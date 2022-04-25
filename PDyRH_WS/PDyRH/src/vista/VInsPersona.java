@@ -17,6 +17,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VInsPersona extends JDialog {
 
@@ -33,37 +36,21 @@ public class VInsPersona extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			VInsPersona dialog = new VInsPersona();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
+	 * @param b 
+	 * @param vInserciones 
 	 */
-	public VInsPersona() {
+	public VInsPersona(VInserciones inserciones, boolean modal) {
+		super(inserciones);
+		this.setModal(modal);
+		
 		setBounds(100, 100, 479, 514);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Agente");
-		chckbxNewCheckBox.setBounds(33, 39, 97, 23);
-		contentPanel.add(chckbxNewCheckBox);
-		
-		JCheckBox chckbxDesaparecida = new JCheckBox("Desaparecida");
-		chckbxDesaparecida.setBounds(132, 39, 97, 23);
-		contentPanel.add(chckbxDesaparecida);
-		
-		JCheckBox chckbxCriminal = new JCheckBox("Criminal");
-		chckbxCriminal.setBounds(261, 39, 97, 23);
-		contentPanel.add(chckbxCriminal);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 463, 37);
@@ -139,82 +126,108 @@ public class VInsPersona extends JDialog {
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(72, 144, 46, 14);
+		lblNewLabel_1.setBounds(72, 133, 46, 14);
 		contentPanel.add(lblNewLabel_1);
 		
 		textNombre = new JTextField();
-		textNombre.setBounds(132, 142, 192, 20);
+		textNombre.setBounds(132, 131, 192, 20);
 		contentPanel.add(textNombre);
 		textNombre.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Apellido");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(72, 184, 46, 14);
+		lblNewLabel_2.setBounds(72, 164, 46, 14);
 		contentPanel.add(lblNewLabel_2);
 		
 		textApellido = new JTextField();
-		textApellido.setBounds(132, 182, 192, 20);
+		textApellido.setBounds(132, 162, 192, 20);
 		contentPanel.add(textApellido);
 		textApellido.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Telefono movil ");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_3.setBounds(33, 227, 88, 14);
+		lblNewLabel_3.setBounds(33, 199, 88, 14);
 		contentPanel.add(lblNewLabel_3);
 		
 		textTelefonoM = new JTextField();
-		textTelefonoM.setBounds(132, 225, 192, 20);
+		textTelefonoM.setBounds(132, 193, 192, 20);
 		contentPanel.add(textTelefonoM);
 		textTelefonoM.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("Telefono opcional");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_4.setBounds(14, 266, 116, 14);
+		lblNewLabel_4.setBounds(14, 224, 116, 14);
 		contentPanel.add(lblNewLabel_4);
 		
 		textTelefonoO = new JTextField();
-		textTelefonoO.setBounds(132, 264, 192, 20);
+		textTelefonoO.setBounds(132, 224, 192, 20);
 		contentPanel.add(textTelefonoO);
 		textTelefonoO.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Localidad");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5.setBounds(58, 309, 60, 14);
+		lblNewLabel_5.setBounds(58, 257, 60, 14);
 		contentPanel.add(lblNewLabel_5);
 		
 		textLocalidad = new JTextField();
-		textLocalidad.setBounds(132, 307, 192, 20);
+		textLocalidad.setBounds(132, 255, 192, 20);
 		contentPanel.add(textLocalidad);
 		textLocalidad.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("Nacimiento");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_6.setBounds(46, 353, 72, 14);
+		lblNewLabel_6.setBounds(46, 288, 72, 14);
 		contentPanel.add(lblNewLabel_6);
 		
 		textNacimiento = new JTextField();
-		textNacimiento.setBounds(132, 350, 192, 20);
+		textNacimiento.setBounds(132, 286, 192, 20);
 		contentPanel.add(textNacimiento);
 		textNacimiento.setColumns(10);
 		
 		JLabel lblNewLabel_7 = new JLabel("Fallecimiento");
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_7.setBounds(33, 396, 85, 14);
+		lblNewLabel_7.setBounds(45, 319, 85, 14);
 		contentPanel.add(lblNewLabel_7);
 		
 		textFallecimiento = new JTextField();
-		textFallecimiento.setBounds(132, 393, 192, 20);
+		textFallecimiento.setBounds(132, 317, 192, 20);
 		contentPanel.add(textFallecimiento);
 		textFallecimiento.setColumns(10);
 		
-		JButton btnAnadir = new JButton("AÑadir");
+		JButton btnAnadir = new JButton("A\u00F1adir");
+		btnAnadir.setEnabled(false);
 		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnAnadir.setBounds(364, 388, 89, 30);
 		contentPanel.add(btnAnadir);
 		
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volver();
+			}
+		});
 		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnVolver.setBounds(364, 434, 89, 30);
 		contentPanel.add(btnVolver);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Agente");
+		rdbtnNewRadioButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rdbtnNewRadioButton.setBounds(30, 44, 72, 23);
+		contentPanel.add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Desaparecida");
+		rdbtnNewRadioButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rdbtnNewRadioButton_1.setBounds(104, 44, 109, 23);
+		contentPanel.add(rdbtnNewRadioButton_1);
+		
+		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Criminal");
+		rdbtnNewRadioButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rdbtnNewRadioButton_2.setBounds(215, 44, 109, 23);
+		contentPanel.add(rdbtnNewRadioButton_2);
+	}
+	
+	private void volver() {
+		// TODO Auto-generated method stub
+		this.dispose();
 	}
 }

@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VListarPersonas extends JDialog {
 
@@ -68,9 +70,19 @@ public class VListarPersonas extends JDialog {
 		}
 		{
 			JButton ButtonVolverVListarPers = new JButton("Volver");
+			ButtonVolverVListarPers.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					volver();
+				}
+			});
 			ButtonVolverVListarPers.setBounds(328, 213, 89, 23);
 			contentPanel.add(ButtonVolverVListarPers);
 		}
+	}
+	
+	private void volver() {
+		// TODO Auto-generated method stub
+		this.dispose();
 	}
 
 }
