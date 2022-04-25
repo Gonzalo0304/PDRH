@@ -3,6 +3,7 @@ package vista;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -21,15 +22,20 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
+import java.awt.List;
+import javax.swing.JScrollBar;
+import javax.swing.ScrollPaneConstants;
 
 public class VComparacion extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
-
+	private ButtonGroup rh = new ButtonGroup();
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -48,70 +54,61 @@ public class VComparacion extends JDialog {
 	 */
 	public VComparacion() {
 		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getContentPane().setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		scrollPane.setBounds(0, 0, 434, 261);
+		getContentPane().add(scrollPane);
+		
+		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(null);
-
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setPreferredSize(new Dimension (360, 330));
+		scrollPane.setViewportView(contentPanel);
+		
 		JButton ButtonVolvervComp = new JButton("Volver");
 		ButtonVolvervComp.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		ButtonVolvervComp.setBounds(319, 227, 105, 23);
+		ButtonVolvervComp.setBounds(300, 225, 105, 23);
 		contentPanel.add(ButtonVolvervComp);
-
+		
 		JButton ButtonCompSelVComp = new JButton("Comprobar sel.");
 		ButtonCompSelVComp.setEnabled(false);
-		ButtonCompSelVComp.setBounds(319, 198, 105, 23);
+		ButtonCompSelVComp.setBounds(300, 198, 105, 23);
 		contentPanel.add(ButtonCompSelVComp);
-
-		JRadioButton RadioButton1VComparacion = new JRadioButton("");
-		RadioButton1VComparacion.setBounds(215, 72, 27, 21);
-		contentPanel.add(RadioButton1VComparacion);
-
-		JRadioButton RadioButton2VComparacion = new JRadioButton("");
-		RadioButton2VComparacion.setBounds(215, 88, 27, 23);
-		contentPanel.add(RadioButton2VComparacion);
-
-		JRadioButton RadioButton3VComparacion = new JRadioButton("");
-		RadioButton3VComparacion.setBounds(215, 164, 27, 23);
-		contentPanel.add(RadioButton3VComparacion);
-
-		JRadioButton RadioButton4VComparacion = new JRadioButton("");
-		RadioButton4VComparacion.setBounds(215, 182, 27, 23);
-		contentPanel.add(RadioButton4VComparacion);
-
-		JLabel lblNewLabel_1 = new JLabel("Resto Humano");
-		lblNewLabel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(10, 35, 199, 14);
-		contentPanel.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_1_1 = new JLabel("Resto Humano");
-		lblNewLabel_1_1.setBackground(SystemColor.window);
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel_1_1.setBounds(10, 135, 199, 14);
-		contentPanel.add(lblNewLabel_1_1);
-
-		String desaparecidas[] = { "Maria", "Fernando" };
-		String restoHumanos[] = { "67", "50" };
+		
+		
+		String desaparecidas[] = { "Maria", "Fernando", "Marcos" };
+		String restoHumanos[] = { "67", "50", "30" };
 		// Creacion de tablas de comparacion
-		int posicion = 48;
+		int posiciontabla = 48;
+		int posicioncabecera = 35;
+		
 		if (desaparecidas.length > 0 && restoHumanos.length > 0) {
 			for (int i = 0; i < restoHumanos.length; i++) {
 				String datosTabla[][] = new String[desaparecidas.length][2];
 				for (int j = 0; j < desaparecidas.length; j++) {
 					datosTabla[j][0] = desaparecidas[j];
 					datosTabla[j][1] = restoHumanos[j];
+
 				}
 
 				JScrollPane JS = new JScrollPane();
-				JS.setBounds(10, posicion, 200, 55);
-				posicion = posicion + 100;
+				JS.setBounds(10, posiciontabla, 200, 55);
+				posiciontabla = posiciontabla + 100;
 				contentPanel.add(JS);
 
 				String cabezera[] = { "Desaparecida", "Precido%" };
 				JTable tabla = new JTable(datosTabla, cabezera);
 				JS.setViewportView(tabla);
+				
+				JLabel lblNewLabel_1 = new JLabel("Resto Humano");
+				lblNewLabel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+				lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNewLabel_1.setBounds(10, posicioncabecera, 199, 14);
+				posicioncabecera = posicioncabecera + 100;
+				contentPanel.add(lblNewLabel_1);
 				
 			}
 		} else {

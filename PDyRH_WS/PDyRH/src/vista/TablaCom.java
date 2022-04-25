@@ -32,7 +32,7 @@ public class TablaCom {
 		public void set_table() {
 			tabla= new JTable(datos, cabezera);
 			JScrollPane JS= new JScrollPane(tabla);
-			JS.setPreferredSize(new Dimension(400,100));
+			JS.setPreferredSize(new Dimension(400,50));
 			ventana.add(JS);
 		}
 		
