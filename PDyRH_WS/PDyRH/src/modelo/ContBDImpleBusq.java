@@ -15,7 +15,7 @@ import modelo.clases.RestoHumano;
 public class ContBDImpleBusq implements ContDatosBusq {
 	// <--- Sentencias -->
 	final String SELECTper = "SELECT * FROM persona WHERE dni = ?";
-	
+	final String SELECTRH = "SELECT * FROM restoHumano WHERE codRH = ?";
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
 	private Connection con;
