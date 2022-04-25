@@ -7,35 +7,39 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class VBusBanda extends JDialog {
+public class VBusRH extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textCodigo;
-	private JTextField textNombre;
-	private JTextField textAmbito;
-	private JTextField textFechaIni;
-	private JTextField textFechaFin;
-	private JTable table;
+	private JTextField textCausa;
+	private JTextField textFecha;
+	private JTextField textUbicacion;
+	private JTextField textGenero;
+	private JTextField textTipoP;
+	private JTextField textColorP;
+	private JTextField textAltura;
+	private JTextField textEspecificacion;
+	private JTextField textCodCaso;
+	private JTextField textIdentificacion;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			VBusBanda dialog = new VBusBanda();
+			VBusRH dialog = new VBusRH();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -46,16 +50,16 @@ public class VBusBanda extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public VBusBanda() {
-		setTitle("Buscar Banda");
-		setBounds(100, 100, 433, 415);
+	public VBusRH() {
+		setTitle("Buscar Resto Humano");
+		setBounds(100, 100, 461, 451);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 463, 37);
+		menuBar.setBounds(0, 0, 491, 37);
 		menuBar.setBorderPainted(false);
 		menuBar.setBackground(UIManager.getColor("FormattedTextField.selectionBackground"));
 		contentPanel.add(menuBar);
@@ -137,80 +141,129 @@ public class VBusBanda extends JDialog {
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
 		
-		JLabel lblNewLabel = new JLabel("Codigo");
+		JLabel lblNewLabel = new JLabel("C\u00F3digo");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(35, 89, 46, 16);
+		lblNewLabel.setBounds(61, 65, 46, 14);
 		contentPanel.add(lblNewLabel);
 		
-		JLabel lblCodigo = new JLabel("Nombre");
+		JLabel lblCodigo = new JLabel("Causa");
 		lblCodigo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCodigo.setBounds(35, 116, 46, 14);
+		lblCodigo.setBounds(61, 90, 46, 14);
 		contentPanel.add(lblCodigo);
 		
-		JLabel lblAmbito = new JLabel("Ambito");
-		lblAmbito.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblAmbito.setBounds(35, 149, 46, 14);
-		contentPanel.add(lblAmbito);
+		JLabel lblCodigo_1 = new JLabel("Fecha");
+		lblCodigo_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCodigo_1.setBounds(61, 115, 46, 14);
+		contentPanel.add(lblCodigo_1);
 		
-		JLabel lblFechaInicio = new JLabel("Fecha Inicio");
-		lblFechaInicio.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFechaInicio.setBounds(13, 180, 68, 14);
-		contentPanel.add(lblFechaInicio);
+		JLabel lblCodigo_2 = new JLabel("Ubicacion");
+		lblCodigo_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCodigo_2.setBounds(46, 140, 61, 14);
+		contentPanel.add(lblCodigo_2);
 		
-		JLabel lblFechaFinal = new JLabel("Fecha Final");
-		lblFechaFinal.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFechaFinal.setBounds(13, 211, 68, 14);
-		contentPanel.add(lblFechaFinal);
+		JLabel lblGenero = new JLabel("Genero");
+		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblGenero.setBounds(61, 165, 46, 14);
+		contentPanel.add(lblGenero);
+		
+		JLabel lblCodigo_3 = new JLabel("Tipo de pelo");
+		lblCodigo_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCodigo_3.setBounds(30, 190, 87, 14);
+		contentPanel.add(lblCodigo_3);
+		
+		JLabel lblAltura = new JLabel("Altura");
+		lblAltura.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblAltura.setBounds(71, 240, 46, 14);
+		contentPanel.add(lblAltura);
+		
+		JLabel lblColorDePelo = new JLabel("Color de pelo");
+		lblColorDePelo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblColorDePelo.setBounds(30, 215, 87, 14);
+		contentPanel.add(lblColorDePelo);
+		
+		JLabel lblEspecificacion = new JLabel("Especificacion");
+		lblEspecificacion.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEspecificacion.setBounds(30, 265, 87, 14);
+		contentPanel.add(lblEspecificacion);
+		
+		JLabel lblCodigoDeCaso = new JLabel("Codigo de caso");
+		lblCodigoDeCaso.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCodigoDeCaso.setBounds(20, 294, 87, 14);
+		contentPanel.add(lblCodigoDeCaso);
+		
+		JLabel lblIdentificado = new JLabel("Identificado");
+		lblIdentificado.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblIdentificado.setBounds(33, 319, 74, 14);
+		contentPanel.add(lblIdentificado);
 		
 		textCodigo = new JTextField();
-		textCodigo.setBounds(99, 85, 163, 20);
+		textCodigo.setBounds(117, 63, 188, 20);
 		contentPanel.add(textCodigo);
 		textCodigo.setColumns(10);
 		
-		textNombre = new JTextField();
-		textNombre.setColumns(10);
-		textNombre.setBounds(99, 114, 163, 20);
-		contentPanel.add(textNombre);
+		textCausa = new JTextField();
+		textCausa.setColumns(10);
+		textCausa.setBounds(117, 88, 188, 20);
+		contentPanel.add(textCausa);
 		
-		textAmbito = new JTextField();
-		textAmbito.setColumns(10);
-		textAmbito.setBounds(99, 147, 163, 20);
-		contentPanel.add(textAmbito);
+		textFecha = new JTextField();
+		textFecha.setColumns(10);
+		textFecha.setBounds(117, 113, 188, 20);
+		contentPanel.add(textFecha);
 		
-		textFechaIni = new JTextField();
-		textFechaIni.setColumns(10);
-		textFechaIni.setBounds(99, 178, 163, 20);
-		contentPanel.add(textFechaIni);
+		textUbicacion = new JTextField();
+		textUbicacion.setColumns(10);
+		textUbicacion.setBounds(117, 138, 188, 20);
+		contentPanel.add(textUbicacion);
 		
-		textFechaFin = new JTextField();
-		textFechaFin.setColumns(10);
-		textFechaFin.setBounds(99, 209, 163, 20);
-		contentPanel.add(textFechaFin);
+		textGenero = new JTextField();
+		textGenero.setColumns(10);
+		textGenero.setBounds(117, 163, 188, 20);
+		contentPanel.add(textGenero);
 		
-		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Codigo", "Nombre", "Ambito"},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column"
-			}
-		));
-		table.setBounds(84, 299, 150, 48);
-		contentPanel.add(table);
+		textTipoP = new JTextField();
+		textTipoP.setColumns(10);
+		textTipoP.setBounds(117, 188, 188, 20);
+		contentPanel.add(textTipoP);
 		
-		JLabel lblNewLabel_1 = new JLabel("Bandas Relacionadas");
-		lblNewLabel_1.setForeground(Color.BLACK);
-		lblNewLabel_1.setBackground(Color.BLACK);
-		lblNewLabel_1.setBounds(84, 284, 150, 14);
-		contentPanel.add(lblNewLabel_1);
+		textColorP = new JTextField();
+		textColorP.setColumns(10);
+		textColorP.setBounds(117, 213, 188, 20);
+		contentPanel.add(textColorP);
+		
+		textAltura = new JTextField();
+		textAltura.setColumns(10);
+		textAltura.setBounds(117, 238, 188, 20);
+		contentPanel.add(textAltura);
+		
+		textEspecificacion = new JTextField();
+		textEspecificacion.setColumns(10);
+		textEspecificacion.setBounds(117, 263, 188, 20);
+		contentPanel.add(textEspecificacion);
+		
+		textCodCaso = new JTextField();
+		textCodCaso.setColumns(10);
+		textCodCaso.setBounds(117, 292, 188, 20);
+		contentPanel.add(textCodCaso);
+		
+		textIdentificacion = new JTextField();
+		textIdentificacion.setColumns(10);
+		textIdentificacion.setBounds(117, 317, 188, 20);
+		contentPanel.add(textIdentificacion);
 		
 		JButton btnVolver = new JButton("Volver");
-		btnVolver.setBounds(318, 334, 89, 31);
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volver();
+			}
+		});
+		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnVolver.setBounds(346, 370, 89, 31);
 		contentPanel.add(btnVolver);
 	}
-
+	
+	private void volver() {
+		// TODO Auto-generated method stub
+		this.dispose();
+	}
 }
