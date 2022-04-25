@@ -7,31 +7,35 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
+import javax.swing.table.DefaultTableModel;
 
-public class VInsCaso extends JDialog {
+public class VBusBanda extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textCodigo;
 	private JTextField textNombre;
+	private JTextField textAmbito;
 	private JTextField textFechaIni;
 	private JTextField textFechaFin;
+	private JTable table;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			VInsCaso dialog = new VInsCaso();
+			VBusBanda dialog = new VBusBanda();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -42,8 +46,9 @@ public class VInsCaso extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public VInsCaso() {
-		setBounds(100, 100, 450, 300);
+	public VBusBanda() {
+		setTitle("Buscar Banda");
+		setBounds(100, 100, 433, 415);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -76,26 +81,47 @@ public class VInsCaso extends JDialog {
 		menuComparar.setForeground(Color.BLACK);
 		menuBar.add(menuComparar);
 		
-		JMenuItem mTotal = new JMenuItem("Total");
-		mTotal.setHorizontalAlignment(SwingConstants.LEFT);
-		mTotal.setBackground(new Color(32, 178, 170));
-		mTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mTotal.setForeground(Color.BLACK);
-		menuComparar.add(mTotal);
-		
-		JMenuItem mEspecifico = new JMenuItem("Especifico");
-		mEspecifico.setHorizontalAlignment(SwingConstants.LEFT);
-		mEspecifico.setBackground(new Color(32, 178, 170));
-		mEspecifico.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mEspecifico.setForeground(Color.BLACK);
-		menuComparar.add(mEspecifico);
-		
 		JMenu menuBusqueda = new JMenu("Busqueda");
 		menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
 		menuBusqueda.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menuBusqueda.setBackground(new Color(0, 0, 255));
 		menuBusqueda.setForeground(Color.BLACK);
 		menuBar.add(menuBusqueda);
+		
+		JMenuItem mPersona = new JMenuItem("Persona");
+		mPersona.setHorizontalAlignment(SwingConstants.LEFT);
+		mPersona.setBackground(new Color(32, 178, 170));
+		mPersona.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mPersona.setForeground(Color.BLACK);
+		menuBusqueda.add(mPersona);
+		
+		JMenuItem mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.setHorizontalAlignment(SwingConstants.RIGHT);
+		mRestoHumano.setBackground(new Color(32, 178, 170));
+		mRestoHumano.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mRestoHumano.setForeground(Color.BLACK);
+		menuBusqueda.add(mRestoHumano);
+		
+		JMenuItem mCaso = new JMenuItem("Caso");
+		mCaso.setHorizontalAlignment(SwingConstants.LEFT);
+		mCaso.setBackground(new Color(32, 178, 170));
+		mCaso.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mCaso.setForeground(Color.BLACK);
+		menuBusqueda.add(mCaso);
+		
+		JMenuItem mBanda = new JMenuItem("Banda");
+		mBanda.setHorizontalAlignment(SwingConstants.LEFT);
+		mBanda.setBackground(new Color(32, 178, 170));
+		mBanda.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mBanda.setForeground(Color.BLACK);
+		menuBusqueda.add(mBanda);
+		
+		JMenuItem mCriminal = new JMenuItem("Criminales");
+		mCriminal.setHorizontalAlignment(SwingConstants.LEFT);
+		mCriminal.setBackground(new Color(32, 178, 170));
+		mCriminal.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mCriminal.setForeground(Color.BLACK);
+		menuBusqueda.add(mCriminal);
 		
 		JMenu menUsuario = new JMenu("Usuario");
 		menuBar.add(menUsuario);
@@ -113,73 +139,78 @@ public class VInsCaso extends JDialog {
 		
 		JLabel lblNewLabel = new JLabel("Codigo");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(27, 64, 46, 14);
+		lblNewLabel.setBounds(35, 89, 46, 16);
 		contentPanel.add(lblNewLabel);
-		
-		JLabel lblEstado = new JLabel("Estado:");
-		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEstado.setBounds(27, 104, 46, 14);
-		contentPanel.add(lblEstado);
 		
 		JLabel lblCodigo = new JLabel("Nombre");
 		lblCodigo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCodigo.setBounds(27, 142, 46, 14);
+		lblCodigo.setBounds(35, 116, 46, 14);
 		contentPanel.add(lblCodigo);
 		
-		JLabel lblCodigo_1 = new JLabel("Fecha Inicio");
-		lblCodigo_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCodigo_1.setBounds(10, 177, 73, 14);
-		contentPanel.add(lblCodigo_1);
+		JLabel lblAmbito = new JLabel("Ambito");
+		lblAmbito.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblAmbito.setBounds(35, 149, 46, 14);
+		contentPanel.add(lblAmbito);
+		
+		JLabel lblFechaInicio = new JLabel("Fecha Inicio");
+		lblFechaInicio.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblFechaInicio.setBounds(13, 180, 68, 14);
+		contentPanel.add(lblFechaInicio);
 		
 		JLabel lblFechaFinal = new JLabel("Fecha Final");
 		lblFechaFinal.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFechaFinal.setBounds(10, 213, 73, 14);
+		lblFechaFinal.setBounds(13, 211, 68, 14);
 		contentPanel.add(lblFechaFinal);
 		
 		textCodigo = new JTextField();
-		textCodigo.setBounds(95, 62, 157, 20);
+		textCodigo.setBounds(99, 85, 163, 20);
 		contentPanel.add(textCodigo);
 		textCodigo.setColumns(10);
 		
-		JRadioButton rdbtnAbierto = new JRadioButton("Abierto");
-		rdbtnAbierto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		rdbtnAbierto.setBounds(83, 101, 73, 23);
-		contentPanel.add(rdbtnAbierto);
-		
-		JRadioButton rdbtnCerrado = new JRadioButton("Cerrado");
-		rdbtnCerrado.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		rdbtnCerrado.setBounds(158, 101, 73, 23);
-		contentPanel.add(rdbtnCerrado);
-		
-		JRadioButton rdbtnSinResolver = new JRadioButton("Sin resolver");
-		rdbtnSinResolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		rdbtnSinResolver.setBounds(245, 101, 93, 23);
-		contentPanel.add(rdbtnSinResolver);
-		
 		textNombre = new JTextField();
-		textNombre.setBounds(95, 140, 157, 20);
-		contentPanel.add(textNombre);
 		textNombre.setColumns(10);
+		textNombre.setBounds(99, 114, 163, 20);
+		contentPanel.add(textNombre);
+		
+		textAmbito = new JTextField();
+		textAmbito.setColumns(10);
+		textAmbito.setBounds(99, 147, 163, 20);
+		contentPanel.add(textAmbito);
 		
 		textFechaIni = new JTextField();
 		textFechaIni.setColumns(10);
-		textFechaIni.setBounds(95, 175, 157, 20);
+		textFechaIni.setBounds(99, 178, 163, 20);
 		contentPanel.add(textFechaIni);
 		
 		textFechaFin = new JTextField();
 		textFechaFin.setColumns(10);
-		textFechaFin.setBounds(95, 211, 157, 20);
+		textFechaFin.setBounds(99, 209, 163, 20);
 		contentPanel.add(textFechaFin);
 		
-		JButton btnAnadir = new JButton("A\u00F1adir");
-		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnAnadir.setBounds(311, 166, 102, 31);
-		contentPanel.add(btnAnadir);
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Codigo", "Nombre", "Ambito"},
+				{null, null, null},
+				{null, null, null},
+			},
+			new String[] {
+				"New column", "New column", "New column"
+			}
+		));
+		table.setBounds(84, 299, 150, 48);
+		contentPanel.add(table);
+		
+		JLabel lblNewLabel_1 = new JLabel("Bandas Relacionadas");
+		lblNewLabel_1.setForeground(Color.BLACK);
+		lblNewLabel_1.setBackground(Color.BLACK);
+		lblNewLabel_1.setBounds(84, 284, 150, 14);
+		contentPanel.add(lblNewLabel_1);
 		
 		JButton btnVolver = new JButton("Volver");
-		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnVolver.setBounds(311, 219, 102, 31);
+		btnVolver.setBounds(318, 334, 89, 31);
 		contentPanel.add(btnVolver);
-		
 	}
+
 }

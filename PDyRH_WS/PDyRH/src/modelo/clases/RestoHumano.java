@@ -98,7 +98,7 @@ public class RestoHumano {
 		this.especificaciones = especificaciones;
 	}
 	public String getCodCaso() {
-		return codCaso;
+		return codResto;
 	}
 	public void setCodCaso(String codCaso) {
 		this.codCaso = codCaso;
