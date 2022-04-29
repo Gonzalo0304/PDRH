@@ -7,34 +7,31 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class VIniciarSesion extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textIdentificador;
-	private JTextField textContrasena;
+	private JButton btnSalir;
+	private JButton btnAceptar;
+	private JPasswordField contrasena;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VIniciarSesion frame = new VIniciarSesion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
+	 * @param vBusRapida 
+	 * @param vPrincipal 
 	 */
 	public VIniciarSesion() {
 		setTitle("Iniciar Sesion");
@@ -60,19 +57,47 @@ public class VIniciarSesion extends JFrame {
 		contentPane.add(textIdentificador);
 		textIdentificador.setColumns(10);
 		
-		textContrasena = new JTextField();
-		textContrasena.setColumns(10);
-		textContrasena.setBounds(177, 121, 188, 20);
-		contentPane.add(textContrasena);
-		
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				principal();
+			}
+		});
 		btnAceptar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnAceptar.setBounds(80, 211, 89, 33);
 		contentPane.add(btnAceptar);
 		
-		JButton btnSalir = new JButton("Salir");
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				salir();
+			}
+		});
 		btnSalir.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnSalir.setBounds(231, 211, 89, 33);
 		contentPane.add(btnSalir);
+		
+		contrasena = new JPasswordField();
+		contrasena.setBounds(177, 121, 188, 20);
+		contentPane.add(contrasena);
+	}
+	
+	private void principal() {
+		// TODO Auto-generated method stub
+		String usr ="PDyRH";
+		String psw = "abcd*1234";
+		
+		if(usr.equals(textIdentificador.getText()) && psw.equals(contrasena.getText())) {
+			VPrincipal ventana1 = new VPrincipal(this, true);
+			ventana1.setVisible(true);
+		}else {
+			VIniciarSesion mensaje = new VIniciarSesion();
+			JOptionPane.showMessageDialog(mensaje, "Usuario o Contraseña incorrectos", "Error!!!", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void salir() {
+		// TODO Auto-generated method stub
+		this.dispose();
 	}
 }

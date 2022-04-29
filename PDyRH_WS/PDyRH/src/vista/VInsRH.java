@@ -19,6 +19,9 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JScrollBar;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VInsRH extends JDialog {
 
@@ -35,20 +38,15 @@ public class VInsRH extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			VInsRH dialog = new VInsRH();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	/**
 	 * Create the dialog.
+	 * @param modal 
+	 * @param inserciones 
 	 */
-	public VInsRH() {
+	public VInsRH(VInserciones inserciones, boolean modal) {
+		super(inserciones);
+		this.setModal(modal);
+		
 		setTitle("Insertar Resto Humano");
 		setBounds(100, 100, 479, 465);
 		getContentPane().setLayout(new BorderLayout());
@@ -184,7 +182,9 @@ public class VInsRH extends JDialog {
 		contentPanel.add(textUbicacion);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(125, 195, 149, 22);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Hombre", "Mujer"}));
+		comboBox.setToolTipText("");
+		comboBox.setBounds(125, 195, 180, 22);
 		contentPanel.add(comboBox);
 		
 		textTipoP = new JTextField();
@@ -208,13 +208,23 @@ public class VInsRH extends JDialog {
 		contentPanel.add(textEspecificaciones);
 		
 		JButton btnNewButton = new JButton("A\u00F1adir");
+		btnNewButton.setEnabled(false);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton.setBounds(348, 287, 89, 32);
 		contentPanel.add(btnNewButton);
 		
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volver();
+			}
+		});
 		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnVolver.setBounds(348, 327, 89, 32);
 		contentPanel.add(btnVolver);
+	}
+	private void volver() {
+		// TODO Auto-generated method stub
+		this.dispose();
 	}
 }

@@ -116,4 +116,69 @@ public class VComparacion extends JDialog {
 		}
 
 	}
+	
+	public VComparacion(VPrincipal vMain, boolean modal) {
+		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		scrollPane.setBounds(0, 0, 434, 261);
+		getContentPane().add(scrollPane);
+		
+		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(null);
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setPreferredSize(new Dimension (360, 330));
+		scrollPane.setViewportView(contentPanel);
+		
+		JButton ButtonVolvervComp = new JButton("Volver");
+		ButtonVolvervComp.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		ButtonVolvervComp.setBounds(300, 225, 105, 23);
+		contentPanel.add(ButtonVolvervComp);
+		
+		JButton ButtonCompSelVComp = new JButton("Comprobar sel.");
+		ButtonCompSelVComp.setEnabled(false);
+		ButtonCompSelVComp.setBounds(300, 198, 105, 23);
+		contentPanel.add(ButtonCompSelVComp);
+		
+		
+		String desaparecidas[] = { "Maria", "Fernando", "Marcos" };
+		String restoHumanos[] = { "67", "50", "30" };
+		// Creacion de tablas de comparacion
+		int posiciontabla = 48;
+		int posicioncabecera = 35;
+		
+		if (desaparecidas.length > 0 && restoHumanos.length > 0) {
+			for (int i = 0; i < restoHumanos.length; i++) {
+				String datosTabla[][] = new String[desaparecidas.length][2];
+				for (int j = 0; j < desaparecidas.length; j++) {
+					datosTabla[j][0] = desaparecidas[j];
+					datosTabla[j][1] = restoHumanos[j];
+
+				}
+
+				JScrollPane JS = new JScrollPane();
+				JS.setBounds(10, posiciontabla, 200, 55);
+				posiciontabla = posiciontabla + 100;
+				contentPanel.add(JS);
+
+				String cabezera[] = { "Desaparecida", "Precido%" };
+				JTable tabla = new JTable(datosTabla, cabezera);
+				JS.setViewportView(tabla);
+				
+				JLabel lblNewLabel_1 = new JLabel("Resto Humano");
+				lblNewLabel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+				lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNewLabel_1.setBounds(10, posicioncabecera, 199, 14);
+				posicioncabecera = posicioncabecera + 100;
+				contentPanel.add(lblNewLabel_1);
+				
+			}
+		} else {
+
+		}
+
+	}
 }

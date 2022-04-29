@@ -17,6 +17,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VInsCaso extends JDialog {
 
@@ -25,24 +27,20 @@ public class VInsCaso extends JDialog {
 	private JTextField textNombre;
 	private JTextField textFechaIni;
 	private JTextField textFechaFin;
+	private JButton btnVolver;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			VInsCaso dialog = new VInsCaso();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	/**
 	 * Create the dialog.
+	 * @param modal 
+	 * @param vInserciones 
 	 */
-	public VInsCaso() {
+	public VInsCaso(VInserciones inserciones, boolean modal) {
+		super(inserciones);
+		this.setModal(modal);
+		
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -172,14 +170,25 @@ public class VInsCaso extends JDialog {
 		contentPanel.add(textFechaFin);
 		
 		JButton btnAnadir = new JButton("A\u00F1adir");
+		btnAnadir.setEnabled(false);
 		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnAnadir.setBounds(311, 166, 102, 31);
 		contentPanel.add(btnAnadir);
 		
-		JButton btnVolver = new JButton("Volver");
+		btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volver();
+			}
+		});
 		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnVolver.setBounds(311, 219, 102, 31);
 		contentPanel.add(btnVolver);
 		
+	}
+	
+	private void volver() {
+		// TODO Auto-generated method stub
+		this.dispose();
 	}
 }
