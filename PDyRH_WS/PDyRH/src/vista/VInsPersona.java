@@ -115,7 +115,7 @@ public class VInsPersona extends JDialog implements ActionListener {
 		this.setModal(modal);
 		datos1 = new ContBDImpleInsertPer();
 
-		setBounds(100, 100, 710, 518);
+		setBounds(350, 150, 710, 518);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -648,7 +648,7 @@ public class VInsPersona extends JDialog implements ActionListener {
 	}
 
 	private void habilitarBoton() {
-		if (!textDni.getText().isBlank() && !textNombre.getText().isBlank()) {
+		if (!textDni.getText().isEmpty() && !textNombre.getText().isEmpty()) {
 			btnAnadir.setEnabled(true);
 			btnAnadir.setBackground(new Color(153, 0, 0));
 		} else {
