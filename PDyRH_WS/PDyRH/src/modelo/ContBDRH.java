@@ -7,7 +7,7 @@ import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
 public class ContBDRH implements ContDatosRH {
-
+	
 	@Override
 	public void altaRH(RestoHumano rh) {
 		// TODO Auto-generated method stub

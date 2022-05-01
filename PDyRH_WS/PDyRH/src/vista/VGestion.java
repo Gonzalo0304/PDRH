@@ -45,8 +45,8 @@ public class VGestion extends JDialog {
 	 * @param b 
 	 * @param vPrincipal 
 	 */
-	public VGestion(VPrincipal vMain, boolean modal) {
-		super(vMain);
+	public VGestion(VIniciarSesion padre, boolean modal) {
+		super(padre);
 		this.setModal(modal);
 		
 		setTitle("Introducir identificador");

@@ -11,7 +11,7 @@ public class Desaparecida extends Persona {
 	private String tipoPelo;
 	private String colorPelo;
 	private String colorOjos;
-	private float altura;
+	private int altura;
 	private String especificaciones;
 	
 	// <--- Constructores --->
@@ -20,7 +20,7 @@ public class Desaparecida extends Persona {
 
 	public Desaparecida(String dni, String nombre, String apellido, int[] telefonos, String localidad,
 			LocalDate fechaNac, LocalDate fechaFal, LocalDateTime fechaDes, String ultimaUbi, String genero,
-			String tipoPelo, String colorPelo, String colorOjos, float altura, String especificaciones) {
+			String tipoPelo, String colorPelo, String colorOjos, int altura, String especificaciones) {
 		super(dni, nombre, apellido, telefonos, localidad, fechaNac, fechaFal);
 		this.fechaDes = fechaDes;
 		this.ultimaUbi = ultimaUbi;
@@ -34,7 +34,7 @@ public class Desaparecida extends Persona {
 
 	public Desaparecida(String dni, String nombre, String apellido, int[] telefonos, String localidad,
 			LocalDate fechaNac, LocalDateTime fechaDes, String ultimaUbi, String genero, String tipoPelo,
-			String colorPelo, String colorOjos, float altura, String especificaciones) {
+			String colorPelo, String colorOjos, int altura, String especificaciones) {
 		super(dni, nombre, apellido, telefonos, localidad, fechaNac);
 		this.fechaDes = fechaDes;
 		this.ultimaUbi = ultimaUbi;
@@ -95,11 +95,11 @@ public class Desaparecida extends Persona {
 		this.colorOjos = colorOjos;
 	}
 
-	public float getAltura() {
+	public int getAltura() {
 		return altura;
 	}
 
-	public void setAltura(float altura) {
+	public void setAltura(int altura) {
 		this.altura = altura;
 	}
 

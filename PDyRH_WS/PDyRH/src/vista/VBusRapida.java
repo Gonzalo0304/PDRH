@@ -33,10 +33,10 @@ public class VBusRapida extends JDialog {
 	/**
 	 * Create the dialog.
 	 * @param modal 
-	 * @param vMain 
+	 * @param padre 
 	 */
-	public VBusRapida(VPrincipal vMain, boolean modal) {
-		super(vMain);
+	public VBusRapida(VIniciarSesion padre, boolean modal) {
+		super(padre);
 		this.setModal(true);
 		
 		setTitle("Busqueda Rapida");

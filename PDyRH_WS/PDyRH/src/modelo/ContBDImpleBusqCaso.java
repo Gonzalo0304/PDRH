@@ -18,9 +18,9 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
-	String url = bundle.getString("URL");
-	String user = bundle.getString("USER");
-	String pass = bundle.getString("PASS");
+	private String url = bundle.getString("URL");
+	private String user = bundle.getString("USER");
+	private String pass = bundle.getString("PASS");
 
 	public void openConnection() {
 		try {

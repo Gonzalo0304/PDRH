@@ -12,7 +12,7 @@ public class RestoHumano {
 	private String tipoPelo;
 	private String colorPelo;
 	private String colorOjos;
-	private float altura;
+	private int altura;
 	private String especificaciones;
 	private String codCaso;
 	
@@ -21,7 +21,7 @@ public class RestoHumano {
 		super();
 	}
 	public RestoHumano(String codResto, String causa, LocalDateTime fechaMuerte, String ubicacion, String genero,
-			String tipoPelo, String colorPelo, String colorOjos, float altura, String especificaciones, String codCaso) {
+			String tipoPelo, String colorPelo, String colorOjos, int altura, String especificaciones, String codCaso) {
 		super();
 		this.codResto = codResto;
 		this.causa = causa;
@@ -85,10 +85,10 @@ public class RestoHumano {
 	public void setColorOjos(String colorOjos) {
 		this.colorOjos = colorOjos;
 	}
-	public float getAltura() {
+	public int getAltura() {
 		return altura;
 	}
-	public void setAltura(float altura) {
+	public void setAltura(int altura) {
 		this.altura = altura;
 	}
 	public String getEspecificaciones() {
