@@ -17,7 +17,7 @@ import modelo.clases.RestoHumano;
 public class ContBDImpleComp implements ContDatosComp {
 	// <--- Sentencias --->
 	final String SELECTrhs = "SELECT * FROM restohumano";
-	final String SELECTdesaparecidas = "SELECT * FROM desaparecidas";
+	final String SELECTdesaparecidas = "SELECT * FROM desaparecida";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -117,7 +117,6 @@ public class ContBDImpleComp implements ContDatosComp {
 				
 				des.setDni(rs.getString("dni"));
 				((Desaparecida) des).setFechaDes(rs.getDate("fechaDes").toLocalDate());
-				((Desaparecida) des).setFechaDes(rs.getDate("fechaDes").toLocalDate());
 				((Desaparecida) des).setUltimaUbi(rs.getString("ultimaUbi"));
 				((Desaparecida) des).setGenero(rs.getString("genero"));
 				((Desaparecida) des).setTipoPelo(rs.getString("tipoPelo"));
@@ -140,7 +139,6 @@ public class ContBDImpleComp implements ContDatosComp {
 			}
 			this.closeConnection();
 		}
-		
 		return desaparecidas;
 	}
 

@@ -5,8 +5,11 @@ import java.awt.BorderLayout;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
+import controlador.DataFactoryComp;
+import controlador.interfaces.ContDatosComp;
+import modelo.clases.Comparacion;
 import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
@@ -21,25 +24,28 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class VComparacion extends JDialog {
+public class VComparacion extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	
+
 	// <--- Elementos --->
 	private final JPanel contentPane = new JPanel();
 	private JTable tabla;
 	private static Point point = new Point();
 	private JLabel lblCerrar;
 	private JScrollPane JS;
-	private RestoHumano rh;
-	private Persona des;
 	private JMenuBar menuBar;
 	private JMenu menuInsertar;
 	private JMenu menuGestionar;
@@ -47,10 +53,18 @@ public class VComparacion extends JDialog {
 	private JMenu menuBusqueda;
 	private JMenu menUsuario;
 	private JMenuItem mCerrar;
-	private String[] desaparecidas;
-	private String[] restosHumanos;
-	private String[] porcentajes;
-	
+	private Map<String, RestoHumano> restos = new TreeMap<>();
+	private Map<String, Persona> desaparecidas = new TreeMap<>();
+	private List<Comparacion> comparados = new ArrayList<>();
+	Comparacion comp;
+	float porcentaje;
+	private JPanel panel;
+	private JPanel panel1;
+	private JLabel lblND;
+
+	// <--- Datos BD --->
+	ContDatosComp datos = DataFactoryComp.getDatos();
+
 	// <--- Ejecución --->
 	public static void main(String[] args) {
 		try {
@@ -64,16 +78,11 @@ public class VComparacion extends JDialog {
 	}
 
 	public VComparacion() {
-
-	}
-	
-	public VComparacion(VIniciarSesion padre, boolean modal) {
-		super(padre);
-		this.setModal(modal);
 		setTitle("Comparar");
-		setBounds(100, 100, 409, 322);
+		setBounds(100, 100, 607, 399);
 		getContentPane().setLayout(new BorderLayout());
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true); // Sin borde predeterminado
 		setLocationRelativeTo(null);
@@ -117,41 +126,41 @@ public class VComparacion extends JDialog {
 		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblCerrar.setForeground(Color.LIGHT_GRAY);
-		lblCerrar.setBounds(377, 2, 31, 19);
+		lblCerrar.setBounds(576, 0, 31, 19);
 		contentPane.add(lblCerrar);
 
 		menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 463, 37);
+		menuBar.setBounds(0, 0, 607, 37);
 		menuBar.setBorderPainted(false);
-		menuBar.setBackground(UIManager.getColor("FormattedTextField.selectionBackground"));
+		menuBar.setBackground(new Color(0, 51, 102));
 		contentPane.add(menuBar);
 
 		menuInsertar = new JMenu("Insertar");
 		menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
 		menuInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menuInsertar.setBackground(new Color(0, 0, 255));
-		menuInsertar.setForeground(Color.BLACK);
+		menuInsertar.setForeground(Color.WHITE);
 		menuBar.add(menuInsertar);
 
 		menuGestionar = new JMenu("Gestionar");
 		menuGestionar.setHorizontalAlignment(SwingConstants.LEFT);
 		menuGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menuGestionar.setBackground(new Color(0, 0, 255));
-		menuGestionar.setForeground(Color.BLACK);
+		menuGestionar.setForeground(Color.WHITE);
 		menuBar.add(menuGestionar);
 
 		menuComparar = new JMenu("Comparar");
 		menuComparar.setHorizontalAlignment(SwingConstants.LEFT);
 		menuComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menuComparar.setBackground(new Color(0, 0, 255));
-		menuComparar.setForeground(Color.BLACK);
+		menuComparar.setForeground(Color.WHITE);
 		menuBar.add(menuComparar);
 
 		menuBusqueda = new JMenu("Busqueda");
 		menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
 		menuBusqueda.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menuBusqueda.setBackground(new Color(0, 0, 255));
-		menuBusqueda.setForeground(Color.BLACK);
+		menuBusqueda.setForeground(Color.WHITE);
 		menuBar.add(menuBusqueda);
 
 		menUsuario = new JMenu("Usuario");
@@ -159,7 +168,7 @@ public class VComparacion extends JDialog {
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		menUsuario.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menUsuario.setBackground(new Color(0, 0, 255));
-		menUsuario.setForeground(Color.BLACK);
+		menUsuario.setForeground(Color.WHITE);
 
 		mCerrar = new JMenuItem("Cerrar Sesion");
 		mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -167,55 +176,177 @@ public class VComparacion extends JDialog {
 		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
-		
-		desaparecidas[0] = "293w";
-		desaparecidas[1] = "843t";
-		restosHumanos[0] = "r1";
-		restosHumanos[1] = "r2";
-		porcentajes[0] = "30";
-		porcentajes[1] = "70";
-		// Creacion de tablas de comparacion
-		int posicion = 48;
-		if (desaparecidas.length > 0 && restosHumanos.length > 0) {
-			String datosTabla[][] = new String[desaparecidas.length][3];
-			for (int j = 0; j < desaparecidas.length; j++) {
-				datosTabla[j][0] = desaparecidas[j];
-				datosTabla[j][1] = restosHumanos[j];
-				datosTabla[j][2] = porcentajes[j];
+	}
+
+	public VComparacion(VIniciarSesion padre, boolean modal, String info) {
+		super(padre);
+		this.setModal(modal);
+		setTitle("Comparar");
+		setBounds(100, 100, 607, 399);
+		getContentPane().setLayout(new BorderLayout());
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
+		getContentPane().add(contentPane, BorderLayout.CENTER);
+		setUndecorated(true); // Sin borde predeterminado
+		setLocationRelativeTo(null);
+		contentPane.setLayout(null);
+
+		// Movimiento de la ventana
+		addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				point.x = e.getX();
+				point.y = e.getY();
+			}
+		});
+		addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = getLocation();
+				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
+			}
+		});
+
+		// Botón para cerrar la ventana
+		lblCerrar = new JLabel("x");
+		lblCerrar.setBackground(new Color(153, 0, 0));
+		lblCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCerrar.setForeground(Color.BLACK);
+				lblCerrar.setOpaque(true);
 			}
 
-			JS = new JScrollPane();
-			JS.setBounds(10, posicion, 300, 55);
-			posicion = posicion + 100;
-			contentPane.add(JS);
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCerrar.setForeground(Color.LIGHT_GRAY);
+				lblCerrar.setOpaque(false);
+			}
 
-			String cabecera[] = { "Desaparecida", "Resto Humano", "Parecido%" };
-			tabla = new JTable(datosTabla, cabecera);
-			JS.setViewportView(tabla);
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar.setForeground(Color.LIGHT_GRAY);
+		lblCerrar.setBounds(576, 0, 31, 19);
+		contentPane.add(lblCerrar);
 
-			tabla.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					String dni = (String) tabla.getValueAt(tabla.getSelectedRow(), 0);
-					String codigo = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
+		menuBar = new JMenuBar();
+		menuBar.setBorderPainted(false);
+		menuBar.setBackground(new Color(0, 51, 102));
+		menuBar.setBounds(2, 2, 603, 45);
+		contentPane.add(menuBar);
 
-					// des = datos.buscarPersona(dni)
-					// rh = datos.buscarRH(codigo)
+		menUsuario = new JMenu(" " + info + " ");
+		menUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
+		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		menUsuario.setForeground(Color.WHITE);
+		menuBar.add(menUsuario);
 
-					rh = new RestoHumano();
-					des = new Desaparecida();
+		mCerrar = new JMenuItem("Cerrar Sesión");
+		mCerrar.setHorizontalTextPosition(SwingConstants.CENTER);
+		mCerrar.addActionListener(this);
+		mCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		mCerrar.setBackground(new Color(32, 178, 170));
+		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mCerrar.setForeground(Color.BLACK);
+		menUsuario.add(mCerrar);
 
-					VComRH vComp = new VComRH(padre, true, rh, des);
-					vComp.setVisible(true);
+		menuInsertar = new JMenu("Insertar");
+		menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menuInsertar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		menuInsertar.setForeground(Color.WHITE);
+		menuBar.add(menuInsertar);
+
+		menuGestionar = new JMenu("Gestionar");
+		menuGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menuGestionar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		menuGestionar.setForeground(Color.WHITE);
+		menuBar.add(menuGestionar);
+
+		menuComparar = new JMenu("Comparar");
+		menuComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menuComparar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		menuComparar.setForeground(Color.WHITE);
+		menuBar.add(menuComparar);
+
+		menuBusqueda = new JMenu("Busqueda");
+		menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
+		menuBusqueda.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		menuBusqueda.setForeground(Color.WHITE);
+		menuBar.add(menuBusqueda);
+
+		// Creacion de tablas de comparacion
+		restos = datos.obtenerRHs();
+		desaparecidas = datos.obtenerDesaparecidas();
+
+		if (!restos.isEmpty() && !desaparecidas.isEmpty()) {
+			for (RestoHumano r : restos.values()) {
+				for (Persona d : desaparecidas.values()) {
+					porcentaje = calcularPor(r, d);
+					if (porcentaje > 60) {
+						comp = new Comparacion();
+						comp.setCodResto(r.getCodResto());
+						comp.setDni(d.getDni());
+						comp.setPorcentaje(porcentaje);
+						comparados.add(comp);
+					}
 				}
-			});
-		}
+			}
 
+			if (comparados.size() > 0) {
+				String datosTabla[][] = new String[comparados.size()][3];
+				for (int i = 0; i < comparados.size(); i++) {
+					datosTabla[i][0] = comparados.get(i).getDni();
+					datosTabla[i][1] = comparados.get(i).getCodResto();
+					datosTabla[i][2] = String.valueOf(comparados.get(i).getPorcentaje());
+				}
+				int posicion = 48 + (comparados.size() * 2);
+				JS = new JScrollPane();
+				JS.setBounds(10, posicion, 300, 55);
+				posicion = posicion + 100;
+				contentPane.add(JS);
+
+				String cabecera[] = { "Desaparecida", "Resto Humano", "Parecido%" };
+				tabla = new JTable(datosTabla, cabecera);
+				JS.setViewportView(tabla);
+
+				tabla.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						String dni = (String) tabla.getValueAt(tabla.getSelectedRow(), 0);
+						String codigo = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
+
+						VComRH vComp = new VComRH(padre, true, dni, codigo);
+						vComp.setVisible(true);
+					}
+				});
+			}
+		} else {
+			panel1 = new JPanel();
+			panel1.setBackground(new Color(153, 0, 0));
+			panel1.setBounds(93, 99, 402, 210);
+			contentPane.add(panel1);
+			panel1.setLayout(null);
+			
+			lblND = new JLabel("NO HAY DATOS");
+			lblND.setForeground(Color.WHITE);
+			lblND.setBackground(Color.WHITE);
+			lblND.setFont(new Font("Tahoma", Font.BOLD, 18));
+			lblND.setBounds(131, 97, 147, 22);
+			panel1.add(lblND);
+			
+			panel = new JPanel();
+			panel.setBackground(new Color(102, 0, 0));
+			panel.setBounds(104, 111, 402, 210);
+			contentPane.add(panel);
+		}
 	}
 
 	// <--- Métodos --->
 	private void cerrar() {
-		// TODO Auto-generated method stub
 		this.dispose();
 	}
 
@@ -228,7 +359,6 @@ public class VComparacion extends JDialog {
 		float xTotal = 0;
 		LocalDate fechaM;
 		LocalDate fechaDes;
-		des = new Desaparecida();
 		String[] rhCar1 = { rh.getUbicacion(), rh.getTipoPelo() };
 		String[] rhCar2 = { rh.getGenero(), rh.getColorPelo(), rh.getColorOjos() };
 		String[] desCar1 = { ((Desaparecida) des).getUltimaUbi(), ((Desaparecida) des).getTipoPelo() };
@@ -266,5 +396,11 @@ public class VComparacion extends JDialog {
 			res = (xFecha + xAltura + xTotal) * 100 / 12;
 		}
 		return res;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

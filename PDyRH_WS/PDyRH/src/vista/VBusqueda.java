@@ -49,7 +49,7 @@ public class VBusqueda extends JDialog {
 	}
 
 
-	public VBusqueda(VIniciarSesion padre, boolean modal) {
+	public VBusqueda(VIniciarSesion padre, boolean modal, String info) {
 		super(padre);
 		this.setModal(modal);
 		setTitle("Introducir Identificador");

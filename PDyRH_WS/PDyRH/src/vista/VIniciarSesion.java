@@ -82,6 +82,7 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		contentPane.setBorder(new LineBorder(new Color(25, 25, 112), 2));
 		setContentPane(contentPane);
 		setUndecorated(true); // Sin borde predeterminado
+		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		
 		// Movimiento de la ventana

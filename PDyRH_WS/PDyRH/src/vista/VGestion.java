@@ -42,10 +42,11 @@ public class VGestion extends JDialog {
 	}
 	/**
 	 * Create the dialog.
+	 * @param info 
 	 * @param b 
 	 * @param vPrincipal 
 	 */
-	public VGestion(VIniciarSesion padre, boolean modal) {
+	public VGestion(VIniciarSesion padre, boolean modal, String info) {
 		super(padre);
 		this.setModal(modal);
 		

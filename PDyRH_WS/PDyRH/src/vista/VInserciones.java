@@ -164,8 +164,8 @@ public class VInserciones extends JDialog {
 	
 	}
 	
-	public VInserciones(VPrincipal vMain, boolean modal) {
-		super(vMain);
+	public VInserciones(VIniciarSesion padre, boolean modal, String info) {
+		super(padre);
 		this.setModal(modal);
 		
 		setTitle("Insertar");

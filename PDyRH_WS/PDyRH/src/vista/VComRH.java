@@ -75,6 +75,7 @@ public class VComRH extends JDialog {
 		contentPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true);
+		setLocationRelativeTo(null);
 
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
@@ -550,7 +551,7 @@ public class VComRH extends JDialog {
 		contentPane.add(lblNewLabel);
 	}
 
-	public VComRH(VIniciarSesion padre, boolean modal, RestoHumano rh, Persona des) {
+	public VComRH(VIniciarSesion padre, boolean modal, String dni, String codigo) {
 		super(padre);
 		this.setModal(modal);
 		setBounds(350, 150, 503, 627);

@@ -57,6 +57,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private JSeparator separator1_1_1;
 	private JSeparator separator1_1_2;
 	private JSeparator separator1_1_3;
+	private String[] info;
 	
 	// <--- Ejecución --->
 	public static void main(String[] args) {
@@ -78,9 +79,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(Color.GRAY);
 		getContentPane().setLayout(new BorderLayout());
-		contentPane.setBorder(new LineBorder(Color.GRAY, 2));
+		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true); // Sin borde predeterminado
+		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 
 		// Movimiento de la ventana
@@ -261,7 +263,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.add(imgErtzAC);
 	}
 
-	public VPrincipal(VIniciarSesion padre, boolean modal, String[] info) {
+	public VPrincipal(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño ventana --->
 		super(padre);
 		setBackground(Color.WHITE);
@@ -270,13 +272,14 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(Color.GRAY);
 		getContentPane().setLayout(new BorderLayout());
-		contentPane.setBorder(new LineBorder(Color.GRAY, 2));
+		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true); // Sin borde predeterminado
 		setLocationRelativeTo(null);
 		this.setModal(modal);
 		contentPane.setLayout(null);
-
+		
+		info = infos;
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -481,7 +484,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelInsert.setBackground(SystemColor.controlShadow);
 		imgInsert.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\laAO.png"));
 		lblInsert.setForeground(new Color(0, 0, 51));
-		VInserciones inserciones = new VInserciones(this, true);
+		VInserciones inserciones = new VInserciones(padre, true, info[0]);
 		inserciones.setVisible(true);
 		panelInsert.setBackground(SystemColor.control);
 		imgInsert.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\la2(1).png"));
@@ -492,7 +495,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelBus.setBackground(SystemColor.controlShadow);
 		imgBuscar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\luAO.png"));
 		lblBuscar.setForeground(new Color(0, 0, 51));
-		VBusqueda busqueda = new VBusqueda(padre, true);
+		VBusqueda busqueda = new VBusqueda(padre, true, info[0]);
 		busqueda.setVisible(true);
 		panelBus.setBackground(SystemColor.control);
 		imgBuscar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\lu2(1).png"));
@@ -503,7 +506,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelGest.setBackground(SystemColor.controlShadow);
 		imgGest.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\engAO.png"));
 		lblGestionar.setForeground(new Color(0, 0, 51));
-		VGestion gestionar = new VGestion(padre, true);
+		VGestion gestionar = new VGestion(padre, true, info[0]);
 		gestionar.setVisible(true);
 		panelGest.setBackground(SystemColor.control);
 		imgGest.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\eng2(1).png"));
@@ -514,7 +517,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelComp.setBackground(SystemColor.controlShadow);
 		imgComparar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\coAO.png"));
 		lblComparar.setForeground(new Color(0, 0, 51));
-		VComparacion comparar = new VComparacion(padre, true);
+		VComparacion comparar = new VComparacion(padre, true, info[0]);
 		comparar.setVisible(true);
 		panelComp.setBackground(SystemColor.control);
 		imgComparar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\co2(1).png"));
