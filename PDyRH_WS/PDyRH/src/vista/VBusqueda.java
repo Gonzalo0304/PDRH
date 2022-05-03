@@ -27,6 +27,10 @@ import java.awt.event.ActionEvent;
 
 public class VBusqueda extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textVBusqueda;
 
@@ -37,15 +41,14 @@ public class VBusqueda extends JDialog {
 		try {
 			VBusqueda dialog = new VBusqueda();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setLocationRelativeTo(null);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
+
 	public VBusqueda(VIniciarSesion padre, boolean modal) {
 		super(padre);
 		this.setModal(modal);

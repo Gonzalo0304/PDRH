@@ -559,6 +559,7 @@ public class VComRH extends JDialog {
 		contentPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true);
+		setLocationRelativeTo(null);
 
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {

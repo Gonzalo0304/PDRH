@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import controlador.ControladorDatosIS;
+import controlador.interfaces.ControladorDatosIS;
 
 public class ContBDImpleIS implements ControladorDatosIS {
 	// <--- Sentencias --->
@@ -27,7 +27,6 @@ public class ContBDImpleIS implements ControladorDatosIS {
 			try {
 				con = DriverManager.getConnection(url, user, pass);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		}
@@ -37,7 +36,6 @@ public class ContBDImpleIS implements ControladorDatosIS {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -45,7 +43,6 @@ public class ContBDImpleIS implements ControladorDatosIS {
 				try {
 					stmnt.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -72,18 +69,17 @@ public class ContBDImpleIS implements ControladorDatosIS {
 				datos[2] = rs.getString("rango");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			this.closeConnection();
 		}
-		this.closeConnection();
 		return datos;
 	}
 

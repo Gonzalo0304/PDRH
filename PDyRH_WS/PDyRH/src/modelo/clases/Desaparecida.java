@@ -1,11 +1,10 @@
 package modelo.clases;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Desaparecida extends Persona {
 	// <--- Atributos --->
-	private LocalDateTime fechaDes;
+	private LocalDate fechaDes;
 	private String ultimaUbi;
 	private String genero;
 	private String tipoPelo;
@@ -16,10 +15,11 @@ public class Desaparecida extends Persona {
 	
 	// <--- Constructores --->
 	public Desaparecida() {
+		super();
 	}
 
 	public Desaparecida(String dni, String nombre, String apellido, int[] telefonos, String localidad,
-			LocalDate fechaNac, LocalDate fechaFal, LocalDateTime fechaDes, String ultimaUbi, String genero,
+			LocalDate fechaNac, LocalDate fechaFal, LocalDate fechaDes, String ultimaUbi, String genero,
 			String tipoPelo, String colorPelo, String colorOjos, int altura, String especificaciones) {
 		super(dni, nombre, apellido, telefonos, localidad, fechaNac, fechaFal);
 		this.fechaDes = fechaDes;
@@ -31,27 +31,13 @@ public class Desaparecida extends Persona {
 		this.altura = altura;
 		this.especificaciones = especificaciones;
 	}
-
-	public Desaparecida(String dni, String nombre, String apellido, int[] telefonos, String localidad,
-			LocalDate fechaNac, LocalDateTime fechaDes, String ultimaUbi, String genero, String tipoPelo,
-			String colorPelo, String colorOjos, int altura, String especificaciones) {
-		super(dni, nombre, apellido, telefonos, localidad, fechaNac);
-		this.fechaDes = fechaDes;
-		this.ultimaUbi = ultimaUbi;
-		this.genero = genero;
-		this.tipoPelo = tipoPelo;
-		this.colorPelo = colorPelo;
-		this.colorOjos = colorOjos;
-		this.altura = altura;
-		this.especificaciones = especificaciones;
-	}
 	
 	// <--- Getters y Setters --->
-	public LocalDateTime getFechaDes() {
+	public LocalDate getFechaDes() {
 		return fechaDes;
 	}
 
-	public void setFechaDes(LocalDateTime fechaDes) {
+	public void setFechaDes(LocalDate fechaDes) {
 		this.fechaDes = fechaDes;
 	}
 

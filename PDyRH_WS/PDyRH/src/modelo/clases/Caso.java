@@ -1,6 +1,8 @@
 package modelo.clases;
 
 import java.time.LocalDate;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Caso {
 	// <--- Atributos --->
@@ -9,27 +11,22 @@ public class Caso {
 	private String nombre;
 	private LocalDate fechaIni;
 	private LocalDate fechaFin;
+	private Map<String,Participante> participantes;
 	
 	// <--- Constructores --->
 	public Caso() {
 		super();
+		participantes = new TreeMap<>();
 	}
 	
-	public Caso(String codCaso, String estado, String nombre, LocalDate fechaIni, LocalDate fechaFin) {
+	public Caso(String codCaso, String estado, String nombre, LocalDate fechaIni, LocalDate fechaFin, Map<String,Participante> participantes) {
 		super();
 		this.codCaso = codCaso;
 		this.estado = estado;
 		this.nombre = nombre;
 		this.fechaIni = fechaIni;
 		this.fechaFin = fechaFin;
-	}
-	
-	public Caso(String codCaso, String estado, String nombre, LocalDate fechaIni) {
-		super();
-		this.codCaso = codCaso;
-		this.estado = estado;
-		this.nombre = nombre;
-		this.fechaIni = fechaIni;
+		this.participantes = participantes;
 	}
 	
 	// <--- Getters y Setters --->
@@ -71,5 +68,13 @@ public class Caso {
 
 	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+
+	public Map<String, Participante> getParticipantes() {
+		return participantes;
+	}
+
+	public void setParticipantes(Map<String, Participante> participantes) {
+		this.participantes = participantes;
 	}
 }

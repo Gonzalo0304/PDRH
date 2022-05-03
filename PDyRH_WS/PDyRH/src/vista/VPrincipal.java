@@ -73,7 +73,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	public VPrincipal() {
 		// <--- Diseño ventana --->
 		setBackground(Color.WHITE);
-		setBounds(350, 150, 607, 399);
+		setBounds(100, 100, 607, 399);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(Color.GRAY);
@@ -265,7 +265,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		// <--- Diseño ventana --->
 		super(padre);
 		setBackground(Color.WHITE);
-		setBounds(350, 150, 607, 399);
+		setBounds(100, 100, 607, 399);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(Color.GRAY);
@@ -273,6 +273,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.setBorder(new LineBorder(Color.GRAY, 2));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true); // Sin borde predeterminado
+		setLocationRelativeTo(null);
 		this.setModal(modal);
 		contentPane.setLayout(null);
 

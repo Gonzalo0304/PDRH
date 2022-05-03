@@ -1,10 +1,8 @@
-package controlador;
-
-import java.util.Map;
+package controlador.interfaces;
 
 import modelo.clases.Caso;
 
 public interface ContDatosInsertCaso {
 	public void altaCaso(Caso caso);
-	public Map<String, Caso> listarCasos();
+	public boolean comprobarCodCaso(String codCaso);
 }

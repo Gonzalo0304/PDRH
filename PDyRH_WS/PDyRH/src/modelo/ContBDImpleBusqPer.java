@@ -9,14 +9,18 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-import controlador.ContDatosBusqPer;
+import controlador.interfaces.ContDatosBusqPer;
+import modelo.clases.Agente;
 import modelo.clases.Conocido;
+import modelo.clases.Criminal;
+import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 
 public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	// <--- Sentencias --->
-	final String SELECTper = "SELECT * FROM persona WHERE dni = ?";
+	final String CALLcompPer = "{CALL comprobarPer(?)}";
 	final String SELECTconoce = "SELECT * FROM persona WHERE dni IN(SELECT dniP2 FROM conoce WHERE dniP1 = ?)";
+	final String SELECTfechas = "SELECT fechaArresto FROM fechaarresto WHERE dni = ?";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -31,9 +35,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
-			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -43,7 +45,6 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -51,16 +52,15 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
 	@Override
-	public Map<String, Conocido> conocidos(String dni1) {
+	public Map<String, Conocido> listarConocidos(String dni1) {
 		ResultSet rs = null;
-		Persona per;
+		Conocido cono;
 		Map<String, Conocido> conocidos = new TreeMap<>();
 
 		this.openConnection();
@@ -72,10 +72,74 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 			rs = stmnt.executeQuery();
 
 			while (rs.next()) {
-				int[] telfs = { rs.getInt("telf1"), rs.getInt("telf2") };
-				per = new Persona();
+				cono = new Conocido();
+				
+				cono.setDni1(rs.getString("dniP1"));
+				cono.setDni2(rs.getString("dniP2"));
+				cono.setRelacion(rs.getString("relacion"));
+				conocidos.put(dni1, cono);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
+		}
+		return conocidos;
+	}
 
-				per.setDni(rs.getString("dni"));
+	@Override
+	public Persona obtenerPersona(String dni) {
+		ResultSet rs = null;
+		Persona per = null;
+		String tipo = null;
+		
+		this.openConnection();
+
+		try {
+			stmnt = con.prepareCall(CALLcompPer);
+			stmnt.setString(1, dni);
+
+			rs = stmnt.executeQuery();
+
+			if (rs.next()) {
+				tipo = rs.getString("tipo");
+				if (tipo.equalsIgnoreCase("agente")) {
+					per = new Agente();
+					((Agente) per).setRango(rs.getString("rango"));
+					((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
+					((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
+				} else if (tipo.equalsIgnoreCase("criminal")) {
+					per = new Criminal();
+					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));
+					
+					PreparedStatement stmnt2 = con.prepareStatement(SELECTfechas);
+					stmnt2.setString(1, dni);
+					while (rs.next()) {
+						((Criminal) per).getFechasArresto().add(rs.getDate("fechaArresto").toLocalDate());
+					}
+				} else if (tipo.equalsIgnoreCase("desaparecida")) {
+					per = new Desaparecida();
+					((Desaparecida) per).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+					((Desaparecida) per).setUltimaUbi(rs.getString("ultimaUbi"));
+					((Desaparecida) per).setGenero(rs.getString("genero"));
+					((Desaparecida) per).setTipoPelo(rs.getString("tipoPelo"));
+					((Desaparecida) per).setColorPelo(rs.getString("colorPelo"));
+					((Desaparecida) per).setColorOjos(rs.getString("colorOjos"));
+					((Desaparecida) per).setAltura(rs.getInt("altura"));
+					((Desaparecida) per).setEspecificaciones(rs.getString("especificaciones"));
+				} else {
+					per = new Persona();
+				}
+				int[] telfs = { rs.getInt("telf1"), rs.getInt("telf2") };
+
+				per.setDni(dni);
 				per.setNombre(rs.getString("nombre"));
 				per.setApellido(rs.getString("apellido"));
 				per.setTelefonos(telfs);
@@ -83,20 +147,18 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			this.closeConnection();
 		}
-
-		this.closeConnection();
-		return conocidos;
+		return per;
 	}
 
 }

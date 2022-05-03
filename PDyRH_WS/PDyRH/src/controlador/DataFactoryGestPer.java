@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.interfaces.ContDatosGestPer;
 import modelo.ContBDImpleGestPer;
 
 public class DataFactoryGestPer {

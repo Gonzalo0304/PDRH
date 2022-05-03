@@ -1,10 +1,8 @@
-package controlador;
-
-import java.util.Map;
+package controlador.interfaces;
 
 import modelo.clases.Persona;
 
 public interface ContDatosInsertPer {
 	public void altaPersona(Persona per);
-	public Map<String, Persona> listarPersonas();
+	public boolean comprobarDNI(String dni);
 }

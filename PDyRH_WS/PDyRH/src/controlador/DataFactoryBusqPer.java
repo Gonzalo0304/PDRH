@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.interfaces.ContDatosBusqPer;
 import modelo.ContBDImpleBusqPer;
 
 public class DataFactoryBusqPer {

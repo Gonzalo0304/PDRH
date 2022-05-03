@@ -25,8 +25,8 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import controlador.ControladorDatosIS;
-import modelo.ContBDImpleIS;
+import controlador.DataFactoryIS;
+import controlador.interfaces.ControladorDatosIS;
 
 public class VIniciarSesion extends JFrame implements ActionListener,ControladorDatosIS {
 
@@ -54,7 +54,7 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 	private JLabel imgVizDer;
 	
 	// <--- Datos BD --->
-	ControladorDatosIS datos = new ContBDImpleIS();
+	ControladorDatosIS datos = DataFactoryIS.getDatos();
 	
 	// <--- Ejecución --->
 	public static void main(String[] args) {

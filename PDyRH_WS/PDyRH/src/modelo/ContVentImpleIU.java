@@ -1,6 +1,6 @@
 package modelo;
 
-import controlador.ControladorIU;
+import controlador.interfaces.ControladorIU;
 import vista.VIniciarSesion;
 
 public class ContVentImpleIU implements ControladorIU {

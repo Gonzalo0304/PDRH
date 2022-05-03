@@ -26,7 +26,7 @@ import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.Period;
 
 public class VComparacion extends JDialog {
@@ -64,18 +64,19 @@ public class VComparacion extends JDialog {
 	}
 
 	public VComparacion() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	public VComparacion(VIniciarSesion padre, boolean modal) {
 		super(padre);
 		this.setModal(modal);
 		setTitle("Comparar");
-		setBounds(350, 150, 409, 322);
+		setBounds(100, 100, 409, 322);
 		getContentPane().setLayout(new BorderLayout());
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true); // Sin borde predeterminado
+		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 
 		// Movimiento de la ventana
@@ -225,8 +226,8 @@ public class VComparacion extends JDialog {
 		int diasDiff;
 		int cmDiff;
 		float xTotal = 0;
-		LocalDateTime fechaM;
-		LocalDateTime fechaDes;
+		LocalDate fechaM;
+		LocalDate fechaDes;
 		des = new Desaparecida();
 		String[] rhCar1 = { rh.getUbicacion(), rh.getTipoPelo() };
 		String[] rhCar2 = { rh.getGenero(), rh.getColorPelo(), rh.getColorOjos() };
@@ -238,7 +239,7 @@ public class VComparacion extends JDialog {
 		// Calcular diferencia de fechas y su valor
 		fechaM = rh.getFechaMuerte();
 		fechaDes = ((Desaparecida) des).getFechaDes();
-		diasDiff = Period.between(fechaDes.toLocalDate(), fechaM.toLocalDate()).getDays();
+		diasDiff = Period.between(fechaDes, fechaM).getDays();
 		xFecha = (diasDiff - 14) / -7;
 		if (diasDiff < 0) {
 			xFecha = 0;

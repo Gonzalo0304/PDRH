@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.interfaces.ContDatosInsertCaso;
 import modelo.ContBDImpleInsertCaso;
 
 public class DataFactoryInsertCaso {

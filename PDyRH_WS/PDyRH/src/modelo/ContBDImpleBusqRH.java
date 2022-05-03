@@ -7,14 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import controlador.interfaces.ContDatosBusq;
-import modelo.clases.Caso;
+import controlador.interfaces.ContDatosBusqRH;
+import modelo.clases.RestoHumano;
 
-public class ContBDImpleBusq implements ContDatosBusq {
-	// <--- Sentencias -->
-	final String SELECTcaso = "SELECT * FROM caso WHERE codCaso = ?";
-	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
-	final String CALLbuscarRH = "{CALL buscarRH(?)}";
+public class ContBDImpleBusqRH implements ContDatosBusqRH {
+	// <--- Sentencias --->
+	final String SELECTidentificado = "SELECT dni FROM identifica WHERE codResto = ?";
+	final String SELECTrh = "SELECT * FROM restohumano WHERE codResto = ?";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -50,87 +49,22 @@ public class ContBDImpleBusq implements ContDatosBusq {
 			}
 		}
 	}
-
+	
 	@Override
-	public Caso buscarCaso(String codCaso) {
+	public String obtenerIdentificado(String codResto) {
 		ResultSet rs = null;
-		Caso caso = null;
-		
-		this.openConnection();
-		try {
-			stmnt = con.prepareStatement(SELECTcaso);
-			stmnt.setString(1, codCaso);
-			
-			rs = stmnt.executeQuery();
-			
-			if (rs.next()) {
-				caso = new Caso();
-				caso.setCodCaso(codCaso);
-				caso.setEstado(rs.getString("estado"));
-				caso.setNombre(rs.getString("nombre"));
-				caso.setFechaIni(rs.getDate("fechaIni").toLocalDate());
-				caso.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			this.closeConnection();
-		}
-		return caso;
-	}
-
-	@Override
-	public boolean comprobarDNI(String dni) {
-		ResultSet rs = null;
-		boolean esta = false;
+		String dni = null;
 		
 		this.openConnection();
 		
 		try {
-			stmnt = con.prepareCall(CALLcomprobarDNI);
-			stmnt.setString(1, dni);
-			
-			rs = stmnt.executeQuery();
-			
-			if (rs.next()) {
-				esta = rs.getBoolean("esta");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			this.closeConnection();
-		}
-		return esta;
-	}
-
-	@Override
-	public boolean buscarRH(String codResto) {
-		ResultSet rs = null;
-		boolean esta = false;
-		
-		this.openConnection();
-		try {
-			stmnt = con.prepareCall(CALLbuscarRH);
+			stmnt = con.prepareStatement(SELECTidentificado);
 			stmnt.setString(1, codResto);
 			
 			rs = stmnt.executeQuery();
 			
 			if (rs.next()) {
-				esta = rs.getBoolean("esta");
+				dni = rs.getString("dni");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -144,7 +78,52 @@ public class ContBDImpleBusq implements ContDatosBusq {
 			}
 			this.closeConnection();
 		}
-		return esta;
+		
+		return dni;
+	}
+
+	@Override
+	public RestoHumano obtenerRH(String codResto) {
+		ResultSet rs = null;
+		RestoHumano resto = null;
+		
+		this.openConnection();
+		
+		try {
+			stmnt = con.prepareStatement(SELECTrh);
+			stmnt.setString(1, codResto);
+			
+			rs = stmnt.executeQuery();
+			
+			if (rs.next()) {
+				resto = new RestoHumano();
+				
+				resto.setCodResto(codResto);
+				resto.setCausa(rs.getString("causa"));
+				resto.setUbicacion(rs.getString("ubicacion"));
+				resto.setGenero(rs.getString("genero"));
+				resto.setTipoPelo(rs.getString("tipoPelo"));
+				resto.setColorPelo(rs.getString("colorPelo"));
+				resto.setColorOjos(rs.getString("colorOjos"));
+				resto.setAltura(rs.getInt("altura"));
+				resto.setEspecificaciones(rs.getString("especificaciones"));
+				resto.setCodCaso(rs.getString("codCaso"));
+				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
+		}
+		
+		return resto;
 	}
 
 }

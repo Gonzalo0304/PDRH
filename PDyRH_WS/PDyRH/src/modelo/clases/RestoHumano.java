@@ -1,12 +1,12 @@
 package modelo.clases;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class RestoHumano {
 	// <--- Atributos --->
 	private String codResto;
 	private String causa;
-	private LocalDateTime fechaMuerte;
+	private LocalDate fechaMuerte;
 	private String ubicacion;
 	private String genero;
 	private String tipoPelo;
@@ -20,7 +20,7 @@ public class RestoHumano {
 	public RestoHumano() {
 		super();
 	}
-	public RestoHumano(String codResto, String causa, LocalDateTime fechaMuerte, String ubicacion, String genero,
+	public RestoHumano(String codResto, String causa, LocalDate fechaMuerte, String ubicacion, String genero,
 			String tipoPelo, String colorPelo, String colorOjos, int altura, String especificaciones, String codCaso) {
 		super();
 		this.codResto = codResto;
@@ -49,10 +49,10 @@ public class RestoHumano {
 	public void setCausa(String causa) {
 		this.causa = causa;
 	}
-	public LocalDateTime getFechaMuerte() {
+	public LocalDate getFechaMuerte() {
 		return fechaMuerte;
 	}
-	public void setFechaMuerte(LocalDateTime fechaMuerte) {
+	public void setFechaMuerte(LocalDate fechaMuerte) {
 		this.fechaMuerte = fechaMuerte;
 	}
 	public String getUbicacion() {
