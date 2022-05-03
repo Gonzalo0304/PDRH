@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import controlador.ContDatosBusq;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -23,6 +26,7 @@ public class VPrincipal extends JDialog {
 	private JMenuItem mCerrar;
 	private JButton btnInsertar;
 	private JButton btnBusqueda;
+	private ContDatosBusq datos;
 
 	/**
 	 * Launch the application.
@@ -41,6 +45,7 @@ public class VPrincipal extends JDialog {
 	 * @param modal 
 	 * @param vIniciarSesion 
 	 */
+	
 	public VPrincipal() {
 		setTitle("Principal");
 		setBounds(100, 100, 416, 312);
@@ -63,7 +68,7 @@ public class VPrincipal extends JDialog {
 		btnBusqueda = new JButton("BUSQUEDA");
 		btnBusqueda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vBusqueda();
+				vBusqueda(datos);
 			}
 		});
 		btnBusqueda.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -93,7 +98,7 @@ public class VPrincipal extends JDialog {
 		JButton btnBusqRapida = new JButton("Busqueda rapida");
 		btnBusqRapida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vBusquedaRapida();
+				vBusquedaRapida(datos);
 			}
 		});
 		btnBusqRapida.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -127,8 +132,7 @@ public class VPrincipal extends JDialog {
 			menUsuario.add(mCerrar);
 		}
 	}
-	
-	public VPrincipal(VIniciarSesion vInicio, boolean modal) {
+	public VPrincipal(VIniciarSesion vInicio, boolean modal, ContDatosBusq datos) {
 		super(vInicio);
 		this.setModal(true);
 		
@@ -153,7 +157,7 @@ public class VPrincipal extends JDialog {
 		btnBusqueda = new JButton("BUSQUEDA");
 		btnBusqueda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vBusqueda();
+				vBusqueda(datos);
 			}
 		});
 		btnBusqueda.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -183,7 +187,7 @@ public class VPrincipal extends JDialog {
 		JButton btnBusqRapida = new JButton("Busqueda rapida");
 		btnBusqRapida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vBusquedaRapida();
+				vBusquedaRapida(datos);
 			}
 		});
 		btnBusqRapida.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -229,9 +233,9 @@ public class VPrincipal extends JDialog {
 		inserciones.setVisible(true);
 	}
 	
-	private void vBusqueda() {
+	private void vBusqueda(ContDatosBusq datos) {
 		// TODO Auto-generated method stub
-		VBusqueda busqueda = new VBusqueda(this, true);
+		VBusqueda busqueda = new VBusqueda(this, true, datos);
 		busqueda.setVisible(true);
 	}
 	
@@ -247,9 +251,9 @@ public class VPrincipal extends JDialog {
 		comparar.setVisible(true);
 	}
 	
-	private void vBusquedaRapida() {
+	private void vBusquedaRapida(ContDatosBusq datos) {
 		// TODO Auto-generated method stub
-		VBusRapida busRapida = new VBusRapida(this, true);
+		VBusRapida busRapida = new VBusRapida(this, true, datos);
 		busRapida.setVisible(true);
 	}
 

@@ -1,10 +1,12 @@
 package controlador;
 
+import modelo.ContVentImpleIU;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		ContVentImpleIU vista = new ContVentImpleIU();
+		vista.conPresentacion();
 	}
 
 }
