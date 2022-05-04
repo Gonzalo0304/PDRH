@@ -13,4 +13,3 @@ public interface ContDatosRH {
 	
 	public void agregarIdentificado(RestoHumano resto, Persona per);
 }
-

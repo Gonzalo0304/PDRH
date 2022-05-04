@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.interfaces.ContDatosInsertPer;
 import modelo.ContBDImpleInsertPer;
 
 public class DataFactoryInsertPer {
@@ -12,4 +13,3 @@ public class DataFactoryInsertPer {
 		return datos;
 	}
 }
-

@@ -16,13 +16,13 @@ public class Criminal extends Persona {
 			LocalDate fechaFal, boolean prisionero, ArrayList<LocalDate> fechasArresto) {
 		super(dni, nombre, apellido, telefonos, localidad, fechaNac, fechaFal);
 		this.prisionero = prisionero;
-		this.fechasArresto = new ArrayList<>();
+		this.fechasArresto = fechasArresto;
 	}
 	public Criminal(String dni, String nombre, String apellido, int[] telefonos, String localidad, LocalDate fechaNac,
 			boolean prisionero, ArrayList<LocalDate> fechasArresto) {
 		super(dni, nombre, apellido, telefonos, localidad, fechaNac);
 		this.prisionero = prisionero;
-		this.fechasArresto = new ArrayList<>();
+		this.fechasArresto = fechasArresto;
 	}
 	
 	// <--- Getters y Setters --->

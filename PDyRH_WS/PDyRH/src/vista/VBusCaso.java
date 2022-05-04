@@ -9,9 +9,16 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JTabbedPane;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import java.awt.CardLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-import controlador.ContDatosBusq;
-import controlador.ContDatosBusqCaso;
+import controlador.interfaces.ContDatosBusq;
+import controlador.interfaces.ContDatosBusqCaso;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
@@ -86,6 +93,7 @@ public class VBusCaso extends JDialog {
 	public VBusCaso() {
 		setTitle("Buscar Caso");
 		setBounds(100, 100, 457, 456);
+		setBounds(100, 100, 457, 530);
 		getContentPane().setLayout(new CardLayout(0, 0));
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -154,8 +162,20 @@ public class VBusCaso extends JDialog {
 		rdbtnSinResolver.setBounds(244, 91, 109, 23);
 		contentPanel.add(rdbtnSinResolver);
 		
-		buttonVolver1 = new Button("Volver");
-		buttonVolver1.addActionListener(new ActionListener() {
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Abierto");
+		rdbtnNewRadioButton.setBounds(91, 91, 68, 23);
+		contentPanel.add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Cerrado");
+		rdbtnNewRadioButton_1.setBounds(161, 91, 68, 23);
+		contentPanel.add(rdbtnNewRadioButton_1);
+		
+		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Sin resolver");
+		rdbtnNewRadioButton_2.setBounds(244, 91, 109, 23);
+		contentPanel.add(rdbtnNewRadioButton_2);
+		
+		btnVolver1 = new JButton("Volver");
+		btnVolver1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				volver1();
 			}
@@ -165,6 +185,10 @@ public class VBusCaso extends JDialog {
 		buttonVolver1.setBackground(new Color(153, 0, 0));
 		buttonVolver1.setBounds(293, 260, 107, 31);
 		contentPanel.add(buttonVolver1);
+		btnVolver1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnVolver1.setBounds(309, 207, 89, 29);
+		contentPanel.add(btnVolver1);
+
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Involucrados", null, panel_1, null);
@@ -174,22 +198,31 @@ public class VBusCaso extends JDialog {
 		lblNomAp1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNomAp1.setBounds(28, 32, 123, 17);
 		panel_1.add(lblNomAp1);
+
+		JLabel lblNewLabel_1 = new JLabel("Nombre y Apellido");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(28, 32, 123, 17);
+		panel_1.add(lblNewLabel_1);
+
 		
 		JLabel lblNewLabel_2 = new JLabel("DNI:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_2.setBounds(97, 69, 33, 14);
 		panel_1.add(lblNewLabel_2);
 		
+
 		textDni1 = new JTextField();
 		textDni1.setBounds(140, 67, 174, 20);
 		panel_1.add(textDni1);
 		textDni1.setColumns(10);
+
 		
 		JLabel lblNewLabel_3 = new JLabel("Implicacion:");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_3.setBounds(55, 105, 77, 14);
 		panel_1.add(lblNewLabel_3);
 		
+
 		textImplicacion1 = new JTextField();
 		textImplicacion1.setBounds(140, 103, 174, 20);
 		panel_1.add(textImplicacion1);
@@ -199,6 +232,11 @@ public class VBusCaso extends JDialog {
 		lblNomAp2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNomAp2.setBounds(28, 144, 123, 17);
 		panel_1.add(lblNomAp2);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Nombre y Apellido");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_1.setBounds(28, 144, 123, 17);
+		panel_1.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("DNI:");
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -388,6 +426,17 @@ public class VBusCaso extends JDialog {
 		textImplicacion2.setBounds(140, 205, 174, 20);
 		panel_1.add(textImplicacion2);
 		
+		JLabel lblNewLabel_4 = new JLabel("Banda");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_4.setBounds(55, 258, 46, 14);
+		panel_1.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("Codigo:");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_5.setBounds(84, 291, 46, 14);
+		panel_1.add(lblNewLabel_5);
+		
+		
 		JLabel lblNewLabel_6 = new JLabel("Resto Humano");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_6.setBounds(28, 343, 120, 14);
@@ -426,7 +475,7 @@ public class VBusCaso extends JDialog {
 		part = new Participante();
 		caso = new Caso();
 		restos = new TreeMap<>();
-		restos = datos2.restos(caso.getCodCaso());		
+		restos = datos2.listarInvolucrados(caso.getCodCaso());		
 		
 		if(part!=null) {
 			textDni1.setText(part.getDni());
@@ -439,6 +488,16 @@ public class VBusCaso extends JDialog {
 				}
 			}
 		}
+	}
+	
+	private void volver1() {
+		// TODO Auto-generated method stub
+		this.dispose();
+	}
+	
+	private void volver2() {
+		// TODO Auto-generated method stub
+		this.dispose();
 	}
 
 	private void datosCasos(Caso caso) {
@@ -463,7 +522,7 @@ public class VBusCaso extends JDialog {
 		caso = new Caso();
 		part = new Participante();
 		participantes = new TreeMap<>();
-		participantes = datos2.participantes(caso.getCodCaso());
+		participantes = datos2.listarParticipantes(caso.getCodCaso());
 		
 		for(Participante parti : participantes.values()) {
 			if (parti.getDni().equalsIgnoreCase(per.getDni())) {
@@ -491,13 +550,4 @@ public class VBusCaso extends JDialog {
 		}
 	}
 
-	private void volver1() {
-		// TODO Auto-generated method stub
-		this.dispose();
-	}
-	
-	private void volver2() {
-		// TODO Auto-generated method stub
-		this.dispose();
-	}
 }

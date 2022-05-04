@@ -1,5 +1,6 @@
 package controlador;
 
+import controlador.interfaces.ContDatosBusqCaso;
 import modelo.ContBDImpleBusqCaso;
 
 public class DataFactoryBusqCaso {

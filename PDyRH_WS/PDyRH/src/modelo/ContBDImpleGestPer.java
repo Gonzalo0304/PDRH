@@ -11,24 +11,26 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-import controlador.ContDatosGestPer;
+import controlador.interfaces.ContDatosGestPer;
 import modelo.clases.Agente;
+import modelo.clases.Conocido;
 import modelo.clases.Criminal;
 import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 
 public class ContBDImpleGestPer implements ContDatosGestPer {
 	// <--- Sentencias --->
+	final String CALLcompPer = "{CALL comprobarPer(?)}";
+	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
 	final String UPDATEper = "UPDATE persona SET nombre = ?,apellido = ?,telf1 = ?,localidad = ?,fechaNac = ?,fechaFal = ?,telf2 = ? WHERE dni = ?";
 	final String DELETEper = "DELETE persona WHERE dni = ?";
-	final String SELECTpers = "SELECT * FROM persona";
-	final String INSERTage = "INSERT INTO agente(dni,rango,inicioServ,finServ) VALUES(?,?,?,?)";
 	final String UPDATEage = "UPDATE agente SET rango = ?,inicioServ = ?,finServ = ? WHERE dni = ?";
 	final String UPDATEcrim = "UPDATE criminal SET prisionero = ? WHERE dni = ?";
 	final String INSERTfechaAr = "INSERT INTO fechaarresto(dni,fechaArresto) VALUES(?,?)";
 	final String UPDATEdes = "UPDATE criminal SET fechaDes = ?,ultimaUbi = ?,genero = ?,tipoPelo = ?,colorPerlo = ?,colorOjos = ?,altura = ?,especificaciones = ? WHERE dni = ?";
 	final String INSERTconoce = "INSERT INTO conoce(dniP1,dniP2,relacion) VALUES(?,?,?)";
 	final String SELECTconoce = "SELECT * FROM persona WHERE dni IN(SELECT dniP2 FROM conoce WHERE dniP1 = ?)";
+	final String SELECTfechas = "SELECT fechaArresto FROM fechaarresto WHERE dni = ?";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -36,16 +38,15 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
-	String url = bundle.getString("URL");
-	String user = bundle.getString("USER");
-	String pass = bundle.getString("PASS");
+	private String url = bundle.getString("URL");
+	private String user = bundle.getString("USER");
+	private String pass = bundle.getString("PASS");
 
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -55,7 +56,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -63,7 +63,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -93,7 +92,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			} else if (per instanceof Desaparecida) {
 				stmnt = con.prepareStatement(UPDATEdes);
 
-				stmnt.setDate(1, Date.valueOf(((Desaparecida) per).getFechaDes().toLocalDate()));
+				stmnt.setDate(1, Date.valueOf(((Desaparecida) per).getFechaDes()));
 				stmnt.setString(2, ((Desaparecida) per).getUltimaUbi());
 				stmnt.setString(3, ((Desaparecida) per).getGenero());
 				stmnt.setString(4, ((Desaparecida) per).getTipoPelo());
@@ -134,103 +133,10 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
-	public void eliminarPersona(Persona per) {
-		this.openConnection();
-
-		try {
-			stmnt = con.prepareStatement(DELETEper);
-
-			stmnt.setString(1, per.getDni());
-
-			stmnt.executeUpdate();
-			con.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			if (con != null) {
-				try {
-					con.rollback();
-				} catch (SQLException e2) {
-					e.printStackTrace();
-				}
-			}
-		} finally {
-			this.closeConnection();
-		}
-	}
-
-	@Override
-	public Map<String, Persona> listarPersonas() {
+	public Map<String, Conocido> listarConocidos(String dni1) {
 		ResultSet rs = null;
-		Persona per;
-		Map<String, Persona> personas = new TreeMap<>();
-
-		this.openConnection();
-
-		try {
-			stmnt = con.prepareStatement(SELECTpers);
-
-			rs = stmnt.executeQuery();
-
-			while (rs.next()) {
-				int[] telfs = { rs.getInt("telf1"), rs.getInt("telf2") };
-				per = new Persona();
-
-				per.setDni(rs.getString("dni"));
-				per.setNombre(rs.getString("nombre"));
-				per.setApellido(rs.getString("apellido"));
-				per.setTelefonos(telfs);
-				per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-				per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		this.closeConnection();
-		return personas;
-	}
-
-	@Override
-	public void agregarConocido(Persona per, String dni2, String relacion) {
-		this.openConnection();
-
-		try {
-			stmnt = con.prepareStatement(INSERTconoce);
-
-			stmnt.setString(1, per.getDni());
-			stmnt.setString(2, dni2);
-			stmnt.setString(3, relacion);
-
-			stmnt.executeUpdate();
-			con.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			if (con != null) {
-				try {
-					con.rollback();
-				} catch (SQLException e2) {
-					e.printStackTrace();
-				}
-			}
-		} finally {
-			this.closeConnection();
-		}
-	}
-
-	@Override
-	public Map<String, Persona> listarConocidos(String dni1) {
-		ResultSet rs = null;
-		Persona per;
-		Map<String, Persona> conocidos = new TreeMap<>();
+		Conocido cono;
+		Map<String, Conocido> conocidos = new TreeMap<>();
 
 		this.openConnection();
 
@@ -241,25 +147,20 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			rs = stmnt.executeQuery();
 
 			while (rs.next()) {
-				int[] telfs = { rs.getInt("telf1"), rs.getInt("telf2") };
-				per = new Persona();
-
-				per.setDni(rs.getString("dni"));
-				per.setNombre(rs.getString("nombre"));
-				per.setApellido(rs.getString("apellido"));
-				per.setTelefonos(telfs);
-				per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-				per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
+				cono = new Conocido();
+				
+				cono.setDni1(rs.getString("dniP1"));
+				cono.setDni2(rs.getString("dniP2"));
+				cono.setRelacion(rs.getString("relacion"));
+				conocidos.put(dni1, cono);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -273,7 +174,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 		this.openConnection();
 
 		try {
-			stmnt = con.prepareStatement(INSERTage);
+			stmnt = con.prepareStatement(INSERTfechaAr);
 
 			stmnt.setString(1, dni);
 			stmnt.setDate(2, Date.valueOf(fecha));
@@ -282,10 +183,158 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			con.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e2) {
+					e.printStackTrace();
+				}
+			}
+		} finally {
+			this.closeConnection();
+		}
+	}
+
+	@Override
+	public Persona obtenerPersona(String dni) {
+		ResultSet rs = null;
+		Persona per = null;
+		String tipo = null;
+		
+		this.openConnection();
+
+		try {
+			stmnt = con.prepareCall(CALLcompPer);
+			stmnt.setString(1, dni);
+
+			rs = stmnt.executeQuery();
+
+			if (rs.next()) {
+				tipo = rs.getString("tipo");
+				if (tipo.equalsIgnoreCase("agente")) {
+					per = new Agente();
+					((Agente) per).setRango(rs.getString("rango"));
+					((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
+					((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
+				} else if (tipo.equalsIgnoreCase("criminal")) {
+					per = new Criminal();
+					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));
+					
+					PreparedStatement stmnt2 = con.prepareStatement(SELECTfechas);
+					stmnt2.setString(1, dni);
+					while (rs.next()) {
+						((Criminal) per).getFechasArresto().add(rs.getDate("fechaArresto").toLocalDate());
+					}
+				} else if (tipo.equalsIgnoreCase("desaparecida")) {
+					per = new Desaparecida();
+					((Desaparecida) per).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+					((Desaparecida) per).setUltimaUbi(rs.getString("ultimaUbi"));
+					((Desaparecida) per).setGenero(rs.getString("genero"));
+					((Desaparecida) per).setTipoPelo(rs.getString("tipoPelo"));
+					((Desaparecida) per).setColorPelo(rs.getString("colorPelo"));
+					((Desaparecida) per).setColorOjos(rs.getString("colorOjos"));
+					((Desaparecida) per).setAltura(rs.getInt("altura"));
+					((Desaparecida) per).setEspecificaciones(rs.getString("especificaciones"));
+				} else {
+					per = new Persona();
+				}
+				int[] telfs = { rs.getInt("telf1"), rs.getInt("telf2") };
+
+				per.setDni(dni);
+				per.setNombre(rs.getString("nombre"));
+				per.setApellido(rs.getString("apellido"));
+				per.setTelefonos(telfs);
+				per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+				per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
+		}
+		return per;
+	}
+
+	@Override
+	public void eliminarPersona(String dni) {
+		this.openConnection();
+
+		try {
+			stmnt = con.prepareStatement(DELETEper);
+
+			stmnt.setString(1, dni);
+
+			stmnt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e2) {
+					e.printStackTrace();
+				}
+			}
+		} finally {
+			this.closeConnection();
+		}
+	}
+
+	@Override
+	public boolean comprobarDNI(String dni) {
+		ResultSet rs = null;
+		boolean esta = false;
+		
+		this.openConnection();
+		
+		try {
+			stmnt = con.prepareCall(CALLcomprobarDNI);
+			stmnt.setString(1, dni);
+			
+			rs = stmnt.executeQuery();
+			
+			if (rs.next()) {
+				esta = rs.getBoolean("esta");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return esta;
+	}
+
+	@Override
+	public void agregarConocido(Conocido cono) {
+		this.openConnection();
+
+		try {
+			stmnt = con.prepareStatement(INSERTconoce);
+
+			stmnt.setString(1, cono.getDni1());
+			stmnt.setString(2, cono.getDni2());
+			stmnt.setString(3, cono.getRelacion());
+
+			stmnt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e2) {
+					e.printStackTrace();
+				}
+			}
 		} finally {
 			this.closeConnection();
 		}
 	}
 
 }
-

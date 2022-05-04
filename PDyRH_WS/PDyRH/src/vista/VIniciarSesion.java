@@ -25,6 +25,15 @@ import javax.swing.JLabel;
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Image;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
@@ -42,25 +51,21 @@ public class VIniciarSesion extends JFrame implements ActionListener {
 	private JPasswordField passwordField;
 	private static Point point = new Point();
 	private Button buttonIS;
+	private JTextField textIdentificador;
+	private JButton btnSalir;
+	private JButton btnAceptar;
+	private JPasswordField contrasena;
+
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFrame frame = new VIniciarSesion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
+	 * @param vBusRapida 
+	 * @param vPrincipal 
 	 */
 	public VIniciarSesion() {
 		setBackground(Color.WHITE);
@@ -207,6 +212,5 @@ public class VIniciarSesion extends JFrame implements ActionListener {
 		if (e.getSource().equals(buttonIS)) {
 			
 		}
-		
 	}
 }

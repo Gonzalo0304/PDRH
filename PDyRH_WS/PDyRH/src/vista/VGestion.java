@@ -245,6 +245,7 @@ public class VGestion extends JDialog {
 		contentPanel.add(ButtonVolverVGestion);
 	}
 	
+
 	private void volver() {
 		// TODO Auto-generated method stub
 		this.dispose();

@@ -9,30 +9,29 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-import controlador.ContDatosBusqCaso;
+import controlador.interfaces.ContDatosBusqCaso;
 import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
 
 public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
-	// <--- Sentencias -->
-	final String SELECTimp = "SELECT dni, implicacion FROM participa WHERE dni = ?";
-	final String SELECTrh = "SELECT codResto FROM restohumano WHERE codCaso = ?";
+	// <--- Sentencias --->
+	final String SELECTparticipantes = "SELECT dni,implicacion FROM participa WHERE codCaso = ?";
+	final String SELECTrestos = "SELECT * FROM restohumano WHERE codCaso = ?";
+	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
 	private Connection con;
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
-	String url = bundle.getString("URL");
-	String user = bundle.getString("USER");
-	String pass = bundle.getString("PASS");
+	private String url = bundle.getString("URL");
+	private String user = bundle.getString("USER");
+	private String pass = bundle.getString("PASS");
 
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
-			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -42,7 +41,6 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -50,87 +48,93 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
 	@Override
-	public Map<String, Participante> participantes(String codCaso) {
-		// TODO Auto-generated method stub
+	public Map<String, Participante> listarParticipantes(String codCaso) {
 		ResultSet rs = null;
-		Participante part;
-		Map<String, Participante> participantes = new TreeMap<>();
+		Participante par = null;
+		Map<String, Participante> participantes =  new TreeMap<>();
 		
 		this.openConnection();
 		
 		try {
-			stmnt = con.prepareStatement(SELECTimp);
+			stmnt = con.prepareStatement(SELECTparticipantes);
+			stmnt.setString(1, codCaso);
+			
 			rs = stmnt.executeQuery();
 			
-			while(rs.next()) {
-				part = new Participante();
-				part.setDni(rs.getString("dni"));
-				part.setImplicacion(rs.getString("implicacion"));
-				participantes.put(part.getDni(), part);
+			while (rs.next()) {
+				par = new Participante();
+				
+				par.setCodCaso(codCaso);
+				par.setDni(rs.getString("dni"));
+				par.setImplicacion(rs.getString("implicacion"));
+				
+				participantes.put(par.getDni(), par);
 			}
-			
 		} catch (SQLException e) {
-			// TODO: handle exception
-			System.out.println("Error de SQL");
 			e.printStackTrace();
-		}
-		
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			this.closeConnection();
 		}
-		this.closeConnection();
-		
 		return participantes;
 	}
 
 	@Override
-	public Map<String, RestoHumano> restos(String codCaso) {
-		// TODO Auto-generated method stub
+	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
 		ResultSet rs = null;
-		RestoHumano restH;
-		Map<String, RestoHumano> restos = new TreeMap<>();
+		RestoHumano resto = null;
+		Map<String, RestoHumano> restos = new TreeMap<>();;
 		
 		this.openConnection();
 		
 		try {
-			stmnt = con.prepareStatement(SELECTrh);
+			stmnt = con.prepareStatement(SELECTrestos);
+			stmnt.setString(1, codCaso);
+			
 			rs = stmnt.executeQuery();
 			
-			while(rs.next()) {
-				restH = new RestoHumano();
-				restH.setCodResto(rs.getString("codResto"));
-				restos.put(restH.getCodResto(), restH);
+			while (rs.next()) {
+				resto = new RestoHumano();
+				
+				resto.setCodResto(rs.getString("codResto"));
+				resto.setCausa(rs.getString("causa"));
+				resto.setUbicacion(rs.getString("ubicacion"));
+				resto.setGenero(rs.getString("genero"));
+				resto.setTipoPelo(rs.getString("tipoPelo"));
+				resto.setColorPelo(rs.getString("colorPelo"));
+				resto.setColorOjos(rs.getString("colorOjos"));
+				resto.setAltura(rs.getInt("altura"));
+				resto.setEspecificaciones(rs.getString("especificaciones"));
+				resto.setCodCaso(codCaso);
+				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				
+				restos.put(resto.getCodResto(),resto);
 			}
-			
 		} catch (SQLException e) {
-			System.out.println("Error de SQL");
 			e.printStackTrace();
-		}
-		
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			this.closeConnection();
 		}
-		
-		this.closeConnection();
-		
-		return null;
+		return restos;
 	}
 
 }

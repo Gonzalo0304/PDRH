@@ -12,4 +12,3 @@ public interface ContDatosGestCaso {
 	public Map<String,Persona> listarParticipantes(String codCaso);
 	public Map<String, Persona> listarPersonas();
 }
-

@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controlador.ContDatosBusq;
+import controlador.interfaces.ContDatosBusq;
 import modelo.clases.Persona;
 
 import javax.swing.JLabel;
@@ -133,8 +133,7 @@ public class VListarPersonas extends JDialog {
 		    persona1.addMouseListener(new MouseAdapter() {
 		    	@Override
 		    	public void mouseClicked(MouseEvent e) {
-		    		VBusPer ventPer = new VBusPer(vMain, true, personas.get(per.getDni()), datos);
-					ventPer.setVisible(true);
+
 		    	}
 		    });
 			persona1.setFont(new Font("Tahoma", Font.PLAIN, 13));

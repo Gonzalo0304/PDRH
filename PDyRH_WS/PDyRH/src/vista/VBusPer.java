@@ -11,8 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.CardLayout;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import controlador.*;
+import controlador.interfaces.ContDatosBusq;
+import controlador.interfaces.ContDatosBusqPer;
 import modelo.clases.Agente;
 import modelo.clases.Conocido;
 import modelo.clases.Criminal;
@@ -616,31 +623,35 @@ public class VBusPer extends JDialog {
 				textTipoP.setText(((Desaparecida) persona).getTipoPelo());
 				textUltimaUbi.setText(((Desaparecida) persona).getUltimaUbi());
 			}
-		}
 
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Conocidos", null, panel, null);
 		panel.setLayout(null);
-
+				
 		lblNomAp1 = new JLabel("Nombre y apellidos");
 		lblNomAp1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNomAp1.setBounds(22, 25, 135, 19);
+		lblNomAp1.setBounds(22, 207, 135, 19);
 		panel.add(lblNomAp1);
-
-		JLabel lblNewLabel_4 = new JLabel("DNI:");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_4.setBounds(82, 55, 35, 14);
-		panel.add(lblNewLabel_4);
-
+				
+		JLabel lblNewLabel_4_1_1 = new JLabel("DNI:");
+		lblNewLabel_4_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_4_1_1.setBounds(82, 237, 35, 14);
+		panel.add(lblNewLabel_4_1_1);
+				
+		JLabel lblNewLabel_5_1_1 = new JLabel("Relacion:");
+		lblNewLabel_5_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_5_1_1.setBounds(54, 262, 63, 14);
+		panel.add(lblNewLabel_5_1_1);
+		
 		textDni1 = new JTextField();
 		textDni1.setBounds(116, 53, 147, 20);
 		panel.add(textDni1);
 		textDni1.setColumns(10);
 
-		JLabel lblNewLabel_5 = new JLabel("Relacion:");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5.setBounds(54, 84, 63, 14);
-		panel.add(lblNewLabel_5);
+		JLabel lblNewLabl_5 = new JLabel("Relacion:");
+		lblNewLabl_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabl_5.setBounds(54, 84, 63, 14);
+		panel.add(lblNewLabl_5);
 
 		textRelacion1 = new JTextField();
 		textRelacion1.setBounds(116, 80, 147, 20);
@@ -677,15 +688,15 @@ public class VBusPer extends JDialog {
 		lblNomAp3.setBounds(22, 207, 135, 19);
 		panel.add(lblNomAp3);
 
-		JLabel lblNewLabel_4_1_1 = new JLabel("DNI:");
-		lblNewLabel_4_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_4_1_1.setBounds(82, 237, 35, 14);
-		panel.add(lblNewLabel_4_1_1);
+		JLabel lblNewLabe = new JLabel("DNI:");
+		lblNewLabe.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabe.setBounds(82, 237, 35, 14);
+		panel.add(lblNewLabe);
 
-		JLabel lblNewLabel_5_1_1 = new JLabel("Relacion:");
-		lblNewLabel_5_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5_1_1.setBounds(54, 262, 63, 14);
-		panel.add(lblNewLabel_5_1_1);
+		JLabel lblNewLabel_ = new JLabel("Relacion:");
+		lblNewLabel_.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_.setBounds(54, 262, 63, 14);
+		panel.add(lblNewLabel_);
 
 		textDni3 = new JTextField();
 		textDni3.setColumns(10);
@@ -710,6 +721,10 @@ public class VBusPer extends JDialog {
 		panel.add(buttonVolver2);
 
 		nombresCompletos(persona, datos, datos2, conocido);
+				
+		}		
+		
+
 	}
 
 	private void mostrarDatosDesaparecido() {
@@ -748,25 +763,25 @@ public class VBusPer extends JDialog {
 	private void nombresCompletos(Persona persona, ContDatosBusq datos, ContDatosBusqPer datos2, Conocido conocido) {
 		// TODO Auto-generated method stub
 		persona = new Persona();
-		persona = datos.buscarPersona(persona.getDni());
+		persona = datos2.obtenerPersona(persona.getDni());
 		conocidos = new TreeMap<>();
-		conocidos = datos2.conocidos(persona.getDni());
+		conocidos = datos2.listarConocidos(persona.getDni());
 		
 		for (Conocido cono : conocidos.values()) {
-			if (cono.getDni().equalsIgnoreCase(persona.getDni())) {
+			if (cono.getDni1().equalsIgnoreCase(persona.getDni())) {
 				lblNomAp1.setText(persona.getNombre()+" y "+persona.getApellido());
-				if (lblNomAp1.getText().equalsIgnoreCase(persona.getNombre()) && cono.getDni().equalsIgnoreCase(persona.getDni())) {
-					textDni1.setText(cono.getDni());
+				if (lblNomAp1.getText().equalsIgnoreCase(persona.getNombre())) {
+					textDni1.setText(cono.getDni1());
 					textRelacion1.setText(cono.getRelacion());
 				}
 				lblNomAp2.setText(persona.getNombre()+" y "+persona.getApellido());
-				if (lblNomAp2.getText().equalsIgnoreCase(persona.getNombre()) && cono.getDni().equalsIgnoreCase(persona.getDni())) {
-					textDni2.setText(cono.getDni());
+				if (lblNomAp2.getText().equalsIgnoreCase(persona.getNombre()) && cono.getDni2().equalsIgnoreCase(persona.getDni())) {
+					textDni2.setText(cono.getDni2());
 					textRelacion2.setText(cono.getRelacion());
 				}
 				lblNomAp3.setText(persona.getNombre()+" y "+persona.getApellido());
-				if (lblNomAp3.getText().equalsIgnoreCase(persona.getNombre()) && cono.getDni().equalsIgnoreCase(persona.getDni())) {
-					textDni3.setText(cono.getDni());
+				if (lblNomAp3.getText().equalsIgnoreCase(persona.getNombre())) {
+					textDni3.setText(cono.getDni2());
 					textRelacion3.setText(cono.getRelacion());
 				}
 			}else {
