@@ -27,12 +27,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.w3c.dom.events.MouseEvent;
 
-import controlador.ContDatosInsertPer;
+import controlador.interfaces.ContDatosInsertPer;
 import modelo.ContBDImpleInsertPer;
 import modelo.clases.Agente;
 import modelo.clases.Criminal;
@@ -114,13 +117,27 @@ public class VInsPersona extends JDialog implements ActionListener {
 
 	/**
 	 * Create the dialog.
+
+	 * @param b 
+	 * @param vInserciones 
+=======
 	 * 
 	 * @param b
 	 * @param vInserciones
+>>>>>>> 067cf60c298ca393e3723ac8c37008564151eb24
 	 */
+
 	
 	/*public VInsPersona() {
 		datos1 =  new ContBDImpleInsertPer();
+=======
+	public VInsPersona(VInserciones inserciones, boolean modal) {
+		super(inserciones);
+		this.setModal(modal);
+		
+		setBounds(100, 100, 479, 514);
+		datos1 = new ContBDImpleInsertPer();
+>>>>>>> 7fa06258be280079938f50fa6d317fed75d45e19
 
 		setBounds(350, 150, 710, 518);
 		getContentPane().setLayout(new BorderLayout());
@@ -512,6 +529,47 @@ public class VInsPersona extends JDialog implements ActionListener {
 		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
+		
+		textFallecimiento = new JTextField();
+		textFallecimiento.setBounds(132, 317, 192, 20);
+		contentPanel.add(textFallecimiento);
+		textFallecimiento.setColumns(10);
+		
+		JButton btnAnadir = new JButton("A\u00F1adir");
+		btnAnadir.setEnabled(false);
+		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnAnadir.setBounds(364, 388, 89, 30);
+		contentPanel.add(btnAnadir);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volver();
+			}
+		});
+		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnVolver.setBounds(364, 434, 89, 30);
+		contentPanel.add(btnVolver);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Agente");
+		rdbtnNewRadioButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rdbtnNewRadioButton.setBounds(30, 44, 72, 23);
+		contentPanel.add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Desaparecida");
+		rdbtnNewRadioButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rdbtnNewRadioButton_1.setBounds(104, 44, 109, 23);
+		contentPanel.add(rdbtnNewRadioButton_1);
+		
+		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Criminal");
+		rdbtnNewRadioButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rdbtnNewRadioButton_2.setBounds(215, 44, 109, 23);
+		contentPanel.add(rdbtnNewRadioButton_2);
+	}
+	
+	private void volver() {
+		// TODO Auto-generated method stub
+		this.dispose();
 
 	}
 	*/
@@ -1086,11 +1144,13 @@ public class VInsPersona extends JDialog implements ActionListener {
 
 	}
 
+
 	private void volver() {
 		VInserciones insercion = new VInserciones(vInicio, true);
 		this.dispose();
 		insercion.setVisible(true);
 	}
+
 
 	private LocalDate stringDate(String string) {
 		LocalDate nacimiento = LocalDate.parse(string);

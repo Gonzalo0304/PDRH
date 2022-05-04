@@ -27,12 +27,18 @@ import java.awt.event.MouseEvent;
 public class VInserciones extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+
 	private VIniciarSesion vInicio = null;
+
+	private JButton btnPersona;
+	private JButton btnRestoHumano;
+	private JButton btnVolver;
+
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			VInserciones dialog = new VInserciones();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -41,7 +47,7 @@ public class VInserciones extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 
 	/**
@@ -49,7 +55,7 @@ public class VInserciones extends JDialog {
 	 * @param b 
 	 * @param vPrincipal 
 	 */
-	public VInserciones() {
+	/*public VInserciones() {
 		setTitle("Insertar");
 		setBounds(100, 100, 607, 399);
 		getContentPane().setLayout(new BorderLayout());
@@ -213,7 +219,7 @@ public class VInserciones extends JDialog {
 		
 	
 	}
-	
+	*/
 	public VInserciones(VIniciarSesion vInicio, boolean modal) {
 		super(vInicio);
 		this.setModal(modal);
@@ -226,8 +232,110 @@ public class VInserciones extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
+		{
+			btnPersona = new JButton("PERSONA");
+			btnPersona.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					insertarPersona();
+				}
+			});
+			btnPersona.setBounds(48, 69, 123, 49);
+			btnPersona.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			contentPanel.add(btnPersona);
+		}
+		{
+			btnRestoHumano = new JButton("RESTO HUMANO");
+			btnRestoHumano.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					insertarRestoHumano();
+				}
+			});
+			btnRestoHumano.setBounds(231, 69, 135, 49);
+			btnRestoHumano.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			contentPanel.add(btnRestoHumano);
+		}
+		{
+			JButton btnCaso = new JButton("CASO");
+			btnCaso.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					insertarCaso();
+				}
+			});
+			btnCaso.setBounds(130, 157, 135, 49);
+			btnCaso.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			contentPanel.add(btnCaso);
+		}
+		{
+			JButton btnVolver = new JButton("Volver");
+			btnVolver.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					volver();
+				}
+			});
+			btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			btnVolver.setBounds(335, 227, 89, 23);
+			contentPanel.add(btnVolver);
+		}
 		setUndecorated(true);
+
+			JMenuBar menuBar = new JMenuBar();
+			menuBar.setBounds(0, 0, 434, 37);
+			menuBar.setBorderPainted(false);
+			menuBar.setBackground(new Color(0, 51, 153));
+			menuBar.setBackground(UIManager.getColor("FormattedTextField.selectionBackground"));
+			contentPanel.add(menuBar);
+			
+			JMenu menuInsertar = new JMenu("Insertar");
+			menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+			menuInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+			menuInsertar.setBackground(new Color(0, 0, 255));
+			menuInsertar.setForeground(Color.BLACK);
+			menuBar.add(menuInsertar);
+			
+			JMenu menuGestionar = new JMenu("Gestionar");
+			menuGestionar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			menuGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+			menuGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+			menuGestionar.setBackground(new Color(0, 0, 255));
+			menuGestionar.setForeground(Color.BLACK);
+			menuBar.add(menuGestionar);
+			
+			JMenu menuComparar = new JMenu("Comparar");
+			menuComparar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			menuComparar.setHorizontalAlignment(SwingConstants.LEFT);
+			menuComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+			menuComparar.setBackground(new Color(0, 0, 255));
+			menuComparar.setForeground(Color.BLACK);
+			menuBar.add(menuComparar);
+			
+			JMenu menuBusqueda = new JMenu("Busqueda");
+			menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
+			menuBusqueda.setFont(new Font("Dialog", Font.PLAIN, 14));
+			menuBusqueda.setBackground(new Color(0, 0, 255));
+			menuBusqueda.setForeground(Color.BLACK);
+			menuBar.add(menuBusqueda);
+			
+			JMenu menUsuario = new JMenu("Usuario");
+			menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+			menUsuario.setFont(new Font("Dialog", Font.PLAIN, 14));
+			menUsuario.setBackground(new Color(0, 0, 255));
+			menUsuario.setForeground(Color.BLACK);
+			menuBar.add(menUsuario);
+			
+			JMenuItem mCerrar = new JMenuItem("Cerrar Sesion");
+			mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
+			mCerrar.setBackground(new Color(32, 178, 170));
+			mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			mCerrar.setForeground(Color.BLACK);
+			menUsuario.add(mCerrar);
 		
+
 			JSeparator separator = new JSeparator();
 			separator.setBounds(93, 227, 27, -47);
 			separator.setOrientation(SwingConstants.VERTICAL);
@@ -282,13 +390,13 @@ public class VInserciones extends JDialog {
 				lblNewLabel_9.setBounds(561, 0, 46, 37);
 				contentPanel.add(lblNewLabel_9);
 				
-					JMenuBar menuBar = new JMenuBar();
+					menuBar = new JMenuBar();
 					menuBar.setBounds(0, 0, 607, 37);
 					menuBar.setBorderPainted(false);
 					menuBar.setBackground(new Color(0, 51, 102));
 					contentPanel.add(menuBar);
 					
-					JMenu menuInsertar = new JMenu("Insertar");
+					menuInsertar = new JMenu("Insertar");
 					menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
 					menuInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
 					menuInsertar.setBackground(new Color(0, 0, 255));
@@ -319,7 +427,7 @@ public class VInserciones extends JDialog {
 					});
 					menuInsertar.add(mnitInsCaso);
 					
-					JMenu menuGestionar = new JMenu("Gestionar");
+					menuGestionar = new JMenu("Gestionar");
 					menuGestionar.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
@@ -332,7 +440,7 @@ public class VInserciones extends JDialog {
 					menuGestionar.setForeground(new Color(255, 255, 255));
 					menuBar.add(menuGestionar);
 					
-					JMenu menuComparar = new JMenu("Comparar");
+					menuComparar = new JMenu("Comparar");
 					menuComparar.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
@@ -346,7 +454,7 @@ public class VInserciones extends JDialog {
 					menuComparar.setForeground(new Color(255, 255, 255));
 					menuBar.add(menuComparar);
 					
-					JMenu menuBusqueda = new JMenu("Busqueda");
+					menuBusqueda = new JMenu("Busqueda");
 					menuBusqueda.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
@@ -359,14 +467,14 @@ public class VInserciones extends JDialog {
 					menuBusqueda.setForeground(new Color(255, 255, 255));
 					menuBar.add(menuBusqueda);
 					
-					JMenu menUsuario = new JMenu("Usuario");
+					menUsuario = new JMenu("Usuario");
 					menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 					menUsuario.setFont(new Font("Dialog", Font.PLAIN, 14));
 					menUsuario.setBackground(new Color(0, 0, 255));
 					menUsuario.setForeground(new Color(255, 255, 255));
 					menuBar.add(menUsuario);
 					
-					JMenuItem mCerrar = new JMenuItem("Cerrar Sesion");
+					mCerrar = new JMenuItem("Cerrar Sesion");
 					mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
 					mCerrar.setBackground(new Color(32, 178, 170));
 					mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));

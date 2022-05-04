@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.CardLayout;
 import javax.swing.JTabbedPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VGesPersona extends JDialog {
 	private JTextField textField;
@@ -23,6 +25,8 @@ public class VGesPersona extends JDialog {
 	private JTextField textField_7;
 	private JTextField textDniConoVGesPersona;
 	private JTextField textRolConoVGesPersona;
+	private JButton ButtonVolverConoVGesPersona;
+	private JButton ButtonVolver;
 
 	/**
 	 * Launch the application.
@@ -41,6 +45,7 @@ public class VGesPersona extends JDialog {
 	 * Create the dialog.
 	 */
 	public VGesPersona() {
+		setTitle("Gestionar Persona");
 		setBounds(100, 100, 450, 354);
 		getContentPane().setLayout(new CardLayout(0, 0));
 		{
@@ -52,9 +57,14 @@ public class VGesPersona extends JDialog {
 				contentPanel.setLayout(null);
 				contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 				{
-					JButton ButtonVolverVGesBanda = new JButton("Volver");
-					ButtonVolverVGesBanda.setBounds(335, 227, 89, 23);
-					contentPanel.add(ButtonVolverVGesBanda);
+					ButtonVolver = new JButton("Volver");
+					ButtonVolver.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							volver1();
+						}
+					});
+					ButtonVolver.setBounds(335, 227, 89, 23);
+					contentPanel.add(ButtonVolver);
 				}
 				{
 					JButton ButtonBajaVGesBanda = new JButton("Dar baja");
@@ -161,7 +171,12 @@ public class VGesPersona extends JDialog {
 				contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 				tabbedPane.addTab("Conocidos", null, contentPanel, null);
 				{
-					JButton ButtonVolverConoVGesPersona = new JButton("Volver");
+					ButtonVolverConoVGesPersona = new JButton("Volver");
+					ButtonVolverConoVGesPersona.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							volver2();
+						}
+					});
 					ButtonVolverConoVGesPersona.setBounds(330, 221, 89, 23);
 					contentPanel.add(ButtonVolverConoVGesPersona);
 				}
@@ -195,6 +210,16 @@ public class VGesPersona extends JDialog {
 				}
 			}
 		}
+	}
+	
+	private void volver1() {
+		// TODO Auto-generated method stub
+		this.dispose();
+	}
+	
+	private void volver2() {
+		// TODO Auto-generated method stub
+		this.dispose();
 	}
 
 }
