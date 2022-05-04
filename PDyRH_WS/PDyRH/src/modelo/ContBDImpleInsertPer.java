@@ -6,11 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 
-import controlador.ContDatosInsertPer;
+import controlador.interfaces.ContDatosInsertPer;
 import modelo.clases.Agente;
 import modelo.clases.Criminal;
 import modelo.clases.Desaparecida;
@@ -23,6 +21,7 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	final String INSERTage = "INSERT INTO agente(dni,rango,inicioServ,finServ) VALUES(?,?,?,?)";
 	final String INSERTcrim = "INSERT INTO criminal(dni,prisionero) VALUES(?,?)";
 	final String INSERTdes = "INSERT INTO desaparecido(dni,fechaDes,ultimaUbi,genero,tipoPelo,colorPelo,colorOjos,altura,especificaciones) VALUES(?,?,?,?,?,?,?,?,?)";
+	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -30,16 +29,15 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
-	String url = bundle.getString("URL");
-	String user = bundle.getString("USER");
-	String pass = bundle.getString("PASS");
+	private String url = bundle.getString("URL");
+	private String user = bundle.getString("USER");
+	private String pass = bundle.getString("PASS");
 
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -49,7 +47,6 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -57,7 +54,6 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -88,7 +84,7 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 				stmnt = con.prepareStatement(INSERTdes);
 
 				stmnt.setString(1, per.getDni());
-				stmnt.setDate(2, Date.valueOf(((Desaparecida) per).getFechaDes().toLocalDate()));
+				stmnt.setDate(2, Date.valueOf(((Desaparecida) per).getFechaDes()));
 				stmnt.setString(3, ((Desaparecida) per).getUltimaUbi());
 				stmnt.setString(4, ((Desaparecida) per).getGenero());
 				stmnt.setString(5, ((Desaparecida) per).getTipoPelo());
@@ -111,7 +107,6 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 			stmnt.setInt(8, per.getTelefonos()[1]);
 
 			stmnt.executeUpdate();
-			
 			con.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -128,44 +123,33 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	}
 
 	@Override
-	public Map<String, Persona> listarPersonas() {
+	public boolean comprobarDNI(String dni) {
 		ResultSet rs = null;
-		Persona per;
-		Map<String, Persona> personas = new TreeMap<>();
-
+		boolean esta = false;
+		
 		this.openConnection();
-
+		
 		try {
-			stmnt = con.prepareStatement(SELECTpers);
-
+			stmnt = con.prepareCall(CALLcomprobarDNI);
+			
+			stmnt.setString(1, dni);
+			
 			rs = stmnt.executeQuery();
-
-			while (rs.next()) {
-				int[] telfs = { rs.getInt("telf1"), rs.getInt("telf2") };
-				per = new Persona();
-
-				per.setDni(rs.getString("dni"));
-				per.setNombre(rs.getString("nombre"));
-				per.setApellido(rs.getString("apellido"));
-				per.setTelefonos(telfs);
-				per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-				per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
+			
+			if (rs.next()) {
+				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		if (rs != null) {
+		} if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		this.closeConnection();
-		return personas;
+		
+		return esta;
 	}
-
 }

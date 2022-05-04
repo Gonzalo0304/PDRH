@@ -28,16 +28,6 @@ public class Persona {
 		this.fechaNac = fechaNac;
 		this.fechaFal = fechaFal;
 	}
-
-	public Persona(String dni, String nombre, String apellido, int[] telefonos, String localidad, LocalDate fechaNac) {
-		super();
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefonos = telefonos;
-		this.localidad = localidad;
-		this.fechaNac = fechaNac;
-	}
 	
 	// <--- Getters y Setters --->
 	public String getDni() {

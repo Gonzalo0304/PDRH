@@ -16,6 +16,7 @@ public class VGestion extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textVGestion;
+	private VIniciarSesion vInicio = null;
 
 	/**
 	 * Launch the application.
@@ -79,7 +80,9 @@ public class VGestion extends JDialog {
 		contentPanel.add(ButtonVolverVGestion);
 	}
 	
-	public VGestion(VPrincipal vMain, boolean modal) {
+	public VGestion(VIniciarSesion vInicio, boolean modal) {
+		super(vInicio);
+		this.setModal(modal);
 		setBounds(100, 100, 499, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

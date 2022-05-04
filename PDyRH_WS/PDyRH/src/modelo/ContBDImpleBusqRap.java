@@ -1,20 +1,20 @@
 package modelo;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
-import controlador.interfaces.ContDatosInsertCaso;
-import modelo.clases.Caso;
+import controlador.interfaces.ContDatosBusqRap;
+import modelo.clases.Persona;
 
-public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
+public class ContBDImpleBusqRap implements ContDatosBusqRap {
 	// <--- Sentencias --->
-	final String INSERTcaso = "INSERT INTO caso(codCaso,estado,nombre,fechaIni,fechaFin) VALUES(?,?,?,?,?)";
-	final String CALLcompCodCaso = "{CALL comprobarCodigoCaso(?)}";
+	final String SELECTpers = "SELECT * FROM persona WHERE UPPER(nombre) LIKE UPPER('%?%')";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -50,43 +50,27 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 			}
 		}
 	}
-
+	
 	@Override
-	public void altaCaso(Caso caso) {
-		this.openConnection();
-		
-		try {
-			stmnt = con.prepareStatement(INSERTcaso);
-			
-			stmnt.setString(1, caso.getCodCaso());
-			stmnt.setString(2, caso.getEstado());
-			stmnt.setString(3, caso.getNombre());
-			stmnt.setDate(4, Date.valueOf(caso.getFechaIni()));
-			stmnt.setDate(5, Date.valueOf(caso.getFechaFin()));
-			
-			stmnt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			this.closeConnection();
-		}
-	}
-
-	@Override
-	public boolean comprobarCodCaso(String codCaso) {
+	public Map<String, Persona> obtenerPersonas(String nombre) {
 		ResultSet rs = null;
-		boolean esta = false;
-		
+		Persona per = null;
+		Map<String, Persona> personas = new TreeMap<>();
+
 		this.openConnection();
-		
+
 		try {
-			stmnt = con.prepareCall(CALLcompCodCaso);
-			stmnt.setString(1, codCaso);
+			stmnt = con.prepareStatement(SELECTpers);
+			stmnt.setString(1, nombre);
 			
 			rs = stmnt.executeQuery();
-			
-			if (rs.next()) {
-				esta = rs.getBoolean("esta");
+
+			while (rs.next()) {
+				per = new Persona();
+
+				per.setDni(rs.getString("dni"));
+				per.setNombre(rs.getString("nombre"));
+				personas.put(per.getDni(), per);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,8 +84,7 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 			}
 			this.closeConnection();
 		}
-	
-		return esta;
+		return personas;
 	}
 
 }

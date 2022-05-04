@@ -20,14 +20,6 @@ public class Agente extends Persona {
 		this.inicioServ = inicioServ;
 		this.finServ = finServ;
 	}
-
-	public Agente(String dni, String nombre, String apellido, int[] telefonos, String localidad, LocalDate fechaNac,
-			String rango, LocalDate inicioServ, LocalDate finServ) {
-		super(dni, nombre, apellido, telefonos, localidad, fechaNac);
-		this.rango = rango;
-		this.inicioServ = inicioServ;
-		this.finServ = finServ;
-	}
 	
 	// <--- Getters y Setters --->
 	public String getRango() {

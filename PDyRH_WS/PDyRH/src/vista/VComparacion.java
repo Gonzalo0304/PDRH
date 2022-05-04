@@ -34,7 +34,7 @@ import javax.swing.ScrollPaneConstants;
 
 public class VComparacion extends JDialog {
 	private ButtonGroup rh = new ButtonGroup();
-	
+	private VIniciarSesion vInicio = null;
 	
 	/**
 	 * Launch the application.
@@ -117,7 +117,7 @@ public class VComparacion extends JDialog {
 
 	}
 	
-	public VComparacion(VPrincipal vMain, boolean modal) {
+	public VComparacion(VIniciarSesion vInicio, boolean modal) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		

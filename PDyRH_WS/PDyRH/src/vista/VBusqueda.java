@@ -29,6 +29,7 @@ public class VBusqueda extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textVBusqueda;
+	private VIniciarSesion vInicio = null;
 
 	/**
 	 * Launch the application.
@@ -46,8 +47,8 @@ public class VBusqueda extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public VBusqueda(VPrincipal vMain, boolean modal) {
-		super(vMain);
+	public VBusqueda(VIniciarSesion vInicio, boolean modal) {
+		super(vInicio);
 		this.setModal(modal);
 		setTitle("Introducir Identificador");
 		setBounds(100, 100, 465, 327);

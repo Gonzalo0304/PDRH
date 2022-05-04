@@ -1,22 +1,22 @@
 package modelo;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import controlador.interfaces.ContDatosRH;
+import controlador.interfaces.ContDatosCompEsp;
+import modelo.clases.Desaparecida;
+import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
-public class ContBDImpleRH implements ContDatosRH {
-	// <--- Sentencias --->	
-	final String INSERTrh = "INSERT INTO restohumano(codResto,causa,ubicacion,genero,tipoPelo,colorPelo,colorOjos,altura,especificaciones,fechaMuerte) VALUES(?,?,?,?,?,?,?,?,?,?)";
-	final String DELETErh = "DELETE FROM restohumano WHERE codResto = ?";
-	final String UPDATErh = "UPDATE restohumano SET causa = ?,ubicacion = ?,genero = ?,tipoPelo = ?,colorPelo = ?,colorOjos = ?,altura = ?,especificaciones = ?,fechaMuerte = ? WHERE codResto = ?";
+public class ContBDImpleCompEsp implements ContDatosCompEsp {
+	// <--- Sentencias --->
+	final String INSERTident = "INSERT INTO identifica(dni,codResto) VALUES(?,?)";
 	final String SELECTrh = "SELECT * FROM restohumano WHERE codResto = ?";
+	final String SELECTdes = "SELECT * FROM desaparecida WHERE dni = ?";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -53,73 +53,19 @@ public class ContBDImpleRH implements ContDatosRH {
 			}
 		}
 	}
-
-	@Override
-	public void altaRH(RestoHumano rh) {
-		this.openConnection();
-		
-		try {
-			stmnt = con.prepareStatement(INSERTrh);
-			
-			stmnt.setString(1, rh.getCodResto());
-			stmnt.setString(2, rh.getCausa());
-			stmnt.setString(3, rh.getUbicacion());
-			stmnt.setString(4, rh.getGenero());
-			stmnt.setString(5, rh.getTipoPelo());
-			stmnt.setString(6, rh.getColorPelo());
-			stmnt.setString(7, rh.getColorOjos());
-			stmnt.setInt(8, rh.getAltura());
-			stmnt.setString(9, rh.getEspecificaciones());
-			stmnt.setDate(10, Date.valueOf(rh.getFechaMuerte()));
-			
-			stmnt.executeUpdate();
-			con.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			this.closeConnection();
-		}
-		
-	}
-
-	@Override
-	public void modificarRH(RestoHumano rh) {
-		this.openConnection();
-		
-		try {
-			stmnt = con.prepareStatement(UPDATErh);
-			
-			stmnt.setString(1, rh.getCausa());
-			stmnt.setString(2, rh.getUbicacion());
-			stmnt.setString(3, rh.getGenero());
-			stmnt.setString(4, rh.getTipoPelo());
-			stmnt.setString(5, rh.getColorPelo());
-			stmnt.setString(6, rh.getColorOjos());
-			stmnt.setInt(7, rh.getAltura());
-			stmnt.setString(8, rh.getEspecificaciones());
-			stmnt.setDate(9, Date.valueOf(rh.getFechaMuerte()));
-			stmnt.setString(10, rh.getCodResto());
-			
-			stmnt.executeUpdate();
-			
-			con.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			this.closeConnection();
-		}
-	}
 	
 	@Override
-	public void eliminarRH(String codResto) {
+	public void agregarIdentificado(String codResto, String dni) {
 		this.openConnection();
 		
 		try {
-			stmnt = con.prepareStatement(DELETErh);
+			stmnt = con.prepareStatement(INSERTident);
 			
-			stmnt.setString(1, codResto);
+			stmnt.setString(1, dni);
+			stmnt.setString(2, codResto);
 			
 			stmnt.executeUpdate();
+			
 			con.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -140,12 +86,14 @@ public class ContBDImpleRH implements ContDatosRH {
 		ResultSet rs = null;
 		RestoHumano resto = null;
 		
+		this.openConnection();
+		
 		try {
 			stmnt = con.prepareStatement(SELECTrh);
-			
 			stmnt.setString(1, codResto);
 			
 			rs = stmnt.executeQuery();
+			
 			if (rs.next()) {
 				resto = new RestoHumano();
 				
@@ -173,6 +121,50 @@ public class ContBDImpleRH implements ContDatosRH {
 			}
 			this.closeConnection();
 		}
+		
 		return resto;
 	}
+
+	@Override
+	public Persona obtenerPersona(String dni) {
+		ResultSet rs = null;
+		Persona des = null;
+		
+		this.openConnection();
+		
+		try {
+			stmnt = con.prepareStatement(SELECTdes);
+			stmnt.setString(1, dni);
+			
+			rs = stmnt.executeQuery();
+			
+			if (rs.next()) {
+				des = new Desaparecida();
+				
+				des.setDni(dni);
+				((Desaparecida) des).setUltimaUbi(rs.getString("ultimaUbi"));
+				((Desaparecida) des).setGenero(rs.getString("genero"));
+				((Desaparecida) des).setTipoPelo(rs.getString("tipoPelo"));
+				((Desaparecida) des).setColorPelo(rs.getString("colorPelo"));
+				((Desaparecida) des).setColorOjos(rs.getString("colorOjos"));
+				((Desaparecida) des).setAltura(rs.getInt("altura"));
+				((Desaparecida) des).setEspecificaciones(rs.getString("especificaciones"));
+				((Desaparecida) des).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
+		}
+		
+		return des;
+	}
+
 }

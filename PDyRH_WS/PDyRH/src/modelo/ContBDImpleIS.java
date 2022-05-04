@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import controlador.ControladorDatosIS;
+import controlador.interfaces.ControladorDatosIS;
 
 public class ContBDImpleIS implements ControladorDatosIS {
 	// <--- Sentencias --->
-	final String SELECTusuario = "SELECT contra,rango FROM usuario WHERE usuario = ?";
+	final String SELECTusuario = "SELECT * FROM usuario WHERE usuario = ?";
 		
 	// <--- Conexión --->
 		private PreparedStatement stmnt;
@@ -19,17 +19,16 @@ public class ContBDImpleIS implements ControladorDatosIS {
 
 		ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
-		String url = bundle.getString("URL");
-		String user = bundle.getString("USER");
-		String pass = bundle.getString("PASS");
-
+		private String url = bundle.getString("URL");
+		private String user = bundle.getString("USER");
+		private String pass = bundle.getString("PASS");
+		
 		public void openConnection() {
 			try {
 				con = DriverManager.getConnection(url, user, pass);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			} 
 		}
 
 		public void closeConnection() {
@@ -37,7 +36,6 @@ public class ContBDImpleIS implements ControladorDatosIS {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -45,7 +43,6 @@ public class ContBDImpleIS implements ControladorDatosIS {
 				try {
 					stmnt.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -65,24 +62,24 @@ public class ContBDImpleIS implements ControladorDatosIS {
 			rs = stmnt.executeQuery();
 			
 			if (rs.next()) {
-				datos = new String[2];
+				datos = new String[3];
 				
-				datos[0] = rs.getString("contra");
-				datos[1] = rs.getString("rango");
+				datos[0] = usuario;
+				datos[1] = rs.getString("contra");
+				datos[2] = rs.getString("rango");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			this.closeConnection();
 		}
-		this.closeConnection();
 		return datos;
 	}
 
