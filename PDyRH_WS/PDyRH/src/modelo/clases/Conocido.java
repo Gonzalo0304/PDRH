@@ -10,12 +10,14 @@ public class Conocido {
 	public Conocido() {
 		super();
 	}
+
 	public Conocido(String dni1, String dni2, String relacion) {
 		super();
 		this.dni1 = dni1;
 		this.dni2 = dni2;
 		this.relacion = relacion;
 	}
+
 	
 	// <--- Getters y Setters --->
 	public String getDni1() {
@@ -24,9 +26,11 @@ public class Conocido {
 	public void setDni1(String dni1) {
 		this.dni1 = dni1;
 	}
+
 	public String getDni2() {
 		return dni2;
 	}
+
 	public void setDni2(String dni2) {
 		this.dni2 = dni2;
 	}

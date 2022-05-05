@@ -391,7 +391,7 @@ public class VInsRH extends JDialog {
 		textCodigo = new JTextField();
 		textCodigo.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				habilitarBoton();
 			}
 		});
@@ -402,7 +402,7 @@ public class VInsRH extends JDialog {
 		textCausa = new JTextField();
 		textCausa.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				habilitarBoton();
 			}
 		});

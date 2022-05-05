@@ -64,6 +64,19 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 		this.openConnection();
 		
 		try {
+			stmnt = con.prepareStatement(INSERTper);
+
+			stmnt.setString(1, per.getDni());
+			stmnt.setString(2, per.getNombre());
+			stmnt.setString(3, per.getApellido());
+			stmnt.setInt(4, per.getTelefonos()[0]);
+			stmnt.setString(5, per.getLocalidad());
+			stmnt.setDate(6, Date.valueOf(per.getFechaNac()));
+			stmnt.setDate(7, Date.valueOf(per.getFechaFal()));
+			stmnt.setInt(8, per.getTelefonos()[1]);
+
+			stmnt.executeUpdate();
+			
 			if (per instanceof Agente) {
 				stmnt = con.prepareStatement(INSERTage);
 
@@ -95,18 +108,6 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 				stmnt.executeUpdate();
 			}
 			// Comprobar si stmnt funciona o habria que utilizar stmnt2
-			stmnt = con.prepareStatement(INSERTper);
-
-			stmnt.setString(1, per.getDni());
-			stmnt.setString(2, per.getNombre());
-			stmnt.setString(3, per.getApellido());
-			stmnt.setInt(4, per.getTelefonos()[0]);
-			stmnt.setString(5, per.getLocalidad());
-			stmnt.setDate(6, Date.valueOf(per.getFechaNac()));
-			stmnt.setDate(7, Date.valueOf(per.getFechaFal()));
-			stmnt.setInt(8, per.getTelefonos()[1]);
-
-			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
