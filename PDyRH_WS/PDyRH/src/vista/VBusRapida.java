@@ -29,17 +29,21 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.TreeMap;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Button;
 
 public class VBusRapida extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textVBusquedaRapida;
-	private JButton btnVolver;
-	private JButton ButtonVBusquedaRapida;
-	
 	private Persona persona;
 	private Map<String, Persona> personas;
 	private ContDatosBusqRap datos2;
+	private Button buttonBusR;
 
 	/**
 	 * Launch the application.
@@ -60,44 +64,96 @@ public class VBusRapida extends JDialog {
 		super(vMain);
 		this.setModal(true);
 		setTitle("Busqueda Rapida");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 607, 399);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
+		setUndecorated(true);
+		
+		buttonBusR = new Button("Buscar");
+		buttonBusR.setEnabled(false);
+		buttonBusR.setForeground(new Color(255, 255, 255));
+		buttonBusR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				habilitarBoton();
+			}
+		});
+		buttonBusR.setBackground(new Color(122, 42, 42));
+		buttonBusR.setBounds(265, 232, 70, 22);
+		contentPanel.add(buttonBusR);
+		{
+			JLabel LabelVBusquedaRapida = new JLabel("Introduce el nombre:");
+			LabelVBusquedaRapida.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			LabelVBusquedaRapida.setBounds(110, 191, 128, 14);
+			contentPanel.add(LabelVBusquedaRapida);
+		}
+		{
+			textVBusquedaRapida = new JTextField();
+			textVBusquedaRapida.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					habilitarBoton();
+				}
+			});
+			textVBusquedaRapida.setBounds(248, 188, 201, 20);
+			contentPanel.add(textVBusquedaRapida);
+			textVBusquedaRapida.setColumns(10);
+		}
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\1dam\\Desktop\\Reto Final\\PGR\\Multimedia\\ertzAC.png"));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 35, 607, 364);
+		contentPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_9 = new JLabel("x");
+		lblNewLabel_9.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				volver();
+			}
+		});
+		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9.setForeground(Color.WHITE);
+		lblNewLabel_9.setBackground(new Color(0, 51, 153));
+		lblNewLabel_9.setBounds(561, 0, 46, 37);
+		contentPanel.add(lblNewLabel_9);
 		{
 			JMenuBar menuBar = new JMenuBar();
-			menuBar.setBounds(0, 0, 463, 37);
+			menuBar.setBounds(0, 0, 607, 37);
 			menuBar.setBorderPainted(false);
-			menuBar.setBackground(UIManager.getColor("FormattedTextField.selectionBackground"));
+			menuBar.setBackground(new Color(0, 51, 102));
 			contentPanel.add(menuBar);
 			
 			JMenu menuInsertar = new JMenu("Insertar");
 			menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
 			menuInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
 			menuInsertar.setBackground(new Color(0, 0, 255));
-			menuInsertar.setForeground(Color.BLACK);
+			menuInsertar.setForeground(new Color(255, 255, 255));
 			menuBar.add(menuInsertar);
 			
 			JMenu menuGestionar = new JMenu("Gestionar");
 			menuGestionar.setHorizontalAlignment(SwingConstants.LEFT);
 			menuGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
 			menuGestionar.setBackground(new Color(0, 0, 255));
-			menuGestionar.setForeground(Color.BLACK);
+			menuGestionar.setForeground(new Color(255, 255, 255));
 			menuBar.add(menuGestionar);
 			
 			JMenu menuComparar = new JMenu("Comparar");
 			menuComparar.setHorizontalAlignment(SwingConstants.LEFT);
 			menuComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
 			menuComparar.setBackground(new Color(0, 0, 255));
-			menuComparar.setForeground(Color.BLACK);
+			menuComparar.setForeground(new Color(255, 255, 255));
 			menuBar.add(menuComparar);
 			
 			JMenu menuBusqueda = new JMenu("Busqueda");
 			menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
 			menuBusqueda.setFont(new Font("Dialog", Font.PLAIN, 14));
 			menuBusqueda.setBackground(new Color(0, 0, 255));
-			menuBusqueda.setForeground(Color.BLACK);
+			menuBusqueda.setForeground(new Color(255, 255, 255));
 			menuBar.add(menuBusqueda);
 			
 			JMenuItem mPersona = new JMenuItem("Persona");
@@ -140,7 +196,7 @@ public class VBusRapida extends JDialog {
 			menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 			menUsuario.setFont(new Font("Dialog", Font.PLAIN, 14));
 			menUsuario.setBackground(new Color(0, 0, 255));
-			menUsuario.setForeground(Color.BLACK);
+			menUsuario.setForeground(new Color(255, 255, 255));
 			
 			JMenuItem mCerrar = new JMenuItem("Cerrar Sesion");
 			mCerrar.addActionListener(new ActionListener() {
@@ -154,67 +210,26 @@ public class VBusRapida extends JDialog {
 			mCerrar.setForeground(Color.BLACK);
 			menUsuario.add(mCerrar);
 		}
-		{
-			JLabel LabelVBusquedaRapida = new JLabel("Introduce el nombre:");
-			LabelVBusquedaRapida.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			LabelVBusquedaRapida.setBounds(29, 109, 128, 14);
-			contentPanel.add(LabelVBusquedaRapida);
-		}
-		{
-			textVBusquedaRapida = new JTextField();
-			textVBusquedaRapida.setBounds(167, 106, 201, 20);
-			contentPanel.add(textVBusquedaRapida);
-			textVBusquedaRapida.setColumns(10);
-		}
-		{
-
-			ButtonVBusquedaRapida = new JButton("Buscar");
-			ButtonVBusquedaRapida.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					busRapida(vMain, datos2, datos);
-				}
-			});
-			JButton ButtonVBusquedaRapida = new JButton("Buscar");
-			ButtonVBusquedaRapida.setFont(new Font("Dialog", Font.PLAIN, 14));
-			ButtonVBusquedaRapida.setEnabled(false);
-			ButtonVBusquedaRapida.setBounds(177, 137, 89, 23);
-			contentPanel.add(ButtonVBusquedaRapida);
-		}
-		{
-			btnVolver = new JButton("Volver");
-			btnVolver.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					volver();
-				}
-			});
-			btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			btnVolver.setBounds(335, 227, 89, 23);
-			contentPanel.add(btnVolver);
-		}
-	}
-	
-	private void busRapida(VPrincipal vMain, ContDatosBusqRap datos2, ContDatosBusq datos) {
-		// TODO Auto-generated method stub
-		persona = new Persona();
-		personas = new TreeMap<>();
-		personas = datos2.obtenerPersonas(persona.getNombre());
-		
-		if(textVBusquedaRapida.getText().equalsIgnoreCase(persona.getNombre())) {
-			VListarPersonas listaPer = new VListarPersonas(vMain, true, personas.get(persona.getNombre()), datos);
-			listaPer.setVisible(true);
-		}else{
-			JOptionPane.showMessageDialog(this, "No se han encontrado coincidencias");
-		}
-	}
-	
-	private void volver() {
-		// TODO Auto-generated method stub
-		this.dispose();
 	}
 	
 	private void cerrarSesion() {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	private void volver() {
+		VPrincipal principal = new VPrincipal();
+		this.dispose();
+		principal.setVisible(true);
+	}
+	
+	private void habilitarBoton() {
+		if(!textVBusquedaRapida.getText().isEmpty()) {
+			buttonBusR.setEnabled(true);
+			buttonBusR.setBackground(new Color(153, 0, 0));
+		}else {
+			buttonBusR.setEnabled(false);
+			buttonBusR.setBackground(new Color(122, 42, 42));
+		}
+	}
 }

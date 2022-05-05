@@ -605,10 +605,9 @@ public class VInsPersona extends JDialog implements ActionListener {
 		textDni = new JTextField();
 		textDni.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				habilitarBoton();
 			}
-
 		});
 		textDni.setBounds(132, 100, 192, 20);
 		contentPanel.add(textDni);
@@ -622,7 +621,7 @@ public class VInsPersona extends JDialog implements ActionListener {
 		textNombre = new JTextField();
 		textNombre.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				habilitarBoton();
 			}
 		});
