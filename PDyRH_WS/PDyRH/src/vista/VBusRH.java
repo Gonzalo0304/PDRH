@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JMenu;
@@ -47,6 +48,7 @@ public class VBusRH extends JDialog {
 	private JTextField textIdentificacion;
 	private JTextField textColorO;
 	private Button buttonVolver;
+	private JLabel imagen;
 	
 	private Persona persona;
 	private ContDatosBusqRH datos2;
@@ -58,17 +60,15 @@ public class VBusRH extends JDialog {
 	 */
 	/**
 	 * Create the dialog.
-<<<<<<< HEAD
 	 * @param datos 
 	 * @param restoHumano 
 	 * @param b 
-	 * @param vMain 
+	 * @param vInicio 
 	 * @param datos 
 	 * @param restoHumano 
 	 * @param b 
 	 * @param vBusqueda 
-=======
->>>>>>> 067cf60c298ca393e3723ac8c37008564151eb24
+
 	 */
 	
 	
@@ -76,7 +76,7 @@ public class VBusRH extends JDialog {
 		super(vMain);
 		this.setModal(modal);
 		setTitle("Buscar Resto Humano");
-		setBounds(100, 100, 461, 451);
+		setBounds(350, 150, 710, 460);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -267,7 +267,7 @@ public class VBusRH extends JDialog {
 		
 		textCodCaso = new JTextField();
 		textCodCaso.setColumns(10);
-		textCodCaso.setBounds(117, 320, 188, 20);
+		textCodCaso.setBounds(114, 345, 188, 20);
 		contentPanel.add(textCodCaso);
 		
 		textIdentificacion = new JTextField();
@@ -296,6 +296,12 @@ public class VBusRH extends JDialog {
 		contentPanel.add(textColorO);
 		textColorO.setColumns(10);
 		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.CENTER);
+		imagen.setBounds(0, 37, 607, 362);
+		contentPanel.add(imagen);
+		
 		if(restoHumano!=null) {
 			textCodigo.setText(restoHumano.getCodResto());
 			textCausa.setText(restoHumano.getCausa());
@@ -321,7 +327,7 @@ public class VBusRH extends JDialog {
 		persona = new Persona();
 		String idnt = datos2.obtenerIdentificado(persona.getDni());
 		
-		textIdentificacion.setText(persona.getDni());
+		textIdentificacion.setText(idnt);
 		
 	}
 

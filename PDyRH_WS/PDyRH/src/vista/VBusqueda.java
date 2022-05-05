@@ -141,6 +141,8 @@ public class VBusqueda extends JDialog {
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
 		
+		rdbtnPersona = new JRadioButton("Persona");
+		grupo.add(rdbtnPersona);
 		JRadioButton rdbtnPersona = new JRadioButton("Persona");
 		rdbtnPersona.setFocusPainted(false);
 		rdbtnPersona.setIgnoreRepaint(true);
@@ -148,11 +150,14 @@ public class VBusqueda extends JDialog {
 		rdbtnPersona.setBounds(10, 44, 85, 23);
 		contentPanel.add(rdbtnPersona);
 		
-		JRadioButton rdbtnRestoHumano = new JRadioButton("Resto Humano");
+		rdbtnRestoHumano = new JRadioButton("Resto Humano");
+		grupo.add(rdbtnRestoHumano);
 		rdbtnRestoHumano.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		rdbtnRestoHumano.setBounds(107, 44, 109, 23);
 		contentPanel.add(rdbtnRestoHumano);
 		
+		rdbtnCaso = new JRadioButton("Caso");
+		grupo.add(rdbtnCaso);
 		JRadioButton rdbtnCaso = new JRadioButton("Caso");
 		rdbtnCaso.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		rdbtnCaso.setBounds(249, 44, 74, 23);
@@ -163,18 +168,25 @@ public class VBusqueda extends JDialog {
 		lblNewLabel.setBounds(21, 120, 175, 14);
 		contentPanel.add(lblNewLabel);
 		
+		btnVolver = new JButton("Volver");
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volver();
+			}
+		});
 		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnVolver.setBounds(350, 246, 89, 31);
 		contentPanel.add(btnVolver);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setEnabled(false);
-		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnBuscar.setBounds(178, 172, 89, 31);
-		contentPanel.add(btnBuscar);
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnBuscar.setEnabled(true);
 	}
-	
+
 	public VBusqueda() {
 		setTitle("Introducir Identificador");
 		setBounds(100, 100, 465, 327);
@@ -418,11 +430,6 @@ public class VBusqueda extends JDialog {
 			}
 		});
 		btnBuscar.setEnabled(true);
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setEnabled(false);
-		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnBuscar.setBounds(178, 172, 89, 31);
-		contentPanel.add(btnBuscar);
 	}
 	
 	private void volver() {
@@ -455,7 +462,7 @@ public class VBusqueda extends JDialog {
 			VBusRH ventRH = new VBusRH(vMain, true, restos.get(codR), datos);
 			ventRH.setVisible(true);
 		}else {
-			JOptionPane.showMessageDialog(this, "El identificador introducido no esta registrado");
+			JOptionPane.showMessageDialog(this, "El identificador introducido no esta registrado",  "Error!!", JOptionPane.ERROR_MESSAGE);
 		}
 			
 	}

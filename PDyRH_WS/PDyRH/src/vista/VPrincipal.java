@@ -237,17 +237,10 @@ public class VPrincipal extends JDialog {
 		inserciones.setVisible(true);
 	}
 
-
-	private void vBusqueda() {
-		// TODO Auto-generated method stub
-		VBusqueda busqueda = new VBusqueda(vInicio, true);
-	}
-
 	
 	private void vBusqueda(ContDatosBusq datos) {
 		// TODO Auto-generated method stub
 		VBusqueda busqueda = new VBusqueda(this, true, datos);
-
 		busqueda.setVisible(true);
 	}
 

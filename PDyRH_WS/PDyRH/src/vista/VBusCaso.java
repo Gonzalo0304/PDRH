@@ -5,6 +5,7 @@ import modelo.*;
 import modelo.clases.*;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -12,9 +13,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 import controlador.interfaces.ContDatosBusq;
@@ -26,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -47,8 +52,6 @@ public class VBusCaso extends JDialog {
 	private JTextField textDni2;
 	private JTextField textImplicacion2;
 	private JTextField textCodigoRH;
-	private JButton btnVolver1;
-	private JButton btnVolver2;
 	private JRadioButton rdbtnAbierto;
 	private JRadioButton rdbtnCerrado;
 	private JRadioButton rdbtnSinResolver;
@@ -57,6 +60,7 @@ public class VBusCaso extends JDialog {
 	private JLabel lblNomAp2;
 	private Button buttonVolver1;
 	private Button buttonVolver2;
+	private JLabel imagen;
 	
 	private Participante part;
 	private Persona per;
@@ -67,15 +71,6 @@ public class VBusCaso extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			VBusCaso dialog = new VBusCaso();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
@@ -95,6 +90,31 @@ public class VBusCaso extends JDialog {
 		setBounds(100, 100, 457, 456);
 		setBounds(100, 100, 457, 530);
 		getContentPane().setLayout(new CardLayout(0, 0));
+		setUndecorated(true);
+		
+		JLabel lblCerrar = new JLabel("x");
+		lblCerrar.setBackground(new Color(153, 0, 0));
+		lblCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCerrar.setForeground(new Color(0,51,102));
+				lblCerrar.setOpaque(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCerrar.setForeground(Color.WHITE);
+				lblCerrar.setOpaque(false);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar.setForeground(Color.WHITE);
+		lblCerrar.setBounds(644, 0, 31, 19);
+		contentPanel.add(lblCerrar);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, "name_7044780698600");
@@ -174,8 +194,8 @@ public class VBusCaso extends JDialog {
 		rdbtnNewRadioButton_2.setBounds(244, 91, 109, 23);
 		contentPanel.add(rdbtnNewRadioButton_2);
 		
-		btnVolver1 = new JButton("Volver");
-		btnVolver1.addActionListener(new ActionListener() {
+		buttonVolver1 = new Button("Volver");
+		buttonVolver1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				volver1();
 			}
@@ -185,9 +205,12 @@ public class VBusCaso extends JDialog {
 		buttonVolver1.setBackground(new Color(153, 0, 0));
 		buttonVolver1.setBounds(293, 260, 107, 31);
 		contentPanel.add(buttonVolver1);
-		btnVolver1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnVolver1.setBounds(309, 207, 89, 29);
-		contentPanel.add(btnVolver1);
+		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.CENTER);
+		imagen.setBounds(0, 37, 452, 465);
+		contentPanel.add(imagen);
 
 		
 		JPanel panel_1 = new JPanel();
@@ -284,6 +307,12 @@ public class VBusCaso extends JDialog {
 		buttonVolver2.setBackground(new Color(153, 0, 0));
 		buttonVolver2.setBounds(291, 321, 107, 31);
 		panel_1.add(buttonVolver2);
+		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.EAST);
+		imagen.setBounds(24, 37, 442, 454);
+		panel_1.add(imagen);
 	}
 	
 	public VBusCaso(VPrincipal vMain, boolean modal, Caso caso, ContDatosBusq datos) {
@@ -293,6 +322,30 @@ public class VBusCaso extends JDialog {
 		setTitle("Buscar Caso");
 		setBounds(100, 100, 457, 530);
 		getContentPane().setLayout(new CardLayout(0, 0));
+		
+		JLabel lblCerrar = new JLabel("x");
+		lblCerrar.setBackground(new Color(153, 0, 0));
+		lblCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCerrar.setForeground(new Color(0,51,102));
+				lblCerrar.setOpaque(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCerrar.setForeground(Color.WHITE);
+				lblCerrar.setOpaque(false);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar.setForeground(Color.WHITE);
+		lblCerrar.setBounds(644, 0, 31, 19);
+		contentPanel.add(lblCerrar);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, "name_7044780698600");
@@ -464,7 +517,30 @@ public class VBusCaso extends JDialog {
 		buttonVolver2.setBounds(293, 260, 107, 31);
 		panel_1.add(buttonVolver2);
 		
-		datosCasos(caso);
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:\\Users\\1dam\\Desktop\\Reto Final\\PGR\\Multimedia\\ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.EAST);
+		imagen.setBounds(0, 37, 607, 362);
+		contentPanel.add(imagen);
+		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.EAST);
+		imagen.setBounds(0, 37, 607, 362);
+		panel_1.add(imagen);
+		
+		//Datos de caso
+		if (caso != null) {
+			textCodigo.setText(caso.getCodCaso());
+			//Estado de los casos
+			estados(caso);
+			textNombre.setText(caso.getNombre());
+			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String fechaIni = caso.getFechaIni().format(formateador);
+			textFechaIni.setText(fechaIni);
+			String fechaFin = caso.getFechaFin().format(formateador);
+			textFechaFin.setText(fechaFin);
+		}
 		
 		datosInvolucrados(part, caso, datos2);
 		nombreCompleto(per, datos2, caso, part);
@@ -500,22 +576,6 @@ public class VBusCaso extends JDialog {
 		this.dispose();
 	}
 
-	private void datosCasos(Caso caso) {
-		// TODO Auto-generated method stub
-		caso = new Caso();
-		
-		if (caso != null) {
-			textCodigo.setText(caso.getCodCaso());
-			estados(caso);
-			textNombre.setText(caso.getNombre());
-			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			String fechaIni = caso.getFechaIni().format(formateador);
-			textFechaIni.setText(fechaIni);
-			String fechaFin = caso.getFechaFin().format(formateador);
-			textFechaFin.setText(fechaFin);
-		}
-	}
-
 	private void nombreCompleto(Persona per, ContDatosBusqCaso datos2,Caso caso, Participante part) {
 		// TODO Auto-generated method stub
 		per = new Persona();
@@ -548,6 +608,11 @@ public class VBusCaso extends JDialog {
 			rdbtnSinResolver.setEnabled(false);
 			rdbtnSinResolver.setSelected(true);
 		}
+	}
+	
+	protected void cerrar() {
+		// TODO Auto-generated method stub
+		this.dispose();
 	}
 
 }
