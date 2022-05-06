@@ -11,9 +11,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.time.LocalDate;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 import java.util.Map;
 
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -77,7 +81,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JMenu menuGestionar;
 	private JMenu menuComparar;
 	private JMenu menuBusqueda;
-	private JSeparator separatorGesPer;
+	private JSeparator separatorGesCas;
 	private JLabel lblGesPer;
 	private JLabel lblAnaInv;
 	private JSeparator separatorAnaCono;
@@ -85,9 +89,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private String[] info;
 	private Button buttonMod;
 	private Button buttonEliminar;
-	private String dni;
 	private VIniciarSesion padre;
-	private JSeparator separator1;
+	private ButtonGroup bgEstado;
+	private JRadioButton rdbtnCer;
+	private JRadioButton rdbtnSR;
+	private JRadioButton rdbtnAbi;
 	
 	// <--- Ejecución --->
 	public VGesCaso(VIniciarSesion padre, boolean modal, Caso caso, String[] infos) {
@@ -99,7 +105,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		getContentPane().setLayout(null);
 		info = infos;
 		this.padre = padre;
-		
+
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(SystemColor.controlHighlight);
 		tabbedPane.setBounds(0, 0, 607, 399);
@@ -127,12 +133,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 
 		// Botón para cerrar la ventana
 		lblCerrar = new JLabel("x");
-		lblCerrar.setBounds(470, 2, 31, 19);
 		lblCerrar.setBackground(new Color(153, 0, 0));
 		lblCerrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblCerrar.setForeground(new Color(0, 51, 102));
+				lblCerrar.setForeground(Color.BLACK);
 				lblCerrar.setOpaque(true);
 			}
 
@@ -150,6 +155,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblCerrar.setForeground(Color.WHITE);
+		lblCerrar.setBounds(573, 2, 31, 19);
 		contentDatos.add(lblCerrar);
 
 		separator2 = new JSeparator();
@@ -203,17 +209,17 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		menuBusqueda.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		menuBusqueda.setForeground(Color.WHITE);
 		menuBar.add(menuBusqueda);
-		
+
 		lblDni = new JLabel("C\u00D3DIGO");
 		lblDni.setForeground(new Color(0, 51, 102));
 		lblDni.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblDni.setBounds(76, 94, 81, 28);
+		lblDni.setBounds(95, 95, 81, 28);
 		contentDatos.add(lblDni);
 
 		separatorCod = new JSeparator();
 		separatorCod.setForeground(SystemColor.controlShadow);
 		separatorCod.setBackground(new Color(0, 51, 102));
-		separatorCod.setBounds(76, 120, 106, 2);
+		separatorCod.setBounds(95, 121, 106, 2);
 		contentDatos.add(separatorCod);
 
 		textCod = new JTextField();
@@ -221,100 +227,98 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		textCod.setEditable(false);
 		textCod.setEnabled(false);
 		textCod.setColumns(10);
-		textCod.setBounds(76, 133, 187, 20);
+		textCod.setBounds(95, 134, 187, 20);
 		contentDatos.add(textCod);
 
 		lblNombre = new JLabel("NOMBRE");
 		lblNombre.setForeground(new Color(0, 51, 102));
 		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNombre.setBounds(76, 152, 81, 28);
+		lblNombre.setBounds(95, 153, 81, 28);
 		contentDatos.add(lblNombre);
 
 		separatorNom = new JSeparator();
 		separatorNom.setForeground(SystemColor.controlShadow);
 		separatorNom.setBackground(new Color(0, 51, 102));
-		separatorNom.setBounds(76, 178, 106, 2);
+		separatorNom.setBounds(95, 179, 106, 2);
 		contentDatos.add(separatorNom);
 
 		textNom = new JTextField();
 		textNom.setToolTipText("");
 		textNom.setColumns(10);
-		textNom.setBounds(76, 191, 187, 20);
+		textNom.setBounds(95, 192, 187, 20);
 		contentDatos.add(textNom);
 
 		lblEstado = new JLabel("ESTADO");
 		lblEstado.setForeground(new Color(0, 51, 102));
 		lblEstado.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblEstado.setBounds(76, 220, 81, 28);
+		lblEstado.setBounds(247, 219, 81, 28);
 		contentDatos.add(lblEstado);
 
 		separatorEstado = new JSeparator();
 		separatorEstado.setForeground(SystemColor.controlShadow);
 		separatorEstado.setBackground(new Color(0, 51, 102));
-		separatorEstado.setBounds(76, 246, 106, 2);
+		separatorEstado.setBounds(247, 245, 106, 2);
 		contentDatos.add(separatorEstado);
-		
+
 		textFechaIni = new JTextField();
 		textFechaIni.setToolTipText("");
 		textFechaIni.setVisible(false);
 		textFechaIni.setColumns(10);
-		textFechaIni.setBounds(314, 170, 187, 20);
+		textFechaIni.setBounds(328, 134, 187, 20);
 		contentDatos.add(textFechaIni);
 
 		textFechaFin = new JTextField();
 		textFechaFin.setToolTipText("");
 		textFechaFin.setVisible(false);
 		textFechaFin.setColumns(10);
-		textFechaFin.setBounds(314, 228, 187, 20);
+		textFechaFin.setBounds(328, 192, 187, 20);
 		contentDatos.add(textFechaFin);
 
 		separatorFechaIni = new JSeparator();
 		separatorFechaIni.setForeground(new Color(0, 0, 102));
 		separatorFechaIni.setBackground(new Color(0, 51, 102));
 		separatorFechaIni.setVisible(false);
-		separatorFechaIni.setBounds(314, 157, 106, 2);
+		separatorFechaIni.setBounds(328, 121, 106, 2);
 		contentDatos.add(separatorFechaIni);
 
 		lblFechaFin = new JLabel("FECHA FIN");
 		lblFechaFin.setForeground(new Color(0, 51, 102));
 		lblFechaFin.setVisible(false);
 		lblFechaFin.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblFechaFin.setBounds(314, 189, 106, 28);
+		lblFechaFin.setBounds(328, 153, 106, 28);
 		contentDatos.add(lblFechaFin);
 
 		separatorFechaFin = new JSeparator();
 		separatorFechaFin.setForeground(new Color(0, 0, 102));
 		separatorFechaFin.setBackground(new Color(0, 51, 102));
 		separatorFechaFin.setVisible(false);
-		separatorFechaFin.setBounds(314, 215, 106, 2);
+		separatorFechaFin.setBounds(328, 179, 106, 2);
 		contentDatos.add(separatorFechaFin);
 
 		lblFechaIni = new JLabel("FECHA INICIO");
 		lblFechaIni.setForeground(new Color(0, 51, 102));
 		lblFechaIni.setVisible(false);
 		lblFechaIni.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblFechaIni.setBounds(314, 131, 106, 28);
+		lblFechaIni.setBounds(328, 95, 106, 28);
 		contentDatos.add(lblFechaIni);
 
-		separatorGesPer = new JSeparator();
-		separatorGesPer.setForeground(new Color(102, 0, 0));
-		separatorGesPer.setVisible(false);
-		separatorGesPer.setBackground(new Color(153, 0, 0));
-		separatorGesPer.setBounds(12, 73, 580, 2);
-		contentDatos.add(separatorGesPer);
+		separatorGesCas = new JSeparator();
+		separatorGesCas.setForeground(new Color(102, 0, 0));
+		separatorGesCas.setBackground(new Color(153, 0, 0));
+		separatorGesCas.setBounds(12, 73, 580, 2);
+		contentDatos.add(separatorGesCas);
 
 		lblGesPer = new JLabel("Gesti\u00F3n de Caso");
 		lblGesPer.setForeground(SystemColor.textInactiveText);
 		lblGesPer.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblGesPer.setBounds(12, 51, 142, 19);
-		lblGesPer.setVisible(false);
 		contentDatos.add(lblGesPer);
 
 		buttonMod = new Button("MODIFICAR");
 		buttonMod.setForeground(Color.WHITE);
 		buttonMod.setFont(new Font("Tahoma", Font.BOLD, 12));
 		buttonMod.setBackground(new Color(153, 0, 0));
-		buttonMod.setBounds(169, 307, 89, 28);
+		buttonMod.setBounds(188, 308, 89, 28);
 		buttonMod.addActionListener(this);
 		contentDatos.add(buttonMod);
 
@@ -323,34 +327,40 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		buttonEliminar.setForeground(Color.WHITE);
 		buttonEliminar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		buttonEliminar.setBackground(new Color(153, 0, 0));
-		buttonEliminar.setBounds(309, 307, 89, 28);
+		buttonEliminar.setBounds(328, 308, 89, 28);
 		buttonEliminar.addActionListener(this);
 		contentDatos.add(buttonEliminar);
-				
-				JRadioButton rdbtnAbi = new JRadioButton("Abierto");
-				rdbtnAbi.setOpaque(false);
-				rdbtnAbi.setFont(new Font("Tahoma", Font.BOLD, 11));
-				rdbtnAbi.setBounds(76, 255, 67, 23);
-				contentDatos.add(rdbtnAbi);
-				
-				JRadioButton rdbtnSR = new JRadioButton("SR");
-				rdbtnSR.setOpaque(false);
-				rdbtnSR.setFont(new Font("Tahoma", Font.BOLD, 11));
-				rdbtnSR.setBounds(214, 255, 46, 23);
-				contentDatos.add(rdbtnSR);
-				
-				JRadioButton rdbtnCer = new JRadioButton("Cerrado");
-				rdbtnCer.setOpaque(false);
-				rdbtnCer.setFont(new Font("Tahoma", Font.BOLD, 11));
-				rdbtnCer.setBounds(145, 255, 71, 23);
-				contentDatos.add(rdbtnCer);
-				
-						imgErtzAO = new JLabel("");
-						imgErtzAO.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
-						imgErtzAO.setBounds(125, 68, 309, 303);
-						contentDatos.add(imgErtzAO);
+
+		rdbtnAbi = new JRadioButton("Abierto");
+		rdbtnAbi.setOpaque(false);
+		rdbtnAbi.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rdbtnAbi.setBounds(212, 255, 67, 23);
+		contentDatos.add(rdbtnAbi);
+
+		rdbtnSR = new JRadioButton("SR");
+		rdbtnSR.setOpaque(false);
+		rdbtnSR.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rdbtnSR.setBounds(350, 255, 46, 23);
+		contentDatos.add(rdbtnSR);
+
+		rdbtnCer = new JRadioButton("Cerrado");
+		rdbtnCer.setOpaque(false);
+		rdbtnCer.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rdbtnCer.setBounds(281, 255, 71, 23);
+		contentDatos.add(rdbtnCer);
 		
-		cargarDatos(dni);
+		bgEstado = new ButtonGroup();
+		bgEstado.add(rdbtnAbi);
+		bgEstado.add(rdbtnCer);
+		bgEstado.add(rdbtnSR);
+
+		imgErtzAO = new JLabel("");
+		imgErtzAO
+				.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
+		imgErtzAO.setBounds(149, 68, 309, 303);
+		contentDatos.add(imgErtzAO);
+		
+		cargarDatos(caso);
 
 		contentInvo = new JPanel();
 		contentInvo.setLayout(null);
@@ -373,7 +383,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		});
 
 		// Botón para cerrar la ventana
-		lblCerrar_1 = new JLabel("x");
+		lblCerrar_1= new JLabel("x");
 		lblCerrar_1.setBackground(new Color(153, 0, 0));
 		lblCerrar_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -519,17 +529,36 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		buttonAgregar.setEnabled(false);
 		buttonAgregar.addActionListener(this);
 		contentInvo.add(buttonAgregar);
-		
+
 		JLabel imgErtzAO_1 = new JLabel("");
-		imgErtzAO_1.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
+		imgErtzAO_1
+				.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
 		imgErtzAO_1.setBounds(142, 68, 309, 303);
 		contentInvo.add(imgErtzAO_1);
 	}
 
-	private void cargarDatos(String dni) {
-		
+	private void cargarDatos(Caso caso) {
+		textCod.setText(caso.getCodCaso());
+		textNom.setText(caso.getNombre());
+		switch (caso.getEstado()) {
+		case "Abierto":
+			rdbtnAbi.setSelected(true);
+			break;
+		case "Cerrado":
+			rdbtnCer.setSelected(true);
+			break;
+		case "Sin resolver":
+			rdbtnSR.setSelected(true);
+			break;
+		}
+		if (caso.getFechaIni() != null) {
+			textFechaIni.setText(caso.getFechaIni().toString());
+		}
+		if (caso.getFechaFin() != null) {
+			textFechaFin.setText(caso.getFechaFin().toString());
+		}
 	}
-	
+
 	public void habilitarBoton() {
 		if (!textImp.getText().isBlank() && !textDniInv.getText().isBlank()) {
 			buttonAgregar.setEnabled(true);
@@ -544,55 +573,73 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	public void cerrar() {
-		VGestion vGest = new VGestion(padre,true,info);
+		VGestion vGest = new VGestion(padre, true, info);
 		this.dispose();
 		vGest.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		if (e.getSource().equals(mCerrar)) {
+			this.dispose();
+			padre.setVisible(true);
+		} else if (e.getSource().equals(mCerrar2)) {
+			this.dispose();
+			padre.setVisible(true);
+		}
 	}
 
 	@Override
 	public void modificarCaso(Caso caso) {
-		// TODO Auto-generated method stub
-		
+		caso.setNombre(textNom.getText());
+		caso.setEstado(rbSelect(bgEstado));
+		if (!textFechaIni.getText().isBlank()) {
+			caso.setFechaIni(LocalDate.parse(textFechaIni.getText()));
+		}
+		if (!textFechaFin.getText().isBlank()) {
+			caso.setFechaFin(LocalDate.parse(textFechaFin.getText()));
+		}
 	}
 
+	public String rbSelect(ButtonGroup bg) {
+        for (Enumeration<AbstractButton> botones = bg.getElements(); botones.hasMoreElements();) {
+            AbstractButton boton = botones.nextElement();
+
+            if (boton.isSelected()) {
+                return boton.getText();
+            }
+        }
+
+        return null;
+    }
+	
 	@Override
 	public void eliminarCaso(String codCaso) {
-		// TODO Auto-generated method stub
-		
+		datos.eliminarCaso(codCaso);
 	}
 
 	@Override
 	public void insertarParticipante(Participante par) {
-		// TODO Auto-generated method stub
-		
+		datos.insertarParticipante(par);
 	}
 
 	@Override
 	public void insertarInvolucrado(String codResto, String codCaso) {
-		// TODO Auto-generated method stub
-		
+		datos.insertarInvolucrado(codResto, codCaso);
 	}
 
 	@Override
 	public Map<String, Participante> listarParticipantes(String codCaso) {
-		// TODO Auto-generated method stub
-		return null;
+		return datos.listarParticipantes(codCaso);
 	}
 
 	@Override
 	public boolean buscarRH(String codResto) {
-		// TODO Auto-generated method stub
-		return false;
+		return datos.buscarRH(codResto);
 	}
 
 	@Override
 	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
-		// TODO Auto-generated method stub
-		return null;
+		return datos.listarInvolucrados(codCaso);
 	}
 }
