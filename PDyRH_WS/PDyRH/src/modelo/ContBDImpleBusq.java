@@ -68,8 +68,17 @@ public class ContBDImpleBusq implements ContDatosBusq {
 				caso.setCodCaso(codCaso);
 				caso.setEstado(rs.getString("estado"));
 				caso.setNombre(rs.getString("nombre"));
-				caso.setFechaIni(rs.getDate("fechaIni").toLocalDate());
-				caso.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+				if(caso.getFechaIni() != null) {
+					caso.setFechaIni(rs.getDate("fechaIni").toLocalDate());
+				}else {
+					caso.setFechaIni(null);
+				}
+				if(caso.getFechaFin()==null) {
+					caso.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+				}else {
+					caso.setFechaFin(null);
+				}
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -28,23 +28,7 @@ public class VGesPersona extends JDialog {
 	private JButton ButtonVolverConoVGesPersona;
 	private JButton ButtonVolver;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			VGesPersona dialog = new VGesPersona();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public VGesPersona() {
+	public VGesPersona(VIniciarSesion padre, boolean b, String string, String info) {
 		setTitle("Gestionar Persona");
 		setBounds(100, 100, 450, 354);
 		getContentPane().setLayout(new CardLayout(0, 0));

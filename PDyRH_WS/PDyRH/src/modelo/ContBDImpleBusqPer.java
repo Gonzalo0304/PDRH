@@ -113,8 +113,17 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				if (tipo.equalsIgnoreCase("agente")) {
 					per = new Agente();
 					((Agente) per).setRango(rs.getString("rango"));
-					((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
-					((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
+					if(((Agente) per).getInicioServ()!=null) {
+						((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
+					}else {
+						((Agente) per).setInicioServ(null);
+					}
+					if(((Agente) per).getFinServ()!=null) {
+						((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
+					}else {
+						((Agente) per).setFinServ(null);
+					}
+					
 				} else if (tipo.equalsIgnoreCase("criminal")) {
 					per = new Criminal();
 					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));
@@ -126,7 +135,11 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 					}
 				} else if (tipo.equalsIgnoreCase("desaparecida")) {
 					per = new Desaparecida();
-					((Desaparecida) per).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+					if(((Desaparecida) per).getFechaDes()!=null) {
+						((Desaparecida) per).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+					}else {
+						((Desaparecida) per).setFechaDes(null);
+					}
 					((Desaparecida) per).setUltimaUbi(rs.getString("ultimaUbi"));
 					((Desaparecida) per).setGenero(rs.getString("genero"));
 					((Desaparecida) per).setTipoPelo(rs.getString("tipoPelo"));
@@ -143,8 +156,19 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				per.setNombre(rs.getString("nombre"));
 				per.setApellido(rs.getString("apellido"));
 				per.setTelefonos(telfs);
-				per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-				per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
+				
+				if(per.getFechaNac()!=null) {
+					per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+				}else {
+					per.setFechaNac(null);
+				}
+				
+				if(per.getFechaFal()!=null) {
+					per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
+				}else {
+					per.setFechaFal(null);
+				}
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

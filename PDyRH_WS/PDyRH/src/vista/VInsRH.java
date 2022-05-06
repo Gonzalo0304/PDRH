@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.ContDatosInsertPer;
 import controlador.ContDatosRH;
+import controlador.interfaces.ContDatosBusq;
 import modelo.ContBDImpleInsertPer;
 import modelo.ContBDImpleRH;
 import modelo.clases.RestoHumano;
@@ -54,6 +55,8 @@ public class VInsRH extends JDialog {
 	private JTextField textColorO;
 	private ContDatosRH datos1;
 	private VIniciarSesion vInicio = null;
+	private ContDatosBusq datos;
+	private String[] info;
 	
 	/**
 	 * Launch the application.
@@ -581,7 +584,7 @@ public class VInsRH extends JDialog {
 	
 	
 	private void volver() {
-		VInserciones insertar = new VInserciones(vInicio, true);
+		VInserciones insertar = new VInserciones(vInicio, true, info[0]);
 		this.dispose();
 		insertar.setVisible(true);
 		
@@ -645,25 +648,25 @@ public class VInsRH extends JDialog {
 	}
 	
 	private void gestionar() {
-		VGestion gestion = new VGestion(vInicio, true);
+		VGestion gestion = new VGestion(vInicio, true, info[0]);
 		this.dispose();
 		gestion.setVisible(true);
 	}
 	
 	private void comparar() {
-		VComparacion comparacion = new VComparacion(vInicio, true);
+		VComparacion comparacion = new VComparacion(vInicio, true, info[0]);
 		this.dispose();
 		comparacion.setVisible(true);
 	}
 
 	private void buscar() {
-		VBusqueda busqueda = new VBusqueda(vInicio, true);
+		VBusqueda busqueda = new VBusqueda(vInicio, true, datos, info[0]);
 		this.dispose();
 		busqueda.setVisible(true);
 	}
 	
 	private void insertar() {
-		VInserciones insertar = new VInserciones(vInicio, true);
+		VInserciones insertar = new VInserciones(vInicio, true, info[0]);
 		this.dispose();
 		insertar.setVisible(true);
 	}

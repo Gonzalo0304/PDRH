@@ -44,6 +44,8 @@ public class VBusRapida extends JDialog {
 	private Map<String, Persona> personas;
 	private ContDatosBusqRap datos2;
 	private Button buttonBusR;
+	private String[] info;
+	private VIniciarSesion vInicio = null;
 
 	/**
 	 * Launch the application.
@@ -60,8 +62,8 @@ public class VBusRapida extends JDialog {
 	
 	
 
-	public VBusRapida(VPrincipal vMain, boolean modal, ContDatosBusq datos) {
-		super(vMain);
+	public VBusRapida(VIniciarSesion vInicio, boolean modal) {
+		super(vInicio);
 		this.setModal(true);
 		setTitle("Busqueda Rapida");
 		setBounds(100, 100, 607, 399);
@@ -218,7 +220,7 @@ public class VBusRapida extends JDialog {
 	}
 	
 	private void volver() {
-		VPrincipal principal = new VPrincipal();
+		VPrincipal principal = new VPrincipal(vInicio, true, info);
 		this.dispose();
 		principal.setVisible(true);
 	}

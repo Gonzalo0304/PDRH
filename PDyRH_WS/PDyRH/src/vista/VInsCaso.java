@@ -16,6 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ContDatosInsertCaso;
+import controlador.interfaces.ContDatosBusq;
 import modelo.ContBDImpleInsertCaso;
 import modelo.clases.Caso;
 
@@ -48,6 +49,8 @@ public class VInsCaso extends JDialog {
 	private JRadioButton rdbtnCerrado;
 	private JRadioButton rdbtnSinResolver;
 	private ContDatosInsertCaso datos1;
+	private ContDatosBusq datos;
+	private String[] info;
 
 	/**
 	 * Launch the application.
@@ -498,7 +501,7 @@ public class VInsCaso extends JDialog {
 	}
 	
 	private void volver() {
-		VInserciones insercion = new VInserciones(vInicio, true);
+		VInserciones insercion = new VInserciones(vInicio, true, info[0]);
 		this.dispose();
 		insercion.setVisible(true);
 	}
@@ -565,19 +568,19 @@ public class VInsCaso extends JDialog {
 	}
 	
 	private void gestionar() {
-		VGestion gestion = new VGestion(vInicio, true);
+		VGestion gestion = new VGestion(vInicio, true, info[0]);
 		this.dispose();
 		gestion.setVisible(true);
 	}
 	
 	private void comparar() {
-		VComparacion comparacion = new VComparacion(vInicio, true);
+		VComparacion comparacion = new VComparacion(vInicio, true, info[0]);
 		this.dispose();
 		comparacion.setVisible(true);
 	}
 
 	private void buscar() {
-		VBusqueda busqueda = new VBusqueda(vInicio, true);
+		VBusqueda busqueda = new VBusqueda(vInicio, true, datos, info[0]);
 		this.dispose();
 		busqueda.setVisible(true);
 	}

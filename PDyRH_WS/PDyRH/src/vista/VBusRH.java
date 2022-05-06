@@ -51,32 +51,14 @@ public class VBusRH extends JDialog {
 	private JLabel imagen;
 	
 	private Persona persona;
+	private RestoHumano resto;
 	private ContDatosBusqRH datos2;
 	
-	
-
-	/**
-	 * Launch the application.
-	 */
-	/**
-	 * Create the dialog.
-	 * @param datos 
-	 * @param restoHumano 
-	 * @param b 
-	 * @param vInicio 
-	 * @param datos 
-	 * @param restoHumano 
-	 * @param b 
-	 * @param vBusqueda 
-
-	 */
-	
-	
-	public VBusRH(VPrincipal vMain, boolean modal, RestoHumano restoHumano, ContDatosBusq datos) {
-		super(vMain);
+	public VBusRH(VIniciarSesion vInicio, boolean modal, String codResto, ContDatosBusq datos) {
+		super(vInicio);
 		this.setModal(modal);
 		setTitle("Buscar Resto Humano");
-		setBounds(350, 150, 710, 460);
+		setBounds(350, 150, 499, 460);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -302,21 +284,21 @@ public class VBusRH extends JDialog {
 		imagen.setBounds(0, 37, 607, 362);
 		contentPanel.add(imagen);
 		
-		if(restoHumano!=null) {
-			textCodigo.setText(restoHumano.getCodResto());
-			textCausa.setText(restoHumano.getCausa());
-			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			String fecha = restoHumano.getFechaMuerte().format(formateador);
+		if(resto!=null) {
+			textCodigo.setText(resto.getCodResto());
+			textCausa.setText(resto.getCausa());
+			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String fecha = resto.getFechaMuerte().format(formateador);
 			textFecha.setText(fecha);
-			textUbicacion.setText(restoHumano.getUbicacion());
-			textGenero.setText(restoHumano.getGenero());
-			textTipoP.setText(restoHumano.getTipoPelo());
-			textColorP.setText(restoHumano.getColorPelo());
-			textColorO.setText(restoHumano.getColorOjos());
-			textAltura.setText(Float.toString(restoHumano.getAltura()));
-			textEspecificacion.setText(restoHumano.getEspecificaciones());
-			textCodCaso.setText(restoHumano.getCodCaso());
-			identificado(persona, restoHumano, datos2);
+			textUbicacion.setText(resto.getUbicacion());
+			textGenero.setText(resto.getGenero());
+			textTipoP.setText(resto.getTipoPelo());
+			textColorP.setText(resto.getColorPelo());
+			textColorO.setText(resto.getColorOjos());
+			textAltura.setText(Float.toString(resto.getAltura()));
+			textEspecificacion.setText(resto.getEspecificaciones());
+			textCodCaso.setText(resto.getCodCaso());
+			identificado(persona, resto, datos2);
 		}
 		
 		

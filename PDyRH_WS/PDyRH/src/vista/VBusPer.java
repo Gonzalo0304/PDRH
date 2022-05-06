@@ -5,6 +5,7 @@ import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -14,6 +15,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -72,242 +75,26 @@ public class VBusPer extends JDialog {
 	private JLabel lblNomAp3;
 	private Button buttonVolver1;
 	private Button buttonVolver2;
+	private JLabel imagen;
 	
 	private ContDatosBusqPer datos2;
 	private Conocido conocido;
 	private Map<String,Conocido> conocidos;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			VBusCaso dialog = new VBusCaso();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 * @param datos 
-	 * @param persona 
-	 * @param b 
-	 * @param vMain 
-	 */
-	public VBusPer() {
-		setBounds(100, 100, 449, 414);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setVisible(false);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new CardLayout(0, 0));
-
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPanel.add(tabbedPane, "name_19326072116700");
-		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("Datos", null, panel_2, null);
-		panel_2.setLayout(null);
-
-		JLabel lblNewLabel = new JLabel("DNI:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(68, 44, 46, 14);
-		panel_2.add(lblNewLabel);
-
-		textDni = new JTextField();
-		textDni.setVerifyInputWhenFocusTarget(false);
-		textDni.setBounds(127, 42, 158, 20);
-		panel_2.add(textDni);
-		textDni.setColumns(10);
-
-		JLabel lblNewLabel_1 = new JLabel("Nombre:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(68, 69, 61, 14);
-		panel_2.add(lblNewLabel_1);
-
-		textNombre = new JTextField();
-		textNombre.setBounds(127, 67, 158, 20);
-		panel_2.add(textNombre);
-		textNombre.setColumns(10);
-
-		JLabel lblNewLabel_2 = new JLabel("Apellido:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(68, 95, 61, 14);
-		panel_2.add(lblNewLabel_2);
-
-		textApellido = new JTextField();
-		textApellido.setBounds(127, 94, 158, 20);
-		panel_2.add(textApellido);
-		textApellido.setColumns(10);
-
-		JLabel lblNewLabel_2_1 = new JLabel("Telefono movil:");
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(19, 120, 95, 14);
-		panel_2.add(lblNewLabel_2_1);
-
-		JLabel lblNewLabel_2_2 = new JLabel("Telefono opcional:");
-		lblNewLabel_2_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_2.setBounds(7, 145, 107, 14);
-		panel_2.add(lblNewLabel_2_2);
-
-		JLabel lblNewLabel_2_3 = new JLabel("Localidad:");
-		lblNewLabel_2_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_3.setBounds(53, 180, 61, 14);
-		panel_2.add(lblNewLabel_2_3);
-
-		JLabel lblNewLabel_2_4 = new JLabel("Nacimiento:");
-		lblNewLabel_2_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_4.setBounds(41, 205, 75, 14);
-		panel_2.add(lblNewLabel_2_4);
-
-		JLabel lblNewLabel_2_5 = new JLabel("Fallecimiento:");
-		lblNewLabel_2_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_5.setBounds(30, 230, 95, 14);
-		panel_2.add(lblNewLabel_2_5);
-
-		textTelefonoM = new JTextField();
-		textTelefonoM.setBounds(127, 120, 158, 20);
-		panel_2.add(textTelefonoM);
-		textTelefonoM.setColumns(10);
-
-		textTelefonoO = new JTextField();
-		textTelefonoO.setColumns(10);
-		textTelefonoO.setBounds(127, 145, 158, 20);
-		panel_2.add(textTelefonoO);
-
-		textLocalidad = new JTextField();
-		textLocalidad.setBounds(127, 178, 158, 20);
-		panel_2.add(textLocalidad);
-		textLocalidad.setColumns(10);
-
-		textNacimiento = new JTextField();
-		textNacimiento.setColumns(10);
-		textNacimiento.setBounds(127, 203, 158, 20);
-		panel_2.add(textNacimiento);
-
-		textFallecimiento = new JTextField();
-		textFallecimiento.setColumns(10);
-		textFallecimiento.setBounds(127, 228, 158, 20);
-		panel_2.add(textFallecimiento);
-
-		buttonVolver1 = new Button("Volver");
-		buttonVolver1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				volver1();
-			}
-		});
-		buttonVolver1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonVolver1.setForeground(Color.WHITE);
-		buttonVolver1.setBackground(new Color(153, 0, 0));
-		buttonVolver1.setBounds(293, 260, 107, 31);
-		panel_2.add(buttonVolver1);
-
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Conocidos", null, panel, null);
-		panel.setLayout(null);
-
-		lblNomAp1 = new JLabel("Nombre y apellidos");
-		lblNomAp1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNomAp1.setBounds(22, 25, 135, 19);
-		panel.add(lblNomAp1);
-
-		JLabel lblNewLabel_4 = new JLabel("DNI:");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_4.setBounds(82, 55, 35, 14);
-		panel.add(lblNewLabel_4);
-
-		textDni1 = new JTextField();
-		textDni1.setBounds(116, 53, 147, 20);
-		panel.add(textDni1);
-		textDni1.setColumns(10);
-
-		JLabel lblNewLabel_5 = new JLabel("Relacion:");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5.setBounds(54, 84, 63, 14);
-		panel.add(lblNewLabel_5);
-
-		textRelacion1 = new JTextField();
-		textRelacion1.setBounds(116, 80, 147, 20);
-		panel.add(textRelacion1);
-		textRelacion1.setColumns(10);
-
-		lblNomAp2 = new JLabel("Nombre y apellidos");
-		lblNomAp2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNomAp2.setBounds(22, 121, 135, 19);
-		panel.add(lblNomAp2);
-
-		JLabel lblNewLabel_4_1 = new JLabel("DNI:");
-		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_4_1.setBounds(82, 151, 35, 14);
-		panel.add(lblNewLabel_4_1);
-
-		JLabel lblNewLabel_5_1 = new JLabel("Relacion:");
-		lblNewLabel_5_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5_1.setBounds(54, 176, 63, 14);
-		panel.add(lblNewLabel_5_1);
-
-		textDni2 = new JTextField();
-		textDni2.setColumns(10);
-		textDni2.setBounds(116, 149, 147, 20);
-		panel.add(textDni2);
-
-		textRelacion2 = new JTextField();
-		textRelacion2.setColumns(10);
-		textRelacion2.setBounds(116, 174, 147, 20);
-		panel.add(textRelacion2);
-
-		lblNomAp3 = new JLabel("Nombre y apellidos");
-		lblNomAp3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNomAp3.setBounds(22, 207, 135, 19);
-		panel.add(lblNomAp3);
-
-		JLabel lblNewLabel_4_1_1 = new JLabel("DNI:");
-		lblNewLabel_4_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_4_1_1.setBounds(82, 237, 35, 14);
-		panel.add(lblNewLabel_4_1_1);
-
-		JLabel lblNewLabel_5_1_1 = new JLabel("Relacion:");
-		lblNewLabel_5_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5_1_1.setBounds(54, 262, 63, 14);
-		panel.add(lblNewLabel_5_1_1);
-
-		textDni3 = new JTextField();
-		textDni3.setColumns(10);
-		textDni3.setBounds(116, 235, 147, 20);
-		panel.add(textDni3);
-
-		textRelacion3 = new JTextField();
-		textRelacion3.setColumns(10);
-		textRelacion3.setBounds(116, 260, 147, 20);
-		panel.add(textRelacion3);
-
-		buttonVolver2 = new Button("Volver");
-		buttonVolver2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				volver2();
-			}
-		});
-		buttonVolver2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonVolver2.setForeground(Color.WHITE);
-		buttonVolver2.setBackground(new Color(153, 0, 0));
-		buttonVolver2.setBounds(293, 260, 107, 31);
-		panel.add(buttonVolver2);
-			
+	private Persona per;
 		
-	}
-	
-	public VBusPer(VPrincipal vMain, boolean modal, Persona persona, ContDatosBusq datos) {
-		super(vMain);
+	public VBusPer(VIniciarSesion vInicio, boolean modal, String dni, ContDatosBusq datos) {
+		super(vInicio);
 		this.setModal(modal);
-		setBounds(100, 100, 447, 745);
+		setBounds(100, 100, 447, 401);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new CardLayout(0, 0));
+		setUndecorated(true);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPanel.add(tabbedPane, "name_19326072116700");
+		tabbedPane.setBounds(0, 0, 0, 0);
+		contentPanel.add(tabbedPane);
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Datos", null, panel_2, null);
 		panel_2.setLayout(null);
@@ -561,88 +348,98 @@ public class VBusPer extends JDialog {
 		buttonVolver1.setBounds(293, 260, 107, 31);
 		panel_2.add(buttonVolver1);
 
-		if (persona != null) {
-			textDni.setText(persona.getDni());
-			textNombre.setText(persona.getNombre());
-			textApellido.setText(persona.getApellido());
-			textTelefonoM.setText(persona.getTelefonos().toString());
-			textTelefonoO.setText(persona.getTelefonos().toString());
-			textLocalidad.setText(persona.getLocalidad());
+		if (per != null) {
+			textDni.setText(per.getDni());
+			textNombre.setText(per.getNombre());
+			textApellido.setText(per.getApellido());
+			textTelefonoM.setText(per.getTelefonos().toString());
+			textTelefonoO.setText(per.getTelefonos().toString());
+			textLocalidad.setText(per.getLocalidad());
 
-			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			String fechaNac = persona.getFechaNac().format(formateador);
-			String fechaFal = persona.getFechaFal().format(formateador);
+			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String fechaNac = per.getFechaNac().format(formateador);
+			String fechaFal = per.getFechaFal().format(formateador);
 
 			textNacimiento.setText(fechaNac);
 			textFallecimiento.setText(fechaFal);
 			
-			if(persona instanceof Agente) {
-				textDni.setText(persona.getDni());
-				textNombre.setText(persona.getNombre());
-				textApellido.setText(persona.getApellido());
+			if(per instanceof Agente) {
+				textDni.setText(per.getDni());
+				textNombre.setText(per.getNombre());
+				textApellido.setText(per.getApellido());
 				
 				ocultarDatosPersona();
 				mostrarDatosAgente();
 				
-				textRango.setText(((Agente) persona).getRango());
-				String inicio = ((Agente) persona).getInicioServ().format(formateador);
-				String fin = ((Agente) persona).getFinServ().format(formateador);
+				textRango.setText(((Agente) per).getRango());
+				String inicio = ((Agente) per).getInicioServ().format(formateador);
+				String fin = ((Agente) per).getFinServ().format(formateador);
 				textInicioServ.setText(inicio);
 				textFinServ.setText(fin);
-			}else if(persona instanceof Criminal) {
-				textDni.setText(persona.getDni());
-				textNombre.setText(persona.getNombre());
-				textApellido.setText(persona.getApellido());
+			}else if(per instanceof Criminal) {
+				textDni.setText(per.getDni());
+				textNombre.setText(per.getNombre());
+				textApellido.setText(per.getApellido());
 				
 				ocultarDatosPersona();
 				mostrarDatosCriminal();
 				
-				textFechaArresto.setText(((Criminal) persona).getFechasArresto().toString());
-				if(((Criminal) persona).isPrisionero()) {
+				textFechaArresto.setText(((Criminal) per).getFechasArresto().toString());
+				if(((Criminal) per).isPrisionero()) {
 					textPrisionero.setText("Si");
 				}else {
 					textPrisionero.setText("No");
 				}
-			}else if(persona instanceof Desaparecida) {
-				textDni.setText(persona.getDni());
-				textNombre.setText(persona.getNombre());
-				textApellido.setText(persona.getApellido());
+			}else if(per instanceof Desaparecida) {
+				textDni.setText(per.getDni());
+				textNombre.setText(per.getNombre());
+				textApellido.setText(per.getApellido());
 				
 				ocultarDatosPersona();
 				mostrarDatosDesaparecido();
 				
-				textAltura.setText(Float.toString(((Desaparecida) persona).getAltura()));
-				textColorO.setText(((Desaparecida) persona).getColorOjos());
-				textColorP.setText(((Desaparecida) persona).getColorPelo());
-				textEspecificaciones.setText(((Desaparecida) persona).getEspecificaciones());
+				textAltura.setText(Float.toString(((Desaparecida) per).getAltura()));
+				textColorO.setText(((Desaparecida) per).getColorOjos());
+				textColorP.setText(((Desaparecida) per).getColorPelo());
+				textEspecificaciones.setText(((Desaparecida) per).getEspecificaciones());
 				
-				String fechaDes = ((Desaparecida) persona).getFechaDes().format(formateador);
+				String fechaDes = ((Desaparecida) per).getFechaDes().format(formateador);
 				textFechaDes.setText(fechaDes);
 				
-				textGenero.setText(((Desaparecida) persona).getGenero());
-				textTipoP.setText(((Desaparecida) persona).getTipoPelo());
-				textUltimaUbi.setText(((Desaparecida) persona).getUltimaUbi());
+				textGenero.setText(((Desaparecida) per).getGenero());
+				textTipoP.setText(((Desaparecida) per).getTipoPelo());
+				textUltimaUbi.setText(((Desaparecida) per).getUltimaUbi());
 			}
+		
+			
+		}
+		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.EAST);
+		imagen.setBounds(17, 11, 432, 352);
+		panel_2.add(imagen);
 
+			
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Conocidos", null, panel, null);
 		panel.setLayout(null);
-				
+
 		lblNomAp1 = new JLabel("Nombre y apellidos");
 		lblNomAp1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNomAp1.setBounds(22, 207, 135, 19);
 		panel.add(lblNomAp1);
-				
+
 		JLabel lblNewLabel_4_1_1 = new JLabel("DNI:");
 		lblNewLabel_4_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_4_1_1.setBounds(82, 237, 35, 14);
 		panel.add(lblNewLabel_4_1_1);
-				
+
 		JLabel lblNewLabel_5_1_1 = new JLabel("Relacion:");
 		lblNewLabel_5_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_5_1_1.setBounds(54, 262, 63, 14);
 		panel.add(lblNewLabel_5_1_1);
-		
+
 		textDni1 = new JTextField();
 		textDni1.setBounds(116, 53, 147, 20);
 		panel.add(textDni1);
@@ -720,9 +517,15 @@ public class VBusPer extends JDialog {
 		buttonVolver2.setBounds(293, 260, 107, 31);
 		panel.add(buttonVolver2);
 
-		nombresCompletos(persona, datos, datos2, conocido);
+		nombresCompletos(per, datos, datos2, conocido);
+
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.EAST);
+		imagen.setBounds(0, 0, 432, 363);
+		panel.add(imagen);
 				
-		}		
+		    
 		
 
 	}
