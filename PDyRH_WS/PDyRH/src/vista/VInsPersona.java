@@ -1031,19 +1031,35 @@ public class VInsPersona extends JDialog implements ActionListener {
 	private void altaPersona() {
 		if (rdbtnNewRadioButton.isSelected()) {
 			Agente agen = new Agente();
-			String telefonos[] = { textTelefonoM.getText(), textTelefonoO.getText() };
-			int telf[] = new int[telefonos.length];
+			int telefonoM = 0;
+			int telefonoO = 0;
+			LocalDate fechaNac=null;
+			LocalDate fechaFall=null;
+			if(!textNacimiento.getText().isEmpty()) {
+				fechaNac = stringDate(textNacimiento.getText());
+			}else if (!textFallecimiento.getText().isEmpty()) {
+				fechaFall = stringDate(textFallecimiento.getText());
+			}
+			
+			if(!textTelefonoM.getText().isEmpty()) {
+				telefonoM = stringInt(textTelefonoM.getText());
+			}else if (!textTelefonoO.getText().isEmpty()) {
+				telefonoO = stringInt(textTelefonoO.getText());
+			}
+			
+			int telefonos[] = { telefonoM, telefonoO};
+			int telf[] = new int[telefonos.length];	
 			for (int i = 0; i < telefonos.length; i++) {
-				telf[i] = Integer.parseInt(telefonos[i]);
+				telf[i] = telefonos[i];
 			}
 			agen.setDni(textDni.getText());
 			agen.setNombre(textNombre.getText());
 			agen.setApellido(textApellido.getText());
 			agen.setTelefonos(telf);
 			agen.setLocalidad(textLocalidad.getText());
-			agen.setFechaNac(stringDate(textNacimiento.getText()));
-			agen.setFechaFal(stringDate(textFallecimiento.getText()));
-			agen.setRango(textFieldRango.getText());
+			agen.setFechaNac(fechaNac);
+			agen.setFechaFal(fechaFall);
+			agen.setRango(stringInt(textFieldRango.getText()));
 			agen.setInicioServ(stringDate(textFieldInServ.getText()));
 			agen.setFinServ(stringDate(textFieldFinServ.getText()));
 			((ContBDImpleInsertPer) datos1).altaPersona(agen);
@@ -1052,25 +1068,50 @@ public class VInsPersona extends JDialog implements ActionListener {
 
 		} else if (rdbtnNewRadioButton_1.isSelected()) {
 			Desaparecida des = new Desaparecida();
-			String telefonos[] = { textTelefonoM.getText(), textTelefonoO.getText() };
-			int telf[] = new int[telefonos.length];
-			for (int i = 0; i < telefonos.length; i++) {
-				telf[i] = Integer.parseInt(telefonos[i]);
+			int telefonoM = 0;
+			int telefonoO = 0;
+			int altura = 0;
+			LocalDate fechaNac = null;
+			LocalDate fechaFall = null;
+			LocalDate fechaDes = null;
+			if(!textNacimiento.getText().isEmpty()) {
+				fechaNac = stringDate(textNacimiento.getText());
+			}else if (!textFallecimiento.getText().isEmpty()) {
+				fechaFall = stringDate(textFallecimiento.getText());
+			}else if (!textFieldFechDes.getText().isEmpty()) {
+				fechaDes = stringDate(textFieldFechDes.getText());
 			}
+			
+			if(!textTelefonoM.getText().isEmpty()) {
+				telefonoM = stringInt(textTelefonoM.getText());
+			}else if (!textTelefonoO.getText().isEmpty()) {
+				telefonoO = stringInt(textTelefonoO.getText());
+			}
+			
+			int telefonos[] = { telefonoM, telefonoO};
+			int telf[] = new int[telefonos.length];	
+			for (int i = 0; i < telefonos.length; i++) {
+				telf[i] = telefonos[i];
+			}
+			
+			if (!textFieldAltura.getText().isEmpty()) {
+				altura = stringInt(textFieldAltura.getText());
+			}
+			
 			des.setDni(textDni.getText());
 			des.setNombre(textNombre.getText());
 			des.setApellido(textApellido.getText());
 			des.setTelefonos(telf);
 			des.setLocalidad(textLocalidad.getText());
-			des.setFechaNac(stringDate(textNacimiento.getText()));
-			des.setFechaFal(stringDate(textFallecimiento.getText()));
-			des.setFechaDes(stringDate(textFieldFechDes.getText()));
+			des.setFechaNac(fechaNac);
+			des.setFechaFal(fechaFall);
+			des.setFechaDes(fechaDes);
 			des.setUltimaUbi(textFieldUltUbi.getText());
 			des.setGenero(textFieldGenero.getText());
 			des.setTipoPelo(textFieldTipoPelo.getText());
 			des.setColorPelo(textFieldColorPelo.getText());
 			des.setColorOjos(textFieldColorOjos.getText());
-			des.setAltura(stringInt(textFieldAltura.getText()));
+			des.setAltura(altura);
 			des.setEspecificaciones(textFieldEspecifi.getText());
 			((ContBDImpleInsertPer) datos1).altaPersona(des);
 			limpiar();
@@ -1078,13 +1119,33 @@ public class VInsPersona extends JDialog implements ActionListener {
 
 		} else if (rdbtnNewRadioButton_2.isSelected()) {
 			Criminal crim = new Criminal();
-			String telefonos[] = { textTelefonoM.getText(), textTelefonoO.getText() };
-			String arrDate = textFieldFechArresto.getText();
+			LocalDate arrDate = null;
 			ArrayList<LocalDate> arrest = new ArrayList<LocalDate>();
-			arrest.add(LocalDate.parse(arrDate));
-			int telf[] = new int[telefonos.length];
+			int telefonoM = 0;
+			int telefonoO = 0;
+			LocalDate fechaNac=null;
+			LocalDate fechaFall=null;
+			
+			if(!textNacimiento.getText().isEmpty()) {
+				fechaNac = stringDate(textNacimiento.getText());
+			}else if (!textFallecimiento.getText().isEmpty()) {
+				fechaFall = stringDate(textFallecimiento.getText());
+			}
+			
+			if(!textFieldFechArresto.getText().isEmpty()) {
+			arrDate = stringDate(textFieldFechArresto.getText());
+			}
+			arrest.add(arrDate);
+			
+			if(!textTelefonoM.getText().isEmpty()) {
+				telefonoM = stringInt(textTelefonoM.getText());
+			}else if (!textTelefonoO.getText().isEmpty()) {
+				telefonoO = stringInt(textTelefonoO.getText());
+			}
+			int telefonos[] = { telefonoM, telefonoO};
+			int telf[] = new int[telefonos.length];	
 			for (int i = 0; i < telefonos.length; i++) {
-				telf[i] = Integer.parseInt(telefonos[i]);
+				telf[i] = telefonos[i];
 			}
 
 			crim.setDni(textDni.getText());
@@ -1092,8 +1153,8 @@ public class VInsPersona extends JDialog implements ActionListener {
 			crim.setApellido(textApellido.getText());
 			crim.setTelefonos(telf);
 			crim.setLocalidad(textLocalidad.getText());
-			crim.setFechaNac(stringDate(textNacimiento.getText()));
-			crim.setFechaFal(stringDate(textFallecimiento.getText()));
+			crim.setFechaNac(fechaNac);
+			crim.setFechaFal(fechaFall);
 			crim.setFechasArresto(arrest);
 			((ContBDImpleInsertPer) datos1).altaPersona(crim);
 			limpiar();

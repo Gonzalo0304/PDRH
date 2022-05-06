@@ -583,8 +583,7 @@ public class VBusPer extends JDialog {
 				
 				ocultarDatosPersona();
 				mostrarDatosAgente();
-				
-				textRango.setText(((Agente) persona).getRango());
+				textRango.setText(intString(((Agente) persona).getRango()));
 				String inicio = ((Agente) persona).getInicioServ().format(formateador);
 				String fin = ((Agente) persona).getFinServ().format(formateador);
 				textInicioServ.setText(inicio);
@@ -799,5 +798,10 @@ public class VBusPer extends JDialog {
 	private void volver2() {
 		// TODO Auto-generated method stub
 		this.dispose();
+	}
+	
+	private String intString(int i) {
+		String rangoNum = String.valueOf(i);
+		return rangoNum;
 	}
 }

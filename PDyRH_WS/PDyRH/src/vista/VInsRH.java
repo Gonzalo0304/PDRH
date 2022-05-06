@@ -52,7 +52,7 @@ public class VInsRH extends JDialog {
 	private JButton btnAnadir;
 	private JComboBox comboBox;
 	private JTextField textColorO;
-	private ContDatosRH datos1;
+	private ContBDImpleRH datos1;
 	private VIniciarSesion vInicio = null;
 	
 	/**
@@ -332,6 +332,7 @@ public class VInsRH extends JDialog {
 	public VInsRH(VIniciarSesion vInicio, boolean modal) {
 		super(vInicio);
 		this.setModal(modal);
+		datos1 = new ContBDImpleRH(); 
 		
 		setTitle("Insertar Resto Humano");
 		setBounds(100, 100, 479, 460);
@@ -589,15 +590,29 @@ public class VInsRH extends JDialog {
 	
 	private void altaRH() {
 		RestoHumano rh = new RestoHumano();
+		LocalDate fechaMuer = null;
+		int altura = 0;
+		if(!textFecha.getText().isEmpty()) {
+			fechaMuer = stringDate(textFecha.getText());
+		}
+		
+		if(!textAltura.getText().isEmpty()) {
+			altura = stringInt(textAltura.getText());
+		}
+		
 		rh.setCodResto(textCodigo.getText());
 		rh.setCausa(textCausa.getText());
-		rh.setFechaMuerte(stringDate(textFecha.getText()));
+		rh.setFechaMuerte(fechaMuer);
 		rh.setUbicacion(textUbicacion.getText());
-		rh.setGenero(comboBox.getSelectedItem().toString());
+		if (comboBox.getSelectedItem() == "Hombre") {
+			rh.setGenero("H");
+		}else if (comboBox.getSelectedItem() == "Mujer") {
+			rh.setGenero("M");
+		}
 		rh.setTipoPelo(textTipoP.getText());
 		rh.setColorPelo(textColorP.getText());
 		rh.setColorOjos(textColorO.getText());
-		rh.setAltura(stringInt(textAltura.getText()));
+		rh.setAltura(altura);
 		rh.setEspecificaciones(textEspecificaciones.getText());
 		((ContBDImpleRH) datos1).altaRH(rh);
 		limpiar();

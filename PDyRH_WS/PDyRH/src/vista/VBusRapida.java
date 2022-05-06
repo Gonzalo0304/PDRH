@@ -78,7 +78,7 @@ public class VBusRapida extends JDialog {
 		buttonBusR.setForeground(new Color(255, 255, 255));
 		buttonBusR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				habilitarBoton();
+				busRapida(vMain, datos2, datos);
 			}
 		});
 		buttonBusR.setBackground(new Color(122, 42, 42));
@@ -216,6 +216,21 @@ public class VBusRapida extends JDialog {
 		// TODO Auto-generated method stub
 		
 	}
+	private void busRapida(VPrincipal vMain, ContDatosBusqRap datos2, ContDatosBusq datos) {
+		// TODO Auto-generated method stub
+		persona = new Persona();
+		personas = new TreeMap<>();
+		personas = datos2.obtenerPersonas(persona.getNombre());
+		
+		if(textVBusquedaRapida.getText().equalsIgnoreCase(persona.getNombre())) {
+			VListarPersonas listaPer = new VListarPersonas(vMain, true, personas.get(persona.getNombre()), datos);
+			this.dispose();
+			listaPer.setVisible(true);
+		}else{
+			JOptionPane.showMessageDialog(this, "No se han encontrado coincidencias");
+		}
+	}
+
 	
 	private void volver() {
 		VPrincipal principal = new VPrincipal();
