@@ -112,7 +112,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				tipo = rs.getString("tipo");
 				if (tipo.equalsIgnoreCase("agente")) {
 					per = new Agente();
-					((Agente) per).setRango(rs.getString("rango"));
+					((Agente) per).setRango(rs.getInt("rango"));
 					((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
 					((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
 				} else if (tipo.equalsIgnoreCase("criminal")) {

@@ -2,7 +2,6 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -21,6 +20,7 @@ import java.awt.event.ActionEvent;
 
 public class VBusRH extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textCodigo;
 	private JTextField textCausa;
@@ -34,28 +34,15 @@ public class VBusRH extends JDialog {
 	private JTextField textCodCaso;
 	private JTextField textIdentificacion;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			VBusRH dialog = new VBusRH();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public VBusRH() {
+	public VBusRH(VIniciarSesion padre, boolean modal, String string) {
+		super(padre);
+		setModal(modal);
 		setTitle("Buscar Resto Humano");
 		setBounds(100, 100, 461, 451);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();

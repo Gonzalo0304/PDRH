@@ -18,6 +18,7 @@ public class ContBDImpleComp implements ContDatosComp {
 	// <--- Sentencias --->
 	final String SELECTrhs = "SELECT * FROM restohumano";
 	final String SELECTdesaparecidas = "SELECT * FROM desaparecida";
+	final String SELECTidentificado = "SELECT dni FROM identifica WHERE codResto = ?";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -81,7 +82,10 @@ public class ContBDImpleComp implements ContDatosComp {
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(rs.getString("codCaso"));
 				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
-				restos.put(resto.getCodResto(), resto);
+				
+				if (obtenerIdentificado(resto.getCodResto()) == null) {
+					restos.put(resto.getCodResto(), resto);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -141,5 +145,36 @@ public class ContBDImpleComp implements ContDatosComp {
 		}
 		return desaparecidas;
 	}
-
+	
+	@Override
+	public String obtenerIdentificado(String codResto) {
+		ResultSet rs = null;
+		String dni = null;
+		
+		this.openConnection();
+		
+		try {
+			stmnt = con.prepareStatement(SELECTidentificado);
+			stmnt.setString(1, codResto);
+			
+			rs = stmnt.executeQuery();
+			
+			if (rs.next()) {
+				dni = rs.getString("dni");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
+		}
+		
+		return dni;
+	}
 }

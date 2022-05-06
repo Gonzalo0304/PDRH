@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Agente extends Persona {
 	// <--- Atributos --->
-	private String rango;
+	private int rango;
 	private LocalDate inicioServ;
 	private LocalDate finServ;
 	
@@ -14,7 +14,7 @@ public class Agente extends Persona {
 	}
 
 	public Agente(String dni, String nombre, String apellido, int[] telefonos, String localidad, LocalDate fechaNac,
-			LocalDate fechaFal, String rango, LocalDate inicioServ, LocalDate finServ) {
+			LocalDate fechaFal, int rango, LocalDate inicioServ, LocalDate finServ) {
 		super(dni, nombre, apellido, telefonos, localidad, fechaNac, fechaFal);
 		this.rango = rango;
 		this.inicioServ = inicioServ;
@@ -22,11 +22,11 @@ public class Agente extends Persona {
 	}
 	
 	// <--- Getters y Setters --->
-	public String getRango() {
+	public int getRango() {
 		return rango;
 	}
 
-	public void setRango(String rango) {
+	public void setRango(int rango) {
 		this.rango = rango;
 	}
 
