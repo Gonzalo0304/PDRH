@@ -125,6 +125,11 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 				cerrar();
 			}
 		});
+		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar.setForeground(Color.WHITE);
+		lblCerrar.setBounds(573, 2, 31, 19);
+		contentPane.add(lblCerrar);
 		
 		separator1 = new JSeparator();
 		separator1.setForeground(new Color(102, 0, 0));
@@ -137,11 +142,6 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		lblComparacinPdyrh.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblComparacinPdyrh.setBounds(24, 60, 151, 19);
 		contentPane.add(lblComparacinPdyrh);
-		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblCerrar.setForeground(Color.WHITE);
-		lblCerrar.setBounds(573, 2, 31, 19);
-		contentPane.add(lblCerrar);
 		
 		separator = new JSeparator();
 		separator.setBackground(Color.DARK_GRAY);
@@ -239,6 +239,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 						String codigo = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
 
 						VComRH vComp = new VComRH(padre, true, dni, codigo, info);
+						cer();
 						vComp.setVisible(true);
 					}
 				});
@@ -366,5 +367,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	@Override
 	public String obtenerIdentificado(String codResto) {
 		return null;
+	}
+	public void cer() {
+		this.dispose();
 	}
 }
