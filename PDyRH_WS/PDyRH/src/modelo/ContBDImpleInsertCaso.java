@@ -61,8 +61,18 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 			stmnt.setString(1, caso.getCodCaso());
 			stmnt.setString(2, caso.getEstado());
 			stmnt.setString(3, caso.getNombre());
-			stmnt.setDate(4, Date.valueOf(caso.getFechaIni()));
-			stmnt.setDate(5, Date.valueOf(caso.getFechaFin()));
+			
+			if(caso.getFechaIni() != null) {
+				stmnt.setDate(4, Date.valueOf(caso.getFechaIni()));
+			}else {
+				stmnt.setDate(4, null);
+			}
+			
+			if(caso.getFechaFin() != null) {
+				stmnt.setDate(5, Date.valueOf(caso.getFechaFin()));
+			}else {
+				stmnt.setDate(5, null);
+			}
 			
 			stmnt.executeUpdate();
 		} catch (SQLException e) {

@@ -1,5 +1,6 @@
 package vista;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -10,69 +11,63 @@ import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import javax.swing.JButton;
 import java.awt.Button;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.SystemColor;
 import java.awt.Font;
+import java.awt.Image;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import java.awt.Component;
 import javax.swing.border.LineBorder;
+import javax.swing.UIManager;
+import java.awt.Panel;
+import java.awt.FlowLayout;
 
-import controlador.DataFactoryIS;
-import controlador.interfaces.ControladorDatosIS;
+public class VIniciarSesion extends JFrame implements ActionListener {
 
-public class VIniciarSesion extends JFrame implements ActionListener,ControladorDatosIS {
-
-	private static final long serialVersionUID = 1L;
-	
-	// <--- Elementos --->
 	private JPanel contentPane;
 	private JTextField txtUsuario;
 	private JPasswordField passwordField;
 	private static Point point = new Point();
 	private Button buttonIS;
-	private JLabel lblContra;
-	private JLabel lblCerrar;
-	private JLabel lblUsuario;
-	private JLabel lblIntroUsu;
-	private JLabel lblIntroContra;
-	private JPanel panelBlanco;
-	private JLabel imgErtz;
-	private JLabel imgVizIz;
-	private JLabel lblPDyRH;
-	private JSeparator separator1;
-	private JSeparator separator2;
-	private JSeparator separator3;
-	private JLabel lblInfo;
-	private JLabel imgVizDer;
-	
-	// <--- Datos BD --->
-	ControladorDatosIS datos = DataFactoryIS.getDatos();
-	
-	// <--- Ejecución --->
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFrame frame = new VIniciarSesion();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
+	private JTextField textIdentificador;
+	private JButton btnSalir;
+	private JButton btnAceptar;
+	private JPasswordField contrasena;
+
+
+	/**
+	 * Launch the application.
+	 */
+
+
+	/**
+	 * Create the frame.
+	 * @param vBusRapida 
+	 * @param vPrincipal 
+	 */
 	public VIniciarSesion() {
-		// <--- Diseño ventana --->
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 336);
@@ -82,7 +77,6 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		contentPane.setBorder(new LineBorder(new Color(25, 25, 112), 2));
 		setContentPane(contentPane);
 		setUndecorated(true); // Sin borde predeterminado
-		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		
 		// Movimiento de la ventana
@@ -104,26 +98,10 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		buttonIS.setFont(new Font("Tahoma", Font.BOLD, 12));
 		buttonIS.setForeground(Color.WHITE);
 		buttonIS.setBackground(new Color(153, 0, 0));
-		buttonIS.setBounds(341, 271, 126, 31);
+		buttonIS.setBounds(341, 252, 126, 31);
 		contentPane.add(buttonIS);
-		
-		// En caso de textField de Usuario vacío
-		lblIntroUsu = new JLabel("Introduce el usuario");
-		lblIntroUsu.setVisible(false);
-		lblIntroUsu.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblIntroUsu.setForeground(new Color(153, 0, 0));
-		lblIntroUsu.setBounds(341, 133, 114, 14);
-		contentPane.add(lblIntroUsu);
-		
-		// En caso de textField de Contraseña vacío
-		lblIntroContra = new JLabel("Introduce la contrase\u00F1a");
-		lblIntroContra.setVisible(false);
-		lblIntroContra.setForeground(new Color(153, 0, 0));
-		lblIntroContra.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblIntroContra.setBounds(341, 226, 136, 14);
-		contentPane.add(lblIntroContra);
 
-		panelBlanco = new JPanel();
+		JPanel panelBlanco = new JPanel();
 		panelBlanco.setForeground(new Color(0, 0, 0));
 		panelBlanco.setBorder(new LineBorder(SystemColor.controlShadow));
 		panelBlanco.setBackground(Color.WHITE);
@@ -131,13 +109,13 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		contentPane.add(panelBlanco);
 		panelBlanco.setLayout(null);
 
-		imgErtz = new JLabel("New label");
-		imgErtz.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\Ertzaintza3.png"));
+		JLabel imgErtz = new JLabel("New label");
+		imgErtz.setIcon(new ImageIcon(VIniciarSesion.class.getResource("/images/Ertzaintza3.png")));
 		imgErtz.setBounds(40, 58, 231, 216);
 		panelBlanco.add(imgErtz);
 
-		imgVizIz = new JLabel("New label");
-		imgVizIz.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\pais-vasco1.png"));
+		JLabel imgVizIz = new JLabel("New label");
+		imgVizIz.setIcon(new ImageIcon(VIniciarSesion.class.getResource("/images/pais-vasco1.png")));
 		imgVizIz.setBounds(-89, 0, 483, 336);
 		panelBlanco.add(imgVizIz);
 
@@ -147,7 +125,7 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
 
-		lblUsuario = new JLabel("USUARIO");
+		JLabel lblUsuario = new JLabel("USUARIO");
 		lblUsuario.setForeground(SystemColor.controlHighlight);
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblUsuario.setBounds(341, 63, 81, 28);
@@ -158,9 +136,8 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		passwordField.setForeground(Color.BLACK);
 		passwordField.setBounds(341, 195, 283, 31);
 		contentPane.add(passwordField);
-		
-		// Botón para cerrar la ventana
-		lblCerrar = new JLabel("x");
+
+		JLabel lblCerrar = new JLabel("x");
 		lblCerrar.setBackground(new Color(153, 0, 0));
 		lblCerrar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -184,100 +161,56 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		lblCerrar.setBounds(644, 0, 31, 19);
 		contentPane.add(lblCerrar);
 
-		lblContra = new JLabel("CONTRASE\u00D1A");
+		JLabel lblContra = new JLabel("CONTRASE\u00D1A");
 		lblContra.setForeground(SystemColor.controlHighlight);
 		lblContra.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblContra.setBounds(341, 156, 114, 28);
 		contentPane.add(lblContra);
 
-		lblPDyRH = new JLabel("Personas Desaparecidas y Restos Humanos");
+		JLabel lblPDyRH = new JLabel("Personas Desaparecidas y Restos Humanos");
 		lblPDyRH.setForeground(SystemColor.activeCaptionBorder);
 		lblPDyRH.setFont(new Font("Nirmala UI", Font.BOLD, 14));
-		lblPDyRH.setBounds(329, 24, 295, 19);
+		lblPDyRH.setBounds(329, 11, 295, 19);
 		contentPane.add(lblPDyRH);
 
-		separator1 = new JSeparator();
+		JSeparator separator1 = new JSeparator();
 		separator1.setForeground(new Color(102, 0, 0));
 		separator1.setBackground(new Color(153, 0, 0));
-		separator1.setBounds(329, 50, 303, 2);
+		separator1.setBounds(329, 37, 303, 2);
 		contentPane.add(separator1);
 
-		separator2 = new JSeparator();
+		JSeparator separator2 = new JSeparator();
 		separator2.setForeground(SystemColor.controlShadow);
 		separator2.setBackground(SystemColor.controlHighlight);
 		separator2.setBounds(341, 89, 114, 2);
 		contentPane.add(separator2);
 
-		separator3 = new JSeparator();
+		JSeparator separator3 = new JSeparator();
 		separator3.setForeground(SystemColor.controlShadow);
 		separator3.setBackground(SystemColor.controlHighlight);
 		separator3.setBounds(341, 182, 114, 2);
 		contentPane.add(separator3);
 
-		lblInfo = new JLabel("El uso no autorizado de esta aplicaci\u00F3n queda totalmente prohibido.");
+		JLabel lblInfo = new JLabel("El uso no autorizado de esta aplicaci\u00F3n queda totalmente prohibido.");
 		lblInfo.setForeground(SystemColor.controlHighlight);
 		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		lblInfo.setBounds(431, 308, 244, 28);
 		contentPane.add(lblInfo);
 
-		imgVizDer = new JLabel("New label");
-		imgVizDer.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\pais-vasco1A.png"));
+		JLabel imgVizDer = new JLabel("New label");
+		imgVizDer.setIcon(new ImageIcon(VIniciarSesion.class.getResource("/images/pais-vasco1A.png")));
 		imgVizDer.setBounds(-89, 0, 723, 336);
 		contentPane.add(imgVizDer);
 	}
-	
-	// <--- Métodos --->
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(buttonIS)) {
-			verificar();
-		}
-		
-	}
-	
-	// Cerrar la ventana
-	public void cerrar() {
+
+	protected void cerrar() {
 		this.dispose();
-	}
-	
-	// Comprobar los datos introducidos
-	private void verificar() {
-		boolean vacio = false;
-		lblIntroUsu.setVisible(false);
-		lblIntroContra.setVisible(false);
-		
-		if (txtUsuario.getText().isBlank()) {
-			lblIntroUsu.setVisible(true);
-			vacio = true;
-		}
-		if (new String(passwordField.getPassword()).isBlank()) {
-			lblIntroContra.setVisible(true);
-			vacio = true;
-		}
-		if (!vacio) {
-			String[] info = new String[3];
-			info = comprobarCredenciales(txtUsuario.getText());
-			if (info == null) {
-				JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos.", "Identificación fallida.", JOptionPane.ERROR_MESSAGE);
-			} else {
-				VPrincipal main = new VPrincipal(this,true,info);
-				this.dispose();
-				main.setVisible(true);
-			}
-		}
-		txtUsuario.setText("");
-		passwordField.setText("");
 	}
 
 	@Override
-	public String[] comprobarCredenciales(String usuario) {
-		String[] info = new String[3];
-		info = datos.comprobarCredenciales(usuario);
-		if (info != null) {
-			if (info[1].equals(new String(passwordField.getPassword()))) {
-				return datos.comprobarCredenciales(usuario);
-			}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(buttonIS)) {
+			
 		}
-		return null;
 	}
 }

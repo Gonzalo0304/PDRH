@@ -1,9 +1,12 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JMenu;
@@ -13,6 +16,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import controlador.ContDatosRH;
+import controlador.interfaces.ContDatosBusq;
+import controlador.interfaces.ContDatosBusqRH;
+import modelo.clases.Persona;
+import modelo.clases.RestoHumano;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -20,7 +34,6 @@ import java.awt.event.ActionEvent;
 
 public class VBusRH extends JDialog {
 
-	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textCodigo;
 	private JTextField textCausa;
@@ -33,16 +46,40 @@ public class VBusRH extends JDialog {
 	private JTextField textEspecificacion;
 	private JTextField textCodCaso;
 	private JTextField textIdentificacion;
+	private JTextField textColorO;
+	private Button buttonVolver;
+	private JLabel imagen;
+	
+	private Persona persona;
+	private ContDatosBusqRH datos2;
+	
+	
 
-	public VBusRH(VIniciarSesion padre, boolean modal, String string, String[] info) {
-		super(padre);
-		setModal(modal);
+	/**
+	 * Launch the application.
+	 */
+	/**
+	 * Create the dialog.
+	 * @param datos 
+	 * @param restoHumano 
+	 * @param b 
+	 * @param vInicio 
+	 * @param datos 
+	 * @param restoHumano 
+	 * @param b 
+	 * @param vBusqueda 
+
+	 */
+	
+	
+	public VBusRH(VPrincipal vMain, boolean modal, RestoHumano restoHumano, ContDatosBusq datos) {
+		super(vMain);
+		this.setModal(modal);
 		setTitle("Buscar Resto Humano");
-		setBounds(100, 100, 461, 451);
+		setBounds(350, 150, 710, 460);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -160,7 +197,7 @@ public class VBusRH extends JDialog {
 		
 		JLabel lblAltura = new JLabel("Altura");
 		lblAltura.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblAltura.setBounds(71, 240, 46, 14);
+		lblAltura.setBounds(71, 272, 46, 14);
 		contentPanel.add(lblAltura);
 		
 		JLabel lblColorDePelo = new JLabel("Color de pelo");
@@ -170,17 +207,17 @@ public class VBusRH extends JDialog {
 		
 		JLabel lblEspecificacion = new JLabel("Especificacion");
 		lblEspecificacion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEspecificacion.setBounds(30, 265, 87, 14);
+		lblEspecificacion.setBounds(30, 297, 87, 14);
 		contentPanel.add(lblEspecificacion);
 		
 		JLabel lblCodigoDeCaso = new JLabel("Codigo de caso");
 		lblCodigoDeCaso.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCodigoDeCaso.setBounds(20, 294, 87, 14);
+		lblCodigoDeCaso.setBounds(20, 322, 87, 14);
 		contentPanel.add(lblCodigoDeCaso);
 		
 		JLabel lblIdentificado = new JLabel("Identificado");
 		lblIdentificado.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblIdentificado.setBounds(33, 319, 74, 14);
+		lblIdentificado.setBounds(30, 347, 74, 14);
 		contentPanel.add(lblIdentificado);
 		
 		textCodigo = new JTextField();
@@ -220,21 +257,22 @@ public class VBusRH extends JDialog {
 		
 		textAltura = new JTextField();
 		textAltura.setColumns(10);
-		textAltura.setBounds(117, 238, 188, 20);
+		textAltura.setBounds(117, 270, 188, 20);
 		contentPanel.add(textAltura);
 		
 		textEspecificacion = new JTextField();
 		textEspecificacion.setColumns(10);
-		textEspecificacion.setBounds(117, 263, 188, 20);
+		textEspecificacion.setBounds(117, 295, 188, 20);
 		contentPanel.add(textEspecificacion);
 		
 		textCodCaso = new JTextField();
 		textCodCaso.setColumns(10);
-		textCodCaso.setBounds(117, 292, 188, 20);
+		textCodCaso.setBounds(114, 345, 188, 20);
 		contentPanel.add(textCodCaso);
 		
 		textIdentificacion = new JTextField();
 		textIdentificacion.setColumns(10);
+		textIdentificacion.setBounds(117, 345, 188, 20);
 		textIdentificacion.setBounds(117, 317, 188, 20);
 		contentPanel.add(textIdentificacion);
 		
@@ -247,8 +285,52 @@ public class VBusRH extends JDialog {
 		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnVolver.setBounds(346, 370, 89, 31);
 		contentPanel.add(btnVolver);
+		
+		JLabel lblColorOjos = new JLabel("Color de ojos");
+		lblColorOjos.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblColorOjos.setBounds(30, 247, 77, 14);
+		contentPanel.add(lblColorOjos);
+		
+		textColorO = new JTextField();
+		textColorO.setBounds(117, 240, 188, 20);
+		contentPanel.add(textColorO);
+		textColorO.setColumns(10);
+		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.CENTER);
+		imagen.setBounds(0, 37, 607, 362);
+		contentPanel.add(imagen);
+		
+		if(restoHumano!=null) {
+			textCodigo.setText(restoHumano.getCodResto());
+			textCausa.setText(restoHumano.getCausa());
+			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String fecha = restoHumano.getFechaMuerte().format(formateador);
+			textFecha.setText(fecha);
+			textUbicacion.setText(restoHumano.getUbicacion());
+			textGenero.setText(restoHumano.getGenero());
+			textTipoP.setText(restoHumano.getTipoPelo());
+			textColorP.setText(restoHumano.getColorPelo());
+			textColorO.setText(restoHumano.getColorOjos());
+			textAltura.setText(Float.toString(restoHumano.getAltura()));
+			textEspecificacion.setText(restoHumano.getEspecificaciones());
+			textCodCaso.setText(restoHumano.getCodCaso());
+			identificado(persona, restoHumano, datos2);
+		}
+		
+		
 	}
 	
+	private void identificado(Persona persona, RestoHumano restoHumano, ContDatosBusqRH datos2) {
+		// TODO Auto-generated method stub
+		persona = new Persona();
+		String idnt = datos2.obtenerIdentificado(persona.getDni());
+		
+		textIdentificacion.setText(idnt);
+		
+	}
+
 	private void volver() {
 		// TODO Auto-generated method stub
 		this.dispose();

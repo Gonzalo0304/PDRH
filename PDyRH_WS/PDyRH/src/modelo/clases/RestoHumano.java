@@ -52,8 +52,9 @@ public class RestoHumano {
 	public LocalDate getFechaMuerte() {
 		return fechaMuerte;
 	}
-	public void setFechaMuerte(LocalDate fechaMuerte) {
-		this.fechaMuerte = fechaMuerte;
+
+	public void setFechaMuerte(LocalDate localDate) {
+		this.fechaMuerte = localDate;
 	}
 	public String getUbicacion() {
 		return ubicacion;
