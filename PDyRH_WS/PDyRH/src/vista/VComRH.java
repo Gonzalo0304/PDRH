@@ -33,7 +33,7 @@ import modelo.clases.Desaparecida;
 
 import javax.swing.ImageIcon;
 
-public class VComRH extends JDialog implements ContDatosCompEsp {
+public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	// <--- Elementos --->
@@ -109,12 +109,14 @@ public class VComRH extends JDialog implements ContDatosCompEsp {
 	private JLabel lblNewLabel;
 	private RestoHumano resto;
 	private Persona des;
-
+	private VIniciarSesion padre;
+	private String[] info;
+	
 	// <--- Datos BD --->
 	ContDatosCompEsp datos = DataFactoryCompEsp.getDatos();
 
 	// <--- Ejecución --->
-	public VComRH(VIniciarSesion padre, boolean modal, String dni, String codigo, String info) {
+	public VComRH(VIniciarSesion padre, boolean modal, String dni, String codigo, String[] infos) {
 		super(padre);
 		this.setModal(modal);
 		setBounds(350, 150, 503, 627);
@@ -125,6 +127,8 @@ public class VComRH extends JDialog implements ContDatosCompEsp {
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
+		this.padre = padre;
+		info = infos;
 		
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
@@ -179,7 +183,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp {
 		menuBar.setBackground(new Color(0, 51, 102));
 		contentPane.add(menuBar);
 
-		menUsuario = new JMenu(" " + info + " ");
+		menUsuario = new JMenu(" " + info[0] + " ");
 		menuBar.add(menUsuario);
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
@@ -191,6 +195,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp {
 		mCerrar.setBackground(new Color(32, 178, 170));
 		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mCerrar.setForeground(Color.BLACK);
+		mCerrar.addActionListener(this);
 		menUsuario.add(mCerrar);
 
 		menuInsertar = new JMenu("Insertar");
@@ -630,7 +635,9 @@ public class VComRH extends JDialog implements ContDatosCompEsp {
 	}
 
 	private void cerrar() {
+		VComparacion vComp = new VComparacion(padre,true,info);
 		this.dispose();
+		vComp.setVisible(true);
 	}
 
 	@Override
@@ -650,5 +657,14 @@ public class VComRH extends JDialog implements ContDatosCompEsp {
 			button.setEnabled(false);
 			JOptionPane.showMessageDialog(this, "Resto identificado correctamente.","Identificación realizada",JOptionPane.CLOSED_OPTION);
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(mCerrar)) {
+			this.dispose();
+			padre.setVisible(true);
+		}
+		
 	}
 }

@@ -261,6 +261,7 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 				JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos.", "Identificación fallida.", JOptionPane.ERROR_MESSAGE);
 			} else {
 				VPrincipal main = new VPrincipal(this,true,info);
+				this.dispose();
 				main.setVisible(true);
 			}
 		}

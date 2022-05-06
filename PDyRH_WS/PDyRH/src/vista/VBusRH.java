@@ -34,7 +34,7 @@ public class VBusRH extends JDialog {
 	private JTextField textCodCaso;
 	private JTextField textIdentificacion;
 
-	public VBusRH(VIniciarSesion padre, boolean modal, String string) {
+	public VBusRH(VIniciarSesion padre, boolean modal, String string, String[] info) {
 		super(padre);
 		setModal(modal);
 		setTitle("Buscar Resto Humano");

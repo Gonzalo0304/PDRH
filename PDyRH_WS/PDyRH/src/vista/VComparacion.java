@@ -68,13 +68,14 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	private JLabel lblImgErtzAC;
 	private JLabel lblComparacinPdyrh;
 	private JSeparator separator1;
-	private String info;
+	private String[] info;
+	private VIniciarSesion padre;
 	
 	// <--- Datos BD --->
 	ContDatosComp datos = DataFactoryComp.getDatos();
 
 	// <--- Ejecución --->
-	public VComparacion(VIniciarSesion padre, boolean modal, String infos) {
+	public VComparacion(VIniciarSesion padre, boolean modal, String[] infos) {
 		super(padre);
 		this.setModal(modal);
 		setTitle("Comparar");
@@ -87,6 +88,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		info = infos;
+		this.padre = padre;
 
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
@@ -152,7 +154,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		menuBar.setBounds(2, 2, 603, 45);
 		contentPane.add(menuBar);
 
-		menUsuario = new JMenu(" " + info + " ");
+		menUsuario = new JMenu(" " + info[0] + " ");
 		menUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
@@ -200,7 +202,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 			for (RestoHumano r : restos.values()) {
 				for (Persona d : desaparecidas.values()) {
 					porcentaje = calcularPor(r, d);
-					if (porcentaje > 60) {
+					if (porcentaje > 54.99) {
 						comp = new Comparacion();
 						comp.setCodResto(r.getCodResto());
 						comp.setDni(d.getDni());
@@ -287,7 +289,9 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 
 	// <--- Métodos --->
 	private void cerrar() {
+		VPrincipal vMain = new VPrincipal(padre,true,info);
 		this.dispose();
+		vMain.setVisible(true);
 	}
 
 	private float calcularPor(RestoHumano rh, Persona des) {
@@ -344,7 +348,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			cerrar();
+			this.dispose();
+			padre.setVisible(true);
 		}
 	}
 

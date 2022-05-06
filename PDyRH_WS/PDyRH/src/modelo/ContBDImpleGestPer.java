@@ -29,7 +29,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	final String INSERTfechaAr = "INSERT INTO fechaarresto(dni,fechaArresto) VALUES(?,?)";
 	final String UPDATEdes = "UPDATE desaparecida SET fechaDes = ?,ultimaUbi = ?,genero = ?,tipoPelo = ?,colorPelo = ?,colorOjos = ?,altura = ?,especificaciones = ? WHERE dni = ?";
 	final String INSERTconoce = "INSERT INTO conoce(dniP1,dniP2,relacion) VALUES(?,?,?)";
-	final String SELECTconoce = "SELECT * FROM persona WHERE dni IN(SELECT dniP2 FROM conoce WHERE dniP1 = ?)";
+	final String SELECTconoce = "SELECT * FROM conoce WHERE dniP1 = ?";
 	final String SELECTfechas = "SELECT fechaArresto FROM fechaarresto WHERE dni = ?";
 	
 	// <--- Conexión --->
@@ -173,7 +173,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				cono.setDni1(rs.getString("dniP1"));
 				cono.setDni2(rs.getString("dniP2"));
 				cono.setRelacion(rs.getString("relacion"));
-				conocidos.put(dni1, cono);
+				conocidos.put(cono.getDni2(), cono);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

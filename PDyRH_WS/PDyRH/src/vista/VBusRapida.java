@@ -34,8 +34,9 @@ public class VBusRapida extends JDialog {
 	 * Create the dialog.
 	 * @param modal 
 	 * @param padre 
+	 * @param info 
 	 */
-	public VBusRapida(VIniciarSesion padre, boolean modal) {
+	public VBusRapida(VIniciarSesion padre, boolean modal, String[] info) {
 		super(padre);
 		this.setModal(true);
 		

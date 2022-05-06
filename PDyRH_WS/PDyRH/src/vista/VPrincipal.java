@@ -76,6 +76,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		this.setModal(modal);
 		contentPane.setLayout(null);
 		info = infos;
+		this.padre = padre;
 
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
@@ -275,54 +276,48 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	// Cerrar la ventana
 	private void cerrar() {
 		this.dispose();
+		padre.setVisible(true);
 	}
 	// Abrir ventanas
 	private void vInsertar() {
 		panelInsert.setBackground(SystemColor.controlShadow);
 		imgInsert.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\laAO.png"));
 		lblInsert.setForeground(new Color(0, 0, 51));
-		VInserciones inserciones = new VInserciones(padre, true, info[0]);
+		VInserciones inserciones = new VInserciones(padre, true, info);
+		this.dispose();
 		inserciones.setVisible(true);
-		panelInsert.setBackground(SystemColor.control);
-		imgInsert.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\la2(1).png"));
-		lblInsert.setForeground(new Color(0, 51, 102));
 	}
 
 	private void vBusqueda() {
 		panelBus.setBackground(SystemColor.controlShadow);
 		imgBuscar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\luAO.png"));
 		lblBuscar.setForeground(new Color(0, 0, 51));
-		VBusqueda busqueda = new VBusqueda(padre, true, info[0]);
+		VBusqueda busqueda = new VBusqueda(padre, true, info);
+		this.dispose();
 		busqueda.setVisible(true);
-		panelBus.setBackground(SystemColor.control);
-		imgBuscar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\lu2(1).png"));
-		lblBuscar.setForeground(new Color(0, 51, 102));
 	}
 
 	private void vGestionar() {
 		panelGest.setBackground(SystemColor.controlShadow);
 		imgGest.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\engAO.png"));
 		lblGestionar.setForeground(new Color(0, 0, 51));
-		VGestion gestionar = new VGestion(padre, true, info[0]);
+		VGestion gestionar = new VGestion(padre, true, info);
+		this.dispose();
 		gestionar.setVisible(true);
-		panelGest.setBackground(SystemColor.control);
-		imgGest.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\eng2(1).png"));
-		lblGestionar.setForeground(new Color(0, 51, 102));
 	}
 
 	private void vComparar() {
 		panelComp.setBackground(SystemColor.controlShadow);
 		imgComparar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\coAO.png"));
 		lblComparar.setForeground(new Color(0, 0, 51));
-		VComparacion comparar = new VComparacion(padre, true, info[0]);
+		VComparacion comparar = new VComparacion(padre, true, info);
+		this.dispose();
 		comparar.setVisible(true);
-		panelComp.setBackground(SystemColor.control);
-		imgComparar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\co2(1).png"));
-		lblComparar.setForeground(new Color(0, 51, 102));
 	}
 	
 	private void vBusRapida() {
-		VBusRapida busRap = new VBusRapida(padre, true);
+		VBusRapida busRap = new VBusRapida(padre, true, info);
+		this.dispose();
 		busRap.setVisible(true);
 	}
 

@@ -73,13 +73,13 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	private ButtonGroup bgTipo;
 	private VIniciarSesion padre;
 	private boolean esta;
-	private String info;
+	private String[] info;
 	
 	// <--- Datos BD --->
 	ContDatosBusq datos = DataFactoryBusq.getDatos();
 
 	// <--- Ejecución --->
-	public VGestion(VIniciarSesion padre, boolean modal, String infos) {
+	public VGestion(VIniciarSesion padre, boolean modal, String[] infos) {
 		super(padre);
 		this.setModal(modal);
 		setTitle("Gestionar");
@@ -92,6 +92,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		info = infos;
+		this.padre = padre;
 		
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
@@ -145,7 +146,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		menuBar.setBounds(2, 2, 603, 45);
 		contentPane.add(menuBar);
 
-		menUsuario = new JMenu(" " + info + " ");
+		menUsuario = new JMenu(" " + info[0] + " ");
 		menUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
@@ -316,13 +317,14 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			cerrar();
+			this.dispose();
+			padre.setVisible(true);
 		} else if (e.getSource().equals(buttonBuscar)) {
 			comprobarBus(info);
 		}
 	}
 
-	private void comprobarBus(String info) {
+	private void comprobarBus(String[] info) {
 		esta = true;
 		String selec = rbSeleccionado(bgTipo);
 		if (selec == null) {
@@ -333,6 +335,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 			case "Persona":
 				if (comprobarDNI(textID.getText())) {
 					VGesPersona vGesPer = new VGesPersona(padre, true, textID.getText(), info);
+					this.dispose();
 					vGesPer.setVisible(true);
 				} else {
 					esta = false;
@@ -340,7 +343,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 				break;
 			case "Resto Humano":
 				if (buscarRH(textID.getText())) {
-					VBusRH vGesRH = new VBusRH(padre, true, textID.getText());
+					VBusRH vGesRH = new VBusRH(padre, true, textID.getText(), info);
+					this.dispose();
 					vGesRH.setVisible(true);
 				} else {
 					esta = false;
@@ -348,7 +352,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 				break;
 			case "Caso":
 				if (buscarCaso(textID.getText()) != null) {
-					VGesCaso vGesCaso = new VGesCaso(padre, true, buscarCaso(textID.getText()));
+					VGesCaso vGesCaso = new VGesCaso(padre, true, buscarCaso(textID.getText()), info);
+					this.dispose();
 					vGesCaso.setVisible(true);
 				} else {
 					esta = false;
@@ -363,7 +368,9 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	}
 
 	private void cerrar() {
+		VPrincipal vMain = new VPrincipal(padre,true,info);
 		this.dispose();
+		vMain.setVisible(true);
 	}
 
 	public String rbSeleccionado(ButtonGroup bg) {
