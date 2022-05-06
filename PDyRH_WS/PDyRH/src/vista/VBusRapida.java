@@ -55,12 +55,13 @@ public class VBusRapida extends JDialog {
 	 * @param modal 
 	 * @param vPrincipal 
 	 * @param modal 
-	 * @param padre 
-	 * @param info 
+	 * @param vMain 
 	 */
+	
+	
 
-	public VBusRapida(VIniciarSesion padre, boolean modal, String[] info) {
-		super(padre);
+	public VBusRapida(VPrincipal vMain, boolean modal, ContDatosBusq datos) {
+		super(vMain);
 		this.setModal(true);
 		setTitle("Busqueda Rapida");
 		setBounds(100, 100, 607, 399);
@@ -215,7 +216,6 @@ public class VBusRapida extends JDialog {
 		// TODO Auto-generated method stub
 		
 	}
-
 	private void busRapida(VPrincipal vMain, ContDatosBusqRap datos2, ContDatosBusq datos) {
 		// TODO Auto-generated method stub
 		persona = new Persona();

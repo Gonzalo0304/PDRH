@@ -40,8 +40,8 @@ public class Desaparecida extends Persona {
 		return fechaDes;
 	}
 
-	public void setFechaDes(LocalDate fechaDes) {
-		this.fechaDes = fechaDes;
+	public void setFechaDes(LocalDate localDate) {
+		this.fechaDes = localDate;
 
 	}
 
