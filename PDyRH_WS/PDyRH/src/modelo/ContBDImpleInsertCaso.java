@@ -56,8 +56,7 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 		this.openConnection();
 		
 		try {
-			stmnt = con.prepareStatement(INSERTcaso);
-			
+			stmnt = con.prepareStatement(INSERTcaso);			
 			stmnt.setString(1, caso.getCodCaso());
 			stmnt.setString(2, caso.getEstado());
 			stmnt.setString(3, caso.getNombre());
@@ -73,6 +72,8 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 			}else {
 				stmnt.setDate(5, null);
 			}
+			stmnt.setDate(4, Date.valueOf(caso.getFechaIni()));
+			stmnt.setDate(5, Date.valueOf(caso.getFechaFin()));
 			
 			stmnt.executeUpdate();
 		} catch (SQLException e) {

@@ -12,26 +12,23 @@ public class Participante {
 	}
 
 	public Participante(String dni, String codCaso, String implicacion) {
-
 		super();
 		this.dni = dni;
 		this.codCaso = codCaso;
 		this.implicacion = implicacion;
 		this.codCaso = codCaso;
 	}
-
+	
+	// <--- Getters y Setters --->
 	public String getDni() {
 		return dni;
 	}
-
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-
 	public String getImplicacion() {
 		return implicacion;
 	}
-
 	public void setImplicacion(String implicacion) {
 		this.implicacion = implicacion;
 	}

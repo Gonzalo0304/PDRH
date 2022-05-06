@@ -34,6 +34,10 @@ import java.awt.event.ActionEvent;
 
 public class VBusqueda extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textVBusqueda;
 	private VIniciarSesion vInicio = null;
@@ -54,12 +58,13 @@ public class VBusqueda extends JDialog {
 		try {
 			VBusqueda dialog = new VBusqueda();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setLocationRelativeTo(null);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Create the dialog.
 	 */
@@ -309,6 +314,10 @@ public class VBusqueda extends JDialog {
 	
 	public VBusqueda(VPrincipal vMain, boolean modal, ContDatosBusq datos) {
 		super(vMain);
+
+
+	public VBusqueda(VIniciarSesion padre, boolean modal, String[] info) {
+		super(padre);
 		this.setModal(modal);
 		setTitle("Introducir Identificador");
 		setBounds(100, 100, 465, 327);

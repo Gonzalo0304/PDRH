@@ -3,7 +3,6 @@ package vista;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -34,6 +33,7 @@ import java.awt.event.ActionEvent;
 
 public class VBusRH extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textCodigo;
 	private JTextField textCausa;
@@ -55,6 +55,7 @@ public class VBusRH extends JDialog {
 	
 	
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -71,15 +72,16 @@ public class VBusRH extends JDialog {
 
 	 */
 	
-	
-	public VBusRH(VPrincipal vMain, boolean modal, RestoHumano restoHumano, ContDatosBusq datos) {
-		super(vMain);
-		this.setModal(modal);
+	public VBusRH(VIniciarSesion padre, boolean modal, String string, String[] info) {
+		super(padre);
+		setModal(modal);
+		
 		setTitle("Buscar Resto Humano");
 		setBounds(350, 150, 710, 460);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();

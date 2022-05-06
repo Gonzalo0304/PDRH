@@ -42,6 +42,5 @@ public class Conocido {
 	public void setRelacion(String relacion) {
 		this.relacion = relacion;
 	}
-	
-	
+
 }
