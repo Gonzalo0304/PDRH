@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -94,6 +95,10 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JRadioButton rdbtnCer;
 	private JRadioButton rdbtnSR;
 	private JRadioButton rdbtnAbi;
+	private Caso caso;
+	private JTextField textCodResto;
+	private JLabel lblCodResto;
+	private JSeparator separatorCodResto;
 	
 	// <--- Ejecución --->
 	public VGesCaso(VIniciarSesion padre, boolean modal, Caso caso, String[] infos) {
@@ -105,6 +110,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		getContentPane().setLayout(null);
 		info = infos;
 		this.padre = padre;
+		this.caso = caso;
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(SystemColor.controlHighlight);
@@ -262,14 +268,12 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 
 		textFechaIni = new JTextField();
 		textFechaIni.setToolTipText("");
-		textFechaIni.setVisible(false);
 		textFechaIni.setColumns(10);
 		textFechaIni.setBounds(328, 134, 187, 20);
 		contentDatos.add(textFechaIni);
 
 		textFechaFin = new JTextField();
 		textFechaFin.setToolTipText("");
-		textFechaFin.setVisible(false);
 		textFechaFin.setColumns(10);
 		textFechaFin.setBounds(328, 192, 187, 20);
 		contentDatos.add(textFechaFin);
@@ -277,13 +281,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		separatorFechaIni = new JSeparator();
 		separatorFechaIni.setForeground(new Color(0, 0, 102));
 		separatorFechaIni.setBackground(new Color(0, 51, 102));
-		separatorFechaIni.setVisible(false);
 		separatorFechaIni.setBounds(328, 121, 106, 2);
 		contentDatos.add(separatorFechaIni);
 
 		lblFechaFin = new JLabel("FECHA FIN");
 		lblFechaFin.setForeground(new Color(0, 51, 102));
-		lblFechaFin.setVisible(false);
 		lblFechaFin.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblFechaFin.setBounds(328, 153, 106, 28);
 		contentDatos.add(lblFechaFin);
@@ -291,13 +293,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		separatorFechaFin = new JSeparator();
 		separatorFechaFin.setForeground(new Color(0, 0, 102));
 		separatorFechaFin.setBackground(new Color(0, 51, 102));
-		separatorFechaFin.setVisible(false);
 		separatorFechaFin.setBounds(328, 179, 106, 2);
 		contentDatos.add(separatorFechaFin);
 
 		lblFechaIni = new JLabel("FECHA INICIO");
 		lblFechaIni.setForeground(new Color(0, 51, 102));
-		lblFechaIni.setVisible(false);
 		lblFechaIni.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblFechaIni.setBounds(328, 95, 106, 28);
 		contentDatos.add(lblFechaIni);
@@ -464,13 +464,13 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		lblDniInv = new JLabel("DNI");
 		lblDniInv.setForeground(new Color(0, 51, 102));
 		lblDniInv.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblDniInv.setBounds(62, 151, 81, 28);
+		lblDniInv.setBounds(61, 106, 81, 28);
 		contentInvo.add(lblDniInv);
 
 		separatorDniInv = new JSeparator();
 		separatorDniInv.setForeground(new Color(0, 0, 102));
 		separatorDniInv.setBackground(new Color(0, 51, 102));
-		separatorDniInv.setBounds(62, 177, 106, 2);
+		separatorDniInv.setBounds(61, 132, 106, 2);
 		contentInvo.add(separatorDniInv);
 
 		textDniInv = new JTextField();
@@ -482,19 +482,19 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		});
 		textDniInv.setToolTipText("");
 		textDniInv.setColumns(10);
-		textDniInv.setBounds(62, 190, 187, 20);
+		textDniInv.setBounds(61, 145, 187, 20);
 		contentInvo.add(textDniInv);
 
 		lblmp = new JLabel("IMPLICACI\u00D3N");
 		lblmp.setForeground(new Color(0, 51, 102));
 		lblmp.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblmp.setBounds(345, 151, 81, 28);
+		lblmp.setBounds(344, 106, 81, 28);
 		contentInvo.add(lblmp);
 
 		separatorImp = new JSeparator();
 		separatorImp.setForeground(new Color(0, 0, 102));
 		separatorImp.setBackground(new Color(0, 51, 102));
-		separatorImp.setBounds(345, 177, 106, 2);
+		separatorImp.setBounds(344, 132, 106, 2);
 		contentInvo.add(separatorImp);
 
 		textImp = new JTextField();
@@ -506,7 +506,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		});
 		textImp.setToolTipText("");
 		textImp.setColumns(10);
-		textImp.setBounds(345, 190, 187, 20);
+		textImp.setBounds(344, 145, 187, 20);
 		contentInvo.add(textImp);
 
 		lblAnaInv = new JLabel(" A\u00F1adir Involucrados");
@@ -522,19 +522,43 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		contentInvo.add(separatorAnaCono);
 
 		buttonAgregar = new Button("A\u00D1ADIR");
+		buttonAgregar.setEnabled(false);
 		buttonAgregar.setForeground(Color.WHITE);
 		buttonAgregar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		buttonAgregar.setBackground(new Color(153, 0, 0));
-		buttonAgregar.setBounds(248, 268, 89, 28);
-		buttonAgregar.setEnabled(false);
+		buttonAgregar.setBounds(248, 297, 89, 28);
 		buttonAgregar.addActionListener(this);
 		contentInvo.add(buttonAgregar);
-
-		JLabel imgErtzAO_1 = new JLabel("");
-		imgErtzAO_1
-				.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
-		imgErtzAO_1.setBounds(142, 68, 309, 303);
-		contentInvo.add(imgErtzAO_1);
+		
+		lblCodResto = new JLabel("C\u00D3DIGO RESTO");
+		lblCodResto.setForeground(new Color(153, 0, 0));
+		lblCodResto.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblCodResto.setBounds(195, 202, 106, 28);
+		contentInvo.add(lblCodResto);
+		
+		separatorCodResto = new JSeparator();
+		separatorCodResto.setForeground(new Color(102, 0, 0));
+		separatorCodResto.setBackground(new Color(153, 0, 0));
+		separatorCodResto.setBounds(195, 228, 106, 2);
+		contentInvo.add(separatorCodResto);
+		
+		textCodResto = new JTextField();
+		textCodResto.setToolTipText("");
+		textCodResto.setColumns(10);
+		textCodResto.setBounds(195, 241, 187, 20);
+		textCodResto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarBoton();
+			}
+		});
+		contentInvo.add(textCodResto);
+		
+				JLabel imgErtzAO_1 = new JLabel("");
+				imgErtzAO_1
+						.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
+				imgErtzAO_1.setBounds(142, 68, 309, 303);
+				contentInvo.add(imgErtzAO_1);
 	}
 
 	private void cargarDatos(Caso caso) {
@@ -560,7 +584,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	public void habilitarBoton() {
-		if (!textImp.getText().isBlank() && !textDniInv.getText().isBlank()) {
+		if ((!textImp.getText().isBlank() && !textDniInv.getText().isBlank()) || !textCodResto.getText().isBlank()) {
 			buttonAgregar.setEnabled(true);
 		} else {
 			buttonAgregar.setEnabled(false);
@@ -586,6 +610,25 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		} else if (e.getSource().equals(mCerrar2)) {
 			this.dispose();
 			padre.setVisible(true);
+		} else if (e.getSource().equals(buttonEliminar)) {
+			eliminarCaso(caso.getCodCaso());
+		} else if (e.getSource().equals(buttonAgregar)) {
+			if (!textCodResto.getText().isBlank()) {
+				insertarInvolucrado(textCodResto.getText(),caso.getCodCaso());
+			}
+			if (!textDniInv.getText().isBlank() && !textImp.getText().isBlank()) {
+				if (!comprobarDNI(textDniInv.getText())) {
+					JOptionPane.showMessageDialog(this, "El DNI introducido no está registrado en la base de datos.","DNI inexistente.",JOptionPane.ERROR_MESSAGE);
+				} else if (listarParticipantes(textCod.getText()).get(textDniInv.getText()) == null) {
+					Participante par = new Participante();
+					insertarParticipante(par);
+					JOptionPane.showMessageDialog(this, "Insercción de persona participante realizada con éxito.","Insercción éxitosa",JOptionPane.CLOSED_OPTION);
+				} else {
+					JOptionPane.showMessageDialog(this, "El DNI introducido ya es un participante de este caso.","DNI existente.",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		} else if (e.getSource().equals(buttonMod)) {
+			modificarCaso(caso);
 		}
 	}
 
@@ -599,6 +642,8 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		if (!textFechaFin.getText().isBlank()) {
 			caso.setFechaFin(LocalDate.parse(textFechaFin.getText()));
 		}
+		datos.modificarCaso(caso);
+		JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.","Modificación éxitosa",JOptionPane.CLOSED_OPTION);
 	}
 
 	public String rbSelect(ButtonGroup bg) {
@@ -615,17 +660,31 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	
 	@Override
 	public void eliminarCaso(String codCaso) {
-		datos.eliminarCaso(codCaso);
+		if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar este caso? Es una acción irreversible.", "Confirmar baja", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+			datos.eliminarCaso(codCaso);;
+			JOptionPane.showMessageDialog(this, "Caso eliminado correctamente.","Baja realizada",JOptionPane.CLOSED_OPTION);
+			cerrar();
+		}
 	}
 
 	@Override
 	public void insertarParticipante(Participante par) {
+		par.setCodCaso(caso.getCodCaso());
+		par.setDni(textDniInv.getText());
+		par.setImplicacion(textImp.getText());
 		datos.insertarParticipante(par);
 	}
 
 	@Override
 	public void insertarInvolucrado(String codResto, String codCaso) {
-		datos.insertarInvolucrado(codResto, codCaso);
+		if (!buscarRH(textCodResto.getText())) {
+			JOptionPane.showMessageDialog(this, "El código de resto introducido no está registrado en la base de datos.","Código inexistente.",JOptionPane.ERROR_MESSAGE);
+		} else if (listarInvolucrados(textCod.getText()).get(textCodResto.getText()) == null) {
+			datos.insertarInvolucrado(codResto, codCaso);
+			JOptionPane.showMessageDialog(this, "Insercción de resto involucrado realizada con éxito","Insercción exitosa",JOptionPane.CLOSED_OPTION);
+		} else {
+			JOptionPane.showMessageDialog(this, "El código introducido ya está involucrado en un caso.","Código existente",JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	@Override

@@ -18,14 +18,14 @@ import modelo.clases.RestoHumano;
 public class ContBDImpleGestCaso implements ContDatosGestCaso {
 	
 	// <--- Sentencias --->
-	final String INSERTparticipa = "INSERT INTO participa(codCaso,dni,implicación) VALUES(?,?,?)";
-	final String SELECTparticipantes = "SELECT dni FROM participa WHERE codCaso = ?";
+	final String INSERTparticipa = "INSERT INTO participa(codCaso,dni,implicacion) VALUES(?,?,?)";
+	final String SELECTparticipantes = "SELECT * FROM participa WHERE codCaso = ?";
 	final String DELETEcaso = "DELETE FROM caso WHERE codCaso = ?";
 	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
-	final String INSERTinvolucrado = "UPDATE restoHumano SET codCaso = ? WHERE codResto = ?";
+	final String INSERTinvolucrado = "UPDATE restohumano SET codCaso = ? WHERE codResto = ?";
 	final String UPDATEcaso = "UPDATE caso SET estado = ?, nombre = ?, fechaIni = ?, fechaFin = ? WHERE codCaso = ?";
-	final String CALLbuscarRH = "{CALL buscarRh(?)}";
-	final String SELECTinvolucrados = "SELECT * FROM restoHumano WHERE codCaso = ?";
+	final String CALLbuscarRH = "{CALL buscarRH(?)}";
+	final String SELECTinvolucrados = "SELECT * FROM restohumano WHERE codCaso IS NOT NULL";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -73,7 +73,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			stmnt.setString(1, caso.getEstado());
 			stmnt.setString(2, caso.getNombre());
 			if (caso.getFechaFin() != null) {
-				stmnt.setDate(3, Date.valueOf(caso.getFechaFin()));
+				stmnt.setDate(3, Date.valueOf(caso.getFechaIni()));
 			} else {
 				stmnt.setDate(3, null);
 			}
@@ -117,9 +117,10 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			while (rs.next()) {
 				par = new Participante();
 				
-				par.setCodCaso(rs.getString("codCaso"));
+				par.setCodCaso(codCaso);
 				par.setDni(rs.getString("dni"));
 				par.setImplicacion(rs.getString("implicacion"));
+				participantes.put(par.getDni(), par);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,7 +170,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			stmnt = con.prepareStatement(INSERTparticipa);
 
 			stmnt.setString(1, par.getCodCaso());
-			stmnt.setString(2, par.getCodCaso());
+			stmnt.setString(2, par.getDni());
 			stmnt.setString(3, par.getImplicacion());
 
 			stmnt.executeUpdate();
@@ -269,7 +270,6 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		
 		try {
 			stmnt = con.prepareStatement(SELECTinvolucrados);
-			stmnt.setString(1, codCaso);
 			
 			rs = stmnt.executeQuery();
 			
