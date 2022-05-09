@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Point;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +19,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.ActionEvent;
 
 import controlador.*;
@@ -40,7 +44,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.awt.event.ActionEvent;
 
-public class VBusPer extends JDialog {
+public class VBusPer extends JDialog implements ContDatosBusqPer{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textDni;
@@ -76,21 +80,34 @@ public class VBusPer extends JDialog {
 	private Button buttonVolver1;
 	private Button buttonVolver2;
 	private JLabel imagen;
+	private static Point point = new Point();
 	
-	private ContDatosBusqPer datos2;
 	private Conocido conocido;
 	private Map<String,Conocido> conocidos;
 	private Persona per;
+	ContDatosBusqPer datos2 = DataFactoryBusqPer.getDatos();
 		
 	public VBusPer(VIniciarSesion vInicio, boolean modal, String dni, ContDatosBusq datos) {
 		super(vInicio);
 		this.setModal(modal);
-		setBounds(100, 100, 447, 401);
+		setBounds(100, 100, 631, 489);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new CardLayout(0, 0));
-		setUndecorated(true);
+		
+		addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				point.x = e.getX();
+				point.y = e.getY();
+			}
+		});
+		addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = getLocation();
+				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
+			}
+		});
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 0, 0);
@@ -112,17 +129,17 @@ public class VBusPer extends JDialog {
 
 		JLabel lblNewLabel_1 = new JLabel("Nombre:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(68, 69, 61, 14);
+		lblNewLabel_1.setBounds(53, 69, 61, 14);
 		panel_2.add(lblNewLabel_1);
 
 		textNombre = new JTextField();
-		textNombre.setBounds(127, 67, 158, 20);
+		textNombre.setBounds(127, 64, 158, 20);
 		panel_2.add(textNombre);
 		textNombre.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("Apellido:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(68, 95, 61, 14);
+		lblNewLabel_2.setBounds(53, 96, 61, 14);
 		panel_2.add(lblNewLabel_2);
 
 		textApellido = new JTextField();
@@ -132,156 +149,156 @@ public class VBusPer extends JDialog {
 		
 		JLabel lblRango = new JLabel("Rango:");
 		lblRango.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblRango.setBounds(19, 120, 95, 14);
+		lblRango.setBounds(349, 44, 46, 14);
 		lblRango.setVisible(false);
 		panel_2.add(lblRango);
 
 		textRango = new JTextField();
-		textRango.setBounds(127, 120, 158, 20);
+		textRango.setBounds(415, 42, 158, 20);
 		textRango.setVisible(false);
 		panel_2.add(textRango);
 		textRango.setColumns(10);
 		
 		JLabel lblIni = new JLabel("Inicio Servicio:");
 		lblIni.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblIni.setBounds(7, 145, 107, 14);
+		lblIni.setBounds(312, 69, 95, 14);
 		lblIni.setVisible(false);
 		panel_2.add(lblIni);
 
 		textInicioServ = new JTextField();
-		textInicioServ.setBounds(127, 145, 158, 20);
+		textInicioServ.setBounds(415, 67, 158, 20);
 		textInicioServ.setVisible(false);
 		panel_2.add(textInicioServ);
 		textInicioServ.setColumns(10);
 		
 		JLabel lblFin = new JLabel("Fin servicio:");
 		lblFin.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFin.setBounds(53, 180, 61, 14);
+		lblFin.setBounds(322, 96, 75, 14);
 		lblFin.setVisible(false);
 		panel_2.add(lblFin);
 
 		textFinServ = new JTextField();
-		textFinServ.setBounds(127, 178, 158, 20);
+		textFinServ.setBounds(415, 96, 158, 20);
 		textFinServ.setVisible(false);
 		panel_2.add(textFinServ);
 		textFinServ.setColumns(10);
 		
 		JLabel lblFechaA = new JLabel("Fechas de arresto:");
 		lblFechaA.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFechaA.setBounds(19, 120, 95, 14);
+		lblFechaA.setBounds(296, 44, 125, 14);
 		lblFechaA.setVisible(false);
 		panel_2.add(lblFechaA);
 
 		textFechaArresto = new JTextField();
-		textFechaArresto.setBounds(127, 120, 158, 20);
+		textFechaArresto.setBounds(415, 42, 158, 20);
 		textFechaArresto.setVisible(false);
 		panel_2.add(textFechaArresto);
 		textFechaArresto.setColumns(10);
 		
 		JLabel lblPrisionero = new JLabel("Prision:");
 		lblPrisionero.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPrisionero.setBounds(7, 145, 107, 14);
+		lblPrisionero.setBounds(359, 69, 46, 14);
 		lblPrisionero.setVisible(false);
 		panel_2.add(lblPrisionero);
 
 		textPrisionero = new JTextField();
-		textPrisionero.setBounds(127, 145, 158, 20);
+		textPrisionero.setBounds(415, 67, 158, 20);
 		textPrisionero.setVisible(false);
 		panel_2.add(textPrisionero);
 		textPrisionero.setColumns(10);
 		
 		JLabel lblAltura = new JLabel("Altura:");
 		lblAltura.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblAltura.setBounds(19, 120, 95, 14);
+		lblAltura.setBounds(352, 44, 53, 14);
 		lblAltura.setVisible(false);
 		panel_2.add(lblAltura);
 
 		textAltura = new JTextField();
-		textAltura.setBounds(127, 120, 158, 20);
+		textAltura.setBounds(415, 42, 158, 20);
 		textAltura.setVisible(false);
 		panel_2.add(textAltura);
 		textAltura.setColumns(10);
 		
 		JLabel lblColorO = new JLabel("Color de ojos:");
 		lblColorO.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblColorO.setBounds(7, 145, 107, 14);
+		lblColorO.setBounds(322, 96, 107, 14);
 		lblColorO.setVisible(false);
 		panel_2.add(lblColorO);
 
 		textColorO = new JTextField();
-		textColorO.setBounds(127, 145, 158, 20);
+		textColorO.setBounds(415, 96, 158, 20);
 		textColorO.setVisible(false);
 		panel_2.add(textColorO);
 		textColorO.setColumns(10);
 		
 		JLabel lblColorP = new JLabel("Color de Pelo:");
 		lblColorP.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblColorP.setBounds(53, 180, 61, 14);
+		lblColorP.setBounds(317, 121, 90, 14);
 		lblColorP.setVisible(false);
 		panel_2.add(lblColorP);
 
 		textColorP = new JTextField();
-		textColorP.setBounds(127, 178, 158, 20);
+		textColorP.setBounds(415, 119, 158, 20);
 		textColorP.setVisible(false);
 		panel_2.add(textColorP);
 		textColorP.setColumns(10);
 		
 		JLabel lblEsp = new JLabel("Especificaciones:");
 		lblEsp.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEsp.setBounds(41, 205, 75, 14);
+		lblEsp.setBounds(300, 146, 107, 14);
 		lblEsp.setVisible(false);
 		panel_2.add(lblEsp);
 
 		textEspecificaciones = new JTextField();
-		textEspecificaciones.setBounds(127, 203, 158, 20);
+		textEspecificaciones.setBounds(415, 144, 158, 20);
 		textEspecificaciones.setVisible(false);
 		panel_2.add(textEspecificaciones);
 		textEspecificaciones.setColumns(10);
 		
 		JLabel lblFechaDes = new JLabel("Fecha desaparecido:");
 		lblFechaDes.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFechaDes.setBounds(41, 205, 75, 14);
+		lblFechaDes.setBounds(291, 171, 130, 14);
 		lblFechaDes.setVisible(false);
 		panel_2.add(lblFechaDes);
 
 		textFechaDes = new JTextField();
-		textFechaDes.setBounds(127, 228, 158, 20);
+		textFechaDes.setBounds(415, 169, 158, 20);
 		textFechaDes.setVisible(false);
 		panel_2.add(textFechaDes);
 		textFechaDes.setColumns(10);
 		
 		JLabel lblGenero = new JLabel("Genero:");
 		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblGenero.setBounds(30, 230, 95, 14);
+		lblGenero.setBounds(349, 194, 61, 14);
 		lblGenero.setVisible(false);
 		panel_2.add(lblGenero);
 
 		textGenero = new JTextField();
-		textGenero.setBounds(127, 67, 158, 20);
+		textGenero.setBounds(415, 196, 158, 20);
 		textGenero.setVisible(false);
 		panel_2.add(textGenero);
 		textGenero.setColumns(10);
 		
 		JLabel lblTipoP = new JLabel("Tipo de pelo:");
 		lblTipoP.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTipoP.setBounds(68, 69, 61, 14);
+		lblTipoP.setBounds(312, 219, 95, 14);
 		lblTipoP.setVisible(false);
 		panel_2.add(lblTipoP);
 
 		textTipoP = new JTextField();
-		textTipoP.setBounds(127, 67, 158, 20);
+		textTipoP.setBounds(415, 228, 158, 20);
 		textTipoP.setVisible(false);
 		panel_2.add(textTipoP);
 		textTipoP.setColumns(10);
 		
 		JLabel lblUltimaUbi = new JLabel("Ultima Ubicacion:");
 		lblUltimaUbi.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblUltimaUbi.setBounds(68, 69, 61, 14);
+		lblUltimaUbi.setBounds(293, 255, 114, 14);
 		lblUltimaUbi.setVisible(false);
 		panel_2.add(lblUltimaUbi);
 
 		textUltimaUbi = new JTextField();
-		textUltimaUbi.setBounds(127, 67, 158, 20);
+		textUltimaUbi.setBounds(415, 253, 158, 20);
 		textUltimaUbi.setVisible(false);
 		panel_2.add(textUltimaUbi);
 		textUltimaUbi.setColumns(10);
@@ -318,7 +335,7 @@ public class VBusPer extends JDialog {
 
 		textTelefonoO = new JTextField();
 		textTelefonoO.setColumns(10);
-		textTelefonoO.setBounds(127, 145, 158, 20);
+		textTelefonoO.setBounds(127, 143, 158, 20);
 		panel_2.add(textTelefonoO);
 
 		textLocalidad = new JTextField();
@@ -333,7 +350,7 @@ public class VBusPer extends JDialog {
 
 		textFallecimiento = new JTextField();
 		textFallecimiento.setColumns(10);
-		textFallecimiento.setBounds(127, 228, 158, 20);
+		textFallecimiento.setBounds(127, 230, 158, 20);
 		panel_2.add(textFallecimiento);
 
 		buttonVolver1 = new Button("Volver");
@@ -345,7 +362,7 @@ public class VBusPer extends JDialog {
 		buttonVolver1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		buttonVolver1.setForeground(Color.WHITE);
 		buttonVolver1.setBackground(new Color(153, 0, 0));
-		buttonVolver1.setBounds(293, 260, 107, 31);
+		buttonVolver1.setBounds(291, 373, 107, 31);
 		panel_2.add(buttonVolver1);
 
 		if (per != null) {
@@ -367,8 +384,9 @@ public class VBusPer extends JDialog {
 				textDni.setText(per.getDni());
 				textNombre.setText(per.getNombre());
 				textApellido.setText(per.getApellido());
-				
-				ocultarDatosPersona();
+				textNacimiento.setText(fechaNac);
+				textFallecimiento.setText(fechaFal);
+				//Mostrar los datos del agente 
 				mostrarDatosAgente();
 				
 				textRango.setText(((Agente) per).getRango());
@@ -380,8 +398,7 @@ public class VBusPer extends JDialog {
 				textDni.setText(per.getDni());
 				textNombre.setText(per.getNombre());
 				textApellido.setText(per.getApellido());
-				
-				ocultarDatosPersona();
+				//Mostrar datos de Criminal
 				mostrarDatosCriminal();
 				
 				textFechaArresto.setText(((Criminal) per).getFechasArresto().toString());
@@ -394,8 +411,7 @@ public class VBusPer extends JDialog {
 				textDni.setText(per.getDni());
 				textNombre.setText(per.getNombre());
 				textApellido.setText(per.getApellido());
-				
-				ocultarDatosPersona();
+				//Mostrar datos de la persona desaparecida
 				mostrarDatosDesaparecido();
 				
 				textAltura.setText(Float.toString(((Desaparecida) per).getAltura()));
@@ -410,14 +426,12 @@ public class VBusPer extends JDialog {
 				textTipoP.setText(((Desaparecida) per).getTipoPelo());
 				textUltimaUbi.setText(((Desaparecida) per).getUltimaUbi());
 			}
-		
-			
 		}
 		
 		imagen = new JLabel("");
 		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
 		imagen.setHorizontalAlignment(SwingConstants.EAST);
-		imagen.setBounds(17, 11, 432, 352);
+		imagen.setBounds(148, 11, 524, 393);
 		panel_2.add(imagen);
 
 			
@@ -517,7 +531,7 @@ public class VBusPer extends JDialog {
 		buttonVolver2.setBounds(293, 260, 107, 31);
 		panel.add(buttonVolver2);
 
-		nombresCompletos(per, datos, datos2, conocido);
+		nombresCompletos(per, conocido);
 
 		imagen = new JLabel("");
 		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
@@ -555,20 +569,10 @@ public class VBusPer extends JDialog {
 		textFinServ.setVisible(true);
 	}
 
-	private void ocultarDatosPersona() {
-		// TODO Auto-generated method stub
-		textNacimiento.setVisible(false);
-		textTelefonoM.setVisible(false);
-		textTelefonoO.setVisible(false);
-		textLocalidad.setVisible(false);
-	}
-
-	private void nombresCompletos(Persona persona, ContDatosBusq datos, ContDatosBusqPer datos2, Conocido conocido) {
+	private void nombresCompletos(Persona persona, Conocido conocido) {
 		// TODO Auto-generated method stub
 		persona = new Persona();
-		persona = datos2.obtenerPersona(persona.getDni());
 		conocidos = new TreeMap<>();
-		conocidos = datos2.listarConocidos(persona.getDni());
 		
 		for (Conocido cono : conocidos.values()) {
 			if (cono.getDni1().equalsIgnoreCase(persona.getDni())) {
@@ -602,5 +606,17 @@ public class VBusPer extends JDialog {
 	private void volver2() {
 		// TODO Auto-generated method stub
 		this.dispose();
+	}
+
+	@Override
+	public Persona obtenerPersona(String dni) {
+		// TODO Auto-generated method stub
+		return datos2.obtenerPersona(dni);
+	}
+
+	@Override
+	public Map<String, Conocido> listarConocidos(String dni1) {
+		// TODO Auto-generated method stub
+		return datos2.listarConocidos(dni1);
 	}
 }

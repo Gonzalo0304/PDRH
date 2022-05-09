@@ -16,6 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ContDatosInsertCaso;
+import controlador.DataFactoryInsertCaso;
 import controlador.interfaces.ContDatosBusq;
 import modelo.ContBDImpleInsertCaso;
 import modelo.clases.Caso;
@@ -48,9 +49,10 @@ public class VInsCaso extends JDialog {
 	private JRadioButton rdbtnAbierto;
 	private JRadioButton rdbtnCerrado;
 	private JRadioButton rdbtnSinResolver;
-	private ContDatosInsertCaso datos1;
 	private ContDatosBusq datos;
 	private String[] info;
+	
+	ContDatosInsertCaso datos1 = (ContDatosInsertCaso) DataFactoryInsertCaso.getDatos();
 
 	/**
 	 * Launch the application.

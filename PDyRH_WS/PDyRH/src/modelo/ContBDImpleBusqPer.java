@@ -113,11 +113,13 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				if (tipo.equalsIgnoreCase("agente")) {
 					per = new Agente();
 					((Agente) per).setRango(rs.getString("rango"));
+					
 					if(((Agente) per).getInicioServ()!=null) {
 						((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
 					}else {
 						((Agente) per).setInicioServ(null);
 					}
+					
 					if(((Agente) per).getFinServ()!=null) {
 						((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
 					}else {
@@ -135,11 +137,13 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 					}
 				} else if (tipo.equalsIgnoreCase("desaparecida")) {
 					per = new Desaparecida();
+					
 					if(((Desaparecida) per).getFechaDes()!=null) {
 						((Desaparecida) per).setFechaDes(rs.getDate("fechaDes").toLocalDate());
 					}else {
 						((Desaparecida) per).setFechaDes(null);
 					}
+					
 					((Desaparecida) per).setUltimaUbi(rs.getString("ultimaUbi"));
 					((Desaparecida) per).setGenero(rs.getString("genero"));
 					((Desaparecida) per).setTipoPelo(rs.getString("tipoPelo"));

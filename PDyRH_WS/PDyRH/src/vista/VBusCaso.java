@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
+import controlador.DataFactoryBusqCaso;
 import controlador.interfaces.ContDatosBusq;
 import controlador.interfaces.ContDatosBusqCaso;
 
@@ -41,7 +42,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.awt.event.ActionEvent;
 
-public class VBusCaso extends JDialog {
+public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textCodigo;
 	private JTextField textNombre;
@@ -65,9 +66,10 @@ public class VBusCaso extends JDialog {
 	private Participante part;
 	private Caso caso;
 	private Persona per;
-	private ContDatosBusqCaso datos2;
 	private Map<String,Participante> participantes;
 	private Map<String, RestoHumano> restos;
+	
+	ContDatosBusqCaso datos2 = DataFactoryBusqCaso.getDatos();
 	
 	public VBusCaso(VIniciarSesion vInicio, boolean modal, String codCaso, ContDatosBusq datos) {
 		super(vInicio);
@@ -368,6 +370,18 @@ public class VBusCaso extends JDialog {
 	protected void cerrar() {
 		// TODO Auto-generated method stub
 		this.dispose();
+	}
+
+	@Override
+	public Map<String, Participante> listarParticipantes(String codCaso) {
+		// TODO Auto-generated method stub
+		return datos2.listarParticipantes(codCaso);
+	}
+
+	@Override
+	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
+		// TODO Auto-generated method stub
+		return datos2.listarInvolucrados(codCaso);
 	}
 
 }

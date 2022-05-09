@@ -66,6 +66,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	public VPrincipal(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño ventana --->
 		super(padre);
+		this.setModal(modal);
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 607, 399);
 		contentPane = new JPanel();

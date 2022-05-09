@@ -55,9 +55,6 @@ public class VBusqueda extends JDialog {
 	private JLabel imagen;
 	private Button buttonBuscar;
 	
-	private Map<String, Caso> casos;
-	private Map<String, Persona> personas;
-	private Map<String, RestoHumano> restos;
 	private ContDatosBusq datos;
 	private String[] info;
 	
@@ -76,6 +73,8 @@ public class VBusqueda extends JDialog {
 		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
 		setUndecorated(true);
+		
+		
 		{
 			textVBusqueda = new JTextField();
 			textVBusqueda.addKeyListener(new KeyAdapter() {
@@ -95,6 +94,8 @@ public class VBusqueda extends JDialog {
 			contentPanel.add(textVBusqueda);
 			textVBusqueda.setColumns(10);
 		}
+		
+		
 		
 		JLabel lblNewLabel_9 = new JLabel("x");
 		lblNewLabel_9.addMouseListener(new MouseAdapter() {
@@ -239,6 +240,7 @@ public class VBusqueda extends JDialog {
 				busqueda(vInicio,datos);
 			}
 		});
+		buttonBuscar.setEnabled(false);
 		buttonBuscar.setForeground(Color.WHITE);
 		buttonBuscar.setBackground(new Color(153, 0, 0));
 		buttonBuscar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -272,6 +274,11 @@ public class VBusqueda extends JDialog {
 	
 	private void busqueda(VIniciarSesion vInicio, ContDatosBusq datos) {
 		// TODO Auto-generated method stub
+		if(!textVBusqueda.getText().isEmpty()) {
+			buttonBuscar.setEnabled(true);
+		}else {
+			buttonBuscar.setEnabled(false);
+		}
 	
 		if(rdbtnCaso.isSelected() && buscarCaso(textVBusqueda.getText())!= null) {
 			VBusCaso ventCaso = new VBusCaso(vInicio, true, textVBusqueda.getText(), datos);
