@@ -78,8 +78,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	// <--- Datos BD --->
 	ContDatosBusq datos = DataFactoryBusq.getDatos();
 
-	// <--- Ejecución --->
 	public VGestion(VIniciarSesion padre, boolean modal, String[] infos) {
+		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
 		setTitle("Gestionar");
@@ -134,7 +134,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		lblCerrar.setForeground(Color.WHITE);
 		lblCerrar.setBounds(573, 2, 31, 19);
 		contentPane.add(lblCerrar);
-
+		
+		// Menú superior y título
 		separator = new JSeparator();
 		separator.setBackground(Color.DARK_GRAY);
 		separator.setBounds(2, 47, 603, 2);
@@ -197,7 +198,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		lblGestin.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblGestin.setBounds(22, 59, 118, 19);
 		contentPane.add(lblGestin);
-
+		
+		// Decoración
 		panel_2 = new Panel();
 		panel_2.setLayout(null);
 		panel_2.setBackground(SystemColor.menu);
@@ -210,6 +212,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		separatorID.setForeground(new Color(102, 0, 0));
 		separatorID.setBackground(new Color(153, 0, 0));
 
+		// Campo a rellenar
 		textID = new JTextField();
 		textID.addKeyListener(new KeyAdapter() {
 			@Override
@@ -231,7 +234,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		lblID.setHorizontalAlignment(SwingConstants.CENTER);
 		lblID.setForeground(new Color(0, 51, 102));
 		lblID.setFont(new Font("Tahoma", Font.BOLD, 14));
-
+		
+		// Botón de busqueda
 		buttonBuscar = new Button("Buscar");
 		buttonBuscar.setBounds(258, 307, 98, 28);
 		buttonBuscar.setForeground(Color.WHITE);
@@ -240,7 +244,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		buttonBuscar.setEnabled(false);
 		buttonBuscar.addActionListener(this);
 		contentPane.add(buttonBuscar);
-
+		
+		// Selección de tipo
 		separatorPer = new JSeparator();
 		separatorPer.setBounds(113, 134, 61, 2);
 		contentPane.add(separatorPer);
@@ -291,14 +296,15 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		panel.setBackground(new Color(0, 51, 102));
 		panel.setBounds(130, 176, 354, 86);
 		contentPane.add(panel);
-
+		
+		// Fondo
 		imgErtzAC = new JLabel("");
-		imgErtzAC
-				.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
+		imgErtzAC.setIcon(new ImageIcon(VGestion.class.getResource("/imagenes/ertzAC.png")));
 		imgErtzAC.setBounds(151, 83, 318, 290);
 		contentPane.add(imgErtzAC);
 	}
-
+	
+	// Métodos
 	@Override
 	public boolean comprobarDNI(String dni) {
 		return datos.comprobarDNI(dni);
@@ -323,7 +329,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 			comprobarBus(info);
 		}
 	}
-
+	
+	// Abrir ventanas
 	private void comprobarBus(String[] info) {
 		esta = true;
 		String selec = rbSeleccionado(bgTipo);
@@ -372,7 +379,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		this.dispose();
 		vMain.setVisible(true);
 	}
-
+	
+	// Comprobar que radio button está seleccionado
 	public String rbSeleccionado(ButtonGroup bg) {
 		for (Enumeration<AbstractButton> botones = bg.getElements(); botones.hasMoreElements();) {
 			AbstractButton boton = botones.nextElement();

@@ -233,6 +233,15 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
 		}
 		
 		return esta;
@@ -256,6 +265,15 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
 		}
 		return esta;
 	}
@@ -285,7 +303,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				resto.setColorOjos(rs.getString("colorOjos"));
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
-				resto.setCodCaso(codCaso);
+				resto.setCodCaso(rs.getString("codCaso"));
 				if (rs.getDate("fechaMuerte") != null) {
 					resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
 				}

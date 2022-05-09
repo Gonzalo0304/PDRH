@@ -26,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 
 public class VPrincipal extends JDialog implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
@@ -59,10 +60,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private JSeparator separator1_1_3;
 	private String[] info;
 	
-	// <--- Ejecución --->
 	public VPrincipal(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño ventana --->
 		super(padre);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\Ertzaintza3.png"));
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 607, 399);
 		contentPane = new JPanel();
@@ -71,7 +72,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		getContentPane().setLayout(new BorderLayout());
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
-		setUndecorated(true); // Sin borde predeterminado
+		setUndecorated(true);
 		setLocationRelativeTo(null);
 		this.setModal(modal);
 		contentPane.setLayout(null);
@@ -118,7 +119,8 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		lblCerrar.setForeground(Color.WHITE);
 		lblCerrar.setBounds(573, 2, 31, 19);
 		contentPane.add(lblCerrar);
-
+		
+		// Menú superior
 		separator = new JSeparator();
 		separator.setBackground(Color.DARK_GRAY);
 		separator.setBounds(2, 47, 603, 2);
@@ -146,7 +148,8 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
-
+		
+		// Botónes principales
 		panelInsert = new JPanel();
 		panelInsert.setBorder(null);
 		panelInsert.setBackground(SystemColor.control);
@@ -155,7 +158,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelInsert.setLayout(null);
 		
 		imgInsert = new JLabel("New label");
-		imgInsert.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\la2(1).png"));
+		imgInsert.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/la2(1).png")));
 		imgInsert.setBounds(40, 11, 73, 80);
 		panelInsert.add(imgInsert);
 		
@@ -179,7 +182,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelGest.setLayout(null);
 		
 		imgGest = new JLabel("New label");
-		imgGest.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\eng2(1).png"));
+		imgGest.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/eng2(1).png")));
 		imgGest.setBounds(39, 11, 73, 80);
 		panelGest.add(imgGest);
 		
@@ -199,10 +202,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		if (info[2].equalsIgnoreCase("agente")) {
 			panelInsert.setBackground(Color.GRAY);
 			lblInsert.setForeground(Color.LIGHT_GRAY);
-			imgInsert.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\lapB.png"));
+			imgInsert.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/lapB.png")));
 			panelGest.setBackground(Color.GRAY);
 			lblGestionar.setForeground(Color.LIGHT_GRAY);
-			imgGest.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\engB.png"));
+			imgGest.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/engB.png")));
 		}else {
 			panelInsert.addMouseListener(this);
 			panelGest.addMouseListener(this);
@@ -217,7 +220,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.add(panelBus);
 		
 		imgBuscar = new JLabel("New label");
-		imgBuscar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\lu2(1).png"));
+		imgBuscar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/lu2(1).png")));
 		imgBuscar.setBounds(40, 11, 73, 80);
 		panelBus.add(imgBuscar);
 		
@@ -242,7 +245,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.add(panelComp);
 		
 		imgComparar = new JLabel("New label");
-		imgComparar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\co2(1).png"));
+		imgComparar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/co2(1).png")));
 		imgComparar.setBounds(43, 11, 73, 80);
 		panelComp.add(imgComparar);
 		
@@ -266,9 +269,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		buttonBR.setBounds(527, 367, 70, 22);
 		contentPane.add(buttonBR);
 		
+		// Fondo
 		imgErtzAC = new JLabel("New label");
-		imgErtzAC.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
-		imgErtzAC.setBounds(151, 83, 318, 290);
+		imgErtzAC.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/ertzAC.png")));
+		imgErtzAC.setBounds(151, 83, 309, 290);
 		contentPane.add(imgErtzAC);
 	}
 
@@ -281,7 +285,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	// Abrir ventanas
 	private void vInsertar() {
 		panelInsert.setBackground(SystemColor.controlShadow);
-		imgInsert.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\laAO.png"));
+		imgInsert.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/laAO.png")));
 		lblInsert.setForeground(new Color(0, 0, 51));
 		VInserciones inserciones = new VInserciones(padre, true, info);
 		this.dispose();
@@ -290,7 +294,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 
 	private void vBusqueda() {
 		panelBus.setBackground(SystemColor.controlShadow);
-		imgBuscar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\luAO.png"));
+		imgBuscar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/luAO.png")));
 		lblBuscar.setForeground(new Color(0, 0, 51));
 		VBusqueda busqueda = new VBusqueda(padre, true, info);
 		this.dispose();
@@ -299,7 +303,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 
 	private void vGestionar() {
 		panelGest.setBackground(SystemColor.controlShadow);
-		imgGest.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\engAO.png"));
+		imgGest.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/engAO.png")));
 		lblGestionar.setForeground(new Color(0, 0, 51));
 		VGestion gestionar = new VGestion(padre, true, info);
 		this.dispose();
@@ -308,7 +312,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 
 	private void vComparar() {
 		panelComp.setBackground(SystemColor.controlShadow);
-		imgComparar.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\coAO.png"));
+		imgComparar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/coAO.png")));
 		lblComparar.setForeground(new Color(0, 0, 51));
 		VComparacion comparar = new VComparacion(padre, true, info);
 		this.dispose();

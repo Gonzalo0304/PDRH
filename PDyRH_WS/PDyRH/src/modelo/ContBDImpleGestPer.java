@@ -346,6 +346,15 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
 		}
 		
 		return esta;

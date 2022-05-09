@@ -106,7 +106,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	private JSeparator separator2_2_1_2;
 	private JLabel lblCO2;
 	private JSeparator separator2_2_1_1_1;
-	private JLabel lblNewLabel;
+	private JLabel imgErtzAC;
 	private RestoHumano resto;
 	private Persona des;
 	private VIniciarSesion padre;
@@ -115,8 +115,8 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	// <--- Datos BD --->
 	ContDatosCompEsp datos = DataFactoryCompEsp.getDatos();
 
-	// <--- Ejecución --->
 	public VComRH(VIniciarSesion padre, boolean modal, String dni, String codigo, String[] infos) {
+		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
 		setBounds(350, 150, 503, 627);
@@ -171,6 +171,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblCerrar.setForeground(Color.WHITE);
 		contentPane.add(lblCerrar);
 		
+		// Menú superior
 		separator2_5 = new JSeparator();
 		separator2_5.setBounds(0, 36, 502, 2);
 		separator2_5.setForeground(SystemColor.controlShadow);
@@ -260,7 +261,8 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		mCriminal.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mCriminal.setForeground(Color.BLACK);
 		menuBusqueda.add(mCriminal);
-
+		
+		// Botón para identificar
 		button = new Button("IDENTIFICAR");
 		button.setBounds(397, 592, 96, 24);
 		button.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -275,293 +277,294 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 			
 		});
 		contentPane.add(button);
-
+		
+		// Campos de información
 		lblFecha = new JLabel("FECHA");
-		lblFecha.setBounds(26, 77, 81, 28);
+		lblFecha.setBounds(36, 78, 81, 28);
 		lblFecha.setForeground(new Color(0, 51, 102));
 		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblFecha);
 
 		separator2 = new JSeparator();
-		separator2.setBounds(26, 103, 106, 2);
+		separator2.setBounds(36, 104, 106, 2);
 		separator2.setForeground(SystemColor.controlShadow);
 		separator2.setBackground(new Color(0, 51, 102));
 		contentPane.add(separator2);
 
 		textFECHA = new JTextField();
-		textFECHA.setBounds(26, 116, 187, 20);
+		textFECHA.setBounds(36, 117, 187, 20);
 		textFECHA.setEditable(false);
 		textFECHA.setToolTipText("");
 		textFECHA.setColumns(10);
 		contentPane.add(textFECHA);
 
 		lblUbi = new JLabel("UBICACI\u00D3N");
-		lblUbi.setBounds(26, 135, 81, 28);
+		lblUbi.setBounds(36, 136, 81, 28);
 		lblUbi.setForeground(new Color(0, 51, 102));
 		lblUbi.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblUbi);
 
 		separator2_1 = new JSeparator();
-		separator2_1.setBounds(26, 161, 106, 2);
+		separator2_1.setBounds(36, 162, 106, 2);
 		separator2_1.setForeground(SystemColor.controlShadow);
 		separator2_1.setBackground(new Color(0, 51, 102));
 		contentPane.add(separator2_1);
 
 		textUbi = new JTextField();
-		textUbi.setBounds(26, 174, 187, 20);
+		textUbi.setBounds(36, 175, 187, 20);
 		textUbi.setEditable(false);
 		textUbi.setToolTipText("");
 		textUbi.setColumns(10);
 		contentPane.add(textUbi);
 
 		lblGen = new JLabel("SEXO");
-		lblGen.setBounds(26, 203, 81, 28);
+		lblGen.setBounds(36, 204, 81, 28);
 		lblGen.setForeground(new Color(0, 51, 102));
 		lblGen.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblGen);
 
 		separator2_2 = new JSeparator();
-		separator2_2.setBounds(26, 229, 106, 2);
+		separator2_2.setBounds(36, 230, 106, 2);
 		separator2_2.setForeground(SystemColor.controlShadow);
 		separator2_2.setBackground(new Color(0, 51, 102));
 		contentPane.add(separator2_2);
 
 		textGen = new JTextField();
-		textGen.setBounds(26, 242, 187, 20);
+		textGen.setBounds(36, 243, 187, 20);
 		textGen.setEditable(false);
 		textGen.setToolTipText("");
 		textGen.setColumns(10);
 		contentPane.add(textGen);
 
 		lblTP = new JLabel("TIPO DE PELO");
-		lblTP.setBounds(26, 261, 81, 28);
+		lblTP.setBounds(36, 262, 81, 28);
 		lblTP.setForeground(new Color(0, 51, 102));
 		lblTP.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblTP);
 
 		separator2_1_1 = new JSeparator();
-		separator2_1_1.setBounds(26, 287, 106, 2);
+		separator2_1_1.setBounds(36, 288, 106, 2);
 		separator2_1_1.setForeground(SystemColor.controlShadow);
 		separator2_1_1.setBackground(new Color(0, 51, 102));
 		contentPane.add(separator2_1_1);
 
 		textTP = new JTextField();
-		textTP.setBounds(26, 300, 187, 20);
+		textTP.setBounds(36, 301, 187, 20);
 		textTP.setEditable(false);
 		textTP.setToolTipText("");
 		textTP.setColumns(10);
 		contentPane.add(textTP);
 
 		lblCP = new JLabel("COLOR DE PELO");
-		lblCP.setBounds(26, 331, 106, 28);
+		lblCP.setBounds(36, 332, 106, 28);
 		lblCP.setForeground(new Color(0, 51, 102));
 		lblCP.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblCP);
 
 		separator2_3 = new JSeparator();
-		separator2_3.setBounds(26, 357, 106, 2);
+		separator2_3.setBounds(36, 358, 106, 2);
 		separator2_3.setForeground(SystemColor.controlShadow);
 		separator2_3.setBackground(new Color(0, 51, 102));
 		contentPane.add(separator2_3);
 
 		textCP = new JTextField();
-		textCP.setBounds(26, 370, 187, 20);
+		textCP.setBounds(36, 371, 187, 20);
 		textCP.setEditable(false);
 		textCP.setToolTipText("");
 		textCP.setColumns(10);
 		contentPane.add(textCP);
 
 		lblAlt = new JLabel("ALTURA");
-		lblAlt.setBounds(26, 458, 81, 28);
+		lblAlt.setBounds(36, 459, 81, 28);
 		lblAlt.setForeground(new Color(0, 51, 102));
 		lblAlt.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblAlt);
 
 		separator2_1_2 = new JSeparator();
-		separator2_1_2.setBounds(26, 484, 106, 2);
+		separator2_1_2.setBounds(36, 485, 106, 2);
 		separator2_1_2.setForeground(SystemColor.controlShadow);
 		separator2_1_2.setBackground(new Color(0, 51, 102));
 		contentPane.add(separator2_1_2);
 
 		textAlt = new JTextField();
-		textAlt.setBounds(26, 497, 187, 20);
+		textAlt.setBounds(36, 498, 187, 20);
 		textAlt.setEditable(false);
 		textAlt.setToolTipText("");
 		textAlt.setColumns(10);
 		contentPane.add(textAlt);
 
 		lblEsp = new JLabel("ESPECIFICACIONES");
-		lblEsp.setBounds(26, 526, 106, 28);
+		lblEsp.setBounds(36, 527, 106, 28);
 		lblEsp.setForeground(new Color(0, 51, 102));
 		lblEsp.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblEsp);
 
 		separator2_2_1 = new JSeparator();
-		separator2_2_1.setBounds(26, 552, 106, 2);
+		separator2_2_1.setBounds(36, 553, 106, 2);
 		separator2_2_1.setForeground(SystemColor.controlShadow);
 		separator2_2_1.setBackground(new Color(0, 51, 102));
 		contentPane.add(separator2_2_1);
 
 		textEsp = new JTextField();
-		textEsp.setBounds(26, 565, 187, 20);
+		textEsp.setBounds(36, 566, 187, 20);
 		textEsp.setEditable(false);
 		textEsp.setToolTipText("");
 		textEsp.setColumns(10);
 		contentPane.add(textEsp);
 
 		lblFecha_1 = new JLabel("FECHA");
-		lblFecha_1.setBounds(264, 74, 81, 28);
+		lblFecha_1.setBounds(274, 75, 81, 28);
 		lblFecha_1.setForeground(new Color(153, 0, 0));
 		lblFecha_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblFecha_1);
 
 		separator2_4 = new JSeparator();
-		separator2_4.setBounds(264, 100, 106, 2);
+		separator2_4.setBounds(274, 101, 106, 2);
 		separator2_4.setForeground(SystemColor.controlShadow);
 		separator2_4.setBackground(new Color(153, 0, 0));
 		contentPane.add(separator2_4);
 
 		textFecha2 = new JTextField();
-		textFecha2.setBounds(264, 113, 187, 20);
+		textFecha2.setBounds(274, 114, 187, 20);
 		textFecha2.setEditable(false);
 		textFecha2.setToolTipText("");
 		textFecha2.setColumns(10);
 		contentPane.add(textFecha2);
 
 		lblUbi_1 = new JLabel("UBICACI\u00D3N");
-		lblUbi_1.setBounds(264, 132, 81, 28);
+		lblUbi_1.setBounds(274, 133, 81, 28);
 		lblUbi_1.setForeground(new Color(153, 0, 0));
 		lblUbi_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblUbi_1);
 
 		separator2_1_3 = new JSeparator();
-		separator2_1_3.setBounds(264, 158, 106, 2);
+		separator2_1_3.setBounds(274, 159, 106, 2);
 		separator2_1_3.setForeground(SystemColor.controlShadow);
 		separator2_1_3.setBackground(new Color(153, 0, 0));
 		contentPane.add(separator2_1_3);
 
 		textUbi2 = new JTextField();
-		textUbi2.setBounds(264, 171, 187, 20);
+		textUbi2.setBounds(274, 172, 187, 20);
 		textUbi2.setEditable(false);
 		textUbi2.setToolTipText("");
 		textUbi2.setColumns(10);
 		contentPane.add(textUbi2);
 
 		lblGen_1 = new JLabel("SEXO");
-		lblGen_1.setBounds(264, 200, 81, 28);
+		lblGen_1.setBounds(274, 201, 81, 28);
 		lblGen_1.setForeground(new Color(153, 0, 0));
 		lblGen_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblGen_1);
 
 		separator2_2_2 = new JSeparator();
-		separator2_2_2.setBounds(264, 226, 106, 2);
+		separator2_2_2.setBounds(274, 227, 106, 2);
 		separator2_2_2.setForeground(SystemColor.controlShadow);
 		separator2_2_2.setBackground(new Color(153, 0, 0));
 		contentPane.add(separator2_2_2);
 
 		textGen2 = new JTextField();
-		textGen2.setBounds(264, 239, 187, 20);
+		textGen2.setBounds(274, 240, 187, 20);
 		textGen2.setEditable(false);
 		textGen2.setToolTipText("");
 		textGen2.setColumns(10);
 		contentPane.add(textGen2);
 
 		lblTP_1 = new JLabel("TIPO DE PELO");
-		lblTP_1.setBounds(264, 258, 81, 28);
+		lblTP_1.setBounds(274, 259, 81, 28);
 		lblTP_1.setForeground(new Color(153, 0, 0));
 		lblTP_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblTP_1);
 
 		separator2_1_1_1 = new JSeparator();
-		separator2_1_1_1.setBounds(264, 284, 106, 2);
+		separator2_1_1_1.setBounds(274, 285, 106, 2);
 		separator2_1_1_1.setForeground(SystemColor.controlShadow);
 		separator2_1_1_1.setBackground(new Color(153, 0, 0));
 		contentPane.add(separator2_1_1_1);
 
 		textTP2 = new JTextField();
-		textTP2.setBounds(264, 297, 187, 20);
+		textTP2.setBounds(274, 298, 187, 20);
 		textTP2.setEditable(false);
 		textTP2.setToolTipText("");
 		textTP2.setColumns(10);
 		contentPane.add(textTP2);
 
 		lblCP_1 = new JLabel("COLOR DE PELO");
-		lblCP_1.setBounds(264, 328, 106, 28);
+		lblCP_1.setBounds(274, 329, 106, 28);
 		lblCP_1.setForeground(new Color(153, 0, 0));
 		lblCP_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblCP_1);
 
 		separator2_3_1 = new JSeparator();
-		separator2_3_1.setBounds(264, 354, 106, 2);
+		separator2_3_1.setBounds(274, 355, 106, 2);
 		separator2_3_1.setForeground(SystemColor.controlShadow);
 		separator2_3_1.setBackground(new Color(153, 0, 0));
 		contentPane.add(separator2_3_1);
 
 		textCP2 = new JTextField();
-		textCP2.setBounds(264, 367, 187, 20);
+		textCP2.setBounds(274, 368, 187, 20);
 		textCP2.setEditable(false);
 		textCP2.setToolTipText("");
 		textCP2.setColumns(10);
 		contentPane.add(textCP2);
 
 		lblAlt_1 = new JLabel("ALTURA");
-		lblAlt_1.setBounds(264, 458, 81, 28);
+		lblAlt_1.setBounds(274, 459, 81, 28);
 		lblAlt_1.setForeground(new Color(153, 0, 0));
 		lblAlt_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblAlt_1);
 
 		separator2_1_2_1 = new JSeparator();
-		separator2_1_2_1.setBounds(264, 484, 106, 2);
+		separator2_1_2_1.setBounds(274, 485, 106, 2);
 		separator2_1_2_1.setForeground(SystemColor.controlShadow);
 		separator2_1_2_1.setBackground(new Color(153, 0, 0));
 		contentPane.add(separator2_1_2_1);
 
 		textAlt2 = new JTextField();
-		textAlt2.setBounds(264, 497, 187, 20);
+		textAlt2.setBounds(274, 498, 187, 20);
 		textAlt2.setEditable(false);
 		textAlt2.setToolTipText("");
 		textAlt2.setColumns(10);
 		contentPane.add(textAlt2);
 
 		lblEsp_1 = new JLabel("ESPECIFICACIONES");
-		lblEsp_1.setBounds(264, 526, 106, 28);
+		lblEsp_1.setBounds(274, 527, 106, 28);
 		lblEsp_1.setForeground(new Color(153, 0, 0));
 		lblEsp_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblEsp_1);
 
 		separator2_2_1_1 = new JSeparator();
-		separator2_2_1_1.setBounds(264, 552, 106, 2);
+		separator2_2_1_1.setBounds(274, 553, 106, 2);
 		separator2_2_1_1.setForeground(SystemColor.controlShadow);
 		separator2_2_1_1.setBackground(new Color(153, 0, 0));
 		contentPane.add(separator2_2_1_1);
 
 		textEsp2 = new JTextField();
-		textEsp2.setBounds(264, 565, 187, 20);
+		textEsp2.setBounds(274, 566, 187, 20);
 		textEsp2.setEditable(false);
 		textEsp2.setToolTipText("");
 		textEsp2.setColumns(10);
 		contentPane.add(textEsp2);
 
 		lblRestoHumano = new JLabel("Resto Humano");
-		lblRestoHumano.setBounds(66, 48, 106, 19);
+		lblRestoHumano.setBounds(76, 49, 106, 19);
 		lblRestoHumano.setForeground(new Color(0, 51, 102));
 		lblRestoHumano.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		contentPane.add(lblRestoHumano);
 
 		separator1 = new JSeparator();
-		separator1.setBounds(54, 67, 126, 2);
+		separator1.setBounds(64, 68, 126, 2);
 		separator1.setForeground(new Color(0, 51, 102));
 		separator1.setBackground(new Color(0, 51, 102));
 		contentPane.add(separator1);
 
 		lblDesaparecida = new JLabel("Desaparecida");
-		lblDesaparecida.setBounds(303, 48, 96, 19);
+		lblDesaparecida.setBounds(313, 49, 96, 19);
 		lblDesaparecida.setForeground(new Color(153, 0, 0));
 		lblDesaparecida.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		contentPane.add(lblDesaparecida);
 
 		separator1_1 = new JSeparator();
-		separator1_1.setBounds(287, 67, 126, 2);
+		separator1_1.setBounds(297, 68, 126, 2);
 		separator1_1.setForeground(new Color(153, 0, 0));
 		separator1_1.setBackground(new Color(153, 0, 0));
 		contentPane.add(separator1_1);
@@ -569,49 +572,51 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblCO = new JLabel("COLOR DE OJOS");
 		lblCO.setForeground(new Color(0, 51, 102));
 		lblCO.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblCO.setBounds(26, 389, 106, 28);
+		lblCO.setBounds(36, 390, 106, 28);
 		contentPane.add(lblCO);
 
 		separator2_2_1_2 = new JSeparator();
 		separator2_2_1_2.setForeground(SystemColor.controlShadow);
 		separator2_2_1_2.setBackground(new Color(0, 51, 102));
-		separator2_2_1_2.setBounds(26, 415, 106, 2);
+		separator2_2_1_2.setBounds(36, 416, 106, 2);
 		contentPane.add(separator2_2_1_2);
 
 		textCO = new JTextField();
 		textCO.setToolTipText("");
 		textCO.setEditable(false);
 		textCO.setColumns(10);
-		textCO.setBounds(26, 428, 187, 20);
+		textCO.setBounds(36, 429, 187, 20);
 		contentPane.add(textCO);
 
 		lblCO2 = new JLabel("COLOR DE OJOS");
 		lblCO2.setForeground(new Color(153, 0, 0));
 		lblCO2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblCO2.setBounds(264, 386, 106, 28);
+		lblCO2.setBounds(274, 387, 106, 28);
 		contentPane.add(lblCO2);
 
 		separator2_2_1_1_1 = new JSeparator();
 		separator2_2_1_1_1.setForeground(SystemColor.controlShadow);
 		separator2_2_1_1_1.setBackground(new Color(153, 0, 0));
-		separator2_2_1_1_1.setBounds(264, 412, 106, 2);
+		separator2_2_1_1_1.setBounds(274, 413, 106, 2);
 		contentPane.add(separator2_2_1_1_1);
 
 		textCO2 = new JTextField();
 		textCO2.setToolTipText("");
 		textCO2.setEditable(false);
 		textCO2.setColumns(10);
-		textCO2.setBounds(264, 425, 187, 20);
+		textCO2.setBounds(274, 426, 187, 20);
 		contentPane.add(textCO2);
-
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(90, 200, 309, 317);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
-		contentPane.add(lblNewLabel);
 		
 		cargarDatos(dni,codigo);
+		// Fondo
+		imgErtzAC = new JLabel("");
+		imgErtzAC.setBounds(90, 200, 309, 317);
+		imgErtzAC.setIcon(new ImageIcon(VComRH.class.getResource("/imagenes/ertzAC.png")));
+		contentPane.add(imgErtzAC);
 	}
-
+	
+	// <--- Métodos --->
+	// Cargar la información en los campos de texto
 	private void cargarDatos(String dni, String codigo) {
 		des = obtenerPersona(dni);
 		resto = obtenerRH(codigo);

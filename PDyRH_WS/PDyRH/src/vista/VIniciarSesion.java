@@ -27,6 +27,7 @@ import javax.swing.border.LineBorder;
 
 import controlador.DataFactoryIS;
 import controlador.interfaces.ControladorDatosIS;
+import java.awt.Toolkit;
 
 public class VIniciarSesion extends JFrame implements ActionListener,ControladorDatosIS {
 
@@ -72,6 +73,8 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 	}
 	
 	public VIniciarSesion() {
+		setTitle("PDyRH: Iniciar sesi\u00F3n");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\Ertzaintza3.png"));
 		// <--- Diseño ventana --->
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,7 +84,7 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		contentPane.setBackground(new Color(0, 51, 102));
 		contentPane.setBorder(new LineBorder(new Color(25, 25, 112), 2));
 		setContentPane(contentPane);
-		setUndecorated(true); // Sin borde predeterminado
+		setUndecorated(true);
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		
@@ -107,58 +110,6 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		buttonIS.setBounds(341, 271, 126, 31);
 		contentPane.add(buttonIS);
 		
-		// En caso de textField de Usuario vacío
-		lblIntroUsu = new JLabel("Introduce el usuario");
-		lblIntroUsu.setVisible(false);
-		lblIntroUsu.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblIntroUsu.setForeground(new Color(153, 0, 0));
-		lblIntroUsu.setBounds(341, 133, 114, 14);
-		contentPane.add(lblIntroUsu);
-		
-		// En caso de textField de Contraseña vacío
-		lblIntroContra = new JLabel("Introduce la contrase\u00F1a");
-		lblIntroContra.setVisible(false);
-		lblIntroContra.setForeground(new Color(153, 0, 0));
-		lblIntroContra.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblIntroContra.setBounds(341, 226, 136, 14);
-		contentPane.add(lblIntroContra);
-
-		panelBlanco = new JPanel();
-		panelBlanco.setForeground(new Color(0, 0, 0));
-		panelBlanco.setBorder(new LineBorder(SystemColor.controlShadow));
-		panelBlanco.setBackground(Color.WHITE);
-		panelBlanco.setBounds(0, 0, 319, 336);
-		contentPane.add(panelBlanco);
-		panelBlanco.setLayout(null);
-
-		imgErtz = new JLabel("New label");
-		imgErtz.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\Ertzaintza3.png"));
-		imgErtz.setBounds(40, 58, 231, 216);
-		panelBlanco.add(imgErtz);
-
-		imgVizIz = new JLabel("New label");
-		imgVizIz.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\pais-vasco1.png"));
-		imgVizIz.setBounds(-89, 0, 483, 336);
-		panelBlanco.add(imgVizIz);
-
-		txtUsuario = new JTextField();
-		txtUsuario.setToolTipText("C\u00F3digo del usuario");
-		txtUsuario.setBounds(341, 102, 283, 31);
-		contentPane.add(txtUsuario);
-		txtUsuario.setColumns(10);
-
-		lblUsuario = new JLabel("USUARIO");
-		lblUsuario.setForeground(SystemColor.controlHighlight);
-		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblUsuario.setBounds(341, 63, 81, 28);
-		contentPane.add(lblUsuario);
-
-		passwordField = new JPasswordField();
-		passwordField.setToolTipText("Contrase\u00F1a");
-		passwordField.setForeground(Color.BLACK);
-		passwordField.setBounds(341, 195, 283, 31);
-		contentPane.add(passwordField);
-		
 		// Botón para cerrar la ventana
 		lblCerrar = new JLabel("x");
 		lblCerrar.setBackground(new Color(153, 0, 0));
@@ -183,13 +134,68 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		lblCerrar.setForeground(Color.WHITE);
 		lblCerrar.setBounds(644, 0, 31, 19);
 		contentPane.add(lblCerrar);
+		
+		// En caso de textField de Usuario vacío
+		lblIntroUsu = new JLabel("Introduce el usuario");
+		lblIntroUsu.setVisible(false);
+		lblIntroUsu.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblIntroUsu.setForeground(new Color(153, 0, 0));
+		lblIntroUsu.setBounds(341, 133, 114, 14);
+		contentPane.add(lblIntroUsu);
+		
+		// En caso de textField de Contraseña vacío
+		lblIntroContra = new JLabel("Introduce la contrase\u00F1a");
+		lblIntroContra.setVisible(false);
+		lblIntroContra.setForeground(new Color(153, 0, 0));
+		lblIntroContra.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblIntroContra.setBounds(341, 226, 136, 14);
+		contentPane.add(lblIntroContra);
+		
+		// Decoración
+		panelBlanco = new JPanel();
+		panelBlanco.setForeground(new Color(0, 0, 0));
+		panelBlanco.setBorder(new LineBorder(SystemColor.controlShadow));
+		panelBlanco.setBackground(Color.WHITE);
+		panelBlanco.setBounds(0, 0, 319, 336);
+		contentPane.add(panelBlanco);
+		panelBlanco.setLayout(null);
+
+		imgErtz = new JLabel("New label");
+		imgErtz.setIcon(new ImageIcon(VIniciarSesion.class.getResource("/imagenes/Ertzaintza3.png")));
+		imgErtz.setBounds(40, 58, 231, 216);
+		panelBlanco.add(imgErtz);
+
+		imgVizIz = new JLabel("New label");
+		imgVizIz.setIcon(new ImageIcon(VIniciarSesion.class.getResource("/imagenes/pais-vasco1.png")));
+		imgVizIz.setBounds(-89, 0, 483, 336);
+		panelBlanco.add(imgVizIz);
+		
+		// Campos a rellenar
+		txtUsuario = new JTextField();
+		txtUsuario.setToolTipText("C\u00F3digo del usuario");
+		txtUsuario.setBounds(341, 102, 283, 31);
+		contentPane.add(txtUsuario);
+		txtUsuario.setColumns(10);
+
+		lblUsuario = new JLabel("USUARIO");
+		lblUsuario.setForeground(SystemColor.controlHighlight);
+		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblUsuario.setBounds(341, 63, 81, 28);
+		contentPane.add(lblUsuario);
+
+		passwordField = new JPasswordField();
+		passwordField.setToolTipText("Contrase\u00F1a");
+		passwordField.setForeground(Color.BLACK);
+		passwordField.setBounds(341, 195, 283, 31);
+		contentPane.add(passwordField);
 
 		lblContra = new JLabel("CONTRASE\u00D1A");
 		lblContra.setForeground(SystemColor.controlHighlight);
 		lblContra.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblContra.setBounds(341, 156, 114, 28);
 		contentPane.add(lblContra);
-
+		
+		// Decoración e información
 		lblPDyRH = new JLabel("Personas Desaparecidas y Restos Humanos");
 		lblPDyRH.setForeground(SystemColor.activeCaptionBorder);
 		lblPDyRH.setFont(new Font("Nirmala UI", Font.BOLD, 14));
@@ -221,7 +227,7 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		contentPane.add(lblInfo);
 
 		imgVizDer = new JLabel("New label");
-		imgVizDer.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\pais-vasco1A.png"));
+		imgVizDer.setIcon(new ImageIcon(VIniciarSesion.class.getResource("/imagenes/pais-vasco1A.png")));
 		imgVizDer.setBounds(-89, 0, 723, 336);
 		contentPane.add(imgVizDer);
 	}
@@ -232,7 +238,6 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		if (e.getSource().equals(buttonIS)) {
 			verificar();
 		}
-		
 	}
 	
 	// Cerrar la ventana
@@ -261,14 +266,13 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 				JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos.", "Identificación fallida.", JOptionPane.ERROR_MESSAGE);
 			} else {
 				VPrincipal main = new VPrincipal(this,true,info);
-				this.dispose();
 				main.setVisible(true);
 			}
 		}
 		txtUsuario.setText("");
 		passwordField.setText("");
 	}
-
+	
 	@Override
 	public String[] comprobarCredenciales(String usuario) {
 		String[] info = new String[3];

@@ -74,8 +74,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	// <--- Datos BD --->
 	ContDatosComp datos = DataFactoryComp.getDatos();
 
-	// <--- Ejecución --->
 	public VComparacion(VIniciarSesion padre, boolean modal, String[] infos) {
+		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
 		setTitle("Comparar");
@@ -131,6 +131,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		lblCerrar.setBounds(573, 2, 31, 19);
 		contentPane.add(lblCerrar);
 		
+		// Menú superior y título
 		separator1 = new JSeparator();
 		separator1.setForeground(new Color(102, 0, 0));
 		separator1.setBackground(new Color(153, 0, 0));
@@ -244,6 +245,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 					}
 				});
 			} else {
+				// No hay restos y desaparecidos que coincidan lo suficiente
 				panel1 = new JPanel();
 				panel1.setBackground(new Color(153, 0, 0));
 				panel1.setBounds(93, 99, 402, 210);
@@ -263,6 +265,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 				contentPane.add(panel);
 			}
 		} else {
+			// No hay datos en la BD
 			panel1 = new JPanel();
 			panel1.setBackground(new Color(153, 0, 0));
 			panel1.setBounds(93, 99, 402, 210);
@@ -282,8 +285,9 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 			contentPane.add(panel);
 		}
 		
+		// Fondo
 		lblImgErtzAC = new JLabel("");
-		lblImgErtzAC.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
+		lblImgErtzAC.setIcon(new ImageIcon(VComparacion.class.getResource("/imagenes/ertzAC.png")));
 		lblImgErtzAC.setBounds(151, 83, 318, 290);
 		contentPane.add(lblImgErtzAC);
 	}
@@ -294,7 +298,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		this.dispose();
 		vMain.setVisible(true);
 	}
-
+	
+	// Calcular porcentaje entre resto humano y persona desaparecida
 	private float calcularPor(RestoHumano rh, Persona des) {
 		// <--- Variables --->
 		float xAltura;
