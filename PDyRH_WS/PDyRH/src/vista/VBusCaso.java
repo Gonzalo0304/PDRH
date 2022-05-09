@@ -299,16 +299,15 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 			textFechaFin.setText(fechaFin);
 		}
 		
-		datosInvolucrados(part, caso, datos2);
-		nombreCompleto(per, datos2, caso, part);
+		datosInvolucrados(part, codCaso);
+		nombreCompleto(per,codCaso, part);
 	}
 	
-	private void datosInvolucrados(Participante part, Caso caso, ContDatosBusqCaso datos2) {
+	private void datosInvolucrados(Participante part, String codCaso) {
 		// TODO Auto-generated method stub
 		part = new Participante();
-		caso = new Caso();
 		restos = new TreeMap<>();
-		restos = datos2.listarInvolucrados(caso.getCodCaso());		
+		restos = listarInvolucrados(codCaso);		
 		
 		if(part!=null) {
 			textDni1.setText(part.getDni());
@@ -316,7 +315,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 			textDni2.setText(part.getDni());
 			textImplicacion2.setText(part.getImplicacion());
 			for (RestoHumano restH : restos.values()) {
-				if(restH.getCodCaso().equalsIgnoreCase(caso.getCodCaso())) {
+				if(restH.getCodCaso().equalsIgnoreCase(codCaso)) {
 					textCodigoRH.setText(restH.getCodResto());
 				}
 			}
@@ -333,13 +332,12 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 		this.dispose();
 	}
 
-	private void nombreCompleto(Persona per, ContDatosBusqCaso datos2,Caso caso, Participante part) {
+	private void nombreCompleto(Persona per, String codCaso, Participante part) {
 		// TODO Auto-generated method stub
 		per = new Persona();
-		caso = new Caso();
 		part = new Participante();
 		participantes = new TreeMap<>();
-		participantes = datos2.listarParticipantes(caso.getCodCaso());
+		participantes = listarParticipantes(codCaso);
 		
 		for(Participante parti : participantes.values()) {
 			if (parti.getDni().equalsIgnoreCase(per.getDni())) {

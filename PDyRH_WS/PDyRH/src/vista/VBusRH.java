@@ -315,6 +315,8 @@ public class VBusRH extends JDialog implements ContDatosBusqRH{
 		imagen.setBounds(0, 37, 499, 423);
 		contentPanel.add(imagen);
 		
+		resto = obtenerRH(codResto);
+		
 		if(resto!=null) {
 			textCodigo.setText(resto.getCodResto());
 			textCausa.setText(resto.getCausa());
@@ -329,21 +331,14 @@ public class VBusRH extends JDialog implements ContDatosBusqRH{
 			textAltura.setText(Float.toString(resto.getAltura()));
 			textEspecificacion.setText(resto.getEspecificaciones());
 			textCodCaso.setText(resto.getCodCaso());
-			identificado(persona, resto, datos2);
+
+			String idnt = obtenerIdentificado(codResto);
+			textIdentificacion.setText(idnt);
 		}
 		
 		
 	}
 	
-	private void identificado(Persona persona, RestoHumano restoHumano, ContDatosBusqRH datos2) {
-		// TODO Auto-generated method stub
-		persona = new Persona();
-		String idnt = datos2.obtenerIdentificado(persona.getDni());
-		
-		textIdentificacion.setText(idnt);
-		
-	}
-
 	private void volver() {
 		// TODO Auto-generated method stub
 		this.dispose();
@@ -390,12 +385,12 @@ public class VBusRH extends JDialog implements ContDatosBusqRH{
 	@Override
 	public String obtenerIdentificado(String codResto) {
 		// TODO Auto-generated method stub
-		return null;
+		return datos2.obtenerIdentificado(codResto);
 	}
 
 	@Override
 	public RestoHumano obtenerRH(String codResto) {
 		// TODO Auto-generated method stub
-		return null;
+		return datos2.obtenerRH(codResto);
 	}
 }

@@ -41,7 +41,7 @@ import java.util.Map;
 import java.awt.event.ActionEvent;
 
 
-public class VBusqueda extends JDialog {
+public class VBusqueda extends JDialog implements ContDatosBusq{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textVBusqueda;
@@ -260,16 +260,16 @@ public class VBusqueda extends JDialog {
 	}
 	
 	public boolean comprobarDNI(String dni) {
-		return datos.comprobarDNI(dni);
+		return datos2.comprobarDNI(dni);
 	}
 	
 	public boolean buscarRH(String codResto) {
-		return datos.buscarRH(codResto);
+		return datos2.buscarRH(codResto);
 	}
 
 
 	public Caso buscarCaso(String codCaso) {
-		return datos.buscarCaso(codCaso);
+		return datos2.buscarCaso(codCaso);
 	}
 	
 	private void busqueda(VIniciarSesion vInicio, ContDatosBusq datos) {

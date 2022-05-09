@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Point;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,9 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.ActionEvent;
 
 import controlador.*;
@@ -80,7 +76,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 	private Button buttonVolver1;
 	private Button buttonVolver2;
 	private JLabel imagen;
-	private static Point point = new Point();
 	
 	private Conocido conocido;
 	private Map<String,Conocido> conocidos;
@@ -95,19 +90,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new CardLayout(0, 0));
-		
-		addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				point.x = e.getX();
-				point.y = e.getY();
-			}
-		});
-		addMouseMotionListener(new MouseMotionAdapter() {
-			public void mouseDragged(MouseEvent e) {
-				Point p = getLocation();
-				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
-			}
-		});
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 0, 0);
@@ -364,8 +346,10 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		buttonVolver1.setBackground(new Color(153, 0, 0));
 		buttonVolver1.setBounds(291, 373, 107, 31);
 		panel_2.add(buttonVolver1);
-
+		
+		per = obtenerPersona(dni);
 		if (per != null) {
+			
 			textDni.setText(per.getDni());
 			textNombre.setText(per.getNombre());
 			textApellido.setText(per.getApellido());
@@ -531,7 +515,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		buttonVolver2.setBounds(293, 260, 107, 31);
 		panel.add(buttonVolver2);
 
-		nombresCompletos(per, conocido);
+		nombresCompletos(per, datos, datos2, conocido);
 
 		imagen = new JLabel("");
 		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
@@ -569,10 +553,13 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		textFinServ.setVisible(true);
 	}
 
-	private void nombresCompletos(Persona persona, Conocido conocido) {
+	private void nombresCompletos(Persona persona, ContDatosBusq datos, ContDatosBusqPer datos2, Conocido conocido) {
 		// TODO Auto-generated method stub
 		persona = new Persona();
+		conocido = new Conocido();
 		conocidos = new TreeMap<>();
+
+		conocidos = datos2.listarConocidos(conocido.getDni1());
 		
 		for (Conocido cono : conocidos.values()) {
 			if (cono.getDni1().equalsIgnoreCase(persona.getDni())) {
