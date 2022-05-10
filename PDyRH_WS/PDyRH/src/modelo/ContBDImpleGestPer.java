@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import controlador.interfaces.ContDatosGestPer;
+import excepciones.Excepciones;
 import modelo.clases.Agente;
 import modelo.clases.Conocido;
 import modelo.clases.Criminal;
@@ -191,7 +192,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
-	public void agregarFechaArresto(String dni, LocalDate fecha) {
+	public void agregarFechaArresto(String dni, LocalDate fecha) throws Excepciones {
 		this.openConnection();
 
 		try {
@@ -203,7 +204,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			if (con != null) {
 				try {
 					con.rollback();
@@ -211,6 +211,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 					e.printStackTrace();
 				}
 			}
+			String msg = "Esta fecha ya había sido introducida.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}
@@ -219,7 +222,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	@Override
 	public Persona obtenerPersona(String dni) {
 		ResultSet rs = null;
-		ResultSet rs2 = null;
 		Persona per = null;
 		String tipo = null;
 		
@@ -247,14 +249,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				case "criminal":
 					per = new Criminal();
 					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));
-					
-					PreparedStatement stmnt2 = con.prepareStatement(SELECTfechas);
-					stmnt2.setString(1, dni);
-					
-					rs2 = stmnt2.executeQuery();
-					while (rs2.next()) {
-						((Criminal) per).getFechasArresto().add(rs2.getDate("fechaArresto").toLocalDate());
-					}
 					break;
 				case "desaparecida":
 					per = new Desaparecida();
@@ -369,6 +363,14 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 
 			stmnt.setString(1, cono.getDni1());
 			stmnt.setString(2, cono.getDni2());
+			stmnt.setString(3, cono.getRelacion());
+
+			stmnt.executeUpdate();
+			con.commit();
+			stmnt = con.prepareStatement(INSERTconoce);
+
+			stmnt.setString(1, cono.getDni2());
+			stmnt.setString(2, cono.getDni1());
 			stmnt.setString(3, cono.getRelacion());
 
 			stmnt.executeUpdate();

@@ -35,6 +35,9 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private JPanel contentPane;
 	private static Point point = new Point();
 	private JMenuItem mCerrar;
+	private JMenuItem mPersona;
+	private JMenuItem mRestoHumano;
+	private JMenuItem mCaso;
 	private JLabel lblCerrar;
 	private JPanel panelInsert;
 	private Button buttonBR;
@@ -42,6 +45,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private JLabel lblComparar;
 	private JLabel imgGest;
 	private JMenu menUsuario;
+	private JMenu menInsertar;
+	private JMenu menComparar;
+	private JMenu menGestionar;
+	private JMenu menBuscar;
 	private JLabel imgInsert;
 	private JLabel lblInsert;
 	private JLabel lblGestionar;
@@ -63,7 +70,8 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	public VPrincipal(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño ventana --->
 		super(padre);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\Ertzaintza3.png"));
+		setTitle("PDyRH: Principal");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VPrincipal.class.getResource("/imagenes/Ertzaintza3.png")));
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 607, 399);
 		contentPane = new JPanel();
@@ -148,6 +156,49 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
+		
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar.add(menInsertar);
+
+		mPersona = new JMenuItem("Persona");
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
+
+		mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
+
+		mCaso = new JMenuItem("Caso");
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
+
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addActionListener(this);
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
+
+		menComparar = new JMenu("Comparar");
+		menComparar.addActionListener(this);
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addActionListener(this);
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar.add(menBuscar);
 		
 		// Botónes principales
 		panelInsert = new JPanel();

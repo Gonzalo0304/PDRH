@@ -84,7 +84,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
-		setUndecorated(true); // Sin borde predeterminado
+		setUndecorated(true); 
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		info = infos;
@@ -288,7 +288,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		// Fondo
 		lblImgErtzAC = new JLabel("");
 		lblImgErtzAC.setIcon(new ImageIcon(VComparacion.class.getResource("/imagenes/ertzAC.png")));
-		lblImgErtzAC.setBounds(151, 83, 318, 290);
+		lblImgErtzAC.setBounds(144, 82, 318, 290);
 		contentPane.add(lblImgErtzAC);
 	}
 

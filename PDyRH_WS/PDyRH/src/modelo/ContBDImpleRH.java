@@ -70,7 +70,11 @@ public class ContBDImpleRH implements ContDatosRH {
 			stmnt.setString(7, rh.getColorOjos());
 			stmnt.setInt(8, rh.getAltura());
 			stmnt.setString(9, rh.getEspecificaciones());
+			if (rh.getFechaMuerte() != null) {
 			stmnt.setDate(10, Date.valueOf(rh.getFechaMuerte()));
+			}else {
+				stmnt.setDate(10, null);
+			}
 			
 			stmnt.executeUpdate();
 			con.commit();
@@ -140,6 +144,7 @@ public class ContBDImpleRH implements ContDatosRH {
 		ResultSet rs = null;
 		RestoHumano resto = null;
 		
+		this.openConnection();
 		try {
 			stmnt = con.prepareStatement(SELECTrh);
 			

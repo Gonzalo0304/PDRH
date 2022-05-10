@@ -3,6 +3,7 @@ package controlador.interfaces;
 import java.time.LocalDate;
 import java.util.Map;
 
+import excepciones.Excepciones;
 import modelo.clases.Conocido;
 import modelo.clases.Persona;
 
@@ -13,5 +14,5 @@ public interface ContDatosGestPer {
 	public boolean comprobarDNI(String dni);
 	public void agregarConocido(Conocido cono);
 	public Map<String,Conocido> listarConocidos(String dni1);
-	public void agregarFechaArresto(String dni, LocalDate fecha);
+	public void agregarFechaArresto(String dni, LocalDate fecha) throws Excepciones;
 }

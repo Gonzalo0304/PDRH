@@ -1,55 +1,111 @@
 package vista;
 
 import java.awt.Font;
+import modelo.clases.*;
 
-import javax.swing.JButton;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
-public class VBusCaso extends JDialog {
+import controlador.DataFactoryBusqCaso;
+import controlador.interfaces.ContDatosBusq;
+import controlador.interfaces.ContDatosBusqCaso;
+
+import javax.swing.JTabbedPane;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+import java.util.TreeMap;
+import java.awt.event.ActionEvent;
+
+public class VBusCaso extends JDialog implements ContDatosBusqCaso{
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JButton btnVolver1;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			VBusCaso dialog = new VBusCaso();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public VBusCaso() {
+	private JTextField textCodigo;
+	private JTextField textNombre;
+	private JTextField textFechaIni;
+	private JTextField textFechaFin;
+	private JTextField textDni1;
+	private JTextField textImplicacion1;
+	private JTextField textDni2;
+	private JTextField textImplicacion2;
+	private JTextField textCodigoRH;
+	private JRadioButton rdbtnAbierto;
+	private JRadioButton rdbtnCerrado;
+	private JRadioButton rdbtnSinResolver;
+	private ButtonGroup grupo = new ButtonGroup();
+	private JLabel lblNomAp1;
+	private JLabel lblNomAp2;
+	private Button buttonVolver1;
+	private Button buttonVolver2;
+	private JLabel imagen;
+	private JLabel lblCerrar;
+	private JTabbedPane tabbedPane;
+	
+	private Participante part;
+	private Caso caso;
+	private Persona per;
+	private Map<String,Participante> participantes;
+	private Map<String, RestoHumano> restos;
+	
+	ContDatosBusqCaso datos2 = DataFactoryBusqCaso.getDatos();
+	
+	public VBusCaso(VIniciarSesion vInicio, boolean modal, Caso caso2, String[] info) {
+		super(vInicio);
+		this.setModal(modal);
+		
 		setTitle("Buscar Caso");
 		setBounds(100, 100, 457, 530);
 		getContentPane().setLayout(new CardLayout(0, 0));
+		setUndecorated(true);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		lblCerrar = new JLabel("x");
+		lblCerrar.setBackground(new Color(153, 0, 0));
+		lblCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCerrar.setForeground(new Color(0,51,102));
+				lblCerrar.setOpaque(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCerrar.setForeground(Color.WHITE);
+				lblCerrar.setOpaque(false);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar.setForeground(Color.WHITE);
+		lblCerrar.setBounds(644, 0, 31, 19);
+		contentPanel.add(lblCerrar);
+		
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, "name_7044780698600");
 		tabbedPane.addTab("Datos", null, contentPanel, null);
 		contentPanel.setLayout(null);
@@ -80,81 +136,86 @@ public class VBusCaso extends JDialog {
 		lblFechafin.setBounds(29, 185, 66, 14);
 		contentPanel.add(lblFechafin);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(108, 51, 149, 20);
-		contentPanel.add(textField);
+		textCodigo = new JTextField();
+		textCodigo.setColumns(10);
+		textCodigo.setBounds(108, 51, 149, 20);
+		contentPanel.add(textCodigo);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(108, 121, 149, 20);
-		contentPanel.add(textField_1);
+		textNombre = new JTextField();
+		textNombre.setColumns(10);
+		textNombre.setBounds(108, 121, 149, 20);
+		contentPanel.add(textNombre);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(108, 152, 149, 20);
-		contentPanel.add(textField_2);
+		textFechaIni = new JTextField();
+		textFechaIni.setColumns(10);
+		textFechaIni.setBounds(108, 152, 149, 20);
+		contentPanel.add(textFechaIni);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(108, 183, 149, 20);
-		contentPanel.add(textField_3);
+		textFechaFin = new JTextField();
+		textFechaFin.setColumns(10);
+		textFechaFin.setBounds(108, 183, 149, 20);
+		contentPanel.add(textFechaFin);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Abierto");
-		rdbtnNewRadioButton.setBounds(91, 91, 68, 23);
-		contentPanel.add(rdbtnNewRadioButton);
+		rdbtnAbierto = new JRadioButton("Abierto");
+		grupo.add(rdbtnAbierto);
+		rdbtnAbierto.setBounds(91, 91, 68, 23);
+		contentPanel.add(rdbtnAbierto);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Cerrado");
-		rdbtnNewRadioButton_1.setBounds(161, 91, 68, 23);
-		contentPanel.add(rdbtnNewRadioButton_1);
+		rdbtnCerrado = new JRadioButton("Cerrado");
+		grupo.add(rdbtnCerrado);
+		rdbtnCerrado.setBounds(161, 91, 68, 23);
+		contentPanel.add(rdbtnCerrado);
 		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Sin resolver");
-		rdbtnNewRadioButton_2.setBounds(244, 91, 109, 23);
-		contentPanel.add(rdbtnNewRadioButton_2);
+		rdbtnSinResolver = new JRadioButton("Sin resolver");
+		grupo.add(rdbtnSinResolver);
+		rdbtnSinResolver.setBounds(244, 91, 109, 23);
+		contentPanel.add(rdbtnSinResolver);
 		
-		btnVolver1 = new JButton("Volver");
-		btnVolver1.addActionListener(new ActionListener() {
+		buttonVolver1 = new Button("Volver");
+		buttonVolver1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				volver1();
 			}
 		});
-		btnVolver1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnVolver1.setBounds(309, 207, 89, 29);
-		contentPanel.add(btnVolver1);
+		buttonVolver1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		buttonVolver1.setForeground(Color.WHITE);
+		buttonVolver1.setBackground(new Color(153, 0, 0));
+		buttonVolver1.setBounds(293, 260, 107, 31);
+		contentPanel.add(buttonVolver1);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Involucrados", null, panel_1, null);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Nombre y Apellido");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(28, 32, 123, 17);
-		panel_1.add(lblNewLabel_1);
+		lblNomAp1 = new JLabel("Nombre y Apellido");
+		lblNomAp1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNomAp1.setBounds(28, 32, 123, 17);
+		panel_1.add(lblNomAp1);
 		
 		JLabel lblNewLabel_2 = new JLabel("DNI:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_2.setBounds(97, 69, 33, 14);
 		panel_1.add(lblNewLabel_2);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(140, 67, 174, 20);
-		panel_1.add(textField_4);
-		textField_4.setColumns(10);
+		textDni1 = new JTextField();
+		textDni1.setBounds(140, 67, 174, 20);
+		panel_1.add(textDni1);
+		textDni1.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Implicacion:");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_3.setBounds(55, 105, 77, 14);
 		panel_1.add(lblNewLabel_3);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(140, 103, 174, 20);
-		panel_1.add(textField_5);
-		textField_5.setColumns(10);
+		textImplicacion1 = new JTextField();
+		textImplicacion1.setBounds(140, 103, 174, 20);
+		panel_1.add(textImplicacion1);
+		textImplicacion1.setColumns(10);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Nombre y Apellido");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(28, 144, 123, 17);
-		panel_1.add(lblNewLabel_1_1);
+		lblNomAp2 = new JLabel("Nombre y Apellido");
+		lblNomAp2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNomAp2.setBounds(28, 144, 123, 17);
+		panel_1.add(lblNomAp2);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("DNI:");
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -166,15 +227,15 @@ public class VBusCaso extends JDialog {
 		lblNewLabel_3_1.setBounds(55, 207, 77, 14);
 		panel_1.add(lblNewLabel_3_1);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(140, 170, 174, 20);
-		panel_1.add(textField_6);
+		textDni2 = new JTextField();
+		textDni2.setColumns(10);
+		textDni2.setBounds(140, 170, 174, 20);
+		panel_1.add(textDni2);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(140, 205, 174, 20);
-		panel_1.add(textField_7);
+		textImplicacion2 = new JTextField();
+		textImplicacion2.setColumns(10);
+		textImplicacion2.setBounds(140, 205, 174, 20);
+		panel_1.add(textImplicacion2);
 		
 		JLabel lblNewLabel_4 = new JLabel("Banda");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -186,10 +247,6 @@ public class VBusCaso extends JDialog {
 		lblNewLabel_5.setBounds(84, 291, 46, 14);
 		panel_1.add(lblNewLabel_5);
 		
-		textField_8 = new JTextField();
-		textField_8.setBounds(140, 289, 174, 20);
-		panel_1.add(textField_8);
-		textField_8.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("Resto Humano");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -201,20 +258,70 @@ public class VBusCaso extends JDialog {
 		lblNewLabel_7.setBounds(84, 385, 46, 14);
 		panel_1.add(lblNewLabel_7);
 		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(140, 383, 174, 20);
-		panel_1.add(textField_9);
+		textCodigoRH = new JTextField();
+		textCodigoRH.setColumns(10);
+		textCodigoRH.setBounds(140, 383, 174, 20);
+		panel_1.add(textCodigoRH);
 		
-		JButton btnVolver2 = new JButton("Volver");
-		btnVolver2.addActionListener(new ActionListener() {
+		buttonVolver2 = new Button("Volver");
+		buttonVolver2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				volver2();
 			}
 		});
-		btnVolver2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnVolver2.setBounds(337, 427, 89, 25);
-		panel_1.add(btnVolver2);
+		buttonVolver2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		buttonVolver2.setForeground(Color.WHITE);
+		buttonVolver2.setBackground(new Color(153, 0, 0));
+		buttonVolver2.setBounds(293, 260, 107, 31);
+		panel_1.add(buttonVolver2);
+		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:\\Users\\1dam\\Desktop\\Reto Final\\PGR\\Multimedia\\ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.EAST);
+		imagen.setBounds(10, 63, 413, 362);
+		contentPanel.add(imagen);
+		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imagen.setHorizontalAlignment(SwingConstants.EAST);
+		imagen.setBounds(0, 37, 607, 362);
+		panel_1.add(imagen);
+		
+		//Datos de caso
+		if (caso != null) {
+			textCodigo.setText(caso.getCodCaso());
+			//Estado de los casos
+			estados(caso);
+			textNombre.setText(caso.getNombre());
+			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String fechaIni = caso.getFechaIni().format(formateador);
+			textFechaIni.setText(fechaIni);
+			String fechaFin = caso.getFechaFin().format(formateador);
+			textFechaFin.setText(fechaFin);
+		}
+		
+		datosInvolucrados(part, caso, datos2);
+		nombreCompleto(per, datos2, caso, part);
+	}
+	
+	private void datosInvolucrados(Participante part, Caso caso, ContDatosBusqCaso datos2) {
+		// TODO Auto-generated method stub
+		part = new Participante();
+		caso = new Caso();
+		restos = new TreeMap<>();
+		restos = datos2.listarInvolucrados(caso.getCodCaso());		
+		
+		if(part!=null) {
+			textDni1.setText(part.getDni());
+			textImplicacion1.setText(part.getImplicacion());
+			textDni2.setText(part.getDni());
+			textImplicacion2.setText(part.getImplicacion());
+			for (RestoHumano restH : restos.values()) {
+				if(restH.getCodCaso().equalsIgnoreCase(caso.getCodCaso())) {
+					textCodigoRH.setText(restH.getCodResto());
+				}
+			}
+		}
 	}
 	
 	private void volver1() {
@@ -226,4 +333,56 @@ public class VBusCaso extends JDialog {
 		// TODO Auto-generated method stub
 		this.dispose();
 	}
+
+	private void nombreCompleto(Persona per, ContDatosBusqCaso datos2,Caso caso, Participante part) {
+		// TODO Auto-generated method stub
+		per = new Persona();
+		caso = new Caso();
+		part = new Participante();
+		participantes = new TreeMap<>();
+		participantes = datos2.listarParticipantes(caso.getCodCaso());
+		
+		for(Participante parti : participantes.values()) {
+			if (parti.getDni().equalsIgnoreCase(per.getDni())) {
+				lblNomAp1.setText(per.getNombre()+" y "+per.getApellido());
+				lblNomAp2.setText(per.getNombre()+" y "+per.getApellido());
+			}
+		}
+	}
+
+	private void estados(Caso caso) {
+		// TODO Auto-generated method stub
+		String abierto = "abierto";
+		String cerrado = "cerrado";
+		String sinRe = "sin resolver";
+		
+		if(caso.getEstado().equalsIgnoreCase(abierto)) {
+			rdbtnAbierto.setEnabled(false);
+			rdbtnAbierto.setSelected(true);
+		}else if(caso.getEstado().equalsIgnoreCase(cerrado)) {
+			rdbtnCerrado.setEnabled(false);
+			rdbtnCerrado.setSelected(true);
+		}else if(caso.getEstado().equalsIgnoreCase(sinRe)){
+			rdbtnSinResolver.setEnabled(false);
+			rdbtnSinResolver.setSelected(true);
+		}
+	}
+	
+	protected void cerrar() {
+		// TODO Auto-generated method stub
+		this.dispose();
+	}
+
+	@Override
+	public Map<String, Participante> listarParticipantes(String codCaso) {
+		// TODO Auto-generated method stub
+		return datos2.listarParticipantes(codCaso);
+	}
+
+	@Override
+	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
+		// TODO Auto-generated method stub
+		return datos2.listarInvolucrados(codCaso);
+	}
+
 }

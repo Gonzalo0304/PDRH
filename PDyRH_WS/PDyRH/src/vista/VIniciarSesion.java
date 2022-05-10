@@ -74,7 +74,7 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 	
 	public VIniciarSesion() {
 		setTitle("PDyRH: Iniciar sesi\u00F3n");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\Ertzaintza3.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VIniciarSesion.class.getResource("/imagenes/Ertzaintza3.png")));
 		// <--- Diseño ventana --->
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -266,7 +266,10 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 				JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos.", "Identificación fallida.", JOptionPane.ERROR_MESSAGE);
 			} else {
 				VPrincipal main = new VPrincipal(this,true,info);
+				this.setBounds(0,0,0,0); // Hacer invisible al abrir la ventana principal y que se pueda ver el icono en la taskbar
 				main.setVisible(true);
+				this.setBounds(100, 100, 675, 336); // Volver al estado original
+				this.setLocationRelativeTo(null);
 			}
 		}
 		txtUsuario.setText("");

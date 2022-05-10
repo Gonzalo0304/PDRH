@@ -2,27 +2,44 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Point;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JRadioButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
-public class VInsPersona extends JDialog {
+import controlador.DataFactoryInsertPer;
+import controlador.interfaces.ContDatosInsertPer;
+import modelo.clases.Agente;
+import modelo.clases.Criminal;
+import modelo.clases.Desaparecida;
+import modelo.clases.Persona;
 
+import java.awt.Button;
+
+public class VInsPersona extends JDialog implements ActionListener, ContDatosInsertPer {
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textDni;
 	private JTextField textNombre;
@@ -32,202 +49,862 @@ public class VInsPersona extends JDialog {
 	private JTextField textLocalidad;
 	private JTextField textNacimiento;
 	private JTextField textFallecimiento;
+	private JTextField textFieldRango;
+	private JTextField textFieldInServ;
+	private JTextField textFieldFinServ;
+	private JTextField textFieldFechArresto;
+	private JTextField textFieldFechDes;
+	private JTextField textFieldUltUbi;
+	private JTextField textFieldGenero;
+	private JTextField textFieldTipoPelo;
+	private JTextField textFieldColorPelo;
+	private JTextField textFieldColorOjos;
+	private JTextField textFieldAltura;
+	private JTextField textFieldEspecifi;
+	private JPanel panelAgente;
+	private JPanel panelCriminal;
+	private JPanel panelDes;
+	private Button btnAnadir;
+	private JSeparator separator2;
+	private JMenuBar menuBar;
+	private JMenu menInsertar;
+	private JMenu menComparar;
+	private JMenu menGestionar;
+	private JMenu menBuscar;
+	private JMenu menUsuario;
+	private JMenuItem mCerrar;
+	private JMenuItem mPersona;
+	private JMenuItem mRestoHumano;
+	private JMenuItem mCaso;
+	private JRadioButton rdbtnAge;
+	private JRadioButton rdbtnDes;
+	private JRadioButton rdbtnCri;
+	private JRadioButton rdbtnSiPreso;
+	private JRadioButton rdbtnNoPreso;
+	private ButtonGroup tipo = new ButtonGroup();
+	private ButtonGroup preso = new ButtonGroup();
+	private static Point point = new Point();
+	private VIniciarSesion padre;
+	private String[] info;
+	private JLabel lblCerrar;
+	
+	ContDatosInsertPer datos = DataFactoryInsertPer.getDatos();
+	private JLabel lblRango;
+	private JSeparator separatorRango;
+	private JLabel lblIniServ;
+	private JSeparator separatorIniServ;
+	private JLabel lblFinServ;
+	private JSeparator separatorFinServ;
+	private JLabel lblPris;
+	private JSeparator separatorPris;
+	private JLabel lblFechaArr;
+	private JSeparator separatorFechaArr;
 
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the dialog.
-	 * @param b 
-	 * @param vInserciones 
-	 */
-	public VInsPersona(VInserciones inserciones, boolean modal) {
-		super(inserciones);
+	public VInsPersona(VIniciarSesion padre, boolean modal, String[] infos) {
+		// <--- Diseño de ventana --->
+		super(padre);
 		this.setModal(modal);
-		
-		setBounds(100, 100, 479, 514);
+		setBounds(350, 150, 503, 627);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setBackground(Color.WHITE);
+		contentPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setUndecorated(true);
+		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
-		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 463, 37);
+		this.padre = padre;
+		info = infos;
+
+		// Movimiento de la ventana
+		contentPanel.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				point.x = e.getX();
+				point.y = e.getY();
+			}
+		});
+		contentPanel.addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = getLocation();
+				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
+			}
+		});
+
+		// Botón para cerrar la ventana
+		lblCerrar = new JLabel("x");
+		lblCerrar.setBounds(470, 2, 31, 19);
+		lblCerrar.setBackground(new Color(153, 0, 0));
+		lblCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCerrar.setForeground(new Color(0, 51, 102));
+				lblCerrar.setOpaque(true);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCerrar.setForeground(Color.WHITE);
+				lblCerrar.setOpaque(false);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar.setForeground(Color.WHITE);
+		contentPanel.add(lblCerrar);
+
+		// Menú superior
+		separator2 = new JSeparator();
+		separator2.setForeground(SystemColor.controlShadow);
+		separator2.setBackground(new Color(0, 51, 102));
+		separator2.setBounds(0, 36, 502, 2);
+		contentPanel.add(separator2);
+
+		menuBar = new JMenuBar();
+		menuBar.setBounds(0, 1, 502, 37);
 		menuBar.setBorderPainted(false);
-		menuBar.setBackground(UIManager.getColor("FormattedTextField.selectionBackground"));
+		menuBar.setBackground(new Color(0, 51, 102));
 		contentPanel.add(menuBar);
-		
-		JMenu menuInsertar = new JMenu("Insertar");
-		menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuInsertar.setBackground(new Color(0, 0, 255));
-		menuInsertar.setForeground(Color.BLACK);
-		menuBar.add(menuInsertar);
-		
-		JMenu menuGestionar = new JMenu("Gestionar");
-		menuGestionar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuGestionar.setBackground(new Color(0, 0, 255));
-		menuGestionar.setForeground(Color.BLACK);
-		menuBar.add(menuGestionar);
-		
-		JMenu menuComparar = new JMenu("Comparar");
-		menuComparar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuComparar.setBackground(new Color(0, 0, 255));
-		menuComparar.setForeground(Color.BLACK);
-		menuBar.add(menuComparar);
-		
-		JMenuItem mTotal = new JMenuItem("Total");
-		mTotal.setHorizontalAlignment(SwingConstants.LEFT);
-		mTotal.setBackground(new Color(32, 178, 170));
-		mTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mTotal.setForeground(Color.BLACK);
-		menuComparar.add(mTotal);
-		
-		JMenuItem mEspecifico = new JMenuItem("Especifico");
-		mEspecifico.setHorizontalAlignment(SwingConstants.LEFT);
-		mEspecifico.setBackground(new Color(32, 178, 170));
-		mEspecifico.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mEspecifico.setForeground(Color.BLACK);
-		menuComparar.add(mEspecifico);
-		
-		JMenu menuBusqueda = new JMenu("Busqueda");
-		menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
-		menuBusqueda.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuBusqueda.setBackground(new Color(0, 0, 255));
-		menuBusqueda.setForeground(Color.BLACK);
-		menuBar.add(menuBusqueda);
-		
-		JMenu menUsuario = new JMenu("Usuario");
+
+		menUsuario = new JMenu(" " + info[0] + " ");
 		menuBar.add(menUsuario);
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
-		menUsuario.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		menUsuario.setBackground(new Color(0, 0, 255));
-		menUsuario.setForeground(Color.BLACK);
-		
-		JMenuItem mCerrar = new JMenuItem("Cerrar Sesion");
+		menUsuario.setForeground(new Color(255, 255, 255));
+
+		mCerrar = new JMenuItem("Cerrar Sesion");
 		mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
 		mCerrar.setBackground(new Color(32, 178, 170));
 		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mCerrar.setForeground(Color.BLACK);
+		mCerrar.addActionListener(this);
 		menUsuario.add(mCerrar);
-		
-		JLabel lblNewLabel = new JLabel("DNI");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel.setBounds(84, 102, 46, 14);
-		contentPanel.add(lblNewLabel);
-		
-		textDni = new JTextField();
-		textDni.setBounds(132, 100, 192, 20);
-		contentPanel.add(textDni);
-		textDni.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("Nombre");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(72, 133, 46, 14);
-		contentPanel.add(lblNewLabel_1);
-		
-		textNombre = new JTextField();
-		textNombre.setBounds(132, 131, 192, 20);
-		contentPanel.add(textNombre);
-		textNombre.setColumns(10);
-		
-		JLabel lblNewLabel_2 = new JLabel("Apellido");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(72, 164, 46, 14);
-		contentPanel.add(lblNewLabel_2);
-		
-		textApellido = new JTextField();
-		textApellido.setBounds(132, 162, 192, 20);
-		contentPanel.add(textApellido);
-		textApellido.setColumns(10);
-		
-		JLabel lblNewLabel_3 = new JLabel("Telefono movil ");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_3.setBounds(33, 199, 88, 14);
-		contentPanel.add(lblNewLabel_3);
-		
-		textTelefonoM = new JTextField();
-		textTelefonoM.setBounds(132, 193, 192, 20);
-		contentPanel.add(textTelefonoM);
-		textTelefonoM.setColumns(10);
-		
-		JLabel lblNewLabel_4 = new JLabel("Telefono opcional");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_4.setBounds(14, 224, 116, 14);
-		contentPanel.add(lblNewLabel_4);
-		
-		textTelefonoO = new JTextField();
-		textTelefonoO.setBounds(132, 224, 192, 20);
-		contentPanel.add(textTelefonoO);
-		textTelefonoO.setColumns(10);
-		
-		JLabel lblNewLabel_5 = new JLabel("Localidad");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5.setBounds(58, 257, 60, 14);
-		contentPanel.add(lblNewLabel_5);
-		
-		textLocalidad = new JTextField();
-		textLocalidad.setBounds(132, 255, 192, 20);
-		contentPanel.add(textLocalidad);
-		textLocalidad.setColumns(10);
-		
-		JLabel lblNewLabel_6 = new JLabel("Nacimiento");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_6.setBounds(46, 288, 72, 14);
-		contentPanel.add(lblNewLabel_6);
-		
-		textNacimiento = new JTextField();
-		textNacimiento.setBounds(132, 286, 192, 20);
-		contentPanel.add(textNacimiento);
-		textNacimiento.setColumns(10);
-		
-		JLabel lblNewLabel_7 = new JLabel("Fallecimiento");
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_7.setBounds(45, 319, 85, 14);
-		contentPanel.add(lblNewLabel_7);
-		
-		textFallecimiento = new JTextField();
-		textFallecimiento.setBounds(132, 317, 192, 20);
-		contentPanel.add(textFallecimiento);
-		textFallecimiento.setColumns(10);
-		
-		JButton btnAnadir = new JButton("A\u00F1adir");
-		btnAnadir.setEnabled(false);
-		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnAnadir.setBounds(364, 388, 89, 30);
-		contentPanel.add(btnAnadir);
-		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				volver();
+
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar.add(menInsertar);
+
+		mPersona = new JMenuItem("Persona");
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
+
+		mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
+
+		mCaso = new JMenuItem("Caso");
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
+
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
 			}
 		});
-		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnVolver.setBounds(364, 434, 89, 30);
-		contentPanel.add(btnVolver);
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
+
+		menComparar = new JMenu("Comparar");
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar.add(menBuscar);
+
+		// JTextField
+		textDni = new JTextField();
+		textDni.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarBoton();
+			}
+		});
+		textDni.setBounds(30, 110, 192, 20);
+		contentPanel.add(textDni);
+		textDni.setColumns(10);
+
+		textNombre = new JTextField();
+		textNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarBoton();
+			}
+		});
+		textNombre.setBounds(30, 171, 192, 20);
+		contentPanel.add(textNombre);
+		textNombre.setColumns(10);
+
+		textApellido = new JTextField();
+		textApellido.setBounds(30, 234, 192, 20);
+		contentPanel.add(textApellido);
+		textApellido.setColumns(10);
+
+		textTelefonoM = new JTextField();
+		textTelefonoM.setBounds(30, 298, 192, 20);
+		contentPanel.add(textTelefonoM);
+		textTelefonoM.setColumns(10);
+
+		textTelefonoO = new JTextField();
+		textTelefonoO.setBounds(30, 358, 192, 20);
+		contentPanel.add(textTelefonoO);
+		textTelefonoO.setColumns(10);
+
+		textLocalidad = new JTextField();
+		textLocalidad.setBounds(30, 425, 192, 20);
+		contentPanel.add(textLocalidad);
+		textLocalidad.setColumns(10);
+
+		textNacimiento = new JTextField();
+		textNacimiento.setBounds(30, 494, 192, 20);
+		contentPanel.add(textNacimiento);
+		textNacimiento.setColumns(10);
+
+		textFallecimiento = new JTextField();
+		textFallecimiento.setBounds(30, 562, 192, 20);
+		contentPanel.add(textFallecimiento);
+		textFallecimiento.setColumns(10);
+
+		// Buttons
+		btnAnadir = new Button("A\u00F1adir");
+		btnAnadir.setEnabled(false);
+		btnAnadir.setForeground(Color.WHITE);
+		btnAnadir.setBackground(new Color(122, 42, 42));
+		btnAnadir.setBounds(568, 388, 116, 40);
+		btnAnadir.addActionListener(this);
+		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		contentPanel.add(btnAnadir);
+
+		// RadioButtons
+		rdbtnAge = new JRadioButton("Agente");
+		rdbtnAge.setForeground(new Color(0, 51, 102));
+		rdbtnAge.setBackground(Color.WHITE);
+		rdbtnAge.setBounds(74, 44, 87, 23);
+		tipo.add(rdbtnAge);
+		rdbtnAge.addActionListener(this);
+		rdbtnAge.setFont(new Font("Tahoma", Font.BOLD, 13));
+		contentPanel.add(rdbtnAge);
+
+		rdbtnDes = new JRadioButton("Desaparecida");
+		rdbtnDes.setForeground(new Color(0, 51, 102));
+		rdbtnDes.setBackground(Color.WHITE);
+		rdbtnDes.setBounds(191, 44, 126, 23);
+		tipo.add(rdbtnDes);
+		rdbtnDes.addActionListener(this);
+		rdbtnDes.setFont(new Font("Tahoma", Font.BOLD, 13));
+		contentPanel.add(rdbtnDes);
+
+		rdbtnCri = new JRadioButton("Criminal");
+		rdbtnCri.setForeground(new Color(0, 51, 102));
+		rdbtnCri.setBackground(Color.WHITE);
+		rdbtnCri.setBounds(330, 44, 109, 23);
+		rdbtnCri.addActionListener(this);
+		tipo.add(rdbtnCri);
+		rdbtnCri.setFont(new Font("Tahoma", Font.BOLD, 13));
+		contentPanel.add(rdbtnCri);
+
+		panelDes = new JPanel();
+		panelDes.setBounds(256, 74, 237, 526);
+		contentPanel.add(panelDes);
+		panelDes.setLayout(null);
+		panelDes.setVisible(false);
+		panelDes.setOpaque(false);
+
+		textFieldFechDes = new JTextField();
+		textFieldFechDes.setColumns(10);
+		textFieldFechDes.setBounds(20, 36, 192, 20);
+		panelDes.add(textFieldFechDes);
+
+		textFieldUltUbi = new JTextField();
+		textFieldUltUbi.setColumns(10);
+		textFieldUltUbi.setBounds(20, 98, 192, 20);
+		panelDes.add(textFieldUltUbi);
+
+		textFieldGenero = new JTextField();
+		textFieldGenero.setColumns(10);
+		textFieldGenero.setBounds(20, 161, 192, 20);
+		panelDes.add(textFieldGenero);
+
+		textFieldTipoPelo = new JTextField();
+		textFieldTipoPelo.setColumns(10);
+		textFieldTipoPelo.setBounds(20, 224, 192, 20);
+		panelDes.add(textFieldTipoPelo);
+
+		textFieldColorPelo = new JTextField();
+		textFieldColorPelo.setColumns(10);
+		textFieldColorPelo.setBounds(20, 283, 192, 20);
+		panelDes.add(textFieldColorPelo);
+
+		textFieldColorOjos = new JTextField();
+		textFieldColorOjos.setColumns(10);
+		textFieldColorOjos.setBounds(20, 350, 192, 20);
+		panelDes.add(textFieldColorOjos);
+
+		textFieldAltura = new JTextField();
+		textFieldAltura.setColumns(10);
+		textFieldAltura.setBounds(20, 419, 192, 20);
+		panelDes.add(textFieldAltura);
+
+		textFieldEspecifi = new JTextField();
+		textFieldEspecifi.setColumns(10);
+		textFieldEspecifi.setBounds(20, 486, 192, 20);
+		panelDes.add(textFieldEspecifi);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Agente");
-		rdbtnNewRadioButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		rdbtnNewRadioButton.setBounds(30, 44, 72, 23);
-		contentPanel.add(rdbtnNewRadioButton);
+		JSeparator separatorFechaDes = new JSeparator();
+		separatorFechaDes.setForeground(SystemColor.controlShadow);
+		separatorFechaDes.setBackground(new Color(153, 0, 0));
+		separatorFechaDes.setBounds(20, 26, 106, 2);
+		panelDes.add(separatorFechaDes);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Desaparecida");
-		rdbtnNewRadioButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		rdbtnNewRadioButton_1.setBounds(104, 44, 109, 23);
-		contentPanel.add(rdbtnNewRadioButton_1);
+		JLabel lblSexo = new JLabel("SEXO");
+		lblSexo.setForeground(new Color(153, 0, 0));
+		lblSexo.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblSexo.setBounds(20, 122, 81, 28);
+		panelDes.add(lblSexo);
 		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Criminal");
-		rdbtnNewRadioButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		rdbtnNewRadioButton_2.setBounds(215, 44, 109, 23);
-		contentPanel.add(rdbtnNewRadioButton_2);
+		JSeparator separatorSexo = new JSeparator();
+		separatorSexo.setForeground(SystemColor.controlShadow);
+		separatorSexo.setBackground(new Color(153, 0, 0));
+		separatorSexo.setBounds(20, 148, 106, 2);
+		panelDes.add(separatorSexo);
+		
+		JLabel lblUltUbi = new JLabel("\u00DALTIMA UBI.");
+		lblUltUbi.setForeground(new Color(153, 0, 0));
+		lblUltUbi.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblUltUbi.setBounds(20, 58, 106, 28);
+		panelDes.add(lblUltUbi);
+		
+		JSeparator separatorUltimaUbi = new JSeparator();
+		separatorUltimaUbi.setForeground(SystemColor.controlShadow);
+		separatorUltimaUbi.setBackground(new Color(153, 0, 0));
+		separatorUltimaUbi.setBounds(20, 84, 106, 2);
+		panelDes.add(separatorUltimaUbi);
+		
+		JLabel lblFechaDes = new JLabel("FECHA DES.");
+		lblFechaDes.setForeground(new Color(153, 0, 0));
+		lblFechaDes.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblFechaDes.setBounds(20, 0, 106, 28);
+		panelDes.add(lblFechaDes);
+		
+		JLabel lblTP = new JLabel("TIPO PELO");
+		lblTP.setForeground(new Color(153, 0, 0));
+		lblTP.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblTP.setBounds(20, 184, 106, 28);
+		panelDes.add(lblTP);
+		
+		JSeparator separatorTP = new JSeparator();
+		separatorTP.setForeground(SystemColor.controlShadow);
+		separatorTP.setBackground(new Color(153, 0, 0));
+		separatorTP.setBounds(20, 210, 106, 2);
+		panelDes.add(separatorTP);
+		
+		JLabel lblCP = new JLabel("COLOR PELO");
+		lblCP.setForeground(new Color(153, 0, 0));
+		lblCP.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblCP.setBounds(20, 244, 106, 28);
+		panelDes.add(lblCP);
+		
+		JSeparator separatorCP = new JSeparator();
+		separatorCP.setForeground(SystemColor.controlShadow);
+		separatorCP.setBackground(new Color(153, 0, 0));
+		separatorCP.setBounds(20, 270, 106, 2);
+		panelDes.add(separatorCP);
+		
+		JLabel lblCO = new JLabel("COLOR OJOS");
+		lblCO.setForeground(new Color(153, 0, 0));
+		lblCO.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblCO.setBounds(20, 312, 106, 28);
+		panelDes.add(lblCO);
+		
+		JSeparator separatorCO = new JSeparator();
+		separatorCO.setForeground(SystemColor.controlShadow);
+		separatorCO.setBackground(new Color(153, 0, 0));
+		separatorCO.setBounds(20, 338, 106, 2);
+		panelDes.add(separatorCO);
+		
+		JLabel lblAlt = new JLabel("ALTURA");
+		lblAlt.setForeground(new Color(153, 0, 0));
+		lblAlt.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblAlt.setBounds(20, 381, 106, 28);
+		panelDes.add(lblAlt);
+		
+		JSeparator separatorAlt = new JSeparator();
+		separatorAlt.setForeground(SystemColor.controlShadow);
+		separatorAlt.setBackground(new Color(153, 0, 0));
+		separatorAlt.setBounds(20, 407, 106, 2);
+		panelDes.add(separatorAlt);
+		
+		JLabel lblEsp = new JLabel("ESPECIFICACIONES");
+		lblEsp.setForeground(new Color(153, 0, 0));
+		lblEsp.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblEsp.setBounds(20, 449, 106, 28);
+		panelDes.add(lblEsp);
+		
+		JSeparator separatorEsp = new JSeparator();
+		separatorEsp.setForeground(SystemColor.controlShadow);
+		separatorEsp.setBackground(new Color(153, 0, 0));
+		separatorEsp.setBounds(20, 475, 106, 2);
+		panelDes.add(separatorEsp);
+		
+		JLabel lblDni = new JLabel("DNI");
+		lblDni.setForeground(new Color(0, 51, 102));
+		lblDni.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblDni.setBounds(30, 74, 81, 28);
+		contentPanel.add(lblDni);
+		
+		JSeparator separatorDni = new JSeparator();
+		separatorDni.setForeground(SystemColor.controlShadow);
+		separatorDni.setBackground(new Color(0, 51, 102));
+		separatorDni.setBounds(30, 100, 106, 2);
+		contentPanel.add(separatorDni);
+		
+		JLabel lblNombre = new JLabel("NOMBRE");
+		lblNombre.setForeground(new Color(0, 51, 102));
+		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNombre.setBounds(30, 132, 81, 28);
+		contentPanel.add(lblNombre);
+		
+		JSeparator separatorNom = new JSeparator();
+		separatorNom.setForeground(SystemColor.controlShadow);
+		separatorNom.setBackground(new Color(0, 51, 102));
+		separatorNom.setBounds(30, 158, 106, 2);
+		contentPanel.add(separatorNom);
+		
+		JLabel lblApellido = new JLabel("APELLIDO");
+		lblApellido.setForeground(new Color(0, 51, 102));
+		lblApellido.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblApellido.setBounds(30, 200, 81, 28);
+		contentPanel.add(lblApellido);
+		
+		JSeparator separatorApe = new JSeparator();
+		separatorApe.setForeground(SystemColor.controlShadow);
+		separatorApe.setBackground(new Color(0, 51, 102));
+		separatorApe.setBounds(30, 226, 106, 2);
+		contentPanel.add(separatorApe);
+		
+		JLabel lblMovil = new JLabel("TEL\u00C9FONO M\u00D3VIL");
+		lblMovil.setForeground(new Color(0, 51, 102));
+		lblMovil.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblMovil.setBounds(30, 259, 106, 28);
+		contentPanel.add(lblMovil);
+		
+		JSeparator separatorMovil = new JSeparator();
+		separatorMovil.setForeground(SystemColor.controlShadow);
+		separatorMovil.setBackground(new Color(0, 51, 102));
+		separatorMovil.setBounds(30, 285, 106, 2);
+		contentPanel.add(separatorMovil);
+		
+		JLabel lblTelf = new JLabel("TEL\u00C9FONO OPC.");
+		lblTelf.setForeground(new Color(0, 51, 102));
+		lblTelf.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblTelf.setBounds(30, 319, 106, 28);
+		contentPanel.add(lblTelf);
+		
+		JSeparator separatorOpc = new JSeparator();
+		separatorOpc.setForeground(SystemColor.controlShadow);
+		separatorOpc.setBackground(new Color(0, 51, 102));
+		separatorOpc.setBounds(30, 344, 106, 2);
+		contentPanel.add(separatorOpc);
+		
+		JLabel lblNac = new JLabel("NACIMIENTO");
+		lblNac.setForeground(new Color(0, 51, 102));
+		lblNac.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNac.setBounds(30, 455, 81, 28);
+		contentPanel.add(lblNac);
+		
+		JSeparator separatorNac = new JSeparator();
+		separatorNac.setForeground(SystemColor.controlShadow);
+		separatorNac.setBackground(new Color(0, 51, 102));
+		separatorNac.setBounds(30, 481, 106, 2);
+		contentPanel.add(separatorNac);
+		
+		JLabel lblFall = new JLabel("FALLECIMIENTO");
+		lblFall.setForeground(new Color(0, 51, 102));
+		lblFall.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblFall.setBounds(30, 523, 106, 28);
+		contentPanel.add(lblFall);
+		
+		JSeparator separatorFall = new JSeparator();
+		separatorFall.setForeground(SystemColor.controlShadow);
+		separatorFall.setBackground(new Color(0, 51, 102));
+		separatorFall.setBounds(30, 549, 106, 2);
+		contentPanel.add(separatorFall);
+		
+		JSeparator separatorLoc = new JSeparator();
+		separatorLoc.setForeground(SystemColor.controlShadow);
+		separatorLoc.setBackground(new Color(0, 51, 102));
+		separatorLoc.setBounds(30, 412, 106, 2);
+		contentPanel.add(separatorLoc);
+		
+		JLabel lblLoc = new JLabel("LOCALIDAD");
+		lblLoc.setForeground(new Color(0, 51, 102));
+		lblLoc.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblLoc.setBounds(30, 386, 106, 28);
+		contentPanel.add(lblLoc);
+		
+				panelAgente = new JPanel();
+				panelAgente.setBounds(256, 71, 237, 400);
+				contentPanel.add(panelAgente);
+				panelAgente.setLayout(null);
+				panelAgente.setVisible(false);
+				panelAgente.setOpaque(false);
+				
+						textFieldRango = new JTextField();
+						textFieldRango.setBounds(20, 39, 192, 20);
+						panelAgente.add(textFieldRango);
+						textFieldRango.setColumns(10);
+						
+								textFieldInServ = new JTextField();
+								textFieldInServ.setBounds(20, 100, 192, 20);
+								panelAgente.add(textFieldInServ);
+								textFieldInServ.setColumns(10);
+								
+										textFieldFinServ = new JTextField();
+										textFieldFinServ.setBounds(20, 160, 192, 20);
+										panelAgente.add(textFieldFinServ);
+										textFieldFinServ.setColumns(10);
+										
+										lblRango = new JLabel("RANGO");
+										lblRango.setForeground(new Color(153, 0, 0));
+										lblRango.setFont(new Font("Tahoma", Font.BOLD, 10));
+										lblRango.setBounds(20, 0, 81, 28);
+										panelAgente.add(lblRango);
+										
+										separatorRango = new JSeparator();
+										separatorRango.setForeground(SystemColor.controlShadow);
+										separatorRango.setBackground(new Color(153, 0, 0));
+										separatorRango.setBounds(20, 26, 106, 2);
+										panelAgente.add(separatorRango);
+										
+										lblIniServ = new JLabel("INICIO SERVICIO");
+										lblIniServ.setForeground(new Color(153, 0, 0));
+										lblIniServ.setFont(new Font("Tahoma", Font.BOLD, 10));
+										lblIniServ.setBounds(20, 63, 106, 28);
+										panelAgente.add(lblIniServ);
+										
+										separatorIniServ = new JSeparator();
+										separatorIniServ.setForeground(SystemColor.controlShadow);
+										separatorIniServ.setBackground(new Color(153, 0, 0));
+										separatorIniServ.setBounds(20, 89, 106, 2);
+										panelAgente.add(separatorIniServ);
+										
+										lblFinServ = new JLabel("FIN SERVICIO");
+										lblFinServ.setForeground(new Color(153, 0, 0));
+										lblFinServ.setFont(new Font("Tahoma", Font.BOLD, 10));
+										lblFinServ.setBounds(20, 126, 81, 28);
+										panelAgente.add(lblFinServ);
+										
+										separatorFinServ = new JSeparator();
+										separatorFinServ.setForeground(SystemColor.controlShadow);
+										separatorFinServ.setBackground(new Color(153, 0, 0));
+										separatorFinServ.setBounds(20, 152, 106, 2);
+										panelAgente.add(separatorFinServ);
+										
+												panelCriminal = new JPanel();
+												panelCriminal.setBounds(256, 74, 237, 316);
+												contentPanel.add(panelCriminal);
+												panelCriminal.setLayout(null);
+												panelCriminal.setVisible(false);
+												panelCriminal.setOpaque(false);
+												
+														textFieldFechArresto = new JTextField();
+														textFieldFechArresto.setColumns(10);
+														textFieldFechArresto.setBounds(18, 97, 192, 20);
+														panelCriminal.add(textFieldFechArresto);
+														
+																rdbtnSiPreso = new JRadioButton("S\u00EC");
+																rdbtnSiPreso.setFont(new Font("Tahoma", Font.BOLD, 11));
+																rdbtnSiPreso.setBounds(18, 36, 40, 23);
+																rdbtnSiPreso.setOpaque(false);
+																preso.add(rdbtnSiPreso);
+																panelCriminal.add(rdbtnSiPreso);
+																
+																		rdbtnNoPreso = new JRadioButton("No");
+																		rdbtnNoPreso.setFont(new Font("Tahoma", Font.BOLD, 11));
+																		rdbtnNoPreso.setBounds(83, 36, 46, 23);
+																		rdbtnNoPreso.setOpaque(false);
+																		preso.add(rdbtnNoPreso);
+																		panelCriminal.add(rdbtnNoPreso);
+																		
+																		lblPris = new JLabel("PRISIONERO");
+																		lblPris.setForeground(new Color(153, 0, 0));
+																		lblPris.setFont(new Font("Tahoma", Font.BOLD, 10));
+																		lblPris.setBounds(21, 0, 81, 28);
+																		panelCriminal.add(lblPris);
+																		
+																		separatorPris = new JSeparator();
+																		separatorPris.setForeground(SystemColor.controlShadow);
+																		separatorPris.setBackground(new Color(153, 0, 0));
+																		separatorPris.setBounds(21, 26, 106, 2);
+																		panelCriminal.add(separatorPris);
+																		
+																		lblFechaArr = new JLabel("FECHA ARRESTO");
+																		lblFechaArr.setForeground(new Color(153, 0, 0));
+																		lblFechaArr.setFont(new Font("Tahoma", Font.BOLD, 10));
+																		lblFechaArr.setBounds(18, 58, 106, 28);
+																		panelCriminal.add(lblFechaArr);
+																		
+																		separatorFechaArr = new JSeparator();
+																		separatorFechaArr.setForeground(SystemColor.controlShadow);
+																		separatorFechaArr.setBackground(new Color(153, 0, 0));
+																		separatorFechaArr.setBounds(21, 84, 106, 2);
+																		panelCriminal.add(separatorFechaArr);
 	}
-	
-	private void volver() {
-		// TODO Auto-generated method stub
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(btnAnadir)) {
+			if (comprobarDNI(textDni.getText())) {
+				JOptionPane.showMessageDialog(this, "El DNI introducido ya ha sido introducido.","DNI existente.",JOptionPane.ERROR_MESSAGE);
+			} else {
+				Persona per = null;
+				altaPersona(per);
+			}
+		}else if (e.getSource().equals(rdbtnAge)) {
+			panelAgente.setVisible(true);
+			panelCriminal.setVisible(false);
+			panelDes.setVisible(false);
+			rdbtnSiPreso.setSelected(false);
+			rdbtnNoPreso.setSelected(false);
+		} else if (e.getSource().equals(rdbtnDes)) {
+			panelDes.setVisible(true);
+			panelCriminal.setVisible(false);
+			panelAgente.setVisible(false);
+			rdbtnSiPreso.setSelected(false);
+			rdbtnNoPreso.setSelected(false);
+		} else if (e.getSource().equals(rdbtnCri)) {
+			panelCriminal.setVisible(true);
+			panelAgente.setVisible(false);
+			panelDes.setVisible(false);
+			rdbtnSiPreso.setSelected(false);
+			rdbtnNoPreso.setSelected(false);
+		} else if (e.getSource().equals(mCerrar)) {
+			this.dispose();
+			padre.setVisible(true);
+		} else if (e.getSource().equals(mCaso)) {
+			abrirInsertCaso();
+		} else if (e.getSource().equals(mPersona)) {
+			abrirInsertPer();
+		} else if (e.getSource().equals(mRestoHumano)) {
+			abrirInsertRH();
+		} 
+
+	}
+
+	private void limpiar() {
+		textDni.setText("");
+		textNombre.setText("");
+		textApellido.setText("");
+		textTelefonoM.setText("");
+		textTelefonoO.setText("");
+		textLocalidad.setText("");
+		textNacimiento.setText("");
+		textFallecimiento.setText("");
+		textFieldRango.setText("");
+		textFieldInServ.setText("");
+		textFieldFinServ.setText("");
+		textFieldFechArresto.setText("");
+		textFieldFechDes.setText("");
+		textFieldUltUbi.setText("");
+		textFieldGenero.setText("");
+		textFieldTipoPelo.setText("");
+		textFieldColorPelo.setText("");
+		textFieldColorOjos.setText("");
+		textFieldAltura.setText("");
+		textFieldEspecifi.setText("");
+		rdbtnAge.setSelected(false);
+		rdbtnDes.setSelected(false);
+		rdbtnCri.setSelected(false);
+		rdbtnSiPreso.setSelected(false);
+		rdbtnNoPreso.setSelected(false);
+
+	}
+
+	private void habilitarBoton() {
+		if (textDni.getText().length() == 9 && !textNombre.getText().isEmpty()) {
+			btnAnadir.setEnabled(true);
+			btnAnadir.setBackground(new Color(153, 0, 0));
+		} else {
+			btnAnadir.setEnabled(false);
+			btnAnadir.setBackground(new Color(122, 42, 42));
+		}
+
+	}
+
+	private void cerrar() {
+		VInserciones insercion = new VInserciones(padre, true, info);
 		this.dispose();
+		insercion.setVisible(true);
+	}
+
+	private LocalDate stringDate(String string) {
+		LocalDate nacimiento = LocalDate.parse(string);
+		return nacimiento;
+	}
+
+	private int stringInt(String string) {
+		int altura = Integer.parseInt(string);
+		return altura;
+	}
+
+	// Abrir ventanas de menú
+	private void abrirGes() {
+		VGestion vBus = new VGestion(padre,true,info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirCom() {
+		VComparacion vCom = new VComparacion(padre,true,info);
+		this.dispose();
+		vCom.setVisible(true);
+	}
+
+	private void abrirBus() {
+		VBusqueda vBus = new VBusqueda(padre,true,info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirInsertRH() {
+		VInsRH vInsRH = new VInsRH(padre,true,info);
+		this.dispose();
+		vInsRH.setVisible(true);
+	}
+
+	private void abrirInsertPer() {
+		VInsPersona vInsPer = new VInsPersona(padre,true,info);
+		this.dispose();
+		vInsPer.setVisible(true);		
+	}
+
+	private void abrirInsertCaso() {
+		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
+		this.dispose();
+		vInsCaso.setVisible(true);
+	}	
+
+	@Override
+	public void altaPersona(Persona per) {
+		int telefonoM = 0;
+		int telefonoO = 0;
+		LocalDate fechaNac = null;
+		LocalDate fechaFall = null;
+		if (rdbtnAge.isSelected()) {
+			per = new Agente();
+			LocalDate fechaIni = null;
+			LocalDate fechaFin = null;
+			
+			if (!textFieldInServ.getText().isBlank()) {
+				fechaIni = LocalDate.parse(textFieldInServ.getText());
+			}
+			
+			if (!textFieldFinServ.getText().isBlank()) {
+				fechaFin = LocalDate.parse(textFieldFinServ.getText());
+			}
+			
+			((Agente) per).setRango(stringInt(textFieldRango.getText()));
+			((Agente) per).setInicioServ(fechaIni);
+			((Agente) per).setFinServ(fechaFin);
+		} else if (rdbtnDes.isSelected()) {
+			per = new Desaparecida();
+			int altura = 0;
+			LocalDate fechaDes = null;
+			
+			if (!textFieldFechDes.getText().isEmpty()) {
+				fechaDes = LocalDate.parse(textFieldFechDes.getText());
+			}
+
+			if (!textFieldAltura.getText().isEmpty()) {
+				altura = stringInt(textFieldAltura.getText());
+			}
+			
+			((Desaparecida) per).setFechaDes(fechaDes);
+			((Desaparecida) per).setUltimaUbi(textFieldUltUbi.getText());
+			((Desaparecida) per).setGenero(textFieldGenero.getText());
+			((Desaparecida) per).setTipoPelo(textFieldTipoPelo.getText());
+			((Desaparecida) per).setColorPelo(textFieldColorPelo.getText());
+			((Desaparecida) per).setColorOjos(textFieldColorOjos.getText());
+			((Desaparecida) per).setAltura(altura);
+			((Desaparecida) per).setEspecificaciones(textFieldEspecifi.getText());
+		} else if (rdbtnCri.isSelected()) {
+			per = new Criminal();
+			LocalDate arrDate = null;
+			
+			if (rdbtnSiPreso.isSelected()) {
+				((Criminal) per).setPrisionero(true);
+			} else {
+				((Criminal) per).setPrisionero(false);
+			}
+			ArrayList<LocalDate> arrest = new ArrayList<LocalDate>();
+			if (!textFieldFechArresto.getText().isBlank()) {
+				arrDate = LocalDate.parse(textFieldFechArresto.getText());
+			}
+			arrest.add(arrDate);
+			((Criminal) per).setFechasArresto(arrest);
+		} else {
+			per = new Persona();
+		}
+		
+		if (!textNacimiento.getText().isEmpty()) {
+			fechaNac = stringDate(textNacimiento.getText());
+		} 
+		if (!textFallecimiento.getText().isEmpty()) {
+			fechaFall = stringDate(textFallecimiento.getText());
+		}
+
+		if (!textTelefonoM.getText().isEmpty()) {
+			telefonoM = stringInt(textTelefonoM.getText());
+		} 
+		if (!textTelefonoO.getText().isEmpty()) {
+			telefonoO = stringInt(textTelefonoO.getText());
+		}
+
+		int[] telf = { telefonoM, telefonoO };
+		per.setDni(textDni.getText());
+		per.setNombre(textNombre.getText());
+		per.setApellido(textApellido.getText());
+		per.setTelefonos(telf);
+		per.setLocalidad(textLocalidad.getText());
+		per.setFechaNac(fechaNac);
+		per.setFechaFal(fechaFall);
+		datos.altaPersona(per);
+		limpiar();
+		habilitarBoton();
+	}
+
+	@Override
+	public boolean comprobarDNI(String dni) {
+		return datos.comprobarDNI(dni);
 	}
 }

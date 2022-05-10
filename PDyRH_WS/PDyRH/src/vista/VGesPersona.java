@@ -29,6 +29,7 @@ import javax.swing.event.ChangeListener;
 
 import controlador.DataFactoryGestPer;
 import controlador.interfaces.ContDatosGestPer;
+import excepciones.Excepciones;
 import modelo.clases.Persona;
 import modelo.clases.Agente;
 import modelo.clases.Conocido;
@@ -1245,9 +1246,13 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 
 	@Override
 	public void agregarFechaArresto(String dni, LocalDate fecha) {
-		datos.agregarFechaArresto(dni, fecha);
-		JOptionPane.showMessageDialog(this, "Fecha agregada correctamente.","Insercción realizada",JOptionPane.CLOSED_OPTION);
-		textFechaArr.setText("");
+		try {
+			datos.agregarFechaArresto(dni, fecha);
+			JOptionPane.showMessageDialog(this, "Fecha agregada correctamente.","Insercción realizada",JOptionPane.CLOSED_OPTION);
+			textFechaArr.setText("");
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(),"Fecha existente.",JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void cerrar() {

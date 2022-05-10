@@ -20,9 +20,9 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	final String SELECTpers = "SELECT * FROM persona";
 	final String INSERTage = "INSERT INTO agente(dni,rango,inicioServ,finServ) VALUES(?,?,?,?)";
 	final String INSERTcrim = "INSERT INTO criminal(dni,prisionero) VALUES(?,?)";
-	final String INSERTdes = "INSERT INTO desaparecido(dni,fechaDes,ultimaUbi,genero,tipoPelo,colorPelo,colorOjos,altura,especificaciones) VALUES(?,?,?,?,?,?,?,?,?)";
+	final String INSERTdes = "INSERT INTO desaparecida(dni,fechaDes,ultimaUbi,genero,tipoPelo,colorPelo,colorOjos,altura,especificaciones) VALUES(?,?,?,?,?,?,?,?,?)";
 	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
-	
+
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
 	private Connection con;
@@ -71,19 +71,39 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 			stmnt.setString(3, per.getApellido());
 			stmnt.setInt(4, per.getTelefonos()[0]);
 			stmnt.setString(5, per.getLocalidad());
-			stmnt.setDate(6, Date.valueOf(per.getFechaNac()));
-			stmnt.setDate(7, Date.valueOf(per.getFechaFal()));
+			if(per.getFechaNac() != null) {
+				stmnt.setDate(6, Date.valueOf(per.getFechaNac()));
+			}else {
+				stmnt.setDate(6, null);
+			}
+			
+			if(per.getFechaFal() != null) {
+				stmnt.setDate(7, Date.valueOf(per.getFechaFal()));
+			}else {
+				stmnt.setDate(7, null);
+			}
+			
 			stmnt.setInt(8, per.getTelefonos()[1]);
 
 			stmnt.executeUpdate();
+			
 			if (per instanceof Agente) {
 				stmnt = con.prepareStatement(INSERTage);
 
 				stmnt.setString(1, per.getDni());
 				stmnt.setInt(2, ((Agente) per).getRango());
-				stmnt.setDate(3, Date.valueOf(((Agente) per).getInicioServ()));
-				stmnt.setDate(4, Date.valueOf(((Agente) per).getFinServ()));
-
+				if(((Agente) per).getInicioServ() != null) {
+					stmnt.setDate(3, Date.valueOf(((Agente) per).getInicioServ()));
+				}else {
+					stmnt.setDate(3, null);
+				}
+				
+				if(((Agente) per).getFinServ() != null) {
+					stmnt.setDate(4, Date.valueOf(((Agente) per).getFinServ()));
+				}else {
+					stmnt.setDate(4, null);
+				}
+				
 				stmnt.executeUpdate();
 			} else if (per instanceof Criminal) {
 				stmnt = con.prepareStatement(INSERTcrim);
@@ -96,13 +116,18 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 				stmnt = con.prepareStatement(INSERTdes);
 
 				stmnt.setString(1, per.getDni());
+				if(((Desaparecida) per).getFechaDes() !=  null) {
 				stmnt.setDate(2, Date.valueOf(((Desaparecida) per).getFechaDes()));
+				}else {
+					stmnt.setDate(2, null);
+				}
 				stmnt.setString(3, ((Desaparecida) per).getUltimaUbi());
 				stmnt.setString(4, ((Desaparecida) per).getGenero());
 				stmnt.setString(5, ((Desaparecida) per).getTipoPelo());
 				stmnt.setString(6, ((Desaparecida) per).getColorPelo());
-				stmnt.setFloat(7, ((Desaparecida) per).getAltura());
-				stmnt.setString(8, ((Desaparecida) per).getEspecificaciones());
+				stmnt.setString(7, ((Desaparecida) per).getColorOjos());
+				stmnt.setFloat(8, ((Desaparecida) per).getAltura());
+				stmnt.setString(9, ((Desaparecida) per).getEspecificaciones());
 
 				stmnt.executeUpdate();
 			}
@@ -126,22 +151,23 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	public boolean comprobarDNI(String dni) {
 		ResultSet rs = null;
 		boolean esta = false;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareCall(CALLcomprobarDNI);
-			
+
 			stmnt.setString(1, dni);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} if (rs != null) {
+		}
+		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
@@ -149,7 +175,7 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 			}
 		}
 		this.closeConnection();
-		
+
 		return esta;
 	}
 }

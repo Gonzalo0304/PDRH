@@ -60,15 +60,13 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	private JMenuBar menuBar;
 	private JMenu menUsuario;
 	private JMenuItem mCerrar;
-	private JMenu menuInsertar;
-	private JMenu menuGestionar;
-	private JMenu menuComparar;
-	private JMenu menuBusqueda;
+	private JMenu menInsertar;
+	private JMenu menComparar;
+	private JMenu menGestionar;
+	private JMenu menBuscar;
 	private JMenuItem mPersona;
 	private JMenuItem mRestoHumano;
 	private JMenuItem mCaso;
-	private JMenuItem mBanda;
-	private JMenuItem mCriminal;
 	private Button button;
 	private JLabel lblFecha;
 	private JSeparator separator2;
@@ -199,68 +197,63 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		mCerrar.addActionListener(this);
 		menUsuario.add(mCerrar);
 
-		menuInsertar = new JMenu("Insertar");
-		menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuInsertar.setBackground(new Color(0, 0, 255));
-		menuInsertar.setForeground(new Color(255, 255, 255));
-		menuBar.add(menuInsertar);
-
-		menuGestionar = new JMenu("Gestionar");
-		menuGestionar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuGestionar.setBackground(new Color(0, 0, 255));
-		menuGestionar.setForeground(new Color(255, 255, 255));
-		menuBar.add(menuGestionar);
-
-		menuComparar = new JMenu("Comparar");
-		menuComparar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuComparar.setBackground(new Color(0, 0, 255));
-		menuComparar.setForeground(new Color(255, 255, 255));
-		menuBar.add(menuComparar);
-
-		menuBusqueda = new JMenu("Busqueda");
-		menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
-		menuBusqueda.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuBusqueda.setBackground(new Color(0, 0, 255));
-		menuBusqueda.setForeground(new Color(255, 255, 255));
-		menuBar.add(menuBusqueda);
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar.add(menInsertar);
 
 		mPersona = new JMenuItem("Persona");
-		mPersona.setHorizontalAlignment(SwingConstants.LEFT);
-		mPersona.setBackground(new Color(32, 178, 170));
-		mPersona.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mPersona.setForeground(Color.BLACK);
-		menuBusqueda.add(mPersona);
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
 
 		mRestoHumano = new JMenuItem("Resto Humano");
-		mRestoHumano.setHorizontalAlignment(SwingConstants.RIGHT);
-		mRestoHumano.setBackground(new Color(32, 178, 170));
-		mRestoHumano.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mRestoHumano.setForeground(Color.BLACK);
-		menuBusqueda.add(mRestoHumano);
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
 
 		mCaso = new JMenuItem("Caso");
-		mCaso.setHorizontalAlignment(SwingConstants.LEFT);
-		mCaso.setBackground(new Color(32, 178, 170));
-		mCaso.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mCaso.setForeground(Color.BLACK);
-		menuBusqueda.add(mCaso);
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
 
-		mBanda = new JMenuItem("Banda");
-		mBanda.setHorizontalAlignment(SwingConstants.LEFT);
-		mBanda.setBackground(new Color(32, 178, 170));
-		mBanda.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mBanda.setForeground(Color.BLACK);
-		menuBusqueda.add(mBanda);
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
+			}
+		});
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
 
-		mCriminal = new JMenuItem("Criminales");
-		mCriminal.setHorizontalAlignment(SwingConstants.LEFT);
-		mCriminal.setBackground(new Color(32, 178, 170));
-		mCriminal.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mCriminal.setForeground(Color.BLACK);
-		menuBusqueda.add(mCriminal);
+		menComparar = new JMenu("Comparar");
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar.add(menBuscar);
 		
 		// Botón para identificar
 		button = new Button("IDENTIFICAR");
@@ -663,13 +656,54 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 			JOptionPane.showMessageDialog(this, "Resto identificado correctamente.","Identificación realizada",JOptionPane.CLOSED_OPTION);
 		}
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
 			this.dispose();
 			padre.setVisible(true);
-		}
-		
+		} else if (e.getSource().equals(mCaso)) {
+			abrirInsertCaso();
+		} else if (e.getSource().equals(mPersona)) {
+			abrirInsertPer();
+		} else if (e.getSource().equals(mRestoHumano)) {
+			abrirInsertRH();
+		} 
 	}
+	
+	// Abrir ventanas de menú
+	private void abrirGes() {
+		VGestion vBus = new VGestion(padre,true,info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirCom() {
+		VComparacion vCom = new VComparacion(padre,true,info);
+		this.dispose();
+		vCom.setVisible(true);
+	}
+
+	private void abrirBus() {
+		VBusqueda vBus = new VBusqueda(padre,true,info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirInsertRH() {
+		VInsRH vInsRH = new VInsRH(padre,true,info);
+		this.dispose();
+		vInsRH.setVisible(true);
+	}
+
+	private void abrirInsertPer() {
+		VInsPersona vInsPer = new VInsPersona(padre,true,info);
+		this.dispose();
+		vInsPer.setVisible(true);		
+	}
+
+	private void abrirInsertCaso() {
+		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
+		this.dispose();
+		vInsCaso.setVisible(true);
+	}	
 }

@@ -18,10 +18,12 @@ public class Desaparecida extends Persona {
 		super();
 	}
 
+			
+
 	public Desaparecida(String dni, String nombre, String apellido, int[] telefonos, String localidad,
-			LocalDate fechaNac, LocalDate fechaFal, LocalDate fechaDes, String ultimaUbi, String genero,
-			String tipoPelo, String colorPelo, String colorOjos, int altura, String especificaciones) {
-		super(dni, nombre, apellido, telefonos, localidad, fechaNac, fechaFal);
+			LocalDate fechaNac, LocalDate fechaDes, String ultimaUbi, String genero, String tipoPelo,
+			String colorPelo, String colorOjos, int altura, String especificaciones) {
+		super(dni, nombre, apellido, telefonos, localidad, fechaNac, fechaDes);
 		this.fechaDes = fechaDes;
 		this.ultimaUbi = ultimaUbi;
 		this.genero = genero;
@@ -31,14 +33,16 @@ public class Desaparecida extends Persona {
 		this.altura = altura;
 		this.especificaciones = especificaciones;
 	}
+
 	
 	// <--- Getters y Setters --->
 	public LocalDate getFechaDes() {
 		return fechaDes;
 	}
 
-	public void setFechaDes(LocalDate fechaDes) {
-		this.fechaDes = fechaDes;
+	public void setFechaDes(LocalDate localDate) {
+		this.fechaDes = localDate;
+
 	}
 
 	public String getUltimaUbi() {
