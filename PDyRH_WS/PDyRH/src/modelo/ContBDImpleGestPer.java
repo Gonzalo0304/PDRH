@@ -76,7 +76,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			if (per instanceof Agente) {
 				stmnt = con.prepareStatement(UPDATEage);
 
-				stmnt.setString(1, ((Agente) per).getRango());
+				stmnt.setInt(1, ((Agente) per).getRango());
 				stmnt.setDate(2, Date.valueOf(((Agente) per).getInicioServ()));
 				stmnt.setDate(3, Date.valueOf(((Agente) per).getFinServ()));
 				stmnt.setString(4, per.getDni());
@@ -213,7 +213,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				tipo = rs.getString("tipo");
 				if (tipo.equalsIgnoreCase("agente")) {
 					per = new Agente();
-					((Agente) per).setRango(rs.getString("rango"));
+					((Agente) per).setRango(rs.getInt("rango"));
 					((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
 					((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
 				} else if (tipo.equalsIgnoreCase("criminal")) {

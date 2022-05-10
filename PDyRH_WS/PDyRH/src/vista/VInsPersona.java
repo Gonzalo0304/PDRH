@@ -1045,7 +1045,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			per.setLocalidad(textLocalidad.getText());
 			per.setFechaNac(stringDate(textNacimiento.getText()));
 			per.setFechaFal(stringDate(textFallecimiento.getText()));
-			((Agente) per).setRango(textFieldRango.getText());
+			((Agente) per).setRango(stringInt(textFieldRango.getText()));
 			((Agente) per).setInicioServ(stringDate(textFieldInServ.getText()));
 			((Agente) per).setFinServ(stringDate(textFieldFinServ.getText()));
 			datos2.altaPersona(per);

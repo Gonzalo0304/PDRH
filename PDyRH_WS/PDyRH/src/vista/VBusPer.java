@@ -389,7 +389,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 				//Mostrar los datos del agente
 				mostrarDatosAgente();
 				
-				textRango.setText(((Agente) per).getRango());
+				textRango.setText(intString(((Agente) per).getRango()));
 				String inicio = ((Agente) per).getInicioServ().format(formateador);
 				String fin = ((Agente) per).getFinServ().format(formateador);
 				textInicioServ.setText(inicio);
@@ -674,6 +674,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		this.dispose();
 	}
 
+
 	@Override
 	public Persona obtenerPersona(String dni) {
 		// TODO Auto-generated method stub
@@ -684,5 +685,12 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 	public Map<String, Conocido> listarConocidos(String dni1) {
 		// TODO Auto-generated method stub
 		return datos2.listarConocidos(dni1);
+	}
+
+	
+	private String intString(int i) {
+		String rangoNum = String.valueOf(i);
+		return rangoNum;
+
 	}
 }

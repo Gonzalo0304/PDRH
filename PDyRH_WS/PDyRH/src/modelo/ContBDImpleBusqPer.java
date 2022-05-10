@@ -112,7 +112,8 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				tipo = rs.getString("tipo");
 				if (tipo.equalsIgnoreCase("agente")) {
 					per = new Agente();
-					((Agente) per).setRango(rs.getString("rango"));
+
+					((Agente) per).setRango(rs.getInt("rango"));
 					
 					if(((Agente) per).getInicioServ()!=null) {
 						((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
@@ -126,6 +127,11 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 						((Agente) per).setFinServ(null);
 					}
 					
+
+					((Agente) per).setRango(rs.getInt("rango"));
+					((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
+					((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
+
 				} else if (tipo.equalsIgnoreCase("criminal")) {
 					per = new Criminal();
 					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));

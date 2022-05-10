@@ -54,6 +54,7 @@ public class VInsCaso extends JDialog {
 	
 	ContDatosInsertCaso datos1 = (ContDatosInsertCaso) DataFactoryInsertCaso.getDatos();
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -520,6 +521,14 @@ public class VInsCaso extends JDialog {
 	
 	private void insertarCaso() {
 		Caso cas = new Caso();
+		LocalDate fechaIni = null;
+		LocalDate fechaFin = null;
+		if(!textFechaIni.getText().isEmpty()) {
+			fechaIni = stringDate(textFechaIni.getText());		
+		}else if(!textFechaFin.getText().isEmpty()) {
+			fechaFin = stringDate(textFechaFin.getText());
+		}
+		
 		cas.setCodCaso(textCodigo.getText());
 		if(rdbtnAbierto.isSelected()) {
 			cas.setEstado(rdbtnAbierto.getText());
@@ -529,8 +538,8 @@ public class VInsCaso extends JDialog {
 			cas.setEstado(rdbtnSinResolver.getText());
 		}
 		cas.setNombre(textNombre.getText());
-		cas.setFechaIni(stringDate(textFechaIni.getText()));
-		cas.setFechaFin(stringDate(textFechaFin.getText()));
+		cas.setFechaIni(fechaIni);
+		cas.setFechaFin(fechaFin);
 		((ContBDImpleInsertCaso)datos1).altaCaso(cas);
 		limpiar();
 	}
@@ -540,6 +549,7 @@ public class VInsCaso extends JDialog {
 		rdbtnAbierto.setSelected(false);
 		rdbtnCerrado.setSelected(false);
 		rdbtnSinResolver.setSelected(false);
+		textNombre.setText("");
 		textFechaIni.setText("");
 		textFechaFin.setText("");
 		

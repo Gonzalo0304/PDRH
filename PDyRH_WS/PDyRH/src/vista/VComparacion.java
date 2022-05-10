@@ -72,7 +72,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	
 	// <--- Datos BD --->
 	ContDatosComp datos = DataFactoryComp.getDatos();
-	
+
+	// <--- Ejecución --->
 	public VComparacion(VIniciarSesion padre, boolean modal, String infos) {
 		super(padre);
 		this.setModal(modal);
@@ -279,7 +280,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		}
 		
 		lblImgErtzAC = new JLabel("");
-		lblImgErtzAC.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		lblImgErtzAC.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
 		lblImgErtzAC.setBounds(151, 83, 318, 290);
 		contentPane.add(lblImgErtzAC);
 	}
@@ -362,5 +363,3 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		return null;
 	}
 }
-
-
