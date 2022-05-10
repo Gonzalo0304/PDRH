@@ -70,6 +70,20 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 	private JTextField textRelacion2;
 	private JTextField textDni3;
 	private JTextField textRelacion3;
+	private JLabel lblRango;
+	private JLabel lblIni;
+	private JLabel lblFechaA;
+	private JLabel lblFin;
+	private JLabel lblPrisionero;
+	private JLabel lblAltura;
+	private JLabel lblColorO;
+	private JLabel lblColorP;
+	private JLabel lblEsp;
+	private JLabel lblGenero;
+	private JLabel lblTipoP;
+	private JLabel lblUltimaUbi;
+	private JLabel lblFechaDes;
+	
 	private JLabel lblNomAp2;
 	private JLabel lblNomAp1;
 	private JLabel lblNomAp3;
@@ -81,6 +95,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 	private Map<String,Conocido> conocidos;
 	private Persona per;
 	ContDatosBusqPer datos2 = DataFactoryBusqPer.getDatos();
+	
 		
 	public VBusPer(VIniciarSesion vInicio, boolean modal, String dni, ContDatosBusq datos) {
 		super(vInicio);
@@ -129,7 +144,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textApellido);
 		textApellido.setColumns(10);
 		
-		JLabel lblRango = new JLabel("Rango:");
+		lblRango = new JLabel("Rango:");
 		lblRango.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblRango.setBounds(349, 44, 46, 14);
 		lblRango.setVisible(false);
@@ -141,7 +156,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textRango);
 		textRango.setColumns(10);
 		
-		JLabel lblIni = new JLabel("Inicio Servicio:");
+		lblIni = new JLabel("Inicio Servicio:");
 		lblIni.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblIni.setBounds(312, 69, 95, 14);
 		lblIni.setVisible(false);
@@ -153,7 +168,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textInicioServ);
 		textInicioServ.setColumns(10);
 		
-		JLabel lblFin = new JLabel("Fin servicio:");
+		lblFin = new JLabel("Fin servicio:");
 		lblFin.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblFin.setBounds(322, 96, 75, 14);
 		lblFin.setVisible(false);
@@ -165,7 +180,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textFinServ);
 		textFinServ.setColumns(10);
 		
-		JLabel lblFechaA = new JLabel("Fechas de arresto:");
+		lblFechaA = new JLabel("Fechas de arresto:");
 		lblFechaA.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblFechaA.setBounds(296, 44, 125, 14);
 		lblFechaA.setVisible(false);
@@ -177,7 +192,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textFechaArresto);
 		textFechaArresto.setColumns(10);
 		
-		JLabel lblPrisionero = new JLabel("Prision:");
+		lblPrisionero = new JLabel("Prision:");
 		lblPrisionero.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblPrisionero.setBounds(359, 69, 46, 14);
 		lblPrisionero.setVisible(false);
@@ -189,7 +204,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textPrisionero);
 		textPrisionero.setColumns(10);
 		
-		JLabel lblAltura = new JLabel("Altura:");
+		lblAltura = new JLabel("Altura:");
 		lblAltura.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblAltura.setBounds(352, 44, 53, 14);
 		lblAltura.setVisible(false);
@@ -201,7 +216,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textAltura);
 		textAltura.setColumns(10);
 		
-		JLabel lblColorO = new JLabel("Color de ojos:");
+		lblColorO = new JLabel("Color de ojos:");
 		lblColorO.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblColorO.setBounds(322, 96, 107, 14);
 		lblColorO.setVisible(false);
@@ -213,7 +228,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textColorO);
 		textColorO.setColumns(10);
 		
-		JLabel lblColorP = new JLabel("Color de Pelo:");
+		lblColorP = new JLabel("Color de Pelo:");
 		lblColorP.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblColorP.setBounds(317, 121, 90, 14);
 		lblColorP.setVisible(false);
@@ -225,7 +240,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textColorP);
 		textColorP.setColumns(10);
 		
-		JLabel lblEsp = new JLabel("Especificaciones:");
+		lblEsp = new JLabel("Especificaciones:");
 		lblEsp.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblEsp.setBounds(300, 146, 107, 14);
 		lblEsp.setVisible(false);
@@ -237,7 +252,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textEspecificaciones);
 		textEspecificaciones.setColumns(10);
 		
-		JLabel lblFechaDes = new JLabel("Fecha desaparecido:");
+		lblFechaDes = new JLabel("Fecha desaparecido:");
 		lblFechaDes.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblFechaDes.setBounds(291, 171, 130, 14);
 		lblFechaDes.setVisible(false);
@@ -249,7 +264,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textFechaDes);
 		textFechaDes.setColumns(10);
 		
-		JLabel lblGenero = new JLabel("Genero:");
+		lblGenero = new JLabel("Genero:");
 		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblGenero.setBounds(349, 194, 61, 14);
 		lblGenero.setVisible(false);
@@ -261,7 +276,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textGenero);
 		textGenero.setColumns(10);
 		
-		JLabel lblTipoP = new JLabel("Tipo de pelo:");
+		lblTipoP = new JLabel("Tipo de pelo:");
 		lblTipoP.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblTipoP.setBounds(312, 219, 95, 14);
 		lblTipoP.setVisible(false);
@@ -273,7 +288,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		panel_2.add(textTipoP);
 		textTipoP.setColumns(10);
 		
-		JLabel lblUltimaUbi = new JLabel("Ultima Ubicacion:");
+		lblUltimaUbi = new JLabel("Ultima Ubicacion:");
 		lblUltimaUbi.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblUltimaUbi.setBounds(293, 255, 114, 14);
 		lblUltimaUbi.setVisible(false);
@@ -349,7 +364,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 		
 		per = obtenerPersona(dni);
 		if (per != null) {
-			
+			per = new Persona();
 			textDni.setText(per.getDni());
 			textNombre.setText(per.getNombre());
 			textApellido.setText(per.getApellido());
@@ -365,12 +380,13 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 			textFallecimiento.setText(fechaFal);
 			
 			if(per instanceof Agente) {
+				per = new Agente();
 				textDni.setText(per.getDni());
 				textNombre.setText(per.getNombre());
 				textApellido.setText(per.getApellido());
 				textNacimiento.setText(fechaNac);
 				textFallecimiento.setText(fechaFal);
-				//Mostrar los datos del agente 
+				//Mostrar los datos del agente
 				mostrarDatosAgente();
 				
 				textRango.setText(((Agente) per).getRango());
@@ -379,10 +395,12 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 				textInicioServ.setText(inicio);
 				textFinServ.setText(fin);
 			}else if(per instanceof Criminal) {
+				per = new Criminal();
 				textDni.setText(per.getDni());
 				textNombre.setText(per.getNombre());
 				textApellido.setText(per.getApellido());
 				//Mostrar datos de Criminal
+				ocultarDatosAgente();
 				mostrarDatosCriminal();
 				
 				textFechaArresto.setText(((Criminal) per).getFechasArresto().toString());
@@ -392,10 +410,12 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 					textPrisionero.setText("No");
 				}
 			}else if(per instanceof Desaparecida) {
+				per = new Desaparecida();
 				textDni.setText(per.getDni());
 				textNombre.setText(per.getNombre());
 				textApellido.setText(per.getApellido());
 				//Mostrar datos de la persona desaparecida
+				ocultarDatosCriminal();
 				mostrarDatosDesaparecido();
 				
 				textAltura.setText(Float.toString(((Desaparecida) per).getAltura()));
@@ -409,6 +429,8 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 				textGenero.setText(((Desaparecida) per).getGenero());
 				textTipoP.setText(((Desaparecida) per).getTipoPelo());
 				textUltimaUbi.setText(((Desaparecida) per).getUltimaUbi());
+			}else {
+				ocultarDatosDesaparecido();
 			}
 		}
 		
@@ -528,8 +550,58 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 
 	}
 
+	private void ocultarDatosDesaparecido() {
+		// TODO Auto-generated method stub
+		lblAltura.setVisible(false);
+		lblColorO.setVisible(false);
+		lblColorP.setVisible(false);
+		lblEsp.setVisible(false);
+		lblFechaDes.setVisible(false);
+		lblGenero.setVisible(false);
+		lblTipoP.setVisible(false);
+		lblUltimaUbi.setVisible(false);
+		
+		textAltura.setVisible(false);
+		textColorO.setVisible(false);
+		textColorP.setVisible(false);
+		textEspecificaciones.setVisible(false);
+		textFechaDes.setVisible(false);
+		textGenero.setVisible(false);
+		textTipoP.setVisible(false);
+		textUltimaUbi.setVisible(false);
+	}
+
+	private void ocultarDatosCriminal() {
+		// TODO Auto-generated method stub
+		lblPrisionero.setVisible(false);
+		lblFechaA.setVisible(false);
+		
+		textPrisionero.setVisible(false);
+		textFechaArresto.setVisible(false);
+	}
+
+	private void ocultarDatosAgente() {
+		// TODO Auto-generated method stub
+		lblRango.setVisible(false);
+		lblIni.setVisible(false);
+		lblFin.setVisible(false);
+		
+		textRango.setVisible(false);
+		textInicioServ.setVisible(false);
+		textFinServ.setVisible(false);
+	}
+
 	private void mostrarDatosDesaparecido() {
 		// TODO Auto-generated method stub
+		lblAltura.setVisible(true);
+		lblColorO.setVisible(true);
+		lblColorP.setVisible(true);
+		lblEsp.setVisible(true);
+		lblFechaDes.setVisible(true);
+		lblGenero.setVisible(true);
+		lblTipoP.setVisible(true);
+		lblUltimaUbi.setVisible(true);
+		
 		textAltura.setVisible(true);
 		textColorO.setVisible(true);
 		textColorP.setVisible(true);
@@ -542,12 +614,19 @@ public class VBusPer extends JDialog implements ContDatosBusqPer{
 
 	private void mostrarDatosCriminal() {
 		// TODO Auto-generated method stub
+		lblPrisionero.setVisible(true);
+		lblFechaA.setVisible(true);
+		
 		textPrisionero.setVisible(true);
 		textFechaArresto.setVisible(true);
 	}
 
 	private void mostrarDatosAgente() {
 		// TODO Auto-generated method stub
+		lblRango.setVisible(true);
+		lblIni.setVisible(true);
+		lblFin.setVisible(true);
+		
 		textRango.setVisible(true);
 		textInicioServ.setVisible(true);
 		textFinServ.setVisible(true);

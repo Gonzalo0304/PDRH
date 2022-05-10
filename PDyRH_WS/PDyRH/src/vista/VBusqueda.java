@@ -41,7 +41,7 @@ import java.util.Map;
 import java.awt.event.ActionEvent;
 
 
-public class VBusqueda extends JDialog implements ContDatosBusq{
+public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textVBusqueda;
@@ -50,13 +50,13 @@ public class VBusqueda extends JDialog implements ContDatosBusq{
 	private JRadioButton rdbtnPersona;
 	private JRadioButton rdbtnRestoHumano;
 	private JRadioButton rdbtnCaso;
-	private JButton btnVolver;
 	private ButtonGroup grupo = new ButtonGroup();
 	private JLabel imagen;
 	private Button buttonBuscar;
 	
 	private ContDatosBusq datos;
 	private String[] info;
+	private boolean existe;
 	
 	ContDatosBusq datos2 = DataFactoryBusq.getDatos();
 
@@ -203,7 +203,6 @@ public class VBusqueda extends JDialog implements ContDatosBusq{
 		
 		rdbtnPersona = new JRadioButton("Persona");
 		grupo.add(rdbtnPersona);
-		JRadioButton rdbtnPersona = new JRadioButton("Persona");
 		rdbtnPersona.setBackground(Color.WHITE);
 		rdbtnPersona.setFocusPainted(false);
 		rdbtnPersona.setIgnoreRepaint(true);
@@ -220,7 +219,6 @@ public class VBusqueda extends JDialog implements ContDatosBusq{
 		
 		rdbtnCaso = new JRadioButton("Caso");
 		grupo.add(rdbtnCaso);
-		JRadioButton rdbtnCaso = new JRadioButton("Caso");
 		rdbtnCaso.setBackground(Color.WHITE);
 		rdbtnCaso.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		rdbtnCaso.setBounds(249, 44, 74, 23);
@@ -231,15 +229,9 @@ public class VBusqueda extends JDialog implements ContDatosBusq{
 		lblNewLabel.setBounds(21, 120, 175, 14);
 		contentPanel.add(lblNewLabel);
 		
-		btnVolver = new JButton("Volver");
-		
 		buttonBuscar = new Button("Buscar");
 		buttonBuscar.setBounds(237, 197, 98, 28);
-		buttonBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				busqueda(vInicio,datos);
-			}
-		});
+		buttonBuscar.addActionListener(this);
 		buttonBuscar.setEnabled(false);
 		buttonBuscar.setForeground(Color.WHITE);
 		buttonBuscar.setBackground(new Color(153, 0, 0));
@@ -270,28 +262,6 @@ public class VBusqueda extends JDialog implements ContDatosBusq{
 
 	public Caso buscarCaso(String codCaso) {
 		return datos2.buscarCaso(codCaso);
-	}
-	
-	private void busqueda(VIniciarSesion vInicio, ContDatosBusq datos) {
-		// TODO Auto-generated method stub
-		if(!textVBusqueda.getText().isEmpty()) {
-			buttonBuscar.setEnabled(true);
-		}else {
-			buttonBuscar.setEnabled(false);
-		}
-	
-		if(rdbtnCaso.isSelected() && buscarCaso(textVBusqueda.getText())!= null) {
-			VBusCaso ventCaso = new VBusCaso(vInicio, true, textVBusqueda.getText(), datos);
-			ventCaso.setVisible(true);
-		}else if(rdbtnPersona.isSelected() && comprobarDNI(textVBusqueda.getText())){
-			VBusPer ventPer = new VBusPer(vInicio, true, textVBusqueda.getText(), datos);
-			ventPer.setVisible(true);
-		}else if(rdbtnRestoHumano.isSelected() && buscarRH(textVBusqueda.getText())) {
-			VBusRH ventRH = new VBusRH(vInicio, true, textVBusqueda.getText(), datos);
-			ventRH.setVisible(true);
-		}else {
-			JOptionPane.showMessageDialog(this, "El identificador introducido no esta registrado",  "Error!!", JOptionPane.ERROR_MESSAGE);
-		}	
 	}
 	
 	private void insertarCaso() {
@@ -330,5 +300,51 @@ public class VBusqueda extends JDialog implements ContDatosBusq{
 		VBusqueda busqueda = new VBusqueda(vInicio, true, datos, info[0]);
 		this.dispose();
 		busqueda.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource().equals(buttonBuscar)) {
+			comprobarBus(info);
+		}
+	}
+
+	private void comprobarBus(String[] info) {
+		// TODO Auto-generated method stub
+		existe = true;
+		if(grupo == null) {
+			JOptionPane.showMessageDialog(this, "No ha seleccionado que tipo de busqueda desea hacer.","Sin selección.", JOptionPane.ERROR_MESSAGE);
+		}else {
+			if(rdbtnCaso.isSelected() && buscarCaso(textVBusqueda.getText()) != null) {
+				VBusCaso ventCaso = new VBusCaso(vInicio, true, textVBusqueda.getText(), datos);
+				ventCaso.setVisible(true);
+			}else if (rdbtnRestoHumano.isSelected() && buscarRH(textVBusqueda.getText())){
+				VBusRH ventRH = new VBusRH(vInicio, true, textVBusqueda.getText(), datos);
+				ventRH.setVisible(true);
+			}else if(rdbtnPersona.isSelected() && comprobarDNI(textVBusqueda.getText())) {
+				VBusPer ventPer = new VBusPer(vInicio, true, textVBusqueda.getText(), datos);
+				ventPer.setVisible(true);
+			}else {
+				existe = false;
+			}
+		}
+		
+		if (!existe) {
+			JOptionPane.showMessageDialog(this, "El identificador introducido no esta registrado","Error!!", JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	
+	public String rbSeleccionado(ButtonGroup bg) {
+		for (Enumeration<AbstractButton> botones = bg.getElements(); botones.hasMoreElements();) {
+			AbstractButton boton = botones.nextElement();
+
+			if (boton.isSelected()) {
+				return boton.getText();
+			}
+		}
+
+		return null;
 	}
 }

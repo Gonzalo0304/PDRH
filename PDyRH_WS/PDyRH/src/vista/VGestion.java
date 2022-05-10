@@ -339,7 +339,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 				break;
 			case "Resto Humano":
 				if (buscarRH(textID.getText())) {
-					VBusRH vGesRH = new VBusRH(padre, true, textID.getText());
+					VBusRH vGesRH = new VBusRH(padre, true, textID.getText(), datos);
 					vGesRH.setVisible(true);
 				} else {
 					esta = false;

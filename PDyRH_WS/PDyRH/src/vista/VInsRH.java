@@ -584,7 +584,7 @@ public class VInsRH extends JDialog {
 	
 	
 	private void volver() {
-		VInserciones insertar = new VInserciones(vInicio, true, info[0]);
+		VInserciones insertar = new VInserciones(vInicio, true, info);
 		this.dispose();
 		insertar.setVisible(true);
 		
@@ -666,7 +666,7 @@ public class VInsRH extends JDialog {
 	}
 	
 	private void insertar() {
-		VInserciones insertar = new VInserciones(vInicio, true, info[0]);
+		VInserciones insertar = new VInserciones(vInicio, true, info);
 		this.dispose();
 		insertar.setVisible(true);
 	}

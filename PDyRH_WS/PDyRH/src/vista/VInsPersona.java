@@ -35,15 +35,18 @@ import javax.swing.border.EmptyBorder;
 
 import org.w3c.dom.events.MouseEvent;
 
+import controlador.DataFactoryInsertPer;
 import controlador.interfaces.ContDatosBusq;
 import controlador.interfaces.ContDatosInsertPer;
 import modelo.ContBDImpleInsertPer;
 import modelo.clases.Agente;
 import modelo.clases.Criminal;
 import modelo.clases.Desaparecida;
+import modelo.clases.Persona;
+
 import java.awt.Button;
 
-public class VInsPersona extends JDialog implements ActionListener {
+public class VInsPersona extends JDialog implements ActionListener, ContDatosInsertPer {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textDni;
@@ -91,19 +94,20 @@ public class VInsPersona extends JDialog implements ActionListener {
 	private JMenu menuBusqueda;
 	private JMenu menUsuario;
 	private JMenuItem mCerrar;
-	private JRadioButton rdbtnNewRadioButton;
-	private JRadioButton rdbtnNewRadioButton_1;
-	private JRadioButton rdbtnNewRadioButton_2;
+	private JRadioButton rdbtnAgente;
+	private JRadioButton rdbtnDesaparecida;
+	private JRadioButton rdbtnCriminal;
 	private JRadioButton rdbtnSiPreso;
 	private JRadioButton rdbtnNoPreso;
 	private ButtonGroup tipo = new ButtonGroup();
 	private ButtonGroup preso = new ButtonGroup();
-	private ContBDImpleInsertPer datos1;
-	private static Point point = new Point();
 	
 	private VIniciarSesion vInicio = null;
 	private ContDatosBusq datos;
 	private String[] info;
+	private Persona per;
+	
+	ContDatosInsertPer datos2 = DataFactoryInsertPer.getDatos(); 
 	/**
 	 * Launch the application.
 	 */
@@ -123,24 +127,20 @@ public class VInsPersona extends JDialog implements ActionListener {
 
 	 * @param b 
 	 * @param vInserciones 
-=======
 	 * 
 	 * @param b
 	 * @param vInserciones
->>>>>>> 067cf60c298ca393e3723ac8c37008564151eb24
 	 */
 
 	
 	/*public VInsPersona() {
 		datos1 =  new ContBDImpleInsertPer();
-=======
 	public VInsPersona(VInserciones inserciones, boolean modal) {
 		super(inserciones);
 		this.setModal(modal);
 		
 		setBounds(100, 100, 479, 514);
 		datos1 = new ContBDImpleInsertPer();
->>>>>>> 7fa06258be280079938f50fa6d317fed75d45e19
 
 		setBounds(350, 150, 710, 518);
 		getContentPane().setLayout(new BorderLayout());
@@ -580,7 +580,6 @@ public class VInsPersona extends JDialog implements ActionListener {
 	public VInsPersona(VIniciarSesion vInicio, boolean modal) {
 		super(vInicio);
 		this.setModal(modal);
-		datos1 = new ContBDImpleInsertPer();
 
 		setBounds(350, 150, 710, 460);
 		getContentPane().setLayout(new BorderLayout());
@@ -704,29 +703,29 @@ public class VInsPersona extends JDialog implements ActionListener {
 
 
 		// RadioButtons
-		rdbtnNewRadioButton = new JRadioButton("Agente");
-		rdbtnNewRadioButton.setBackground(Color.WHITE);
-		rdbtnNewRadioButton.setBounds(30, 44, 72, 23);
-		tipo.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.addActionListener(this);
-		rdbtnNewRadioButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		contentPanel.add(rdbtnNewRadioButton);
+		rdbtnAgente = new JRadioButton("Agente");
+		rdbtnAgente.setBackground(Color.WHITE);
+		rdbtnAgente.setBounds(30, 44, 72, 23);
+		tipo.add(rdbtnAgente);
+		rdbtnAgente.addActionListener(this);
+		rdbtnAgente.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		contentPanel.add(rdbtnAgente);
 
-		rdbtnNewRadioButton_1 = new JRadioButton("Desaparecida");
-		rdbtnNewRadioButton_1.setBackground(Color.WHITE);
-		rdbtnNewRadioButton_1.setBounds(104, 44, 109, 23);
-		tipo.add(rdbtnNewRadioButton_1);
-		rdbtnNewRadioButton_1.addActionListener(this);
-		rdbtnNewRadioButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		contentPanel.add(rdbtnNewRadioButton_1);
+		rdbtnDesaparecida = new JRadioButton("Desaparecida");
+		rdbtnDesaparecida.setBackground(Color.WHITE);
+		rdbtnDesaparecida.setBounds(104, 44, 109, 23);
+		tipo.add(rdbtnDesaparecida);
+		rdbtnDesaparecida.addActionListener(this);
+		rdbtnDesaparecida.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		contentPanel.add(rdbtnDesaparecida);
 
-		rdbtnNewRadioButton_2 = new JRadioButton("Criminal");
-		rdbtnNewRadioButton_2.setBackground(Color.WHITE);
-		rdbtnNewRadioButton_2.setBounds(215, 44, 109, 23);
-		rdbtnNewRadioButton_2.addActionListener(this);
-		tipo.add(rdbtnNewRadioButton_2);
-		rdbtnNewRadioButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		contentPanel.add(rdbtnNewRadioButton_2);
+		rdbtnCriminal = new JRadioButton("Criminal");
+		rdbtnCriminal.setBackground(Color.WHITE);
+		rdbtnCriminal.setBounds(215, 44, 109, 23);
+		rdbtnCriminal.addActionListener(this);
+		tipo.add(rdbtnCriminal);
+		rdbtnCriminal.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		contentPanel.add(rdbtnCriminal);
 
 		panelAgente = new JPanel();
 		panelAgente.setBounds(334, 74, 300, 389);
@@ -1009,19 +1008,19 @@ public class VInsPersona extends JDialog implements ActionListener {
 		if (e.getSource().equals(btnAnadir)) {
 			altaPersona();
 		}
-		if (e.getSource().equals(rdbtnNewRadioButton)) {
+		if (e.getSource().equals(rdbtnAgente)) {
 			panelAgente.setVisible(true);
 			panelCriminal.setVisible(false);
 			panelDes.setVisible(false);
 			rdbtnSiPreso.setSelected(false);
 			rdbtnNoPreso.setSelected(false);
-		} else if (e.getSource().equals(rdbtnNewRadioButton_1)) {
+		} else if (e.getSource().equals(rdbtnDesaparecida)) {
 			panelDes.setVisible(true);
 			panelCriminal.setVisible(false);
 			panelAgente.setVisible(false);
 			rdbtnSiPreso.setSelected(false);
 			rdbtnNoPreso.setSelected(false);
-		} else if (e.getSource().equals(rdbtnNewRadioButton_2)) {
+		} else if (e.getSource().equals(rdbtnCriminal)) {
 			panelCriminal.setVisible(true);
 			panelAgente.setVisible(false);
 			panelDes.setVisible(false);
@@ -1032,55 +1031,54 @@ public class VInsPersona extends JDialog implements ActionListener {
 	}
 
 	private void altaPersona() {
-		if (rdbtnNewRadioButton.isSelected()) {
-			Agente agen = new Agente();
+		per = new Persona();
+		if (rdbtnAgente.isSelected() && per instanceof Agente) {
 			String telefonos[] = { textTelefonoM.getText(), textTelefonoO.getText() };
 			int telf[] = new int[telefonos.length];
 			for (int i = 0; i < telefonos.length; i++) {
 				telf[i] = Integer.parseInt(telefonos[i]);
 			}
-			agen.setDni(textDni.getText());
-			agen.setNombre(textNombre.getText());
-			agen.setApellido(textApellido.getText());
-			agen.setTelefonos(telf);
-			agen.setLocalidad(textLocalidad.getText());
-			agen.setFechaNac(stringDate(textNacimiento.getText()));
-			agen.setFechaFal(stringDate(textFallecimiento.getText()));
-			agen.setRango(textFieldRango.getText());
-			agen.setInicioServ(stringDate(textFieldInServ.getText()));
-			agen.setFinServ(stringDate(textFieldFinServ.getText()));
-			((ContBDImpleInsertPer) datos1).altaPersona(agen);
+			per.setDni(textDni.getText());
+			per.setNombre(textNombre.getText());
+			per.setApellido(textApellido.getText());
+			per.setTelefonos(telf);
+			per.setLocalidad(textLocalidad.getText());
+			per.setFechaNac(stringDate(textNacimiento.getText()));
+			per.setFechaFal(stringDate(textFallecimiento.getText()));
+			((Agente) per).setRango(textFieldRango.getText());
+			((Agente) per).setInicioServ(stringDate(textFieldInServ.getText()));
+			((Agente) per).setFinServ(stringDate(textFieldFinServ.getText()));
+			datos2.altaPersona(per);
 			limpiar();
 			habilitarBoton();
 
-		} else if (rdbtnNewRadioButton_1.isSelected()) {
-			Desaparecida des = new Desaparecida();
+		} else if (rdbtnDesaparecida.isSelected() && per instanceof Desaparecida) {
+
 			String telefonos[] = { textTelefonoM.getText(), textTelefonoO.getText() };
 			int telf[] = new int[telefonos.length];
 			for (int i = 0; i < telefonos.length; i++) {
 				telf[i] = Integer.parseInt(telefonos[i]);
 			}
-			des.setDni(textDni.getText());
-			des.setNombre(textNombre.getText());
-			des.setApellido(textApellido.getText());
-			des.setTelefonos(telf);
-			des.setLocalidad(textLocalidad.getText());
-			des.setFechaNac(stringDate(textNacimiento.getText()));
-			des.setFechaFal(stringDate(textFallecimiento.getText()));
-			des.setFechaDes(stringDate(textFieldFechDes.getText()));
-			des.setUltimaUbi(textFieldUltUbi.getText());
-			des.setGenero(textFieldGenero.getText());
-			des.setTipoPelo(textFieldTipoPelo.getText());
-			des.setColorPelo(textFieldColorPelo.getText());
-			des.setColorOjos(textFieldColorOjos.getText());
-			des.setAltura(stringInt(textFieldAltura.getText()));
-			des.setEspecificaciones(textFieldEspecifi.getText());
-			((ContBDImpleInsertPer) datos1).altaPersona(des);
+			per.setDni(textDni.getText());
+			per.setNombre(textNombre.getText());
+			per.setApellido(textApellido.getText());
+			per.setTelefonos(telf);
+			per.setLocalidad(textLocalidad.getText());
+			per.setFechaNac(stringDate(textNacimiento.getText()));
+			per.setFechaFal(stringDate(textFallecimiento.getText()));
+			((Desaparecida) per).setFechaDes(stringDate(textFieldFechDes.getText()));
+			((Desaparecida) per).setUltimaUbi(textFieldUltUbi.getText());
+			((Desaparecida) per).setGenero(textFieldGenero.getText());
+			((Desaparecida) per).setTipoPelo(textFieldTipoPelo.getText());
+			((Desaparecida) per).setColorPelo(textFieldColorPelo.getText());
+			((Desaparecida) per).setColorOjos(textFieldColorOjos.getText());
+			((Desaparecida) per).setAltura(stringInt(textFieldAltura.getText()));
+			((Desaparecida) per).setEspecificaciones(textFieldEspecifi.getText());
+			datos2.altaPersona(per);
 			limpiar();
 			habilitarBoton();
 
-		} else if (rdbtnNewRadioButton_2.isSelected()) {
-			Criminal crim = new Criminal();
+		} else if (rdbtnCriminal.isSelected() && per instanceof Criminal) {
 			String telefonos[] = { textTelefonoM.getText(), textTelefonoO.getText() };
 			String arrDate = textFieldFechArresto.getText();
 			ArrayList<LocalDate> arrest = new ArrayList<LocalDate>();
@@ -1090,15 +1088,15 @@ public class VInsPersona extends JDialog implements ActionListener {
 				telf[i] = Integer.parseInt(telefonos[i]);
 			}
 
-			crim.setDni(textDni.getText());
-			crim.setNombre(textNombre.getText());
-			crim.setApellido(textApellido.getText());
-			crim.setTelefonos(telf);
-			crim.setLocalidad(textLocalidad.getText());
-			crim.setFechaNac(stringDate(textNacimiento.getText()));
-			crim.setFechaFal(stringDate(textFallecimiento.getText()));
-			crim.setFechasArresto(arrest);
-			((ContBDImpleInsertPer) datos1).altaPersona(crim);
+			per.setDni(textDni.getText());
+			per.setNombre(textNombre.getText());
+			per.setApellido(textApellido.getText());
+			per.setTelefonos(telf);
+			per.setLocalidad(textLocalidad.getText());
+			per.setFechaNac(stringDate(textNacimiento.getText()));
+			per.setFechaFal(stringDate(textFallecimiento.getText()));
+			((Criminal) per).setFechasArresto(arrest);
+			datos2.altaPersona(per);
 			limpiar();
 			habilitarBoton();
 
@@ -1127,9 +1125,9 @@ public class VInsPersona extends JDialog implements ActionListener {
 		textFieldColorOjos.setText("");
 		textFieldAltura.setText("");
 		textFieldEspecifi.setText("");
-		rdbtnNewRadioButton.setSelected(false);
-		rdbtnNewRadioButton_1.setSelected(false);
-		rdbtnNewRadioButton_2.setSelected(false);
+		rdbtnAgente.setSelected(false);
+		rdbtnDesaparecida.setSelected(false);
+		rdbtnCriminal.setSelected(false);
 		rdbtnSiPreso.setSelected(false);
 		rdbtnNoPreso.setSelected(false);
 
@@ -1148,7 +1146,7 @@ public class VInsPersona extends JDialog implements ActionListener {
 
 
 	private void volver() {
-		VInserciones insercion = new VInserciones(vInicio, true, info[0]);
+		VInserciones insercion = new VInserciones(vInicio, true, info);
 		this.dispose();
 		insercion.setVisible(true);
 	}
@@ -1200,5 +1198,17 @@ public class VInsPersona extends JDialog implements ActionListener {
 		VBusqueda busqueda = new VBusqueda(vInicio, true, datos, info[0]);
 		this.dispose();
 		busqueda.setVisible(true);
+	}
+
+	@Override
+	public void altaPersona(Persona per) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean comprobarDNI(String dni) {
+		// TODO Auto-generated method stub
+		return datos2.comprobarDNI(dni);
 	}
 }

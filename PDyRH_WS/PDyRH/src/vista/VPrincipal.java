@@ -285,7 +285,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelInsert.setBackground(SystemColor.controlShadow);
 		imgInsert.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/laAO.png"));
 		lblInsert.setForeground(new Color(0, 0, 51));
-		VInserciones inserciones = new VInserciones(padre, true, info[0]);
+		VInserciones inserciones = new VInserciones(padre, true, info);
 		inserciones.setVisible(true);
 		panelInsert.setBackground(SystemColor.control);
 		imgInsert.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/la2(1).png"));

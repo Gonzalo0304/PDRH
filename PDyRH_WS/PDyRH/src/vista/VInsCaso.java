@@ -503,7 +503,7 @@ public class VInsCaso extends JDialog {
 	}
 	
 	private void volver() {
-		VInserciones insercion = new VInserciones(vInicio, true, info[0]);
+		VInserciones insercion = new VInserciones(vInicio, true, info);
 		this.dispose();
 		insercion.setVisible(true);
 	}
@@ -547,13 +547,6 @@ public class VInsCaso extends JDialog {
 	private LocalDate stringDate(String string) {
 		LocalDate nacimiento = LocalDate.parse(string);
 		return nacimiento;
-	}
-	
-	private void VinsertarCaso() {
-		VInsCaso caso = new VInsCaso(vInicio, true);
-		this.dispose();
-		caso.setVisible(true);
-		
 	}
 	
 	private void insertarRestoHumano() {
