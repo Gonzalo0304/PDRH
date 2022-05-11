@@ -62,70 +62,16 @@ public class VComparacion extends JDialog {
 		setTitle("Comparar");
 		setBounds(100, 100, 409, 322);
 		getContentPane().setLayout(new BorderLayout());
-
-		contentPane.setBackground(Color.WHITE);
-		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
-		getContentPane().add(contentPane, BorderLayout.CENTER);
-		setUndecorated(true); // Sin borde predeterminado
-		setLocationRelativeTo(null);
-		contentPane.setLayout(null);
-		info = infos;
-		this.padre = padre;
-
-		// Movimiento de la ventana
-		addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				point.x = e.getX();
-				point.y = e.getY();
-			}
-		});
-		addMouseMotionListener(new MouseMotionAdapter() {
-			public void mouseDragged(MouseEvent e) {
-				Point p = getLocation();
-				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
-			}
-		});
-
-		// Bot�n para cerrar la ventana
-		lblCerrar = new JLabel("x");
-		lblCerrar.setBackground(new Color(153, 0, 0));
-		lblCerrar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblCerrar.setForeground(Color.BLACK);
-				lblCerrar.setOpaque(true);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblCerrar.setForeground(Color.WHITE);
-				lblCerrar.setOpaque(false);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cerrar();
-			}
-		});
-		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblCerrar.setForeground(Color.WHITE);
-		lblCerrar.setBounds(573, 2, 31, 19);
-		contentPane.add(lblCerrar);
-
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		lblComparacinPdyrh = new JLabel("Comparaci\u00F3n PDyRH");
-		lblComparacinPdyrh.setForeground(SystemColor.textInactiveText);
-		lblComparacinPdyrh.setFont(new Font("Nirmala UI", Font.BOLD, 14));
-		lblComparacinPdyrh.setBounds(24, 60, 151, 19);
-		contentPane.add(lblComparacinPdyrh);
-
 		scrollPane.setBounds(0, 0, 434, 261);
 		getContentPane().add(scrollPane);
-
 		
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(null);
@@ -236,26 +182,6 @@ public class VComparacion extends JDialog {
 				String cabezera[] = { "Desaparecida", "Precido%" };
 				JTable tabla = new JTable(datosTabla, cabezera);
 				JS.setViewportView(tabla);
-
-
-				tabla.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						String dni = (String) tabla.getValueAt(tabla.getSelectedRow(), 0);
-						String codigo = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
-
-						VComRH vComp = new VComRH(padre, true, dni, codigo, info);
-						cer();
-						vComp.setVisible(true);
-					}
-				});
-			} else {
-				panel1 = new JPanel();
-				panel1.setBackground(new Color(153, 0, 0));
-				panel1.setBounds(93, 99, 402, 210);
-				contentPane.add(panel1);
-				panel1.setLayout(null);
-
 				
 				JLabel lblNewLabel_1 = new JLabel("Resto Humano");
 				lblNewLabel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -339,9 +265,6 @@ public class VComparacion extends JDialog {
 		// TODO Auto-generated method stub
 		this.dispose();
 
-	}
-	public void cer() {
-		this.dispose();
 	}
 }
 

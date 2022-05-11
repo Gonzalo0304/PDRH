@@ -1035,12 +1035,20 @@ public class VInsPersona extends JDialog implements ActionListener {
 			int telefonoO = 0;
 			LocalDate fechaNac=null;
 			LocalDate fechaFall=null;
+			LocalDate fechaIni=null;
+			LocalDate fechaFin=null;
 			if(!textNacimiento.getText().isEmpty()) {
 				fechaNac = stringDate(textNacimiento.getText());
 			}else if (!textFallecimiento.getText().isEmpty()) {
 				fechaFall = stringDate(textFallecimiento.getText());
 			}
 			
+			if(!textNacimiento.getText().isEmpty()) {
+				fechaIni = stringDate(textFieldInServ.getText());
+			}else if (!textFallecimiento.getText().isEmpty()) {
+				fechaFin = stringDate(textFieldFinServ.getText());
+			}
+	
 			if(!textTelefonoM.getText().isEmpty()) {
 				telefonoM = stringInt(textTelefonoM.getText());
 			}else if (!textTelefonoO.getText().isEmpty()) {
@@ -1060,8 +1068,8 @@ public class VInsPersona extends JDialog implements ActionListener {
 			agen.setFechaNac(fechaNac);
 			agen.setFechaFal(fechaFall);
 			agen.setRango(stringInt(textFieldRango.getText()));
-			agen.setInicioServ(stringDate(textFieldInServ.getText()));
-			agen.setFinServ(stringDate(textFieldFinServ.getText()));
+			agen.setInicioServ(fechaIni);
+			agen.setFinServ(fechaFin);
 			((ContBDImpleInsertPer) datos1).altaPersona(agen);
 			limpiar();
 			habilitarBoton();
@@ -1155,6 +1163,12 @@ public class VInsPersona extends JDialog implements ActionListener {
 			crim.setLocalidad(textLocalidad.getText());
 			crim.setFechaNac(fechaNac);
 			crim.setFechaFal(fechaFall);
+			if(rdbtnSiPreso.isSelected()) {
+				crim.setPrisionero(true);
+			}
+			if(rdbtnNoPreso.isSelected()) {
+				crim.setPrisionero(false);
+			}
 			crim.setFechasArresto(arrest);
 			((ContBDImpleInsertPer) datos1).altaPersona(crim);
 			limpiar();

@@ -94,6 +94,8 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JRadioButton rdbtnCer;
 	private JRadioButton rdbtnSR;
 	private JRadioButton rdbtnAbi;
+	private Caso caso;
+	private JTextField textCodResto;
 	
 	// <--- Ejecución --->
 	public VGesCaso(VIniciarSesion padre, boolean modal, Caso caso, String[] infos) {
@@ -105,6 +107,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		getContentPane().setLayout(null);
 		info = infos;
 		this.padre = padre;
+		this.caso = caso;
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(SystemColor.controlHighlight);
@@ -464,13 +467,13 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		lblDniInv = new JLabel("DNI");
 		lblDniInv.setForeground(new Color(0, 51, 102));
 		lblDniInv.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblDniInv.setBounds(62, 151, 81, 28);
+		lblDniInv.setBounds(61, 106, 81, 28);
 		contentInvo.add(lblDniInv);
 
 		separatorDniInv = new JSeparator();
 		separatorDniInv.setForeground(new Color(0, 0, 102));
 		separatorDniInv.setBackground(new Color(0, 51, 102));
-		separatorDniInv.setBounds(62, 177, 106, 2);
+		separatorDniInv.setBounds(61, 132, 106, 2);
 		contentInvo.add(separatorDniInv);
 
 		textDniInv = new JTextField();
@@ -482,19 +485,19 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		});
 		textDniInv.setToolTipText("");
 		textDniInv.setColumns(10);
-		textDniInv.setBounds(62, 190, 187, 20);
+		textDniInv.setBounds(61, 145, 187, 20);
 		contentInvo.add(textDniInv);
 
 		lblmp = new JLabel("IMPLICACI\u00D3N");
 		lblmp.setForeground(new Color(0, 51, 102));
 		lblmp.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblmp.setBounds(345, 151, 81, 28);
+		lblmp.setBounds(344, 106, 81, 28);
 		contentInvo.add(lblmp);
 
 		separatorImp = new JSeparator();
 		separatorImp.setForeground(new Color(0, 0, 102));
 		separatorImp.setBackground(new Color(0, 51, 102));
-		separatorImp.setBounds(345, 177, 106, 2);
+		separatorImp.setBounds(344, 132, 106, 2);
 		contentInvo.add(separatorImp);
 
 		textImp = new JTextField();
@@ -506,7 +509,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		});
 		textImp.setToolTipText("");
 		textImp.setColumns(10);
-		textImp.setBounds(345, 190, 187, 20);
+		textImp.setBounds(344, 145, 187, 20);
 		contentInvo.add(textImp);
 
 		lblAnaInv = new JLabel(" A\u00F1adir Involucrados");
@@ -525,16 +528,33 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		buttonAgregar.setForeground(Color.WHITE);
 		buttonAgregar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		buttonAgregar.setBackground(new Color(153, 0, 0));
-		buttonAgregar.setBounds(248, 268, 89, 28);
-		buttonAgregar.setEnabled(false);
+		buttonAgregar.setBounds(248, 297, 89, 28);
 		buttonAgregar.addActionListener(this);
 		contentInvo.add(buttonAgregar);
-
-		JLabel imgErtzAO_1 = new JLabel("");
-		imgErtzAO_1
-				.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
-		imgErtzAO_1.setBounds(142, 68, 309, 303);
-		contentInvo.add(imgErtzAO_1);
+		
+		JLabel lblCodResto = new JLabel("C\u00D3DIGO RESTO");
+		lblCodResto.setForeground(new Color(153, 0, 0));
+		lblCodResto.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblCodResto.setBounds(195, 202, 106, 28);
+		contentInvo.add(lblCodResto);
+		
+		JSeparator separatorCodResto = new JSeparator();
+		separatorCodResto.setForeground(new Color(102, 0, 0));
+		separatorCodResto.setBackground(new Color(153, 0, 0));
+		separatorCodResto.setBounds(195, 228, 106, 2);
+		contentInvo.add(separatorCodResto);
+		
+		textCodResto = new JTextField();
+		textCodResto.setToolTipText("");
+		textCodResto.setColumns(10);
+		textCodResto.setBounds(195, 241, 187, 20);
+		contentInvo.add(textCodResto);
+		
+				JLabel imgErtzAO_1 = new JLabel("");
+				imgErtzAO_1
+						.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
+				imgErtzAO_1.setBounds(142, 68, 309, 303);
+				contentInvo.add(imgErtzAO_1);
 	}
 
 	private void cargarDatos(Caso caso) {
@@ -573,7 +593,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	public void cerrar() {
-		VGestion vGest = new VGestion(padre, true, info);
+		VGestion vGest = new VGestion(padre, true);
 		this.dispose();
 		vGest.setVisible(true);
 	}
@@ -586,6 +606,14 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		} else if (e.getSource().equals(mCerrar2)) {
 			this.dispose();
 			padre.setVisible(true);
+		} else if (e.getSource().equals(buttonEliminar)) {
+			eliminarCaso(caso.getCodCaso());
+		} else if (e.getSource().equals(buttonAgregar)) {
+			insertarInvolucrado(textCodResto.getText(),caso.getCodCaso());
+			Participante par = new Participante();
+			insertarParticipante(par);
+		} else if (e.getSource().equals(buttonMod)) {
+			modificarCaso(caso);
 		}
 	}
 
@@ -599,6 +627,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		if (!textFechaFin.getText().isBlank()) {
 			caso.setFechaFin(LocalDate.parse(textFechaFin.getText()));
 		}
+		datos.modificarCaso(caso);
 	}
 
 	public String rbSelect(ButtonGroup bg) {
@@ -620,6 +649,9 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 
 	@Override
 	public void insertarParticipante(Participante par) {
+		par.setCodCaso(caso.getCodCaso());
+		par.setDni(textDniInv.getText());
+		par.setImplicacion(textImp.getText());
 		datos.insertarParticipante(par);
 	}
 

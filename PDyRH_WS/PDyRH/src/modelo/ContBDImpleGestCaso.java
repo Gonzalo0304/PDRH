@@ -72,16 +72,8 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 
 			stmnt.setString(1, caso.getEstado());
 			stmnt.setString(2, caso.getNombre());
-			if (caso.getFechaFin() != null) {
-				stmnt.setDate(3, Date.valueOf(caso.getFechaFin()));
-			} else {
-				stmnt.setDate(3, null);
-			}
-			if (caso.getFechaIni() != null) {
-				stmnt.setDate(4, Date.valueOf(caso.getFechaFin()));
-			} else {
-				stmnt.setDate(4, null);
-			}
+			stmnt.setDate(3, Date.valueOf(caso.getFechaFin()));
+			stmnt.setDate(4, Date.valueOf(caso.getFechaFin()));
 			stmnt.setString(5, caso.getCodCaso());
 
 			stmnt.executeUpdate();
@@ -286,9 +278,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(codCaso);
-				if (rs.getDate("fechaMuerte") != null) {
-					resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
-				}
+				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
 				
 				restos.put(resto.getCodResto(),resto);
 			}
