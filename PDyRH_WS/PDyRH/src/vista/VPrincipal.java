@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 
-import java.awt.Button;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -34,21 +33,11 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	// <--- Elementos --->
 	private JPanel contentPane;
 	private static Point point = new Point();
-	private JMenuItem mCerrar;
-	private JMenuItem mPersona;
-	private JMenuItem mRestoHumano;
-	private JMenuItem mCaso;
 	private JLabel lblCerrar;
 	private JPanel panelInsert;
-	private Button buttonBR;
 	private JPanel panelGest;
 	private JLabel lblComparar;
 	private JLabel imgGest;
-	private JMenu menUsuario;
-	private JMenu menInsertar;
-	private JMenu menComparar;
-	private JMenu menGestionar;
-	private JMenu menBuscar;
 	private JLabel imgInsert;
 	private JLabel lblInsert;
 	private JLabel lblGestionar;
@@ -60,12 +49,21 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private JLabel imgErtzAC;
 	private VIniciarSesion padre;
 	private JSeparator separator;
-	private JMenuBar menuBar;
+	private JMenu menInsertar;
+	private JMenu menComparar;
+	private JMenu menGestionar;
+	private JMenu menBuscar;
+	private JMenu menUsuario;
+	private JMenuItem mCerrar;
+	private JMenuItem mPersona;
+	private JMenuItem mRestoHumano;
+	private JMenuItem mCaso;
 	private JSeparator separator1_1;
 	private JSeparator separator1_1_1;
 	private JSeparator separator1_1_2;
 	private JSeparator separator1_1_3;
 	private String[] info;
+	private JMenuBar menuBar;
 	
 	public VPrincipal(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño ventana --->
@@ -133,7 +131,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		separator.setBackground(Color.DARK_GRAY);
 		separator.setBounds(2, 47, 603, 2);
 		contentPane.add(separator);
-		
+
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
 		menuBar.setBackground(new Color(0, 51, 102));
@@ -144,7 +142,6 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		menUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		menUsuario.setBackground(Color.DARK_GRAY);
 		menUsuario.setForeground(Color.WHITE);
 		menuBar.add(menUsuario);
 
@@ -156,7 +153,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
-		
+
 		menInsertar = new JMenu("Insertar");
 		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
 		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
@@ -177,7 +174,12 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		menInsertar.add(mCaso);
 
 		menGestionar = new JMenu("Gestionar");
-		menGestionar.addActionListener(this);
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
+			}
+		});
 		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
 		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menGestionar.setBackground(new Color(0, 0, 255));
@@ -185,7 +187,12 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		menuBar.add(menGestionar);
 
 		menComparar = new JMenu("Comparar");
-		menComparar.addActionListener(this);
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
 		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
 		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menComparar.setBackground(new Color(0, 0, 255));
@@ -193,7 +200,12 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		menuBar.add(menComparar);
 
 		menBuscar = new JMenu("Busqueda");
-		menBuscar.addActionListener(this);
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
 		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
 		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
 		menBuscar.setBackground(new Color(0, 0, 255));
@@ -312,14 +324,6 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		separator1_1_3.setForeground(new Color(102, 0, 0));
 		separator1_1_3.setBackground(new Color(153, 0, 0));
 		
-		buttonBR = new Button("Busq. rap.");
-		buttonBR.setFocusable(false);
-		buttonBR.addActionListener(this);
-		buttonBR.setForeground(new Color(255, 255, 255));
-		buttonBR.setBackground(new Color(153, 0, 0));
-		buttonBR.setBounds(527, 367, 70, 22);
-		contentPane.add(buttonBR);
-		
 		// Fondo
 		imgErtzAC = new JLabel("New label");
 		imgErtzAC.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/ertzAC.png")));
@@ -369,19 +373,17 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		this.dispose();
 		comparar.setVisible(true);
 	}
-	
-	private void vBusRapida() {
-		VBusRapida busRap = new VBusRapida(padre, true, info);
-		this.dispose();
-		busRap.setVisible(true);
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
 			cerrar();
-		}else if (e.getSource().equals(buttonBR)) {
-			vBusRapida();
+		} else if (e.getSource().equals(mCaso)) {
+			abrirInsertCaso();
+		} else if (e.getSource().equals(mPersona)) {
+			abrirInsertPer();
+		} else if (e.getSource().equals(mRestoHumano)) {
+			abrirInsertRH();
 		}
 	}
 	
@@ -425,5 +427,42 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	@Override
 	public void mouseExited(MouseEvent e) {
 		((JComponent) e.getSource()).setBorder(null);
+	}
+	
+	// Abrir ventanas de menú
+	private void abrirGes() {
+		VGestion vBus = new VGestion(padre, true, info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirCom() {
+		VComparacion vCom = new VComparacion(padre, true, info);
+		this.dispose();
+		vCom.setVisible(true);
+	}
+
+	private void abrirBus() {
+		VBusqueda vBus = new VBusqueda(padre, true, info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirInsertRH() {
+		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
+		this.dispose();
+		vInsRH.setVisible(true);
+	}
+
+	private void abrirInsertPer() {
+		VInsPersona vInsPer = new VInsPersona(padre, true, info);
+		this.dispose();
+		vInsPer.setVisible(true);
+	}
+
+	private void abrirInsertCaso() {
+		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
+		this.dispose();
+		vInsCaso.setVisible(true);
 	}
 }

@@ -48,7 +48,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	private JMenuBar menuBar;
 	private JMenu menInsertar;
 	private JMenu menComparar;
-	private JMenu menBustionar;
+	private JMenu menGestionar;
 	private JMenu menBuscar;
 	private JMenu menUsuario;
 	private JMenuItem mCerrar;
@@ -85,10 +85,10 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
-		setTitle("Bustionar");
+		setTitle("Gestionar");
 		setBounds(100, 100, 607, 399);
-		getContentPane().setLayout(new BorderLayout());
 		contentPane.setBackground(Color.WHITE);
+		getContentPane().setLayout(new BorderLayout());
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true);
@@ -138,7 +138,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		lblCerrar.setBounds(573, 2, 31, 19);
 		contentPane.add(lblCerrar);
 		
-		// Menú superior y título
+		// Menú superior
 		separator = new JSeparator();
 		separator.setBackground(Color.DARK_GRAY);
 		separator.setBounds(2, 47, 603, 2);
@@ -185,18 +185,18 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		mCaso.addActionListener(this);
 		menInsertar.add(mCaso);
 
-		menBustionar = new JMenu("Bustionar");
-		menBustionar.addMouseListener(new MouseAdapter() {
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
 				abrirGes();
 			}
 		});
-		menBustionar.setHorizontalAlignment(SwingConstants.LEFT);
-		menBustionar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menBustionar.setBackground(new Color(0, 0, 255));
-		menBustionar.setForeground(Color.WHITE);
-		menuBar.add(menBustionar);
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
 
 		menComparar = new JMenu("Comparar");
 		menComparar.addMouseListener(new MouseAdapter() {
@@ -393,7 +393,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	}
 
 	private void abrirInsertRH() {
-		VInsRH vInsRH = new VInsRH(padre,true,info);
+		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}

@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -37,6 +38,8 @@ import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 
 import java.awt.Button;
+import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 
 public class VInsPersona extends JDialog implements ActionListener, ContDatosInsertPer {
 	private static final long serialVersionUID = 1L;
@@ -55,13 +58,13 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 	private JTextField textFieldFechArresto;
 	private JTextField textFieldFechDes;
 	private JTextField textFieldUltUbi;
-	private JTextField textFieldGenero;
 	private JTextField textFieldTipoPelo;
 	private JTextField textFieldColorPelo;
 	private JTextField textFieldColorOjos;
 	private JTextField textFieldAltura;
 	private JTextField textFieldEspecifi;
 	private JPanel panelAgente;
+	private JComboBox<Object> comboBox;
 	private JPanel panelCriminal;
 	private JPanel panelDes;
 	private Button btnAnadir;
@@ -87,7 +90,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 	private VIniciarSesion padre;
 	private String[] info;
 	private JLabel lblCerrar;
-	
+
 	ContDatosInsertPer datos = DataFactoryInsertPer.getDatos();
 	private JLabel lblRango;
 	private JSeparator separatorRango;
@@ -105,9 +108,9 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		super(padre);
 		this.setModal(modal);
 		setBounds(350, 150, 503, 627);
-		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
-		contentPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
@@ -300,7 +303,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		btnAnadir.setEnabled(false);
 		btnAnadir.setForeground(Color.WHITE);
 		btnAnadir.setBackground(new Color(122, 42, 42));
-		btnAnadir.setBounds(568, 388, 116, 40);
+		btnAnadir.setBounds(212, 588, 87, 29);
 		btnAnadir.addActionListener(this);
 		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		contentPanel.add(btnAnadir);
@@ -350,11 +353,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		textFieldUltUbi.setBounds(20, 98, 192, 20);
 		panelDes.add(textFieldUltUbi);
 
-		textFieldGenero = new JTextField();
-		textFieldGenero.setColumns(10);
-		textFieldGenero.setBounds(20, 161, 192, 20);
-		panelDes.add(textFieldGenero);
-
 		textFieldTipoPelo = new JTextField();
 		textFieldTipoPelo.setColumns(10);
 		textFieldTipoPelo.setBounds(20, 224, 192, 20);
@@ -379,318 +377,331 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		textFieldEspecifi.setColumns(10);
 		textFieldEspecifi.setBounds(20, 486, 192, 20);
 		panelDes.add(textFieldEspecifi);
-		
+
 		JSeparator separatorFechaDes = new JSeparator();
 		separatorFechaDes.setForeground(SystemColor.controlShadow);
 		separatorFechaDes.setBackground(new Color(153, 0, 0));
 		separatorFechaDes.setBounds(20, 26, 106, 2);
 		panelDes.add(separatorFechaDes);
-		
+
 		JLabel lblSexo = new JLabel("SEXO");
 		lblSexo.setForeground(new Color(153, 0, 0));
 		lblSexo.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblSexo.setBounds(20, 122, 81, 28);
 		panelDes.add(lblSexo);
-		
+
 		JSeparator separatorSexo = new JSeparator();
 		separatorSexo.setForeground(SystemColor.controlShadow);
 		separatorSexo.setBackground(new Color(153, 0, 0));
 		separatorSexo.setBounds(20, 148, 106, 2);
 		panelDes.add(separatorSexo);
-		
+
 		JLabel lblUltUbi = new JLabel("\u00DALTIMA UBI.");
 		lblUltUbi.setForeground(new Color(153, 0, 0));
 		lblUltUbi.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblUltUbi.setBounds(20, 58, 106, 28);
 		panelDes.add(lblUltUbi);
-		
+
 		JSeparator separatorUltimaUbi = new JSeparator();
 		separatorUltimaUbi.setForeground(SystemColor.controlShadow);
 		separatorUltimaUbi.setBackground(new Color(153, 0, 0));
 		separatorUltimaUbi.setBounds(20, 84, 106, 2);
 		panelDes.add(separatorUltimaUbi);
-		
+
 		JLabel lblFechaDes = new JLabel("FECHA DES.");
 		lblFechaDes.setForeground(new Color(153, 0, 0));
 		lblFechaDes.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblFechaDes.setBounds(20, 0, 106, 28);
 		panelDes.add(lblFechaDes);
-		
+
 		JLabel lblTP = new JLabel("TIPO PELO");
 		lblTP.setForeground(new Color(153, 0, 0));
 		lblTP.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblTP.setBounds(20, 184, 106, 28);
 		panelDes.add(lblTP);
-		
+
 		JSeparator separatorTP = new JSeparator();
 		separatorTP.setForeground(SystemColor.controlShadow);
 		separatorTP.setBackground(new Color(153, 0, 0));
 		separatorTP.setBounds(20, 210, 106, 2);
 		panelDes.add(separatorTP);
-		
+
 		JLabel lblCP = new JLabel("COLOR PELO");
 		lblCP.setForeground(new Color(153, 0, 0));
 		lblCP.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblCP.setBounds(20, 244, 106, 28);
 		panelDes.add(lblCP);
-		
+
 		JSeparator separatorCP = new JSeparator();
 		separatorCP.setForeground(SystemColor.controlShadow);
 		separatorCP.setBackground(new Color(153, 0, 0));
 		separatorCP.setBounds(20, 270, 106, 2);
 		panelDes.add(separatorCP);
-		
+
 		JLabel lblCO = new JLabel("COLOR OJOS");
 		lblCO.setForeground(new Color(153, 0, 0));
 		lblCO.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblCO.setBounds(20, 312, 106, 28);
 		panelDes.add(lblCO);
-		
+
 		JSeparator separatorCO = new JSeparator();
 		separatorCO.setForeground(SystemColor.controlShadow);
 		separatorCO.setBackground(new Color(153, 0, 0));
 		separatorCO.setBounds(20, 338, 106, 2);
 		panelDes.add(separatorCO);
-		
+
 		JLabel lblAlt = new JLabel("ALTURA");
 		lblAlt.setForeground(new Color(153, 0, 0));
 		lblAlt.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblAlt.setBounds(20, 381, 106, 28);
 		panelDes.add(lblAlt);
-		
+
 		JSeparator separatorAlt = new JSeparator();
 		separatorAlt.setForeground(SystemColor.controlShadow);
 		separatorAlt.setBackground(new Color(153, 0, 0));
 		separatorAlt.setBounds(20, 407, 106, 2);
 		panelDes.add(separatorAlt);
-		
+
 		JLabel lblEsp = new JLabel("ESPECIFICACIONES");
 		lblEsp.setForeground(new Color(153, 0, 0));
 		lblEsp.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblEsp.setBounds(20, 449, 106, 28);
 		panelDes.add(lblEsp);
-		
+
 		JSeparator separatorEsp = new JSeparator();
 		separatorEsp.setForeground(SystemColor.controlShadow);
 		separatorEsp.setBackground(new Color(153, 0, 0));
 		separatorEsp.setBounds(20, 475, 106, 2);
 		panelDes.add(separatorEsp);
 		
+		comboBox = new JComboBox<Object>();
+		comboBox.setBounds(20, 161, 180, 22);
+		panelDes.add(comboBox);
+		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] {"", "Hombre", "Mujer"}));
+		comboBox.setToolTipText("");
+
 		JLabel lblDni = new JLabel("DNI");
 		lblDni.setForeground(new Color(0, 51, 102));
 		lblDni.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblDni.setBounds(30, 74, 81, 28);
 		contentPanel.add(lblDni);
-		
+
 		JSeparator separatorDni = new JSeparator();
 		separatorDni.setForeground(SystemColor.controlShadow);
 		separatorDni.setBackground(new Color(0, 51, 102));
 		separatorDni.setBounds(30, 100, 106, 2);
 		contentPanel.add(separatorDni);
-		
+
 		JLabel lblNombre = new JLabel("NOMBRE");
 		lblNombre.setForeground(new Color(0, 51, 102));
 		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNombre.setBounds(30, 132, 81, 28);
 		contentPanel.add(lblNombre);
-		
+
 		JSeparator separatorNom = new JSeparator();
 		separatorNom.setForeground(SystemColor.controlShadow);
 		separatorNom.setBackground(new Color(0, 51, 102));
 		separatorNom.setBounds(30, 158, 106, 2);
 		contentPanel.add(separatorNom);
-		
+
 		JLabel lblApellido = new JLabel("APELLIDO");
 		lblApellido.setForeground(new Color(0, 51, 102));
 		lblApellido.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblApellido.setBounds(30, 200, 81, 28);
 		contentPanel.add(lblApellido);
-		
+
 		JSeparator separatorApe = new JSeparator();
 		separatorApe.setForeground(SystemColor.controlShadow);
 		separatorApe.setBackground(new Color(0, 51, 102));
 		separatorApe.setBounds(30, 226, 106, 2);
 		contentPanel.add(separatorApe);
-		
+
 		JLabel lblMovil = new JLabel("TEL\u00C9FONO M\u00D3VIL");
 		lblMovil.setForeground(new Color(0, 51, 102));
 		lblMovil.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblMovil.setBounds(30, 259, 106, 28);
 		contentPanel.add(lblMovil);
-		
+
 		JSeparator separatorMovil = new JSeparator();
 		separatorMovil.setForeground(SystemColor.controlShadow);
 		separatorMovil.setBackground(new Color(0, 51, 102));
 		separatorMovil.setBounds(30, 285, 106, 2);
 		contentPanel.add(separatorMovil);
-		
+
 		JLabel lblTelf = new JLabel("TEL\u00C9FONO OPC.");
 		lblTelf.setForeground(new Color(0, 51, 102));
 		lblTelf.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblTelf.setBounds(30, 319, 106, 28);
 		contentPanel.add(lblTelf);
-		
+
 		JSeparator separatorOpc = new JSeparator();
 		separatorOpc.setForeground(SystemColor.controlShadow);
 		separatorOpc.setBackground(new Color(0, 51, 102));
 		separatorOpc.setBounds(30, 344, 106, 2);
 		contentPanel.add(separatorOpc);
-		
+
 		JLabel lblNac = new JLabel("NACIMIENTO");
 		lblNac.setForeground(new Color(0, 51, 102));
 		lblNac.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNac.setBounds(30, 455, 81, 28);
 		contentPanel.add(lblNac);
-		
+
 		JSeparator separatorNac = new JSeparator();
 		separatorNac.setForeground(SystemColor.controlShadow);
 		separatorNac.setBackground(new Color(0, 51, 102));
 		separatorNac.setBounds(30, 481, 106, 2);
 		contentPanel.add(separatorNac);
-		
+
 		JLabel lblFall = new JLabel("FALLECIMIENTO");
 		lblFall.setForeground(new Color(0, 51, 102));
 		lblFall.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblFall.setBounds(30, 523, 106, 28);
 		contentPanel.add(lblFall);
-		
+
 		JSeparator separatorFall = new JSeparator();
 		separatorFall.setForeground(SystemColor.controlShadow);
 		separatorFall.setBackground(new Color(0, 51, 102));
 		separatorFall.setBounds(30, 549, 106, 2);
 		contentPanel.add(separatorFall);
-		
+
 		JSeparator separatorLoc = new JSeparator();
 		separatorLoc.setForeground(SystemColor.controlShadow);
 		separatorLoc.setBackground(new Color(0, 51, 102));
 		separatorLoc.setBounds(30, 412, 106, 2);
 		contentPanel.add(separatorLoc);
-		
+
 		JLabel lblLoc = new JLabel("LOCALIDAD");
 		lblLoc.setForeground(new Color(0, 51, 102));
 		lblLoc.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblLoc.setBounds(30, 386, 106, 28);
 		contentPanel.add(lblLoc);
+
+		panelAgente = new JPanel();
+		panelAgente.setBounds(256, 71, 237, 400);
+		contentPanel.add(panelAgente);
+		panelAgente.setLayout(null);
+		panelAgente.setVisible(false);
+		panelAgente.setOpaque(false);
+
+		textFieldRango = new JTextField();
+		textFieldRango.setBounds(20, 39, 192, 20);
+		panelAgente.add(textFieldRango);
+		textFieldRango.setColumns(10);
+
+		textFieldInServ = new JTextField();
+		textFieldInServ.setBounds(20, 100, 192, 20);
+		panelAgente.add(textFieldInServ);
+		textFieldInServ.setColumns(10);
+
+		textFieldFinServ = new JTextField();
+		textFieldFinServ.setBounds(20, 160, 192, 20);
+		panelAgente.add(textFieldFinServ);
+		textFieldFinServ.setColumns(10);
+
+		lblRango = new JLabel("RANGO");
+		lblRango.setForeground(new Color(153, 0, 0));
+		lblRango.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblRango.setBounds(20, 0, 81, 28);
+		panelAgente.add(lblRango);
+
+		separatorRango = new JSeparator();
+		separatorRango.setForeground(SystemColor.controlShadow);
+		separatorRango.setBackground(new Color(153, 0, 0));
+		separatorRango.setBounds(20, 26, 106, 2);
+		panelAgente.add(separatorRango);
+
+		lblIniServ = new JLabel("INICIO SERVICIO");
+		lblIniServ.setForeground(new Color(153, 0, 0));
+		lblIniServ.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblIniServ.setBounds(20, 63, 106, 28);
+		panelAgente.add(lblIniServ);
+
+		separatorIniServ = new JSeparator();
+		separatorIniServ.setForeground(SystemColor.controlShadow);
+		separatorIniServ.setBackground(new Color(153, 0, 0));
+		separatorIniServ.setBounds(20, 89, 106, 2);
+		panelAgente.add(separatorIniServ);
+
+		lblFinServ = new JLabel("FIN SERVICIO");
+		lblFinServ.setForeground(new Color(153, 0, 0));
+		lblFinServ.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblFinServ.setBounds(20, 126, 81, 28);
+		panelAgente.add(lblFinServ);
+
+		separatorFinServ = new JSeparator();
+		separatorFinServ.setForeground(SystemColor.controlShadow);
+		separatorFinServ.setBackground(new Color(153, 0, 0));
+		separatorFinServ.setBounds(20, 152, 106, 2);
+		panelAgente.add(separatorFinServ);
+
+		panelCriminal = new JPanel();
+		panelCriminal.setBounds(256, 74, 237, 316);
+		contentPanel.add(panelCriminal);
+		panelCriminal.setLayout(null);
+		panelCriminal.setVisible(false);
+		panelCriminal.setOpaque(false);
+
+		textFieldFechArresto = new JTextField();
+		textFieldFechArresto.setColumns(10);
+		textFieldFechArresto.setBounds(18, 97, 192, 20);
+		panelCriminal.add(textFieldFechArresto);
+
+		rdbtnSiPreso = new JRadioButton("S\u00ED");
+		rdbtnSiPreso.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rdbtnSiPreso.setBounds(18, 36, 40, 23);
+		rdbtnSiPreso.setOpaque(false);
+		preso.add(rdbtnSiPreso);
+		panelCriminal.add(rdbtnSiPreso);
+
+		rdbtnNoPreso = new JRadioButton("No");
+		rdbtnNoPreso.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rdbtnNoPreso.setBounds(83, 36, 46, 23);
+		rdbtnNoPreso.setOpaque(false);
+		preso.add(rdbtnNoPreso);
+		panelCriminal.add(rdbtnNoPreso);
+
+		lblPris = new JLabel("PRISIONERO");
+		lblPris.setForeground(new Color(153, 0, 0));
+		lblPris.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblPris.setBounds(21, 0, 81, 28);
+		panelCriminal.add(lblPris);
+
+		separatorPris = new JSeparator();
+		separatorPris.setForeground(SystemColor.controlShadow);
+		separatorPris.setBackground(new Color(153, 0, 0));
+		separatorPris.setBounds(21, 26, 106, 2);
+		panelCriminal.add(separatorPris);
+
+		lblFechaArr = new JLabel("FECHA ARRESTO");
+		lblFechaArr.setForeground(new Color(153, 0, 0));
+		lblFechaArr.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblFechaArr.setBounds(18, 58, 106, 28);
+		panelCriminal.add(lblFechaArr);
+
+		separatorFechaArr = new JSeparator();
+		separatorFechaArr.setForeground(SystemColor.controlShadow);
+		separatorFechaArr.setBackground(new Color(153, 0, 0));
+		separatorFechaArr.setBounds(21, 84, 106, 2);
+		panelCriminal.add(separatorFechaArr);
 		
-				panelAgente = new JPanel();
-				panelAgente.setBounds(256, 71, 237, 400);
-				contentPanel.add(panelAgente);
-				panelAgente.setLayout(null);
-				panelAgente.setVisible(false);
-				panelAgente.setOpaque(false);
-				
-						textFieldRango = new JTextField();
-						textFieldRango.setBounds(20, 39, 192, 20);
-						panelAgente.add(textFieldRango);
-						textFieldRango.setColumns(10);
-						
-								textFieldInServ = new JTextField();
-								textFieldInServ.setBounds(20, 100, 192, 20);
-								panelAgente.add(textFieldInServ);
-								textFieldInServ.setColumns(10);
-								
-										textFieldFinServ = new JTextField();
-										textFieldFinServ.setBounds(20, 160, 192, 20);
-										panelAgente.add(textFieldFinServ);
-										textFieldFinServ.setColumns(10);
-										
-										lblRango = new JLabel("RANGO");
-										lblRango.setForeground(new Color(153, 0, 0));
-										lblRango.setFont(new Font("Tahoma", Font.BOLD, 10));
-										lblRango.setBounds(20, 0, 81, 28);
-										panelAgente.add(lblRango);
-										
-										separatorRango = new JSeparator();
-										separatorRango.setForeground(SystemColor.controlShadow);
-										separatorRango.setBackground(new Color(153, 0, 0));
-										separatorRango.setBounds(20, 26, 106, 2);
-										panelAgente.add(separatorRango);
-										
-										lblIniServ = new JLabel("INICIO SERVICIO");
-										lblIniServ.setForeground(new Color(153, 0, 0));
-										lblIniServ.setFont(new Font("Tahoma", Font.BOLD, 10));
-										lblIniServ.setBounds(20, 63, 106, 28);
-										panelAgente.add(lblIniServ);
-										
-										separatorIniServ = new JSeparator();
-										separatorIniServ.setForeground(SystemColor.controlShadow);
-										separatorIniServ.setBackground(new Color(153, 0, 0));
-										separatorIniServ.setBounds(20, 89, 106, 2);
-										panelAgente.add(separatorIniServ);
-										
-										lblFinServ = new JLabel("FIN SERVICIO");
-										lblFinServ.setForeground(new Color(153, 0, 0));
-										lblFinServ.setFont(new Font("Tahoma", Font.BOLD, 10));
-										lblFinServ.setBounds(20, 126, 81, 28);
-										panelAgente.add(lblFinServ);
-										
-										separatorFinServ = new JSeparator();
-										separatorFinServ.setForeground(SystemColor.controlShadow);
-										separatorFinServ.setBackground(new Color(153, 0, 0));
-										separatorFinServ.setBounds(20, 152, 106, 2);
-										panelAgente.add(separatorFinServ);
-										
-												panelCriminal = new JPanel();
-												panelCriminal.setBounds(256, 74, 237, 316);
-												contentPanel.add(panelCriminal);
-												panelCriminal.setLayout(null);
-												panelCriminal.setVisible(false);
-												panelCriminal.setOpaque(false);
-												
-														textFieldFechArresto = new JTextField();
-														textFieldFechArresto.setColumns(10);
-														textFieldFechArresto.setBounds(18, 97, 192, 20);
-														panelCriminal.add(textFieldFechArresto);
-														
-																rdbtnSiPreso = new JRadioButton("S\u00EC");
-																rdbtnSiPreso.setFont(new Font("Tahoma", Font.BOLD, 11));
-																rdbtnSiPreso.setBounds(18, 36, 40, 23);
-																rdbtnSiPreso.setOpaque(false);
-																preso.add(rdbtnSiPreso);
-																panelCriminal.add(rdbtnSiPreso);
-																
-																		rdbtnNoPreso = new JRadioButton("No");
-																		rdbtnNoPreso.setFont(new Font("Tahoma", Font.BOLD, 11));
-																		rdbtnNoPreso.setBounds(83, 36, 46, 23);
-																		rdbtnNoPreso.setOpaque(false);
-																		preso.add(rdbtnNoPreso);
-																		panelCriminal.add(rdbtnNoPreso);
-																		
-																		lblPris = new JLabel("PRISIONERO");
-																		lblPris.setForeground(new Color(153, 0, 0));
-																		lblPris.setFont(new Font("Tahoma", Font.BOLD, 10));
-																		lblPris.setBounds(21, 0, 81, 28);
-																		panelCriminal.add(lblPris);
-																		
-																		separatorPris = new JSeparator();
-																		separatorPris.setForeground(SystemColor.controlShadow);
-																		separatorPris.setBackground(new Color(153, 0, 0));
-																		separatorPris.setBounds(21, 26, 106, 2);
-																		panelCriminal.add(separatorPris);
-																		
-																		lblFechaArr = new JLabel("FECHA ARRESTO");
-																		lblFechaArr.setForeground(new Color(153, 0, 0));
-																		lblFechaArr.setFont(new Font("Tahoma", Font.BOLD, 10));
-																		lblFechaArr.setBounds(18, 58, 106, 28);
-																		panelCriminal.add(lblFechaArr);
-																		
-																		separatorFechaArr = new JSeparator();
-																		separatorFechaArr.setForeground(SystemColor.controlShadow);
-																		separatorFechaArr.setBackground(new Color(153, 0, 0));
-																		separatorFechaArr.setBounds(21, 84, 106, 2);
-																		panelCriminal.add(separatorFechaArr);
+		JLabel imgErtzAC = new JLabel("");
+		imgErtzAC.setIcon(new ImageIcon(VInsPersona.class.getResource("/imagenes/ertzAC.png")));
+		imgErtzAC.setBounds(93, 174, 309, 317);
+		contentPanel.add(imgErtzAC);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnAnadir)) {
 			if (comprobarDNI(textDni.getText())) {
-				JOptionPane.showMessageDialog(this, "El DNI introducido ya ha sido introducido.","DNI existente.",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "El DNI introducido ya ha sido introducido.", "DNI existente.",
+						JOptionPane.ERROR_MESSAGE);
 			} else {
 				Persona per = null;
 				altaPersona(per);
+				JOptionPane.showMessageDialog(this, "Persona registrada correctamente.","Inserción éxitosa",JOptionPane.CLOSED_OPTION);
 			}
-		}else if (e.getSource().equals(rdbtnAge)) {
+		} else if (e.getSource().equals(rdbtnAge)) {
 			panelAgente.setVisible(true);
 			panelCriminal.setVisible(false);
 			panelDes.setVisible(false);
@@ -717,7 +728,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			abrirInsertPer();
 		} else if (e.getSource().equals(mRestoHumano)) {
 			abrirInsertRH();
-		} 
+		}
 
 	}
 
@@ -736,7 +747,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		textFieldFechArresto.setText("");
 		textFieldFechDes.setText("");
 		textFieldUltUbi.setText("");
-		textFieldGenero.setText("");
+		comboBox.setSelectedIndex(-1);
 		textFieldTipoPelo.setText("");
 		textFieldColorPelo.setText("");
 		textFieldColorOjos.setText("");
@@ -779,40 +790,40 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 
 	// Abrir ventanas de menú
 	private void abrirGes() {
-		VGestion vBus = new VGestion(padre,true,info);
+		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
 	private void abrirCom() {
-		VComparacion vCom = new VComparacion(padre,true,info);
+		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
 	private void abrirBus() {
-		VBusqueda vBus = new VBusqueda(padre,true,info);
+		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
 	private void abrirInsertRH() {
-		VInsRH vInsRH = new VInsRH(padre,true,info);
+		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
 	private void abrirInsertPer() {
-		VInsPersona vInsPer = new VInsPersona(padre,true,info);
+		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
-		vInsPer.setVisible(true);		
+		vInsPer.setVisible(true);
 	}
 
 	private void abrirInsertCaso() {
-		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
+		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
 		vInsCaso.setVisible(true);
-	}	
+	}
 
 	@Override
 	public void altaPersona(Persona per) {
@@ -824,15 +835,15 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			per = new Agente();
 			LocalDate fechaIni = null;
 			LocalDate fechaFin = null;
-			
+
 			if (!textFieldInServ.getText().isBlank()) {
 				fechaIni = LocalDate.parse(textFieldInServ.getText());
 			}
-			
+
 			if (!textFieldFinServ.getText().isBlank()) {
 				fechaFin = LocalDate.parse(textFieldFinServ.getText());
 			}
-			
+
 			((Agente) per).setRango(stringInt(textFieldRango.getText()));
 			((Agente) per).setInicioServ(fechaIni);
 			((Agente) per).setFinServ(fechaFin);
@@ -840,7 +851,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			per = new Desaparecida();
 			int altura = 0;
 			LocalDate fechaDes = null;
-			
+
 			if (!textFieldFechDes.getText().isEmpty()) {
 				fechaDes = LocalDate.parse(textFieldFechDes.getText());
 			}
@@ -848,10 +859,14 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			if (!textFieldAltura.getText().isEmpty()) {
 				altura = stringInt(textFieldAltura.getText());
 			}
-			
+
 			((Desaparecida) per).setFechaDes(fechaDes);
 			((Desaparecida) per).setUltimaUbi(textFieldUltUbi.getText());
-			((Desaparecida) per).setGenero(textFieldGenero.getText());
+			if (comboBox.getSelectedItem() == "Hombre") {
+				((Desaparecida) per).setGenero("H");
+			}else if (comboBox.getSelectedItem() == "Mujer") {
+				((Desaparecida) per).setGenero("M");
+			}
 			((Desaparecida) per).setTipoPelo(textFieldTipoPelo.getText());
 			((Desaparecida) per).setColorPelo(textFieldColorPelo.getText());
 			((Desaparecida) per).setColorOjos(textFieldColorOjos.getText());
@@ -860,7 +875,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		} else if (rdbtnCri.isSelected()) {
 			per = new Criminal();
 			LocalDate arrDate = null;
-			
+
 			if (rdbtnSiPreso.isSelected()) {
 				((Criminal) per).setPrisionero(true);
 			} else {
@@ -875,17 +890,17 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		} else {
 			per = new Persona();
 		}
-		
+
 		if (!textNacimiento.getText().isEmpty()) {
 			fechaNac = stringDate(textNacimiento.getText());
-		} 
+		}
 		if (!textFallecimiento.getText().isEmpty()) {
 			fechaFall = stringDate(textFallecimiento.getText());
 		}
 
 		if (!textTelefonoM.getText().isEmpty()) {
 			telefonoM = stringInt(textTelefonoM.getText());
-		} 
+		}
 		if (!textTelefonoO.getText().isEmpty()) {
 			telefonoO = stringInt(textTelefonoO.getText());
 		}

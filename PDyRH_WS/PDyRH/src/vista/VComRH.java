@@ -35,7 +35,7 @@ import javax.swing.ImageIcon;
 
 public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener {
 	private static final long serialVersionUID = 1L;
-	
+
 	// <--- Elementos --->
 	private JPanel contentPane = new JPanel();
 	private static Point point = new Point();
@@ -109,7 +109,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	private Persona des;
 	private VIniciarSesion padre;
 	private String[] info;
-	
+
 	// <--- Datos BD --->
 	ContDatosCompEsp datos = DataFactoryCompEsp.getDatos();
 
@@ -118,16 +118,16 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		super(padre);
 		this.setModal(modal);
 		setBounds(350, 150, 503, 627);
-		getContentPane().setLayout(new BorderLayout());
 		contentPane.setBackground(Color.WHITE);
-		contentPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		getContentPane().setLayout(new BorderLayout());
+		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		this.padre = padre;
 		info = infos;
-		
+
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -168,7 +168,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblCerrar.setForeground(Color.WHITE);
 		contentPane.add(lblCerrar);
-		
+
 		// Menú superior
 		separator2_5 = new JSeparator();
 		separator2_5.setBounds(0, 36, 502, 2);
@@ -254,7 +254,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		menBuscar.setBackground(new Color(0, 0, 255));
 		menBuscar.setForeground(Color.WHITE);
 		menuBar.add(menBuscar);
-		
+
 		// Botón para identificar
 		button = new Button("IDENTIFICAR");
 		button.setBounds(397, 592, 96, 24);
@@ -265,12 +265,12 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				agregarIdentificado(codigo,dni);
+				agregarIdentificado(codigo, dni);
 			}
-			
+
 		});
 		contentPane.add(button);
-		
+
 		// Campos de información
 		lblFecha = new JLabel("FECHA");
 		lblFecha.setBounds(36, 78, 81, 28);
@@ -599,21 +599,21 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		textCO2.setColumns(10);
 		textCO2.setBounds(274, 426, 187, 20);
 		contentPane.add(textCO2);
-		
-		cargarDatos(dni,codigo);
+
+		cargarDatos(dni, codigo);
 		// Fondo
 		imgErtzAC = new JLabel("");
 		imgErtzAC.setBounds(90, 200, 309, 317);
 		imgErtzAC.setIcon(new ImageIcon(VComRH.class.getResource("/imagenes/ertzAC.png")));
 		contentPane.add(imgErtzAC);
 	}
-	
+
 	// <--- Métodos --->
 	// Cargar la información en los campos de texto
 	private void cargarDatos(String dni, String codigo) {
 		des = obtenerPersona(dni);
 		resto = obtenerRH(codigo);
-		
+
 		textFECHA.setText(resto.getFechaMuerte().toString());
 		textUbi.setText(resto.getUbicacion());
 		textGen.setText(resto.getGenero());
@@ -633,7 +633,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	}
 
 	private void cerrar() {
-		VComparacion vComp = new VComparacion(padre,true,info);
+		VComparacion vComp = new VComparacion(padre, true, info);
 		this.dispose();
 		vComp.setVisible(true);
 	}
@@ -650,12 +650,16 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 
 	@Override
 	public void agregarIdentificado(String codResto, String dni) {
-		if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea identificar a este resto? Es una acción irreversible.", "Confirmar identificación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+		if (JOptionPane.showConfirmDialog(this,
+				"¿Seguro que desea identificar a este resto? Es una acción irreversible.", "Confirmar identificación",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 			datos.agregarIdentificado(codResto, dni);
 			button.setEnabled(false);
-			JOptionPane.showMessageDialog(this, "Resto identificado correctamente.","Identificación realizada",JOptionPane.CLOSED_OPTION);
+			JOptionPane.showMessageDialog(this, "Resto identificado correctamente.", "Identificación realizada",
+					JOptionPane.CLOSED_OPTION);
 		}
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
@@ -667,43 +671,43 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 			abrirInsertPer();
 		} else if (e.getSource().equals(mRestoHumano)) {
 			abrirInsertRH();
-		} 
+		}
 	}
-	
+
 	// Abrir ventanas de menú
 	private void abrirGes() {
-		VGestion vBus = new VGestion(padre,true,info);
+		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
 	private void abrirCom() {
-		VComparacion vCom = new VComparacion(padre,true,info);
+		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
 	private void abrirBus() {
-		VBusqueda vBus = new VBusqueda(padre,true,info);
+		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
 	private void abrirInsertRH() {
-		VInsRH vInsRH = new VInsRH(padre,true,info);
+		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
 	private void abrirInsertPer() {
-		VInsPersona vInsPer = new VInsPersona(padre,true,info);
+		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
-		vInsPer.setVisible(true);		
+		vInsPer.setVisible(true);
 	}
 
 	private void abrirInsertCaso() {
-		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
+		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
 		vInsCaso.setVisible(true);
-	}	
+	}
 }

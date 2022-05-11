@@ -146,6 +146,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	private JSeparator separatorBus;
 	private Map<String,Conocido> conocidos;
 	private int posicion = 0;
+	private JLabel imgErtzAO_1;
 	
 	public VBusPer(VIniciarSesion padre, boolean modal, String dni, String[] infos) {
 		// <--- Diseño de ventana --->
@@ -311,7 +312,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorDni);
 
 		textDni = new JTextField();
-		textDni.setEditable(false);
+		textDni.setEnabled(false);
 		textDni.setToolTipText("");
 		textDni.setColumns(10);
 		textDni.setBounds(26, 116, 187, 20);
@@ -330,7 +331,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorNom);
 
 		textNombre = new JTextField();
-		textNombre.setEditable(false);
+		textNombre.setEnabled(false);
 		textNombre.setToolTipText("");
 		textNombre.setColumns(10);
 		textNombre.setBounds(26, 174, 187, 20);
@@ -349,7 +350,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorApe);
 
 		textApellido = new JTextField();
-		textApellido.setEditable(false);
+		textApellido.setEnabled(false);
 		textApellido.setToolTipText("");
 		textApellido.setColumns(10);
 		textApellido.setBounds(26, 242, 187, 20);
@@ -368,7 +369,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorMovil);
 
 		textMovil = new JTextField();
-		textMovil.setEditable(false);
+		textMovil.setEnabled(false);
 		textMovil.setToolTipText("");
 		textMovil.setColumns(10);
 		textMovil.setBounds(26, 300, 187, 20);
@@ -387,7 +388,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorOpc);
 
 		textTelf = new JTextField();
-		textTelf.setEditable(false);
+		textTelf.setEnabled(false);
 		textTelf.setToolTipText("");
 		textTelf.setColumns(10);
 		textTelf.setBounds(26, 370, 187, 20);
@@ -406,7 +407,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorNac);
 
 		textNac = new JTextField();
-		textNac.setEditable(false);
+		textNac.setEnabled(false);
 		textNac.setToolTipText("");
 		textNac.setColumns(10);
 		textNac.setBounds(26, 497, 187, 20);
@@ -425,7 +426,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorFall);
 
 		textFall = new JTextField();
-		textFall.setEditable(false);
+		textFall.setEnabled(false);
 		textFall.setToolTipText("");
 		textFall.setColumns(10);
 		textFall.setBounds(26, 565, 187, 20);
@@ -446,7 +447,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(lblLoc);
 
 		textLoc = new JTextField();
-		textLoc.setEditable(false);
+		textLoc.setEnabled(false);
 		textLoc.setToolTipText("");
 		textLoc.setText((String) null);
 		textLoc.setColumns(10);
@@ -510,21 +511,21 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		panelDes.setVisible(false);
 
 		textFechaDes = new JTextField();
-		textFechaDes.setEditable(false);
+		textFechaDes.setEnabled(false);
 		textFechaDes.setBounds(21, 39, 187, 20);
 		panelDes.add(textFechaDes);
 		textFechaDes.setToolTipText("");
 		textFechaDes.setColumns(10);
 
 		textTP = new JTextField();
-		textTP.setEditable(false);
+		textTP.setEnabled(false);
 		textTP.setBounds(21, 223, 187, 20);
 		panelDes.add(textTP);
 		textTP.setToolTipText("");
 		textTP.setColumns(10);
 
 		textUltUbi = new JTextField();
-		textUltUbi.setEditable(false);
+		textUltUbi.setEnabled(false);
 		textUltUbi.setBounds(21, 97, 187, 20);
 		panelDes.add(textUltUbi);
 		textUltUbi.setToolTipText("");
@@ -579,14 +580,14 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorTP.setBackground(new Color(153, 0, 0));
 
 		textSexo = new JTextField();
-		textSexo.setEditable(false);
+		textSexo.setEnabled(false);
 		textSexo.setBounds(21, 165, 187, 20);
 		panelDes.add(textSexo);
 		textSexo.setToolTipText("");
 		textSexo.setColumns(10);
 
 		textCP = new JTextField();
-		textCP.setEditable(false);
+		textCP.setEnabled(false);
 		textCP.setBounds(21, 293, 187, 20);
 		panelDes.add(textCP);
 		textCP.setToolTipText("");
@@ -605,7 +606,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorCP.setBackground(new Color(153, 0, 0));
 
 		textCO = new JTextField();
-		textCO.setEditable(false);
+		textCO.setEnabled(false);
 		textCO.setBounds(21, 351, 187, 20);
 		panelDes.add(textCO);
 		textCO.setToolTipText("");
@@ -624,7 +625,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorCO.setBackground(new Color(153, 0, 0));
 
 		textAlt = new JTextField();
-		textAlt.setEditable(false);
+		textAlt.setEnabled(false);
 		textAlt.setBounds(21, 420, 187, 20);
 		panelDes.add(textAlt);
 		textAlt.setToolTipText("");
@@ -643,7 +644,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorAlt.setBackground(new Color(153, 0, 0));
 
 		textEsp = new JTextField();
-		textEsp.setEditable(false);
+		textEsp.setEnabled(false);
 		textEsp.setBounds(21, 488, 187, 20);
 		panelDes.add(textEsp);
 		textEsp.setToolTipText("");
@@ -682,7 +683,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorRango.setBackground(new Color(153, 0, 0));
 
 		textRango = new JTextField();
-		textRango.setEditable(false);
+		textRango.setEnabled(false);
 		textRango.setBounds(21, 42, 187, 20);
 		panelAgente.add(textRango);
 		textRango.setToolTipText("");
@@ -701,7 +702,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorIniServ.setBackground(new Color(153, 0, 0));
 
 		textIniServ = new JTextField();
-		textIniServ.setEditable(false);
+		textIniServ.setEnabled(false);
 		textIniServ.setBounds(21, 100, 187, 20);
 		panelAgente.add(textIniServ);
 		textIniServ.setToolTipText("");
@@ -720,7 +721,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorFinServ.setBackground(new Color(153, 0, 0));
 
 		textFinServ = new JTextField();
-		textFinServ.setEditable(false);
+		textFinServ.setEnabled(false);
 		textFinServ.setBounds(21, 168, 187, 20);
 		panelAgente.add(textFinServ);
 		textFinServ.setToolTipText("");
@@ -738,7 +739,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorBus.setBounds(10, 64, 478, 2);
 		contentDatos.add(separatorBus);
 		
-		lblBusPer = new JLabel("Busqueda de Persona");
+		lblBusPer = new JLabel("B\u00FAsqueda de Persona");
 		lblBusPer.setForeground(SystemColor.textInactiveText);
 		lblBusPer.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblBusPer.setBounds(10, 42, 160, 19);
@@ -908,7 +909,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 			textRel.setText(con.getRelacion());
 			contentConos.add(textRel);
 			
-			lblNomComp = new JLabel(con.getNomComp().toUpperCase());
+			lblNomComp = new JLabel(con.getNomComp());
 			lblNomComp.setBounds(18, 81 + posicion, 438, 14);
 			lblNomComp.setFont(new Font("Tahoma", Font.BOLD, 11));
 			lblNomComp.addMouseListener(new MouseAdapter() {
@@ -932,6 +933,11 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorLisCono.setForeground(new Color(102, 0, 0));
 		separatorLisCono.setBackground(new Color(153, 0, 0));
 		contentConos.add(separatorLisCono);
+		
+		imgErtzAO_1 = new JLabel("");
+		imgErtzAO_1.setIcon(new ImageIcon(VBusPer.class.getResource("/imagenes/ertzAC.png")));
+		imgErtzAO_1.setBounds(97, 178, 309, 317);
+		contentConos.add(imgErtzAO_1);
 
 	}
 
@@ -1040,7 +1046,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	}
 
 	private void abrirInsertRH() {
-		VInsRH vInsRH = new VInsRH(padre,true,info);
+		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
