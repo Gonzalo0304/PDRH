@@ -1,12 +1,9 @@
 package modelo;
 
-import java.util.Map;
-
 import controlador.interfaces.ContDatosRH;
-import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
-public class ContBDRH implements controlador.interfaces.ContDatosRH {
+public class ContBDRH implements ContDatosRH {
 
 	@Override
 	public void altaRH(RestoHumano rh) {
