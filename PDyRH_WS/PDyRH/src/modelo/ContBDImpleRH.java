@@ -144,6 +144,7 @@ public class ContBDImpleRH implements ContDatosRH {
 		ResultSet rs = null;
 		RestoHumano resto = null;
 		
+		this.openConnection();
 		try {
 			stmnt = con.prepareStatement(SELECTrh);
 			

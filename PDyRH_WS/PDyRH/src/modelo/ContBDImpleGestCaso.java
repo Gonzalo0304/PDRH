@@ -18,14 +18,14 @@ import modelo.clases.RestoHumano;
 public class ContBDImpleGestCaso implements ContDatosGestCaso {
 	
 	// <--- Sentencias --->
-	final String INSERTparticipa = "INSERT INTO participa(codCaso,dni,implicación) VALUES(?,?,?)";
-	final String SELECTparticipantes = "SELECT dni FROM participa WHERE codCaso = ?";
+	final String INSERTparticipa = "INSERT INTO participa(codCaso,dni,implicacion) VALUES(?,?,?)";
+	final String SELECTparticipantes = "SELECT * FROM participa WHERE codCaso = ?";
 	final String DELETEcaso = "DELETE FROM caso WHERE codCaso = ?";
 	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
-	final String INSERTinvolucrado = "UPDATE restoHumano SET codCaso = ? WHERE codResto = ?";
+	final String INSERTinvolucrado = "UPDATE restohumano SET codCaso = ? WHERE codResto = ?";
 	final String UPDATEcaso = "UPDATE caso SET estado = ?, nombre = ?, fechaIni = ?, fechaFin = ? WHERE codCaso = ?";
-	final String CALLbuscarRH = "{CALL buscarRh(?)}";
-	final String SELECTinvolucrados = "SELECT * FROM restoHumano WHERE codCaso = ?";
+	final String CALLbuscarRH = "{CALL buscarRH(?)}";
+	final String SELECTinvolucrados = "SELECT * FROM restohumano WHERE codCaso IS NOT NULL";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -72,8 +72,21 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 
 			stmnt.setString(1, caso.getEstado());
 			stmnt.setString(2, caso.getNombre());
+
 			stmnt.setDate(3, Date.valueOf(caso.getFechaFin()));
 			stmnt.setDate(4, Date.valueOf(caso.getFechaFin()));
+
+			if (caso.getFechaFin() != null) {
+				stmnt.setDate(3, Date.valueOf(caso.getFechaIni()));
+			} else {
+				stmnt.setDate(3, null);
+			}
+			if (caso.getFechaIni() != null) {
+				stmnt.setDate(4, Date.valueOf(caso.getFechaFin()));
+			} else {
+				stmnt.setDate(4, null);
+			}
+
 			stmnt.setString(5, caso.getCodCaso());
 
 			stmnt.executeUpdate();
@@ -109,9 +122,10 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			while (rs.next()) {
 				par = new Participante();
 				
-				par.setCodCaso(rs.getString("codCaso"));
+				par.setCodCaso(codCaso);
 				par.setDni(rs.getString("dni"));
 				par.setImplicacion(rs.getString("implicacion"));
+				participantes.put(par.getDni(), par);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -161,7 +175,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			stmnt = con.prepareStatement(INSERTparticipa);
 
 			stmnt.setString(1, par.getCodCaso());
-			stmnt.setString(2, par.getCodCaso());
+			stmnt.setString(2, par.getDni());
 			stmnt.setString(3, par.getImplicacion());
 
 			stmnt.executeUpdate();
@@ -224,6 +238,15 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
 		}
 		
 		return esta;
@@ -247,6 +270,15 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
 		}
 		return esta;
 	}
@@ -261,7 +293,6 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		
 		try {
 			stmnt = con.prepareStatement(SELECTinvolucrados);
-			stmnt.setString(1, codCaso);
 			
 			rs = stmnt.executeQuery();
 			
@@ -279,6 +310,11 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(codCaso);
 				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				resto.setCodCaso(rs.getString("codCaso"));
+				if (rs.getDate("fechaMuerte") != null) {
+					resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				}
+
 				
 				restos.put(resto.getCodResto(),resto);
 			}

@@ -1,341 +1,156 @@
 package vista;
 
+import java.awt.Color;
 import java.awt.Font;
-import modelo.*;
-import modelo.clases.*;
+import java.awt.Point;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.JRadioButton;
-import java.awt.CardLayout;
-import java.awt.event.ActionListener;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.ActionEvent;
-
-import controlador.interfaces.ContDatosBusq;
-import controlador.interfaces.ContDatosBusqCaso;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
-import java.util.TreeMap;
-import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import javax.swing.JSeparator;
+import javax.swing.border.LineBorder;
 
-public class VBusCaso extends JDialog {
-	private final JPanel contentPanel = new JPanel();
-	private JTextField textCodigo;
+import controlador.DataFactoryBusqCaso;
+import controlador.interfaces.ContDatosBusqCaso;
+import modelo.clases.RestoHumano;
+import modelo.clases.Caso;
+import modelo.clases.Participante;
+
+import javax.swing.ImageIcon;
+import javax.swing.JTabbedPane;
+
+public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListener {
+	private static final long serialVersionUID = 1L;
+
+	// <--- Datos BD --->
+	ContDatosBusqCaso datos = DataFactoryBusqCaso.getDatos();
+
+	// <--- Elementos --->
+	private static Point point = new Point();
+	private JTabbedPane tabbedPane;
+	private JPanel contentDatos;
+	private JLabel lblCerrar;
+	private JSeparator separator2;
+	private JSeparator separator2_1;
+	private JMenuBar menuBar;
+	private JMenuBar menuBar_1;
+	private JMenu menInsertar;
+	private JMenu menComparar;
+	private JMenu menGestionar;
+	private JMenu menBuscar;
+	private JMenu menUsuario;
+	private JMenuItem mCerrar;
+	private JMenuItem mPersona;
+	private JMenuItem mRestoHumano;
+	private JMenuItem mCaso;
+	private JLabel lblCod;
+	private JSeparator separatorCod;
+	private JTextField textCod;
+	private JLabel lblNombre;
+	private JSeparator separatorNom;
 	private JTextField textNombre;
-	private JTextField textFechaIni;
-	private JTextField textFechaFin;
-	private JTextField textDni1;
-	private JTextField textImplicacion1;
-	private JTextField textDni2;
-	private JTextField textImplicacion2;
-	private JTextField textCodigoRH;
-	private JRadioButton rdbtnAbierto;
-	private JRadioButton rdbtnCerrado;
-	private JRadioButton rdbtnSinResolver;
-	private ButtonGroup grupo = new ButtonGroup();
-	private JLabel lblNomAp1;
-	private JLabel lblNomAp2;
-	private Button buttonVolver1;
-	private Button buttonVolver2;
-	private JLabel imagen;
-	
-	private Participante part;
-	private Persona per;
-	private ContDatosBusqCaso datos2;
-	private Map<String,Participante> participantes;
-	private Map<String, RestoHumano> restos;
+	private JLabel lblEstado;
+	private JSeparator separatorEstado;
+	private JTextField textEstado;
+	private JLabel lblNac;
+	private JSeparator separatorNac;
+	private JTextField textNac;
+	private JLabel lblFall;
+	private JSeparator separatorFall;
+	private JTextField textFall;
+	private JLabel imgErtzAO;
+	private JPanel contentConos;
+	private JLabel lblCerrar_1;
+	private JSeparator separator2_6;
+	private JLabel lblImp;
+	private JSeparator separatorImp;
+	private JTextField textImp;
+	private JLabel lblLisInv;
+	private JSeparator separatorLisCono;
+	private String[] info;
+	private Caso caso;
+	private VIniciarSesion padre;
+	private JLabel lblNomComp;
+	private JLabel lblBusPer;
+	private JSeparator separatorBus;
+	private Map<String, Participante> participantes;
+	private Map<String, RestoHumano> involucrados;
+	private int posicion = 0;
+	private JLabel lblPer;
+	private JTextField textCodResto;
+	private JSeparator separatorPer;
+	private JSeparator separatorRes;
+	private JLabel lblRes;
+	private JLabel imgErtzAO_1;
 
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the dialog.
-	 * @param datos 
-	 * @param caso 
-	 * @param b 
-	 * @param vMain 
-	 * @param datos 
-	 * @param caso 
-	 * @param b 
-	 * @param vBusqueda 
-	 * @param b 
-	 * @param vBusqueda 
-	 */
-	public VBusCaso() {
-		setTitle("Buscar Caso");
-		setBounds(100, 100, 457, 456);
-		setBounds(100, 100, 457, 530);
-		getContentPane().setLayout(new CardLayout(0, 0));
-		setUndecorated(true);
-		
-		JLabel lblCerrar = new JLabel("x");
-		lblCerrar.setBackground(new Color(153, 0, 0));
-		lblCerrar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblCerrar.setForeground(new Color(0,51,102));
-				lblCerrar.setOpaque(true);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblCerrar.setForeground(Color.WHITE);
-				lblCerrar.setOpaque(false);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cerrar();
-			}
-		});
-		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblCerrar.setForeground(Color.WHITE);
-		lblCerrar.setBounds(644, 0, 31, 19);
-		contentPanel.add(lblCerrar);
-		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		getContentPane().add(tabbedPane, "name_7044780698600");
-		tabbedPane.addTab("Datos", null, contentPanel, null);
-		contentPanel.setLayout(null);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		JLabel lblNewLabel = new JLabel("Codigo");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(39, 53, 46, 14);
-		contentPanel.add(lblNewLabel);
-		
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEstado.setBounds(39, 94, 46, 14);
-		contentPanel.add(lblEstado);
-		
-		JLabel lblCodigo = new JLabel("Nombre");
-		lblCodigo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCodigo.setBounds(39, 123, 46, 14);
-		contentPanel.add(lblCodigo);
-		
-		JLabel lblCodigo_1 = new JLabel("Fecha Inicio");
-		lblCodigo_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCodigo_1.setBounds(29, 154, 68, 14);
-		contentPanel.add(lblCodigo_1);
-		
-		JLabel lblFechafin = new JLabel("Fecha Final");
-		lblFechafin.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFechafin.setBounds(29, 185, 66, 14);
-		contentPanel.add(lblFechafin);
-		
-		textCodigo = new JTextField();
-		textCodigo.setColumns(10);
-		textCodigo.setBounds(108, 51, 149, 20);
-		contentPanel.add(textCodigo);
-		
-		textNombre = new JTextField();
-		textNombre.setColumns(10);
-		textNombre.setBounds(108, 121, 149, 20);
-		contentPanel.add(textNombre);
-		
-		textFechaIni = new JTextField();
-		textFechaIni.setColumns(10);
-		textFechaIni.setBounds(108, 152, 149, 20);
-		contentPanel.add(textFechaIni);
-		
-		textFechaFin = new JTextField();
-		textFechaFin.setColumns(10);
-		textFechaFin.setBounds(108, 183, 149, 20);
-		contentPanel.add(textFechaFin);
-		
-		rdbtnAbierto = new JRadioButton("Abierto");
-		grupo.add(rdbtnAbierto);
-		rdbtnAbierto.setBounds(91, 91, 68, 23);
-		contentPanel.add(rdbtnAbierto);
-		
-		rdbtnCerrado = new JRadioButton("Cerrado");
-		grupo.add(rdbtnCerrado);
-		rdbtnCerrado.setBounds(161, 91, 81, 23);
-		contentPanel.add(rdbtnCerrado);
-		
-		rdbtnSinResolver = new JRadioButton("Sin resolver");
-		grupo.add(rdbtnSinResolver);
-		rdbtnSinResolver.setBounds(244, 91, 109, 23);
-		contentPanel.add(rdbtnSinResolver);
-		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Abierto");
-		rdbtnNewRadioButton.setBounds(91, 91, 68, 23);
-		contentPanel.add(rdbtnNewRadioButton);
-		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Cerrado");
-		rdbtnNewRadioButton_1.setBounds(161, 91, 68, 23);
-		contentPanel.add(rdbtnNewRadioButton_1);
-		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Sin resolver");
-		rdbtnNewRadioButton_2.setBounds(244, 91, 109, 23);
-		contentPanel.add(rdbtnNewRadioButton_2);
-		
-		buttonVolver1 = new Button("Volver");
-		buttonVolver1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				volver1();
-			}
-		});
-		buttonVolver1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonVolver1.setForeground(Color.WHITE);
-		buttonVolver1.setBackground(new Color(153, 0, 0));
-		buttonVolver1.setBounds(293, 260, 107, 31);
-		contentPanel.add(buttonVolver1);
-		
-		imagen = new JLabel("");
-		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
-		imagen.setHorizontalAlignment(SwingConstants.CENTER);
-		imagen.setBounds(0, 37, 452, 465);
-		contentPanel.add(imagen);
-
-		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Involucrados", null, panel_1, null);
-		panel_1.setLayout(null);
-		
-		lblNomAp1 = new JLabel("Nombre y Apellido");
-		lblNomAp1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNomAp1.setBounds(28, 32, 123, 17);
-		panel_1.add(lblNomAp1);
-
-		JLabel lblNewLabel_1 = new JLabel("Nombre y Apellido");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(28, 32, 123, 17);
-		panel_1.add(lblNewLabel_1);
-
-		
-		JLabel lblNewLabel_2 = new JLabel("DNI:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(97, 69, 33, 14);
-		panel_1.add(lblNewLabel_2);
-		
-
-		textDni1 = new JTextField();
-		textDni1.setBounds(140, 67, 174, 20);
-		panel_1.add(textDni1);
-		textDni1.setColumns(10);
-
-		
-		JLabel lblNewLabel_3 = new JLabel("Implicacion:");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_3.setBounds(55, 105, 77, 14);
-		panel_1.add(lblNewLabel_3);
-		
-
-		textImplicacion1 = new JTextField();
-		textImplicacion1.setBounds(140, 103, 174, 20);
-		panel_1.add(textImplicacion1);
-		textImplicacion1.setColumns(10);
-		
-		lblNomAp2 = new JLabel("Nombre y Apellido");
-		lblNomAp2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNomAp2.setBounds(28, 144, 123, 17);
-		panel_1.add(lblNomAp2);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Nombre y Apellido");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(28, 144, 123, 17);
-		panel_1.add(lblNewLabel_1_1);
-		
-		JLabel lblNewLabel_2_1 = new JLabel("DNI:");
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(97, 172, 33, 14);
-		panel_1.add(lblNewLabel_2_1);
-		
-		JLabel lblNewLabel_3_1 = new JLabel("Implicacion:");
-		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_3_1.setBounds(55, 207, 77, 14);
-		panel_1.add(lblNewLabel_3_1);
-		
-		textDni2 = new JTextField();
-		textDni2.setColumns(10);
-		textDni2.setBounds(140, 170, 174, 20);
-		panel_1.add(textDni2);
-		
-		textImplicacion2 = new JTextField();
-		textImplicacion2.setColumns(10);
-		textImplicacion2.setBounds(140, 205, 174, 20);
-		panel_1.add(textImplicacion2);
-		
-		JLabel lblNewLabel_6 = new JLabel("Resto Humano");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_6.setBounds(31, 261, 120, 14);
-		panel_1.add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_7 = new JLabel("Codigo");
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_7.setBounds(86, 286, 46, 14);
-		panel_1.add(lblNewLabel_7);
-		
-		textCodigoRH = new JTextField();
-		textCodigoRH.setColumns(10);
-		textCodigoRH.setBounds(140, 286, 174, 20);
-		panel_1.add(textCodigoRH);
-		
-		buttonVolver2 = new Button("Volver");
-		buttonVolver2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				volver2();
-			}
-		});
-		buttonVolver2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonVolver2.setForeground(Color.WHITE);
-		buttonVolver2.setBackground(new Color(153, 0, 0));
-		buttonVolver2.setBounds(291, 321, 107, 31);
-		panel_1.add(buttonVolver2);
-		
-		imagen = new JLabel("");
-		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
-		imagen.setHorizontalAlignment(SwingConstants.EAST);
-		imagen.setBounds(24, 37, 442, 454);
-		panel_1.add(imagen);
-	}
-	
-	public VBusCaso(VPrincipal vMain, boolean modal, Caso caso, ContDatosBusq datos) {
-		super(vMain);
+	public VBusCaso(VIniciarSesion padre, boolean modal, Caso cas, String[] infos) {
+		// <--- Diseño de ventana --->
+		super(padre);
 		this.setModal(modal);
-		
-		setTitle("Buscar Caso");
-		setBounds(100, 100, 457, 530);
-		getContentPane().setLayout(new CardLayout(0, 0));
-		
-		JLabel lblCerrar = new JLabel("x");
+		setBounds(350, 150, 506, 690);
+		setUndecorated(true);
+		setLocationRelativeTo(null);
+		getContentPane().setLayout(null);
+		info = infos;
+		this.padre = padre;
+		caso = cas;
+
+		// <--- Pestaña 1 --->
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(SystemColor.controlHighlight);
+		tabbedPane.setBounds(0, 0, 506, 690);
+		getContentPane().add(tabbedPane);
+
+		contentDatos = new JPanel();
+		contentDatos.setLayout(null);
+		contentDatos.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		contentDatos.setBackground(Color.WHITE);
+		tabbedPane.addTab("Datos", null, contentDatos, null);
+
+		// Movimiento de la ventana
+		contentDatos.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				point.x = e.getX();
+				point.y = e.getY();
+			}
+		});
+		contentDatos.addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = getLocation();
+				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
+			}
+		});
+
+		// Botón para cerrar la ventana
+		lblCerrar = new JLabel("x");
+		lblCerrar.setBounds(470, 2, 31, 19);
 		lblCerrar.setBackground(new Color(153, 0, 0));
 		lblCerrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblCerrar.setForeground(new Color(0,51,102));
+				lblCerrar.setForeground(new Color(0, 51, 102));
 				lblCerrar.setOpaque(true);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblCerrar.setForeground(Color.WHITE);
 				lblCerrar.setOpaque(false);
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				cerrar();
@@ -344,275 +159,535 @@ public class VBusCaso extends JDialog {
 		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblCerrar.setForeground(Color.WHITE);
-		lblCerrar.setBounds(644, 0, 31, 19);
-		contentPanel.add(lblCerrar);
-		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		getContentPane().add(tabbedPane, "name_7044780698600");
-		tabbedPane.addTab("Datos", null, contentPanel, null);
-		contentPanel.setLayout(null);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		JLabel lblNewLabel = new JLabel("Codigo");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(39, 53, 46, 14);
-		contentPanel.add(lblNewLabel);
-		
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEstado.setBounds(39, 94, 46, 14);
-		contentPanel.add(lblEstado);
-		
-		JLabel lblCodigo = new JLabel("Nombre");
-		lblCodigo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCodigo.setBounds(39, 123, 46, 14);
-		contentPanel.add(lblCodigo);
-		
-		JLabel lblCodigo_1 = new JLabel("Fecha Inicio");
-		lblCodigo_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCodigo_1.setBounds(29, 154, 68, 14);
-		contentPanel.add(lblCodigo_1);
-		
-		JLabel lblFechafin = new JLabel("Fecha Final");
-		lblFechafin.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFechafin.setBounds(29, 185, 66, 14);
-		contentPanel.add(lblFechafin);
-		
-		textCodigo = new JTextField();
-		textCodigo.setColumns(10);
-		textCodigo.setBounds(108, 51, 149, 20);
-		contentPanel.add(textCodigo);
-		
+		contentDatos.add(lblCerrar);
+
+		// Menú superior
+		separator2 = new JSeparator();
+		separator2.setForeground(SystemColor.controlShadow);
+		separator2.setBackground(new Color(0, 51, 102));
+		separator2.setBounds(0, 36, 502, 2);
+		contentDatos.add(separator2);
+
+		menuBar = new JMenuBar();
+		menuBar.setBounds(0, 1, 502, 37);
+		menuBar.setBorderPainted(false);
+		menuBar.setBackground(new Color(0, 51, 102));
+		contentDatos.add(menuBar);
+
+		menUsuario = new JMenu(" " + info[0] + " ");
+		menuBar.add(menUsuario);
+		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		menUsuario.setBackground(new Color(0, 0, 255));
+		menUsuario.setForeground(new Color(255, 255, 255));
+
+		mCerrar = new JMenuItem("Cerrar Sesion");
+		mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
+		mCerrar.setBackground(new Color(32, 178, 170));
+		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mCerrar.setForeground(Color.BLACK);
+		mCerrar.addActionListener(this);
+		menUsuario.add(mCerrar);
+
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar.add(menInsertar);
+
+		mPersona = new JMenuItem("Persona");
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
+
+		mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
+
+		mCaso = new JMenuItem("Caso");
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
+
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
+			}
+		});
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
+
+		menComparar = new JMenu("Comparar");
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar.add(menBuscar);
+
+		lblCod = new JLabel("C\u00D3DIGO");
+		lblCod.setForeground(new Color(0, 51, 102));
+		lblCod.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblCod.setBounds(151, 106, 81, 28);
+		contentDatos.add(lblCod);
+
+		// Campos de información de persona
+		separatorCod = new JSeparator();
+		separatorCod.setForeground(SystemColor.controlShadow);
+		separatorCod.setBackground(new Color(0, 51, 102));
+		separatorCod.setBounds(151, 132, 106, 2);
+		contentDatos.add(separatorCod);
+
+		textCod = new JTextField();
+		textCod.setEditable(false);
+		textCod.setToolTipText("");
+		textCod.setColumns(10);
+		textCod.setBounds(151, 145, 187, 20);
+		contentDatos.add(textCod);
+
+		lblNombre = new JLabel("NOMBRE");
+		lblNombre.setForeground(new Color(0, 51, 102));
+		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNombre.setBounds(151, 205, 81, 28);
+		contentDatos.add(lblNombre);
+
+		separatorNom = new JSeparator();
+		separatorNom.setForeground(SystemColor.controlShadow);
+		separatorNom.setBackground(new Color(0, 51, 102));
+		separatorNom.setBounds(151, 231, 106, 2);
+		contentDatos.add(separatorNom);
+
 		textNombre = new JTextField();
+		textNombre.setEditable(false);
+		textNombre.setToolTipText("");
 		textNombre.setColumns(10);
-		textNombre.setBounds(108, 121, 149, 20);
-		contentPanel.add(textNombre);
+		textNombre.setBounds(151, 244, 187, 20);
+		contentDatos.add(textNombre);
+
+		lblEstado = new JLabel("ESTADO");
+		lblEstado.setForeground(new Color(0, 51, 102));
+		lblEstado.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblEstado.setBounds(151, 308, 81, 28);
+		contentDatos.add(lblEstado);
+
+		separatorEstado = new JSeparator();
+		separatorEstado.setForeground(SystemColor.controlShadow);
+		separatorEstado.setBackground(new Color(0, 51, 102));
+		separatorEstado.setBounds(151, 334, 106, 2);
+		contentDatos.add(separatorEstado);
+
+		textEstado = new JTextField();
+		textEstado.setEditable(false);
+		textEstado.setToolTipText("");
+		textEstado.setColumns(10);
+		textEstado.setBounds(151, 347, 187, 20);
+		contentDatos.add(textEstado);
+
+		lblNac = new JLabel("INICIO");
+		lblNac.setForeground(new Color(0, 51, 102));
+		lblNac.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNac.setBounds(151, 420, 81, 28);
+		contentDatos.add(lblNac);
+
+		separatorNac = new JSeparator();
+		separatorNac.setForeground(SystemColor.controlShadow);
+		separatorNac.setBackground(new Color(0, 51, 102));
+		separatorNac.setBounds(151, 446, 106, 2);
+		contentDatos.add(separatorNac);
+
+		textNac = new JTextField();
+		textNac.setEditable(false);
+		textNac.setToolTipText("");
+		textNac.setColumns(10);
+		textNac.setBounds(151, 459, 187, 20);
+		contentDatos.add(textNac);
+
+		lblFall = new JLabel("FIN");
+		lblFall.setForeground(new Color(0, 51, 102));
+		lblFall.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblFall.setBounds(151, 536, 106, 28);
+		contentDatos.add(lblFall);
+
+		separatorFall = new JSeparator();
+		separatorFall.setForeground(SystemColor.controlShadow);
+		separatorFall.setBackground(new Color(0, 51, 102));
+		separatorFall.setBounds(151, 562, 106, 2);
+		contentDatos.add(separatorFall);
+
+		textFall = new JTextField();
+		textFall.setEditable(false);
+		textFall.setToolTipText("");
+		textFall.setColumns(10);
+		textFall.setBounds(151, 575, 187, 20);
+		contentDatos.add(textFall);
+
+		// Fondo
+		imgErtzAO = new JLabel("");
+		imgErtzAO.setIcon(new ImageIcon(VGesPersona.class.getResource("/imagenes/ertzAC.png")));
+		imgErtzAO.setBounds(89, 206, 309, 317);
+		contentDatos.add(imgErtzAO);
+
+		separatorBus = new JSeparator();
+		separatorBus.setForeground(new Color(102, 0, 0));
+		separatorBus.setBackground(new Color(153, 0, 0));
+		separatorBus.setBounds(10, 64, 478, 2);
+		contentDatos.add(separatorBus);
 		
-		textFechaIni = new JTextField();
-		textFechaIni.setColumns(10);
-		textFechaIni.setBounds(108, 152, 149, 20);
-		contentPanel.add(textFechaIni);
-		
-		textFechaFin = new JTextField();
-		textFechaFin.setColumns(10);
-		textFechaFin.setBounds(108, 183, 149, 20);
-		contentPanel.add(textFechaFin);
-		
-		rdbtnAbierto = new JRadioButton("Abierto");
-		grupo.add(rdbtnAbierto);
-		rdbtnAbierto.setBounds(91, 91, 68, 23);
-		contentPanel.add(rdbtnAbierto);
-		
-		rdbtnCerrado = new JRadioButton("Cerrado");
-		grupo.add(rdbtnCerrado);
-		rdbtnCerrado.setBounds(161, 91, 68, 23);
-		contentPanel.add(rdbtnCerrado);
-		
-		rdbtnSinResolver = new JRadioButton("Sin resolver");
-		grupo.add(rdbtnSinResolver);
-		rdbtnSinResolver.setBounds(244, 91, 109, 23);
-		contentPanel.add(rdbtnSinResolver);
-		
-		buttonVolver1 = new Button("Volver");
-		buttonVolver1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				volver1();
+		lblBusPer = new JLabel("B\u00FAsqueda de Caso");
+		lblBusPer.setForeground(SystemColor.textInactiveText);
+		lblBusPer.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+		lblBusPer.setBounds(10, 42, 160, 19);
+		contentDatos.add(lblBusPer);
+
+		cargarDatos(caso);
+
+		// <--- Pestaña 2 --->
+		contentConos = new JPanel();
+		contentConos.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		contentConos.setBackground(Color.WHITE);
+		tabbedPane.addTab("Involucrados", null, contentConos, null);
+
+		// Movimiento de la ventana
+		contentConos.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				point.x = e.getX();
+				point.y = e.getY();
 			}
 		});
-		buttonVolver1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonVolver1.setForeground(Color.WHITE);
-		buttonVolver1.setBackground(new Color(153, 0, 0));
-		buttonVolver1.setBounds(293, 260, 107, 31);
-		contentPanel.add(buttonVolver1);
-		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Involucrados", null, panel_1, null);
-		panel_1.setLayout(null);
-		
-		lblNomAp1 = new JLabel("Nombre y Apellido");
-		lblNomAp1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNomAp1.setBounds(28, 32, 123, 17);
-		panel_1.add(lblNomAp1);
-		
-		JLabel lblNewLabel_2 = new JLabel("DNI:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(97, 69, 33, 14);
-		panel_1.add(lblNewLabel_2);
-		
-		textDni1 = new JTextField();
-		textDni1.setBounds(140, 67, 174, 20);
-		panel_1.add(textDni1);
-		textDni1.setColumns(10);
-		
-		JLabel lblNewLabel_3 = new JLabel("Implicacion:");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_3.setBounds(55, 105, 77, 14);
-		panel_1.add(lblNewLabel_3);
-		
-		textImplicacion1 = new JTextField();
-		textImplicacion1.setBounds(140, 103, 174, 20);
-		panel_1.add(textImplicacion1);
-		textImplicacion1.setColumns(10);
-		
-		lblNomAp2 = new JLabel("Nombre y Apellido");
-		lblNomAp2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNomAp2.setBounds(28, 144, 123, 17);
-		panel_1.add(lblNomAp2);
-		
-		JLabel lblNewLabel_2_1 = new JLabel("DNI:");
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(97, 172, 33, 14);
-		panel_1.add(lblNewLabel_2_1);
-		
-		JLabel lblNewLabel_3_1 = new JLabel("Implicacion:");
-		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_3_1.setBounds(55, 207, 77, 14);
-		panel_1.add(lblNewLabel_3_1);
-		
-		textDni2 = new JTextField();
-		textDni2.setColumns(10);
-		textDni2.setBounds(140, 170, 174, 20);
-		panel_1.add(textDni2);
-		
-		textImplicacion2 = new JTextField();
-		textImplicacion2.setColumns(10);
-		textImplicacion2.setBounds(140, 205, 174, 20);
-		panel_1.add(textImplicacion2);
-		
-		JLabel lblNewLabel_4 = new JLabel("Banda");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_4.setBounds(55, 258, 46, 14);
-		panel_1.add(lblNewLabel_4);
-		
-		JLabel lblNewLabel_5 = new JLabel("Codigo:");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5.setBounds(84, 291, 46, 14);
-		panel_1.add(lblNewLabel_5);
-		
-		
-		JLabel lblNewLabel_6 = new JLabel("Resto Humano");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_6.setBounds(28, 343, 120, 14);
-		panel_1.add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_7 = new JLabel("Codigo");
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_7.setBounds(84, 385, 46, 14);
-		panel_1.add(lblNewLabel_7);
-		
-		textCodigoRH = new JTextField();
-		textCodigoRH.setColumns(10);
-		textCodigoRH.setBounds(140, 383, 174, 20);
-		panel_1.add(textCodigoRH);
-		
-		buttonVolver2 = new Button("Volver");
-		buttonVolver2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				volver2();
+		contentConos.addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = getLocation();
+				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
 			}
 		});
-		buttonVolver2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonVolver2.setForeground(Color.WHITE);
-		buttonVolver2.setBackground(new Color(153, 0, 0));
-		buttonVolver2.setBounds(293, 260, 107, 31);
-		panel_1.add(buttonVolver2);
+
+		// Botón para cerrar la ventana
+		lblCerrar_1 = new JLabel("x");
+		lblCerrar_1.setBounds(470, 2, 31, 19);
+		lblCerrar_1.setBackground(new Color(153, 0, 0));
+		lblCerrar_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCerrar_1.setForeground(new Color(0, 51, 102));
+				lblCerrar_1.setOpaque(true);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCerrar_1.setForeground(Color.WHITE);
+				lblCerrar_1.setOpaque(false);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		contentConos.setLayout(null);
+		lblCerrar_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar_1.setForeground(Color.WHITE);
+		contentConos.add(lblCerrar_1);
+
+		// Menú superior
+		separator2_6 = new JSeparator();
+		separator2_6.setBounds(0, 36, 502, 2);
+		separator2_6.setForeground(SystemColor.controlShadow);
+		separator2_6.setBackground(new Color(0, 51, 102));
+		contentConos.add(separator2_6);
+
+		separator2_1 = new JSeparator();
+		separator2_1.setBounds(0, 36, 502, 2);
+		separator2_1.setForeground(SystemColor.controlShadow);
+		separator2_1.setBackground(new Color(0, 51, 102));
+		contentConos.add(separator2_1);
+
+		menuBar_1 = new JMenuBar();
+		menuBar_1.setBounds(0, 1, 502, 37);
+		menuBar_1.setBorderPainted(false);
+		menuBar_1.setBackground(new Color(0, 51, 102));
+		contentConos.add(menuBar_1);
+
+		menUsuario = new JMenu(" " + info[0] + " ");
+		menuBar_1.add(menUsuario);
+		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		menUsuario.setBackground(new Color(0, 0, 255));
+		menUsuario.setForeground(new Color(255, 255, 255));
+
+		mCerrar = new JMenuItem("Cerrar Sesion");
+		mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
+		mCerrar.setBackground(new Color(32, 178, 170));
+		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mCerrar.setForeground(Color.BLACK);
+		mCerrar.addActionListener(this);
+		menUsuario.add(mCerrar);
+
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar_1.add(menInsertar);
+
+		mPersona = new JMenuItem("Persona");
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
+
+		mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
+
+		mCaso = new JMenuItem("Caso");
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
+
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
+			}
+		});
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar_1.add(menGestionar);
+
+		menComparar = new JMenu("Comparar");
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar_1.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar_1.add(menBuscar);
 		
-		imagen = new JLabel("");
-		imagen.setIcon(new ImageIcon("C:\\Users\\1dam\\Desktop\\Reto Final\\PGR\\Multimedia\\ertzAC.png"));
-		imagen.setHorizontalAlignment(SwingConstants.EAST);
-		imagen.setBounds(0, 37, 607, 362);
-		contentPanel.add(imagen);
-		
-		imagen = new JLabel("");
-		imagen.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
-		imagen.setHorizontalAlignment(SwingConstants.EAST);
-		imagen.setBounds(0, 37, 607, 362);
-		panel_1.add(imagen);
-		
-		//Datos de caso
-		if (caso != null) {
-			textCodigo.setText(caso.getCodCaso());
-			//Estado de los casos
-			estados(caso);
-			textNombre.setText(caso.getNombre());
-			DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			String fechaIni = caso.getFechaIni().format(formateador);
-			textFechaIni.setText(fechaIni);
-			String fechaFin = caso.getFechaFin().format(formateador);
-			textFechaFin.setText(fechaFin);
-		}
-		
-		datosInvolucrados(part, caso, datos2);
-		nombreCompleto(per, datos2, caso, part);
-	}
-	
-	private void datosInvolucrados(Participante part, Caso caso, ContDatosBusqCaso datos2) {
-		// TODO Auto-generated method stub
-		part = new Participante();
-		caso = new Caso();
-		restos = new TreeMap<>();
-		restos = datos2.listarInvolucrados(caso.getCodCaso());		
-		
-		if(part!=null) {
-			textDni1.setText(part.getDni());
-			textImplicacion1.setText(part.getImplicacion());
-			textDni2.setText(part.getDni());
-			textImplicacion2.setText(part.getImplicacion());
-			for (RestoHumano restH : restos.values()) {
-				if(restH.getCodCaso().equalsIgnoreCase(caso.getCodCaso())) {
-					textCodigoRH.setText(restH.getCodResto());
+		// Mostrar Involucrados
+		participantes = listarParticipantes(caso.getCodCaso());
+		for (Participante par : participantes.values()) {
+			if (posicion == 0) {
+				lblPer = new JLabel("PERSONAS");
+				lblPer.setForeground(new Color(0, 51, 102));
+				lblPer.setFont(new Font("Tahoma", Font.BOLD, 11));
+				lblPer.setBounds(20, 77, 71, 14);
+				contentConos.add(lblPer);
+				
+				separatorPer = new JSeparator();
+				separatorPer.setBounds(21, 92, 106, 2);
+				separatorPer.setForeground(SystemColor.controlShadow);
+				separatorPer.setBackground(new Color(0, 51, 102));
+				contentConos.add(separatorPer);
+			}
+			lblImp = new JLabel("IMPLICACI\u00D3N");
+			lblImp.setBounds(25, 104 + posicion, 81, 28);
+			lblImp.setForeground(new Color(153, 0, 0));
+			lblImp.setFont(new Font("Tahoma", Font.BOLD, 10));
+			contentConos.add(lblImp);
+			
+			separatorImp = new JSeparator();
+			separatorImp.setBounds(25, 128 + posicion, 106, 2);
+			separatorImp.setForeground(SystemColor.controlShadow);
+			separatorImp.setBackground(new Color(153, 0, 0));
+			contentConos.add(separatorImp);
+			
+			textImp = new JTextField();
+			textImp.setEditable(false);
+			textImp.setBounds(25, 138 + posicion, 187, 20);
+			textImp.setColumns(10);
+			textImp.setText(par.getImplicacion());
+			contentConos.add(textImp);
+			
+			lblNomComp = new JLabel(par.getNomComp());
+			lblNomComp.setBounds(23, 99 + posicion, 438, 14);
+			lblNomComp.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblNomComp.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					abrirBusPer(par.getDni());
 				}
+			});
+			contentConos.add(lblNomComp);
+			
+			posicion = posicion + 76;
+		}
+		involucrados = listarInvolucrados(caso.getCodCaso());
+		int pos = posicion;
+		for (RestoHumano res : involucrados.values()) {
+			if (posicion == pos) {
+				lblRes = new JLabel("RESTOS");
+				lblRes.setForeground(new Color(0, 51, 102));
+				lblRes.setFont(new Font("Tahoma", Font.BOLD, 11));
+				lblRes.setBounds(20, posicion + 94, 71, 14);
+				contentConos.add(lblRes);
+				
+				separatorRes = new JSeparator();
+				separatorRes.setBounds(21, 108 + posicion, 106, 2);
+				separatorRes.setForeground(SystemColor.controlShadow);
+				separatorRes.setBackground(new Color(0, 51, 102));
+				contentConos.add(separatorRes);
 			}
+			textCodResto = new JTextField(res.getCodResto());
+			textCodResto.setBounds(23, 115 + posicion, 187, 20);
+			textCodResto.setEditable(false);
+			textCodResto.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					abrirBusRH(res.getCodResto());
+				}
+			});
+			contentConos.add(textCodResto);
+			
+			posicion = posicion + 30;
 		}
-	}
-	
-	private void volver1() {
-		// TODO Auto-generated method stub
-		this.dispose();
-	}
-	
-	private void volver2() {
-		// TODO Auto-generated method stub
-		this.dispose();
-	}
-
-	private void nombreCompleto(Persona per, ContDatosBusqCaso datos2,Caso caso, Participante part) {
-		// TODO Auto-generated method stub
-		per = new Persona();
-		caso = new Caso();
-		part = new Participante();
-		participantes = new TreeMap<>();
-		participantes = datos2.listarParticipantes(caso.getCodCaso());
 		
-		for(Participante parti : participantes.values()) {
-			if (parti.getDni().equalsIgnoreCase(per.getDni())) {
-				lblNomAp1.setText(per.getNombre()+" y "+per.getApellido());
-				lblNomAp2.setText(per.getNombre()+" y "+per.getApellido());
-			}
+		lblLisInv = new JLabel("Lista Involucrados");
+		lblLisInv.setBounds(10, 42, 142, 19);
+		lblLisInv.setForeground(SystemColor.textInactiveText);
+		lblLisInv.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+		contentConos.add(lblLisInv);
+
+		separatorLisCono = new JSeparator();
+		separatorLisCono.setBounds(10, 64, 464, 2);
+		separatorLisCono.setForeground(new Color(102, 0, 0));
+		separatorLisCono.setBackground(new Color(153, 0, 0));
+		contentConos.add(separatorLisCono);
+		
+		imgErtzAO_1 = new JLabel("");
+		imgErtzAO_1.setIcon(new ImageIcon(VBusCaso.class.getResource("/imagenes/ertzAC.png")));
+		imgErtzAO_1.setBounds(96, 210, 309, 317);
+		contentConos.add(imgErtzAO_1);
+	}
+
+	// Cargar la información
+	private void cargarDatos(Caso cas) {
+		textCod.setText(cas.getCodCaso());
+		textNombre.setText(cas.getNombre());
+		textEstado.setText(cas.getEstado());
+		if (cas.getFechaIni() != null) {
+			textNac.setText(cas.getFechaIni().toString());
+		}
+		if (cas.getFechaFin() != null) {
+			textFall.setText(cas.getFechaFin().toString());
 		}
 	}
 
-	private void estados(Caso caso) {
-		// TODO Auto-generated method stub
-		String abierto = "abierto";
-		String cerrado = "cerrado";
-		String sinRe = "sin resolver";
-		
-		if(caso.getEstado().equalsIgnoreCase(abierto)) {
-			rdbtnAbierto.setEnabled(false);
-			rdbtnAbierto.setSelected(true);
-		}else if(caso.getEstado().equalsIgnoreCase(cerrado)) {
-			rdbtnCerrado.setEnabled(false);
-			rdbtnCerrado.setSelected(true);
-		}else if(caso.getEstado().equalsIgnoreCase(sinRe)){
-			rdbtnSinResolver.setEnabled(false);
-			rdbtnSinResolver.setSelected(true);
-		}
+	public void cerrar() {
+		VBusqueda vBus = new VBusqueda(padre, true, info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(mCerrar)) {
+			this.dispose();
+			padre.setVisible(true);
+		} else if (e.getSource().equals(mCaso)) {
+			abrirInsertCaso();
+		} else if (e.getSource().equals(mPersona)) {
+			abrirInsertPer();
+		} else if (e.getSource().equals(mRestoHumano)) {
+			abrirInsertRH();
+		} 
 	}
 	
-	protected void cerrar() {
-		// TODO Auto-generated method stub
+	// Abrir ventanas de menú
+	private void abrirGes() {
+		VGestion vBus = new VGestion(padre,true,info);
 		this.dispose();
+		vBus.setVisible(true);
 	}
 
+	private void abrirCom() {
+		VComparacion vCom = new VComparacion(padre,true,info);
+		this.dispose();
+		vCom.setVisible(true);
+	}
+
+	private void abrirBus() {
+		VBusqueda vBus = new VBusqueda(padre,true,info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirInsertRH() {
+		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
+		this.dispose();
+		vInsRH.setVisible(true);
+	}
+
+	private void abrirInsertPer() {
+		VInsPersona vInsPer = new VInsPersona(padre,true,info);
+		this.dispose();
+		vInsPer.setVisible(true);		
+	}
+
+	private void abrirInsertCaso() {
+		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
+		this.dispose();
+		vInsCaso.setVisible(true);
+	}	
+	
+	private void abrirBusPer(String dni) {
+		VBusPer vBusPer = new VBusPer(padre, true, dni, info);
+		this.dispose();
+		vBusPer.setVisible(true);
+	}
+	
+	private void abrirBusRH(String codigo) {
+		VBusRH vBusRH = new VBusRH(padre, true, codigo, info);
+		this.dispose();
+		vBusRH.setVisible(true);
+	}
+
+	@Override
+	public Map<String, Participante> listarParticipantes(String codCaso) {
+		return datos.listarParticipantes(codCaso);
+	}
+
+	@Override
+	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
+		return datos.listarInvolucrados(codCaso);
+	}
 }

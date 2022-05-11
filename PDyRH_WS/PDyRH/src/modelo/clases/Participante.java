@@ -2,6 +2,7 @@ package modelo.clases;
 
 public class Participante {
 	// <--- Atributos --->
+	private String nomComp;
 	private String dni;
 	private String implicacion;
 	private String codCaso;
@@ -11,15 +12,24 @@ public class Participante {
 		super();
 	}
 
-	public Participante(String dni, String codCaso, String implicacion) {
+	public Participante(String nomComp, String dni, String codCaso, String implicacion) {
 
 		super();
+		this.nomComp = nomComp;
 		this.dni = dni;
 		this.codCaso = codCaso;
 		this.implicacion = implicacion;
 		this.codCaso = codCaso;
 	}
-
+	
+	public String getNomComp() {
+		return nomComp;
+	}
+	
+	public void setNomComp(String nomComp) {
+		this.nomComp = nomComp;
+	}
+	
 	public String getDni() {
 		return dni;
 	}

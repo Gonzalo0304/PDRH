@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import controlador.interfaces.ContDatosGestPer;
+import excepciones.Excepciones;
 import modelo.clases.Agente;
 import modelo.clases.Conocido;
 import modelo.clases.Criminal;
@@ -23,13 +24,13 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	final String CALLcompPer = "{CALL comprobarPer(?)}";
 	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
 	final String UPDATEper = "UPDATE persona SET nombre = ?,apellido = ?,telf1 = ?,localidad = ?,fechaNac = ?,fechaFal = ?,telf2 = ? WHERE dni = ?";
-	final String DELETEper = "DELETE persona WHERE dni = ?";
+	final String DELETEper = "DELETE FROM persona WHERE dni = ?";
 	final String UPDATEage = "UPDATE agente SET rango = ?,inicioServ = ?,finServ = ? WHERE dni = ?";
 	final String UPDATEcrim = "UPDATE criminal SET prisionero = ? WHERE dni = ?";
 	final String INSERTfechaAr = "INSERT INTO fechaarresto(dni,fechaArresto) VALUES(?,?)";
-	final String UPDATEdes = "UPDATE criminal SET fechaDes = ?,ultimaUbi = ?,genero = ?,tipoPelo = ?,colorPerlo = ?,colorOjos = ?,altura = ?,especificaciones = ? WHERE dni = ?";
+	final String UPDATEdes = "UPDATE desaparecida SET fechaDes = ?,ultimaUbi = ?,genero = ?,tipoPelo = ?,colorPelo = ?,colorOjos = ?,altura = ?,especificaciones = ? WHERE dni = ?";
 	final String INSERTconoce = "INSERT INTO conoce(dniP1,dniP2,relacion) VALUES(?,?,?)";
-	final String SELECTconoce = "SELECT * FROM persona WHERE dni IN(SELECT dniP2 FROM conoce WHERE dniP1 = ?)";
+	final String SELECTconoce = "SELECT * FROM conoce WHERE dniP1 = ?";
 	final String SELECTfechas = "SELECT fechaArresto FROM fechaarresto WHERE dni = ?";
 	
 	// <--- Conexión --->
@@ -77,8 +78,16 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				stmnt = con.prepareStatement(UPDATEage);
 
 				stmnt.setInt(1, ((Agente) per).getRango());
-				stmnt.setDate(2, Date.valueOf(((Agente) per).getInicioServ()));
-				stmnt.setDate(3, Date.valueOf(((Agente) per).getFinServ()));
+				if (((Agente) per).getInicioServ() != null) {
+					stmnt.setDate(2, Date.valueOf(((Agente) per).getInicioServ()));
+				}else {
+					stmnt.setDate(2, null);
+				}
+				if (((Agente) per).getFinServ() != null) {
+					stmnt.setDate(3, Date.valueOf(((Agente) per).getFinServ()));
+				} else {
+					stmnt.setDate(3, null);
+				}
 				stmnt.setString(4, per.getDni());
 				
 				stmnt.executeUpdate();
@@ -92,14 +101,19 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			} else if (per instanceof Desaparecida) {
 				stmnt = con.prepareStatement(UPDATEdes);
 
-				stmnt.setDate(1, Date.valueOf(((Desaparecida) per).getFechaDes()));
+				if (((Desaparecida) per).getFechaDes() != null) {
+					stmnt.setDate(1, Date.valueOf(((Desaparecida) per).getFechaDes()));
+				} else {
+					stmnt.setDate(1, null);
+				}
 				stmnt.setString(2, ((Desaparecida) per).getUltimaUbi());
 				stmnt.setString(3, ((Desaparecida) per).getGenero());
 				stmnt.setString(4, ((Desaparecida) per).getTipoPelo());
 				stmnt.setString(5, ((Desaparecida) per).getColorPelo());
-				stmnt.setFloat(6, ((Desaparecida) per).getAltura());
-				stmnt.setString(7, ((Desaparecida) per).getEspecificaciones());
-				stmnt.setString(8, per.getDni());
+				stmnt.setString(6, ((Desaparecida) per).getColorOjos());
+				stmnt.setFloat(7, ((Desaparecida) per).getAltura());
+				stmnt.setString(8, ((Desaparecida) per).getEspecificaciones());
+				stmnt.setString(9, per.getDni());
 				
 				stmnt.executeUpdate();
 			}
@@ -110,8 +124,16 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			stmnt.setString(2, per.getApellido());
 			stmnt.setInt(3, per.getTelefonos()[0]);
 			stmnt.setString(4, per.getLocalidad());
-			stmnt.setDate(5, Date.valueOf(per.getFechaNac()));
-			stmnt.setDate(6, Date.valueOf(per.getFechaFal()));
+			if (per.getFechaNac() != null) {
+				stmnt.setDate(5, Date.valueOf(per.getFechaNac()));
+			} else {
+				stmnt.setDate(5, null);
+			}
+			if (per.getFechaFal() != null) {
+				stmnt.setDate(6, Date.valueOf(per.getFechaFal()));
+			} else {
+				stmnt.setDate(6, null);
+			}
 			stmnt.setInt(7, per.getTelefonos()[1]);
 			stmnt.setString(8, per.getDni());
 
@@ -152,7 +174,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				cono.setDni1(rs.getString("dniP1"));
 				cono.setDni2(rs.getString("dniP2"));
 				cono.setRelacion(rs.getString("relacion"));
-				conocidos.put(dni1, cono);
+				conocidos.put(cono.getDni2(), cono);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -170,7 +192,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
-	public void agregarFechaArresto(String dni, LocalDate fecha) {
+	public void agregarFechaArresto(String dni, LocalDate fecha) throws Excepciones {
 		this.openConnection();
 
 		try {
@@ -182,7 +204,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			if (con != null) {
 				try {
 					con.rollback();
@@ -190,6 +211,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 					e.printStackTrace();
 				}
 			}
+			String msg = "Esta fecha ya había sido introducida.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}
@@ -211,23 +235,26 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 
 			if (rs.next()) {
 				tipo = rs.getString("tipo");
-				if (tipo.equalsIgnoreCase("agente")) {
+				switch (tipo) {
+				case "agente":
 					per = new Agente();
 					((Agente) per).setRango(rs.getInt("rango"));
-					((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
-					((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
-				} else if (tipo.equalsIgnoreCase("criminal")) {
+					if (rs.getDate("inicioServ") != null) {
+						((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
+					}
+					if (rs.getDate("finServ") != null) {
+						((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
+					}
+					break;
+				case "criminal":
 					per = new Criminal();
 					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));
-					
-					PreparedStatement stmnt2 = con.prepareStatement(SELECTfechas);
-					stmnt2.setString(1, dni);
-					while (rs.next()) {
-						((Criminal) per).getFechasArresto().add(rs.getDate("fechaArresto").toLocalDate());
-					}
-				} else if (tipo.equalsIgnoreCase("desaparecida")) {
+					break;
+				case "desaparecida":
 					per = new Desaparecida();
-					((Desaparecida) per).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+					if (rs.getDate("fechaDes") != null) {
+						((Desaparecida) per).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+					}
 					((Desaparecida) per).setUltimaUbi(rs.getString("ultimaUbi"));
 					((Desaparecida) per).setGenero(rs.getString("genero"));
 					((Desaparecida) per).setTipoPelo(rs.getString("tipoPelo"));
@@ -235,8 +262,11 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 					((Desaparecida) per).setColorOjos(rs.getString("colorOjos"));
 					((Desaparecida) per).setAltura(rs.getInt("altura"));
 					((Desaparecida) per).setEspecificaciones(rs.getString("especificaciones"));
-				} else {
+					break;
+
+				default:
 					per = new Persona();
+					break;
 				}
 				int[] telfs = { rs.getInt("telf1"), rs.getInt("telf2") };
 
@@ -244,8 +274,13 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				per.setNombre(rs.getString("nombre"));
 				per.setApellido(rs.getString("apellido"));
 				per.setTelefonos(telfs);
-				per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-				per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
+				if (rs.getDate("fechaNac") != null) {
+					per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+				}
+				if (rs.getDate("fechaFal") != null) {
+					per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
+				}
+				per.setLocalidad(rs.getString("localidad"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -305,6 +340,15 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.closeConnection();
 		}
 		
 		return esta;
@@ -319,6 +363,14 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 
 			stmnt.setString(1, cono.getDni1());
 			stmnt.setString(2, cono.getDni2());
+			stmnt.setString(3, cono.getRelacion());
+
+			stmnt.executeUpdate();
+			con.commit();
+			stmnt = con.prepareStatement(INSERTconoce);
+
+			stmnt.setString(1, cono.getDni2());
+			stmnt.setString(2, cono.getDni1());
 			stmnt.setString(3, cono.getRelacion());
 
 			stmnt.executeUpdate();
