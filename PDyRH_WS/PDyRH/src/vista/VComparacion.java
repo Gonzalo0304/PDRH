@@ -5,10 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-<<<<<<< HEAD
-=======
-import javax.swing.border.EmptyBorder;
->>>>>>> 87029f207c365c8dc61429e9ab8c290c71b8847a
 import javax.swing.border.LineBorder;
 
 import controlador.DataFactoryComp;
@@ -86,18 +82,9 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		super(padre);
 		this.setModal(modal);
 		setTitle("Comparar");
-
-		setBounds(100, 100, 409, 322);
-		getContentPane().setLayout(new BorderLayout());
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPane, BorderLayout.CENTER);
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(null);
-
 		setBounds(100, 100, 607, 399);
 		contentPane.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
-
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true); 
@@ -146,7 +133,6 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		lblCerrar.setForeground(Color.WHITE);
 		lblCerrar.setBounds(573, 2, 31, 19);
 		contentPane.add(lblCerrar);
-
 		
 		// Menú superior y título
 		separator1 = new JSeparator();
@@ -154,10 +140,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		separator1.setBackground(new Color(153, 0, 0));
 		separator1.setBounds(24, 82, 559, 2);
 		contentPane.add(separator1);
-
-		JS.setBounds(0, 0, 434, 261);
-		getContentPane().add(JS);
-
+		
 		lblComparacinPdyrh = new JLabel("Comparaci\u00F3n PDyRH");
 		lblComparacinPdyrh.setForeground(SystemColor.textInactiveText);
 		lblComparacinPdyrh.setFont(new Font("Nirmala UI", Font.BOLD, 14));
@@ -310,7 +293,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 				panel1.setBounds(93, 99, 402, 210);
 				contentPane.add(panel1);
 				panel1.setLayout(null);
-
+				
 				lblND = new JLabel("NO HAY COINCIDENCIAS");
 				lblND.setForeground(Color.WHITE);
 				lblND.setBackground(Color.WHITE);
@@ -343,6 +326,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 			panel.setBounds(104, 111, 402, 210);
 			contentPane.add(panel);
 		}
+		
 		// Fondo
 		lblImgErtzAC = new JLabel("");
 		lblImgErtzAC.setIcon(new ImageIcon(VComparacion.class.getResource("/imagenes/ertzAC.png")));
@@ -459,10 +443,6 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 			this.dispose();
 			vInsCaso.setVisible(true);
 		}
-		
-		private void cer() {
-			this.dispose();
-		}
 	
 	@Override
 	public Map<String, RestoHumano> obtenerRHs() {
@@ -478,5 +458,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	public String obtenerIdentificado(String codResto) {
 		return null;
 	}
-	
+	public void cer() {
+		this.dispose();
+	}
 }

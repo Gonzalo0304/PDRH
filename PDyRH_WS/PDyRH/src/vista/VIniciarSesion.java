@@ -238,7 +238,6 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		if (e.getSource().equals(buttonIS)) {
 			verificar();
 		}
-		
 	}
 	
 	// Cerrar la ventana

@@ -10,8 +10,8 @@ public class Excepciones extends Exception {
 
 	public Excepciones(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 	
-}
+	
 
+}

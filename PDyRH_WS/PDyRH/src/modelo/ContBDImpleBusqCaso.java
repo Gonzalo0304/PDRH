@@ -129,11 +129,7 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(codCaso);
-				if(resto.getFechaMuerte()!=null) {
-					resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
-				}else {
-					resto.setFechaMuerte(null);
-				}
+				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
 				
 				restos.put(resto.getCodResto(),resto);
 			}

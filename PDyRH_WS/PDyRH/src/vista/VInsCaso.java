@@ -487,4 +487,3 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		
 	}
 }
-
