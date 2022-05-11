@@ -72,6 +72,9 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 
 			stmnt.setString(1, caso.getEstado());
 			stmnt.setString(2, caso.getNombre());
+
+			stmnt.setDate(3, Date.valueOf(caso.getFechaFin()));
+			stmnt.setDate(4, Date.valueOf(caso.getFechaFin()));
 			if (caso.getFechaFin() != null) {
 				stmnt.setDate(3, Date.valueOf(caso.getFechaIni()));
 			} else {
@@ -303,6 +306,8 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				resto.setColorOjos(rs.getString("colorOjos"));
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
+				resto.setCodCaso(codCaso);
+				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
 				resto.setCodCaso(rs.getString("codCaso"));
 				if (rs.getDate("fechaMuerte") != null) {
 					resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());

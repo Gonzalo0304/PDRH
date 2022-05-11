@@ -239,7 +239,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				case "agente":
 					per = new Agente();
 					((Agente) per).setRango(rs.getInt("rango"));
-
 					if (rs.getDate("inicioServ") != null) {
 						((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
 					}

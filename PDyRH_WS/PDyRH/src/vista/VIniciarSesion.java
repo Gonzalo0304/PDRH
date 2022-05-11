@@ -276,7 +276,7 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		txtUsuario.setText("");
 		passwordField.setText("");
 	}
-
+	
 	@Override
 	public String[] comprobarCredenciales(String usuario) {
 		String[] info = new String[3];

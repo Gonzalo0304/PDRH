@@ -129,7 +129,6 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 					if (rs.getDate("finServ") != null) {
 						((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
 					}
-
 				} else if (tipo.equalsIgnoreCase("criminal")) {
 					per = new Criminal();
 					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));
@@ -162,7 +161,8 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				per.setDni(dni);
 				per.setNombre(rs.getString("nombre"));
 				per.setApellido(rs.getString("apellido"));
-				per.setTelefonos(telfs);		if (rs.getDate("fechaNac") != null) {
+				per.setTelefonos(telfs);
+				if (rs.getDate("fechaNac") != null) {
 					per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
 				}
 				if (rs.getDate("fechaFal") != null) {

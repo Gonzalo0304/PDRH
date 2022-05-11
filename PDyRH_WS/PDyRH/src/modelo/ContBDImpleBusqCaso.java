@@ -15,7 +15,8 @@ import modelo.clases.RestoHumano;
 
 public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	// <--- Sentencias --->
-	final String SELECTparticipantes = "SELECT dni,implicacion FROM participa WHERE codCaso = ?";
+	final String SELECTparticipantes = "SELECT * FROM participa WHERE codCaso = ?";
+	final String SELECTnomCom = "SELECT nombre,apellido FROM persona WHERE dni = ?";
 	final String SELECTrestos = "SELECT * FROM restohumano WHERE codCaso = ?";
 	
 	// <--- Conexión --->
@@ -56,6 +57,8 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	@Override
 	public Map<String, Participante> listarParticipantes(String codCaso) {
 		ResultSet rs = null;
+		ResultSet rs2 = null;
+		PreparedStatement stmnt2;
 		Participante par = null;
 		Map<String, Participante> participantes =  new TreeMap<>();
 		
@@ -73,6 +76,14 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 				par.setCodCaso(codCaso);
 				par.setDni(rs.getString("dni"));
 				par.setImplicacion(rs.getString("implicacion"));
+				
+				stmnt2 = con.prepareStatement(SELECTnomCom);
+				stmnt2.setString(1, par.getDni());
+				
+				rs2 = stmnt2.executeQuery();
+				if (rs2.next()) {
+					par.setNomComp(rs2.getString("nombre") + " " + rs2.getString("apellido"));
+				}
 				
 				participantes.put(par.getDni(), par);
 			}

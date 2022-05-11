@@ -92,7 +92,6 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 
 				stmnt.setString(1, per.getDni());
 				stmnt.setInt(2, ((Agente) per).getRango());
-
 				if(((Agente) per).getInicioServ() != null) {
 					stmnt.setDate(3, Date.valueOf(((Agente) per).getInicioServ()));
 				}else {
