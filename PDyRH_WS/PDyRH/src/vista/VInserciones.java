@@ -2,32 +2,28 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Point;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-
-import controlador.interfaces.ContDatosBusq;
-
+import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
 import java.awt.Button;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.SystemColor;
 
-public class VInserciones extends JDialog {
+public class VInserciones extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -37,43 +33,171 @@ public class VInserciones extends JDialog {
 	private Button btnRestoHumano;
 	private Button btnCaso;
 	private JMenuBar menuBar;
-	private JMenu menuInsertar;
 	private String[] info;
-	private JMenuItem mnitInsPer;
-	private JMenuItem mnitInsRH;
-	private JMenuItem mnitInsCaso;
-	private JMenu menuGestionar;
-	private JMenu menuComparar;
-	private JMenu menuBusqueda;
+	private JMenu menInsertar;
+	private JMenu menComparar;
+	private JMenu menGestionar;
+	private JMenu menBuscar;
 	private JMenu menUsuario;
 	private JMenuItem mCerrar;
-	private JLabel lblNewLabel;
-	
-	private ContDatosBusq datos;
-	
+	private JMenuItem mPersona;
+	private JMenuItem mRestoHumano;
+	private JMenuItem mCaso;
+	private JLabel imgErtzAO;
+	private JLabel lblBus;
+	private JSeparator separator1;
+	private static Point point = new Point();
+	private JLabel lblCerrar;
 
 	public VInserciones(VIniciarSesion padre, boolean modal, String[] infos) {
+		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
-		this.padre = padre;
-		info = infos;
-
-		setTitle("Insertar");
+		setTitle("Gestionar");
 		setBounds(100, 100, 607, 399);
+		contentPanel.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(255, 255, 255));
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setUndecorated(true);
 		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
-		setUndecorated(true);
+		info = infos;
+		this.padre = padre;
+		
+		// Movimiento de la ventana
+		addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				point.x = e.getX();
+				point.y = e.getY();
+			}
+		});
+		addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = getLocation();
+				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
+			}
+		});
+
+		// Botón para cerrar la ventana
+		lblCerrar = new JLabel("x");
+		lblCerrar.setBackground(new Color(153, 0, 0));
+		lblCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCerrar.setForeground(Color.BLACK);
+				lblCerrar.setOpaque(true);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCerrar.setForeground(Color.WHITE);
+				lblCerrar.setOpaque(false);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar.setForeground(Color.WHITE);
+		lblCerrar.setBounds(573, 2, 31, 19);
+		contentPanel.add(lblCerrar);
+		
+		// Menú superior y título
+		separator = new JSeparator();
+		separator.setBackground(Color.DARK_GRAY);
+		separator.setBounds(2, 47, 603, 2);
+		contentPanel.add(separator);
+
+		menuBar = new JMenuBar();
+		menuBar.setBorderPainted(false);
+		menuBar.setBackground(new Color(0, 51, 102));
+		menuBar.setBounds(2, 2, 603, 45);
+		contentPanel.add(menuBar);
+
+		menUsuario = new JMenu(" " + info[0] + " ");
+		menUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
+		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		menUsuario.setForeground(Color.WHITE);
+		menuBar.add(menUsuario);
+
+		mCerrar = new JMenuItem("Cerrar Sesión");
+		mCerrar.setHorizontalTextPosition(SwingConstants.CENTER);
+		mCerrar.addActionListener(this);
+		mCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		mCerrar.setBackground(new Color(32, 178, 170));
+		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mCerrar.setForeground(Color.BLACK);
+		menUsuario.add(mCerrar);
+
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar.add(menInsertar);
+
+		mPersona = new JMenuItem("Persona");
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
+
+		mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
+
+		mCaso = new JMenuItem("Caso");
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
+
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
+			}
+		});
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
+
+		menComparar = new JMenu("Comparar");
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar.add(menBuscar);
 
 		separator = new JSeparator();
 		separator.setBounds(93, 227, 27, -47);
 		separator.setOrientation(SwingConstants.VERTICAL);
 		contentPanel.add(separator);
 
-		btnPersona = new Button("Persona");
+		btnPersona = new Button("PERSONA");
 		btnPersona.setBackground(new Color(153, 0, 0));
 		btnPersona.setForeground(Color.WHITE);
 		btnPersona.addActionListener(new ActionListener() {
@@ -81,11 +205,11 @@ public class VInserciones extends JDialog {
 				insertarPersona();
 			}
 		});
-		btnPersona.setBounds(93, 140, 168, 67);
-		btnPersona.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnPersona.setBounds(93, 153, 168, 42);
+		btnPersona.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPanel.add(btnPersona);
 
-		btnRestoHumano = new Button("Resto Humano");
+		btnRestoHumano = new Button("RESTO HUMANO");
 		btnRestoHumano.setBackground(new Color(153, 0, 0));
 		btnRestoHumano.setForeground(Color.WHITE);
 		btnRestoHumano.addActionListener(new ActionListener() {
@@ -93,11 +217,11 @@ public class VInserciones extends JDialog {
 				insertarRestoHumano();
 			}
 		});
-		btnRestoHumano.setBounds(340, 140, 168, 67);
-		btnRestoHumano.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnRestoHumano.setBounds(340, 153, 168, 42);
+		btnRestoHumano.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPanel.add(btnRestoHumano);
 
-		btnCaso = new Button("Caso");
+		btnCaso = new Button("CASO");
 		btnCaso.setBackground(new Color(153, 0, 0));
 		btnCaso.setForeground(Color.WHITE);
 		btnCaso.addActionListener(new ActionListener() {
@@ -105,162 +229,102 @@ public class VInserciones extends JDialog {
 				insertarCaso();
 			}
 		});
-		btnCaso.setBounds(221, 239, 168, 67);
-		btnCaso.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnCaso.setBounds(221, 252, 168, 42);
+		btnCaso.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPanel.add(btnCaso);
-
-		JLabel lblNewLabel_9 = new JLabel("x");
-		lblNewLabel_9.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				volver();
-			}
-		});
-		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_9.setForeground(Color.WHITE);
-		lblNewLabel_9.setBackground(new Color(0, 51, 153));
-		lblNewLabel_9.setBounds(561, 0, 46, 37);
-		contentPanel.add(lblNewLabel_9);
-
-		menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 607, 37);
-		menuBar.setBorderPainted(false);
-		menuBar.setBackground(new Color(0, 51, 102));
-		contentPanel.add(menuBar);
-
-		menuInsertar = new JMenu("Insertar");
-		menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuInsertar.setBackground(new Color(0, 0, 255));
-		menuInsertar.setForeground(new Color(255, 255, 255));
-		menuBar.add(menuInsertar);
-
-		mnitInsPer = new JMenuItem("Persona");
-		mnitInsPer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				insertarPersona();
-			}
-		});
-		menuInsertar.add(mnitInsPer);
-
-		mnitInsRH = new JMenuItem("Resto Humano");
-		mnitInsRH.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				insertarRestoHumano();
-			}
-		});
-		menuInsertar.add(mnitInsRH);
-
-		mnitInsCaso = new JMenuItem("Caso");
-		mnitInsCaso.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				insertarCaso();
-			}
-		});
-		menuInsertar.add(mnitInsCaso);
-
-		menuGestionar = new JMenu("Gestionar");
-		menuGestionar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				gestionar();
-			}
-		});
-		menuGestionar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuGestionar.setBackground(new Color(0, 0, 255));
-		menuGestionar.setForeground(new Color(255, 255, 255));
-		menuBar.add(menuGestionar);
-
-		menuComparar = new JMenu("Comparar");
-		menuComparar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				comparar();
-			}
-		});
-
-		menuComparar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuComparar.setBackground(new Color(0, 51, 102));
-		menuComparar.setForeground(new Color(255, 255, 255));
-		menuBar.add(menuComparar);
-
-		menuBusqueda = new JMenu("Busqueda");
-		menuBusqueda.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				buscar();
-			}
-		});
-		menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
-		menuBusqueda.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menuBusqueda.setBackground(new Color(0, 0, 255));
-		menuBusqueda.setForeground(new Color(255, 255, 255));
-		menuBar.add(menuBusqueda);
-
-		menUsuario = new JMenu("Usuario");
-		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
-		menUsuario.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menUsuario.setBackground(new Color(0, 0, 255));
-		menUsuario.setForeground(new Color(255, 255, 255));
-		menuBar.add(menUsuario);
-
-		mCerrar = new JMenuItem("Cerrar Sesion");
-		mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
-		mCerrar.setBackground(new Color(32, 178, 170));
-		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mCerrar.setForeground(Color.BLACK);
-		menUsuario.add(mCerrar);
-
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\1dam\\Desktop\\Reto Final\\PGR\\Multimedia\\ertzAC.png"));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(0, 37, 607, 362);
-		contentPanel.add(lblNewLabel);
+		
+		imgErtzAO = new JLabel("");
+		imgErtzAO.setIcon(new ImageIcon(VInserciones.class.getResource("/imagenes/ertzAC.png")));
+		imgErtzAO.setBounds(155, 85, 309, 303);
+		contentPanel.add(imgErtzAO);
+		
+		lblBus = new JLabel("Men\u00FA de Inserci\u00F3n");
+		lblBus.setForeground(SystemColor.textInactiveText);
+		lblBus.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+		lblBus.setBounds(24, 60, 132, 19);
+		contentPanel.add(lblBus);
+		
+		separator1 = new JSeparator();
+		separator1.setForeground(new Color(102, 0, 0));
+		separator1.setBackground(new Color(153, 0, 0));
+		separator1.setBounds(24, 82, 561, 2);
+		contentPanel.add(separator1);
 	}
 
-	private void volver() {
+	private void cerrar() {
 		VPrincipal principal = new VPrincipal(padre, true, info);
 		this.dispose();
 		principal.setVisible(true);
 	}
-	
+
 	private void insertarCaso() {
-		VInsCaso caso = new VInsCaso(padre, true);
+		VInsCaso caso = new VInsCaso(padre, true, info);
 		this.dispose();
 		caso.setVisible(true);
-		
+
 	}
-	
+
 	private void insertarRestoHumano() {
-		VInsRH restoHumano = new VInsRH(padre, true);
+		VInsRH restoHumano = new VInsRH(padre, true, null, info,false);
 		this.dispose();
 		restoHumano.setVisible(true);
-		
+
 	}
-	
+
 	private void insertarPersona() {
-		VInsPersona persona = new VInsPersona(padre, true);
+		VInsPersona persona = new VInsPersona(padre, true, info);
 		this.dispose();
 		persona.setVisible(true);
 	}
-	
-	private void gestionar() {
-		VGestion gestion = new VGestion(padre, true, info[0]);
-		this.dispose();
-		gestion.setVisible(true);
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(mCerrar)) {
+			this.dispose();
+			padre.setVisible(true);
+		} else if (e.getSource().equals(mCaso)) {
+			abrirInsertCaso();
+		} else if (e.getSource().equals(mPersona)) {
+			abrirInsertPer();
+		} else if (e.getSource().equals(mRestoHumano)) {
+			abrirInsertRH();
+		} 
 	}
 	
-	private void comparar() {
-		VComparacion comparacion = new VComparacion(padre, true, info[0]);
+	// Abrir ventanas de menú
+	private void abrirGes() {
+		VGestion vBus = new VGestion(padre,true,info);
 		this.dispose();
-		comparacion.setVisible(true);
+		vBus.setVisible(true);
 	}
 
-	private void buscar() {
-		VBusqueda busqueda = new VBusqueda(padre, true, datos, info[0]);
+	private void abrirCom() {
+		VComparacion vCom = new VComparacion(padre,true,info);
 		this.dispose();
-		busqueda.setVisible(true);
+		vCom.setVisible(true);
+	}
+
+	private void abrirBus() {
+		VBusqueda vBus = new VBusqueda(padre,true,info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirInsertRH() {
+		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
+		this.dispose();
+		vInsRH.setVisible(true);
+	}
+
+	private void abrirInsertPer() {
+		VInsPersona vInsPer = new VInsPersona(padre,true,info);
+		this.dispose();
+		vInsPer.setVisible(true);		
+	}
+
+	private void abrirInsertCaso() {
+		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
+		this.dispose();
+		vInsCaso.setVisible(true);
 	}
 }

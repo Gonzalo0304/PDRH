@@ -68,13 +68,14 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	private JLabel lblImgErtzAC;
 	private JLabel lblComparacinPdyrh;
 	private JSeparator separator1;
-	private String info;
+	private String[] info;
+	private VIniciarSesion padre;
 	
 	// <--- Datos BD --->
 	ContDatosComp datos = DataFactoryComp.getDatos();
 
-	// <--- Ejecución --->
-	public VComparacion(VIniciarSesion padre, boolean modal, String infos) {
+	public VComparacion(VIniciarSesion padre, boolean modal, String[] infos) {
+		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
 		setTitle("Comparar");
@@ -83,10 +84,11 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
-		setUndecorated(true); // Sin borde predeterminado
+		setUndecorated(true); 
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		info = infos;
+		this.padre = padre;
 
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
@@ -123,7 +125,13 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 				cerrar();
 			}
 		});
+		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar.setForeground(Color.WHITE);
+		lblCerrar.setBounds(573, 2, 31, 19);
+		contentPane.add(lblCerrar);
 		
+		// Menú superior y título
 		separator1 = new JSeparator();
 		separator1.setForeground(new Color(102, 0, 0));
 		separator1.setBackground(new Color(153, 0, 0));
@@ -135,11 +143,6 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		lblComparacinPdyrh.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblComparacinPdyrh.setBounds(24, 60, 151, 19);
 		contentPane.add(lblComparacinPdyrh);
-		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblCerrar.setForeground(Color.WHITE);
-		lblCerrar.setBounds(573, 2, 31, 19);
-		contentPane.add(lblCerrar);
 		
 		separator = new JSeparator();
 		separator.setBackground(Color.DARK_GRAY);
@@ -152,7 +155,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		menuBar.setBounds(2, 2, 603, 45);
 		contentPane.add(menuBar);
 
-		menUsuario = new JMenu(" " + info + " ");
+		menUsuario = new JMenu(" " + info[0] + " ");
 		menUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
@@ -200,7 +203,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 			for (RestoHumano r : restos.values()) {
 				for (Persona d : desaparecidas.values()) {
 					porcentaje = calcularPor(r, d);
-					if (porcentaje > 60) {
+					if (porcentaje > 54.99) {
 						comp = new Comparacion();
 						comp.setCodResto(r.getCodResto());
 						comp.setDni(d.getDni());
@@ -237,10 +240,13 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 						String codigo = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
 
 						VComRH vComp = new VComRH(padre, true, dni, codigo, info);
+						cer();
 						vComp.setVisible(true);
 					}
 				});
 			} else {
+
+				// No hay restos y desaparecidos que coincidan lo suficiente
 				panel1 = new JPanel();
 				panel1.setBackground(new Color(153, 0, 0));
 				panel1.setBounds(93, 99, 402, 210);
@@ -260,6 +266,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 				contentPane.add(panel);
 			}
 		} else {
+			// No hay datos en la BD
 			panel1 = new JPanel();
 			panel1.setBackground(new Color(153, 0, 0));
 			panel1.setBounds(93, 99, 402, 210);
@@ -278,18 +285,21 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 			panel.setBounds(104, 111, 402, 210);
 			contentPane.add(panel);
 		}
-		
+		// Fondo
 		lblImgErtzAC = new JLabel("");
-		lblImgErtzAC.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
-		lblImgErtzAC.setBounds(151, 83, 318, 290);
+		lblImgErtzAC.setIcon(new ImageIcon(VComparacion.class.getResource("/imagenes/ertzAC.png")));
+		lblImgErtzAC.setBounds(144, 82, 318, 290);
 		contentPane.add(lblImgErtzAC);
 	}
 
 	// <--- Métodos --->
 	private void cerrar() {
+		VPrincipal vMain = new VPrincipal(padre,true,info);
 		this.dispose();
+		vMain.setVisible(true);
 	}
-
+	
+	// Calcular porcentaje entre resto humano y persona desaparecida
 	private float calcularPor(RestoHumano rh, Persona des) {
 		// <--- Variables --->
 		float xAltura;
@@ -344,7 +354,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			cerrar();
+			this.dispose();
+			padre.setVisible(true);
 		}
 	}
 
@@ -361,5 +372,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	@Override
 	public String obtenerIdentificado(String codResto) {
 		return null;
+	}
+	public void cer() {
+		this.dispose();
 	}
 }

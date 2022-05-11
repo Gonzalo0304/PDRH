@@ -19,8 +19,9 @@ import modelo.clases.Persona;
 public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	// <--- Sentencias --->
 	final String CALLcompPer = "{CALL comprobarPer(?)}";
-	final String SELECTconoce = "SELECT * FROM persona WHERE dni IN(SELECT dniP2 FROM conoce WHERE dniP1 = ?)";
+	final String SELECTconoce = "SELECT * FROM conoce WHERE dniP1 = ?";
 	final String SELECTfechas = "SELECT fechaArresto FROM fechaarresto WHERE dni = ?";
+	final String SELECTnomComp = "SELECT nombre,apellido FROM persona WHERE dni = ?";
 	
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
@@ -60,6 +61,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	@Override
 	public Map<String, Conocido> listarConocidos(String dni1) {
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 		Conocido cono;
 		Map<String, Conocido> conocidos = new TreeMap<>();
 
@@ -77,7 +79,14 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				cono.setDni1(rs.getString("dniP1"));
 				cono.setDni2(rs.getString("dniP2"));
 				cono.setRelacion(rs.getString("relacion"));
-				conocidos.put(dni1, cono);
+				PreparedStatement stmnt2 = con.prepareStatement(SELECTnomComp);
+				stmnt2.setString(1, cono.getDni2());
+				rs2 = stmnt2.executeQuery();
+				if (rs2.next()) {
+					cono.setNomComp(rs2.getString("nombre") + " " + rs2.getString("apellido"));
+				}
+				rs2.close();
+				conocidos.put(cono.getDni2(), cono);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,6 +106,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	@Override
 	public Persona obtenerPersona(String dni) {
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 		Persona per = null;
 		String tipo = null;
 		
@@ -112,25 +122,13 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				tipo = rs.getString("tipo");
 				if (tipo.equalsIgnoreCase("agente")) {
 					per = new Agente();
-
 					((Agente) per).setRango(rs.getInt("rango"));
-					
-					if(((Agente) per).getInicioServ()!=null) {
+					if (rs.getDate("inicioServ") != null) {
 						((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
-					}else {
-						((Agente) per).setInicioServ(null);
 					}
-					
-					if(((Agente) per).getFinServ()!=null) {
+					if (rs.getDate("finServ") != null) {
 						((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
-					}else {
-						((Agente) per).setFinServ(null);
 					}
-					
-
-					((Agente) per).setRango(rs.getInt("rango"));
-					((Agente) per).setInicioServ(rs.getDate("inicioServ").toLocalDate());
-					((Agente) per).setFinServ(rs.getDate("finServ").toLocalDate());
 
 				} else if (tipo.equalsIgnoreCase("criminal")) {
 					per = new Criminal();
@@ -138,18 +136,17 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 					
 					PreparedStatement stmnt2 = con.prepareStatement(SELECTfechas);
 					stmnt2.setString(1, dni);
-					while (rs.next()) {
-						((Criminal) per).getFechasArresto().add(rs.getDate("fechaArresto").toLocalDate());
+					rs2 = stmnt2.executeQuery();
+					while (rs2.next()) {
+						((Criminal) per).getFechasArresto().add(rs2.getDate("fechaArresto").toLocalDate());
 					}
+					
+					rs2.close();
 				} else if (tipo.equalsIgnoreCase("desaparecida")) {
 					per = new Desaparecida();
-					
-					if(((Desaparecida) per).getFechaDes()!=null) {
+					if (rs.getDate("fechaDes") != null) {
 						((Desaparecida) per).setFechaDes(rs.getDate("fechaDes").toLocalDate());
-					}else {
-						((Desaparecida) per).setFechaDes(null);
 					}
-					
 					((Desaparecida) per).setUltimaUbi(rs.getString("ultimaUbi"));
 					((Desaparecida) per).setGenero(rs.getString("genero"));
 					((Desaparecida) per).setTipoPelo(rs.getString("tipoPelo"));
@@ -165,20 +162,12 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				per.setDni(dni);
 				per.setNombre(rs.getString("nombre"));
 				per.setApellido(rs.getString("apellido"));
-				per.setTelefonos(telfs);
-				
-				if(per.getFechaNac()!=null) {
+				per.setTelefonos(telfs);		if (rs.getDate("fechaNac") != null) {
 					per.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-				}else {
-					per.setFechaNac(null);
 				}
-				
-				if(per.getFechaFal()!=null) {
+				if (rs.getDate("fechaFal") != null) {
 					per.setFechaFal(rs.getDate("fechaFal").toLocalDate());
-				}else {
-					per.setFechaFal(null);
 				}
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

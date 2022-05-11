@@ -2,6 +2,7 @@ package modelo.clases;
 
 public class Conocido {
 	// <--- Atributos --->
+	private String nomComp;
 	private String dni1;
 	private String dni2;
 	private String relacion;
@@ -11,8 +12,9 @@ public class Conocido {
 		super();
 	}
 
-	public Conocido(String dni1, String dni2, String relacion) {
+	public Conocido(String nomComp, String dni1, String dni2, String relacion) {
 		super();
+		this.nomComp = nomComp;
 		this.dni1 = dni1;
 		this.dni2 = dni2;
 		this.relacion = relacion;
@@ -20,6 +22,12 @@ public class Conocido {
 
 	
 	// <--- Getters y Setters --->
+	public String getNomComp() {
+		return nomComp;
+	}
+	public void setNomComp(String nomComp) {
+		this.nomComp = nomComp;
+	}
 	public String getDni1() {
 		return dni1;
 	}

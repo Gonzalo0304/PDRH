@@ -1,12 +1,10 @@
 package vista;
 
 import java.awt.Font;
-import modelo.*;
 import modelo.clases.*;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -43,6 +41,7 @@ import java.util.TreeMap;
 import java.awt.event.ActionEvent;
 
 public class VBusCaso extends JDialog implements ContDatosBusqCaso{
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textCodigo;
 	private JTextField textNombre;
@@ -62,6 +61,8 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 	private Button buttonVolver1;
 	private Button buttonVolver2;
 	private JLabel imagen;
+	private JLabel lblCerrar;
+	private JTabbedPane tabbedPane;
 	
 	private Participante part;
 	private Caso caso;
@@ -71,7 +72,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 	
 	ContDatosBusqCaso datos2 = DataFactoryBusqCaso.getDatos();
 	
-	public VBusCaso(VIniciarSesion vInicio, boolean modal, String codCaso, ContDatosBusq datos) {
+	public VBusCaso(VIniciarSesion vInicio, boolean modal, Caso caso2, String[] info) {
 		super(vInicio);
 		this.setModal(modal);
 		
@@ -80,7 +81,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 		getContentPane().setLayout(new CardLayout(0, 0));
 		setUndecorated(true);
 		
-		JLabel lblCerrar = new JLabel("x");
+		lblCerrar = new JLabel("x");
 		lblCerrar.setBackground(new Color(153, 0, 0));
 		lblCerrar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -104,7 +105,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 		lblCerrar.setBounds(644, 0, 31, 19);
 		contentPanel.add(lblCerrar);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, "name_7044780698600");
 		tabbedPane.addTab("Datos", null, contentPanel, null);
 		contentPanel.setLayout(null);
@@ -299,15 +300,15 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 			textFechaFin.setText(fechaFin);
 		}
 		
-		datosInvolucrados(part, codCaso);
-		nombreCompleto(per,codCaso, part);
+		datosInvolucrados(part);
+		nombreCompleto(per, part);
 	}
 	
-	private void datosInvolucrados(Participante part, String codCaso) {
+	private void datosInvolucrados(Participante part) {
 		// TODO Auto-generated method stub
 		part = new Participante();
 		restos = new TreeMap<>();
-		restos = listarInvolucrados(codCaso);		
+		restos = listarInvolucrados(part.getCodCaso());		
 		
 		if(part!=null) {
 			textDni1.setText(part.getDni());
@@ -315,7 +316,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 			textDni2.setText(part.getDni());
 			textImplicacion2.setText(part.getImplicacion());
 			for (RestoHumano restH : restos.values()) {
-				if(restH.getCodCaso().equalsIgnoreCase(codCaso)) {
+				if(restH.getCodCaso().equalsIgnoreCase(part.getCodCaso())) {
 					textCodigoRH.setText(restH.getCodResto());
 				}
 			}
@@ -332,12 +333,13 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso{
 		this.dispose();
 	}
 
-	private void nombreCompleto(Persona per, String codCaso, Participante part) {
+	private void nombreCompleto(Persona per, Participante part) {
 		// TODO Auto-generated method stub
 		per = new Persona();
+		caso = new Caso();
 		part = new Participante();
 		participantes = new TreeMap<>();
-		participantes = listarParticipantes(codCaso);
+		participantes = listarParticipantes(caso.getCodCaso());
 		
 		for(Participante parti : participantes.values()) {
 			if (parti.getDni().equalsIgnoreCase(per.getDni())) {

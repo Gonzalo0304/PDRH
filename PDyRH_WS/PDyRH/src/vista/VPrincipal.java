@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 
-import java.awt.Button;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -14,8 +13,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-
-import controlador.interfaces.ContDatosBusq;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -28,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 
 public class VPrincipal extends JDialog implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
@@ -35,14 +33,11 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	// <--- Elementos --->
 	private JPanel contentPane;
 	private static Point point = new Point();
-	private JMenuItem mCerrar;
 	private JLabel lblCerrar;
 	private JPanel panelInsert;
-	private Button buttonBR;
 	private JPanel panelGest;
 	private JLabel lblComparar;
 	private JLabel imgGest;
-	private JMenu menUsuario;
 	private JLabel imgInsert;
 	private JLabel lblInsert;
 	private JLabel lblGestionar;
@@ -54,19 +49,27 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private JLabel imgErtzAC;
 	private VIniciarSesion padre;
 	private JSeparator separator;
-	private JMenuBar menuBar;
+	private JMenu menInsertar;
+	private JMenu menComparar;
+	private JMenu menGestionar;
+	private JMenu menBuscar;
+	private JMenu menUsuario;
+	private JMenuItem mCerrar;
+	private JMenuItem mPersona;
+	private JMenuItem mRestoHumano;
+	private JMenuItem mCaso;
 	private JSeparator separator1_1;
 	private JSeparator separator1_1_1;
 	private JSeparator separator1_1_2;
 	private JSeparator separator1_1_3;
 	private String[] info;
-	private ContDatosBusq datos;
+	private JMenuBar menuBar;
 	
-	// <--- Ejecución --->
 	public VPrincipal(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño ventana --->
 		super(padre);
-		this.setModal(modal);
+		setTitle("PDyRH: Principal");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VPrincipal.class.getResource("/imagenes/Ertzaintza3.png")));
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 607, 399);
 		contentPane = new JPanel();
@@ -75,12 +78,13 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		getContentPane().setLayout(new BorderLayout());
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
-		setUndecorated(true); // Sin borde predeterminado
+		setUndecorated(true);
 		setLocationRelativeTo(null);
 		this.setModal(modal);
 		contentPane.setLayout(null);
-		
 		info = infos;
+		this.padre = padre;
+
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -121,23 +125,23 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		lblCerrar.setForeground(Color.WHITE);
 		lblCerrar.setBounds(573, 2, 31, 19);
 		contentPane.add(lblCerrar);
-
+		
+		// Menú superior
 		separator = new JSeparator();
 		separator.setBackground(Color.DARK_GRAY);
 		separator.setBounds(2, 47, 603, 2);
 		contentPane.add(separator);
-		
+
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
 		menuBar.setBackground(new Color(0, 51, 102));
 		menuBar.setBounds(2, 2, 603, 45);
 		contentPane.add(menuBar);
 
-		menUsuario = new JMenu(" " +info[0] + " ");
+		menUsuario = new JMenu(" " + info[0] + " ");
 		menUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		menUsuario.setBackground(Color.DARK_GRAY);
 		menUsuario.setForeground(Color.WHITE);
 		menuBar.add(menUsuario);
 
@@ -150,6 +154,65 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
 
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar.add(menInsertar);
+
+		mPersona = new JMenuItem("Persona");
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
+
+		mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
+
+		mCaso = new JMenuItem("Caso");
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
+
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
+			}
+		});
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
+
+		menComparar = new JMenu("Comparar");
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar.add(menBuscar);
+		
+		// Botónes principales
 		panelInsert = new JPanel();
 		panelInsert.setBorder(null);
 		panelInsert.setBackground(SystemColor.control);
@@ -158,7 +221,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelInsert.setLayout(null);
 		
 		imgInsert = new JLabel("New label");
-		imgInsert.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/la2(1).png"));
+		imgInsert.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/la2(1).png")));
 		imgInsert.setBounds(40, 11, 73, 80);
 		panelInsert.add(imgInsert);
 		
@@ -182,7 +245,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		panelGest.setLayout(null);
 		
 		imgGest = new JLabel("New label");
-		imgGest.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/eng2(1).png"));
+		imgGest.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/eng2(1).png")));
 		imgGest.setBounds(39, 11, 73, 80);
 		panelGest.add(imgGest);
 		
@@ -202,10 +265,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		if (info[2].equalsIgnoreCase("agente")) {
 			panelInsert.setBackground(Color.GRAY);
 			lblInsert.setForeground(Color.LIGHT_GRAY);
-			imgInsert.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/lapB.png"));
+			imgInsert.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/lapB.png")));
 			panelGest.setBackground(Color.GRAY);
 			lblGestionar.setForeground(Color.LIGHT_GRAY);
-			imgGest.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/engB.png"));
+			imgGest.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/engB.png")));
 		}else {
 			panelInsert.addMouseListener(this);
 			panelGest.addMouseListener(this);
@@ -220,7 +283,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.add(panelBus);
 		
 		imgBuscar = new JLabel("New label");
-		imgBuscar.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/lu2(1).png"));
+		imgBuscar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/lu2(1).png")));
 		imgBuscar.setBounds(40, 11, 73, 80);
 		panelBus.add(imgBuscar);
 		
@@ -245,7 +308,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.add(panelComp);
 		
 		imgComparar = new JLabel("New label");
-		imgComparar.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/co2(1).png"));
+		imgComparar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/co2(1).png")));
 		imgComparar.setBounds(43, 11, 73, 80);
 		panelComp.add(imgComparar);
 		
@@ -261,17 +324,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		separator1_1_3.setForeground(new Color(102, 0, 0));
 		separator1_1_3.setBackground(new Color(153, 0, 0));
 		
-		buttonBR = new Button("Busq. rap.");
-		buttonBR.setFocusable(false);
-		buttonBR.addActionListener(this);
-		buttonBR.setForeground(new Color(255, 255, 255));
-		buttonBR.setBackground(new Color(153, 0, 0));
-		buttonBR.setBounds(527, 367, 70, 22);
-		contentPane.add(buttonBR);
-		
+		// Fondo
 		imgErtzAC = new JLabel("New label");
-		imgErtzAC.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
-		imgErtzAC.setBounds(151, 83, 318, 290);
+		imgErtzAC.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/ertzAC.png")));
+		imgErtzAC.setBounds(151, 83, 309, 290);
 		contentPane.add(imgErtzAC);
 	}
 
@@ -279,63 +335,55 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	// Cerrar la ventana
 	private void cerrar() {
 		this.dispose();
+		padre.setVisible(true);
 	}
 	// Abrir ventanas
 	private void vInsertar() {
 		panelInsert.setBackground(SystemColor.controlShadow);
-		imgInsert.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/laAO.png"));
+		imgInsert.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/laAO.png")));
 		lblInsert.setForeground(new Color(0, 0, 51));
 		VInserciones inserciones = new VInserciones(padre, true, info);
+		this.dispose();
 		inserciones.setVisible(true);
-		panelInsert.setBackground(SystemColor.control);
-		imgInsert.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/la2(1).png"));
-		lblInsert.setForeground(new Color(0, 51, 102));
 	}
 
 	private void vBusqueda() {
 		panelBus.setBackground(SystemColor.controlShadow);
-		imgBuscar.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/luAO.png"));
+		imgBuscar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/luAO.png")));
 		lblBuscar.setForeground(new Color(0, 0, 51));
-		VBusqueda busqueda = new VBusqueda(padre, true,datos,info[0]);
+		VBusqueda busqueda = new VBusqueda(padre, true, info);
+		this.dispose();
 		busqueda.setVisible(true);
-		panelBus.setBackground(SystemColor.control);
-		imgBuscar.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/lu2(1).png"));
-		lblBuscar.setForeground(new Color(0, 51, 102));
 	}
 
 	private void vGestionar() {
 		panelGest.setBackground(SystemColor.controlShadow);
-		imgGest.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/engAO.png"));
+		imgGest.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/engAO.png")));
 		lblGestionar.setForeground(new Color(0, 0, 51));
-		VGestion gestionar = new VGestion(padre, true, info[0]);
+		VGestion gestionar = new VGestion(padre, true, info);
+		this.dispose();
 		gestionar.setVisible(true);
-		panelGest.setBackground(SystemColor.control);
-		imgGest.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/eng2(1).png"));
-		lblGestionar.setForeground(new Color(0, 51, 102));
 	}
 
 	private void vComparar() {
 		panelComp.setBackground(SystemColor.controlShadow);
-		imgComparar.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/coAO.png"));
+		imgComparar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/coAO.png")));
 		lblComparar.setForeground(new Color(0, 0, 51));
-		VComparacion comparar = new VComparacion(padre, true, info[0]);
+		VComparacion comparar = new VComparacion(padre, true, info);
+		this.dispose();
 		comparar.setVisible(true);
-		panelComp.setBackground(SystemColor.control);
-		imgComparar.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/co2(1).png"));
-		lblComparar.setForeground(new Color(0, 51, 102));
-	}
-	
-	private void vBusRapida() {
-		VBusRapida busRap = new VBusRapida(padre, true);
-		busRap.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
 			cerrar();
-		}else if (e.getSource().equals(buttonBR)) {
-			vBusRapida();
+		} else if (e.getSource().equals(mCaso)) {
+			abrirInsertCaso();
+		} else if (e.getSource().equals(mPersona)) {
+			abrirInsertPer();
+		} else if (e.getSource().equals(mRestoHumano)) {
+			abrirInsertRH();
 		}
 	}
 	
@@ -379,5 +427,42 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	@Override
 	public void mouseExited(MouseEvent e) {
 		((JComponent) e.getSource()).setBorder(null);
+	}
+	
+	// Abrir ventanas de menú
+	private void abrirGes() {
+		VGestion vBus = new VGestion(padre, true, info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirCom() {
+		VComparacion vCom = new VComparacion(padre, true, info);
+		this.dispose();
+		vCom.setVisible(true);
+	}
+
+	private void abrirBus() {
+		VBusqueda vBus = new VBusqueda(padre, true, info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirInsertRH() {
+		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
+		this.dispose();
+		vInsRH.setVisible(true);
+	}
+
+	private void abrirInsertPer() {
+		VInsPersona vInsPer = new VInsPersona(padre, true, info);
+		this.dispose();
+		vInsPer.setVisible(true);
+	}
+
+	private void abrirInsertCaso() {
+		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
+		this.dispose();
+		vInsCaso.setVisible(true);
 	}
 }

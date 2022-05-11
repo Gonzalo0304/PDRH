@@ -2,11 +2,11 @@ package modelo;
 
 import java.util.Map;
 
-import controlador.ContDatosRH;
+import controlador.interfaces.ContDatosRH;
 import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
-public class ContBDRH implements ContDatosRH {
+public class ContBDRH implements controlador.interfaces.ContDatosRH {
 
 	@Override
 	public void altaRH(RestoHumano rh) {
@@ -21,21 +21,15 @@ public class ContBDRH implements ContDatosRH {
 	}
 
 	@Override
-	public void eliminarRH(RestoHumano rh) {
+	public void eliminarRH(String codResto) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Map<String, RestoHumano> listarRestos() {
+	public RestoHumano obtenerRH(String codResto) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void agregarIdentificado(RestoHumano resto, Persona per) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

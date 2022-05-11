@@ -46,12 +46,15 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	// <--- Elementos --->
 	private JTextField textID;
 	private JMenuBar menuBar;
-	private JMenu menuInsertar;
-	private JMenu menuGestionar;
-	private JMenu menuComparar;
-	private JMenu menuBusqueda;
+	private JMenu menInsertar;
+	private JMenu menComparar;
+	private JMenu menGestionar;
+	private JMenu menBuscar;
 	private JMenu menUsuario;
 	private JMenuItem mCerrar;
+	private JMenuItem mPersona;
+	private JMenuItem mRestoHumano;
+	private JMenuItem mCaso;
 	private JLabel lblID;
 	private Button buttonBuscar;
 	private JRadioButton RadioButtonPersonaVGestion;
@@ -73,26 +76,27 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	private ButtonGroup bgTipo;
 	private VIniciarSesion padre;
 	private boolean esta;
-	private String info;
-	
+	private String[] info;
+
 	// <--- Datos BD --->
 	ContDatosBusq datos = DataFactoryBusq.getDatos();
-	
-	public VGestion(VIniciarSesion vInicio, boolean modal, String infos) {
-		super(vInicio);
+
+	public VGestion(VIniciarSesion padre, boolean modal, String[] infos) {
+		// <--- Diseño de ventana --->
+		super(padre);
 		this.setModal(modal);
-		
 		setTitle("Gestionar");
 		setBounds(100, 100, 607, 399);
-		getContentPane().setLayout(new BorderLayout());
 		contentPane.setBackground(Color.WHITE);
+		getContentPane().setLayout(new BorderLayout());
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		info = infos;
-		
+		this.padre = padre;
+
 		// Movimiento de la ventana
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -134,6 +138,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		lblCerrar.setBounds(573, 2, 31, 19);
 		contentPane.add(lblCerrar);
 
+		// Menú superior
 		separator = new JSeparator();
 		separator.setBackground(Color.DARK_GRAY);
 		separator.setBounds(2, 47, 603, 2);
@@ -145,7 +150,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		menuBar.setBounds(2, 2, 603, 45);
 		contentPane.add(menuBar);
 
-		menUsuario = new JMenu(" " + info + " ");
+		menUsuario = new JMenu(" " + info[0] + " ");
 		menUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
 		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
@@ -161,29 +166,63 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		mCerrar.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar);
 
-		menuInsertar = new JMenu("Insertar");
-		menuInsertar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuInsertar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		menuInsertar.setForeground(Color.WHITE);
-		menuBar.add(menuInsertar);
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar.add(menInsertar);
 
-		menuGestionar = new JMenu("Gestionar");
-		menuGestionar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuGestionar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		menuGestionar.setForeground(Color.WHITE);
-		menuBar.add(menuGestionar);
+		mPersona = new JMenuItem("Persona");
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
 
-		menuComparar = new JMenu("Comparar");
-		menuComparar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuComparar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		menuComparar.setForeground(Color.WHITE);
-		menuBar.add(menuComparar);
+		mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
 
-		menuBusqueda = new JMenu("Busqueda");
-		menuBusqueda.setHorizontalAlignment(SwingConstants.LEFT);
-		menuBusqueda.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		menuBusqueda.setForeground(Color.WHITE);
-		menuBar.add(menuBusqueda);
+		mCaso = new JMenuItem("Caso");
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
+
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
+			}
+		});
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
+
+		menComparar = new JMenu("Comparar");
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar.add(menBuscar);
 
 		separator1 = new JSeparator();
 		separator1.setForeground(new Color(102, 0, 0));
@@ -197,6 +236,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		lblGestin.setBounds(22, 59, 118, 19);
 		contentPane.add(lblGestin);
 
+		// Decoración
 		panel_2 = new Panel();
 		panel_2.setLayout(null);
 		panel_2.setBackground(SystemColor.menu);
@@ -209,6 +249,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		separatorID.setForeground(new Color(102, 0, 0));
 		separatorID.setBackground(new Color(153, 0, 0));
 
+		// Campo a rellenar
 		textID = new JTextField();
 		textID.addKeyListener(new KeyAdapter() {
 			@Override
@@ -231,6 +272,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		lblID.setForeground(new Color(0, 51, 102));
 		lblID.setFont(new Font("Tahoma", Font.BOLD, 14));
 
+		// Botón de busqueda
 		buttonBuscar = new Button("Buscar");
 		buttonBuscar.setBounds(258, 307, 98, 28);
 		buttonBuscar.setForeground(Color.WHITE);
@@ -240,6 +282,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		buttonBuscar.addActionListener(this);
 		contentPane.add(buttonBuscar);
 
+		// Selección de tipo
 		separatorPer = new JSeparator();
 		separatorPer.setBounds(113, 134, 61, 2);
 		contentPane.add(separatorPer);
@@ -291,12 +334,14 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		panel.setBounds(130, 176, 354, 86);
 		contentPane.add(panel);
 
+		// Fondo
 		imgErtzAC = new JLabel("");
-		imgErtzAC.setIcon(new ImageIcon("C:/Users/1dam/Desktop/Reto Final/PGR/Multimedia/ertzAC.png"));
+		imgErtzAC.setIcon(new ImageIcon(VGestion.class.getResource("/imagenes/ertzAC.png")));
 		imgErtzAC.setBounds(151, 83, 318, 290);
 		contentPane.add(imgErtzAC);
 	}
 
+	// Métodos
 	@Override
 	public boolean comprobarDNI(String dni) {
 		return datos.comprobarDNI(dni);
@@ -315,13 +360,58 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			cerrar();
+			this.dispose();
+			padre.setVisible(true);
 		} else if (e.getSource().equals(buttonBuscar)) {
 			comprobarBus(info);
+		} else if (e.getSource().equals(mCaso)) {
+			abrirInsertCaso();
+		} else if (e.getSource().equals(mPersona)) {
+			abrirInsertPer();
+		} else if (e.getSource().equals(mRestoHumano)) {
+			abrirInsertRH();
 		}
 	}
 
-	private void comprobarBus(String info) {
+	// Abrir ventanas de menú
+	private void abrirGes() {
+		VGestion vGes = new VGestion(padre, true, info);
+		this.dispose();
+		vGes.setVisible(true);
+	}
+
+	private void abrirCom() {
+		VComparacion vCom = new VComparacion(padre, true, info);
+		this.dispose();
+		vCom.setVisible(true);
+	}
+
+	private void abrirBus() {
+		VBusqueda vBus = new VBusqueda(padre, true, info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
+
+	private void abrirInsertRH() {
+		VInsRH vInsRH = new VInsRH(padre, true, null, info, true);
+		this.dispose();
+		vInsRH.setVisible(true);
+	}
+
+	private void abrirInsertPer() {
+		VInsPersona vInsPer = new VInsPersona(padre, true, info);
+		this.dispose();
+		vInsPer.setVisible(true);
+	}
+
+	private void abrirInsertCaso() {
+		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
+		this.dispose();
+		vInsCaso.setVisible(true);
+	}
+
+	// Abrir ventanas de gestión
+	private void comprobarBus(String[] info) {
 		esta = true;
 		String selec = rbSeleccionado(bgTipo);
 		if (selec == null) {
@@ -332,6 +422,7 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 			case "Persona":
 				if (comprobarDNI(textID.getText())) {
 					VGesPersona vGesPer = new VGesPersona(padre, true, textID.getText(), info);
+					this.dispose();
 					vGesPer.setVisible(true);
 				} else {
 					esta = false;
@@ -339,7 +430,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 				break;
 			case "Resto Humano":
 				if (buscarRH(textID.getText())) {
-					VBusRH vGesRH = new VBusRH(padre, true, textID.getText(), datos);
+					VInsRH vGesRH = new VInsRH(padre, true, textID.getText(), info,true);
+					this.dispose();
 					vGesRH.setVisible(true);
 				} else {
 					esta = false;
@@ -347,7 +439,8 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 				break;
 			case "Caso":
 				if (buscarCaso(textID.getText()) != null) {
-					VGesCaso vGesCaso = new VGesCaso(padre, true, buscarCaso(textID.getText()));
+					VGesCaso vGesCaso = new VGesCaso(padre, true, buscarCaso(textID.getText()), info);
+					this.dispose();
 					vGesCaso.setVisible(true);
 				} else {
 					esta = false;
@@ -355,16 +448,19 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 				break;
 			}
 			if (!esta) {
-				JOptionPane.showMessageDialog(this, "El identificador introduccido no es correcto.",
-						"ID erroneo.", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "El identificador introduccido no es correcto.", "ID erroneo.",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
 
 	private void cerrar() {
+		VPrincipal vMain = new VPrincipal(padre, true, info);
 		this.dispose();
+		vMain.setVisible(true);
 	}
 
+	// Comprobar que radio button está seleccionado
 	public String rbSeleccionado(ButtonGroup bg) {
 		for (Enumeration<AbstractButton> botones = bg.getElements(); botones.hasMoreElements();) {
 			AbstractButton boton = botones.nextElement();
