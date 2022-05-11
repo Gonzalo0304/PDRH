@@ -108,6 +108,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JLabel imgErtzAO_1;
 	private JSeparator separator;
 
+>>>>>>> 87029f207c365c8dc61429e9ab8c290c71b8847a
 
 	public VGesCaso(VIniciarSesion padre, boolean modal, Caso caso, String[] infos) {
 		// <--- Diseño de ventana --->
@@ -586,18 +587,13 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 
 		// Campo de resto involucrado
 		lblCodResto = new JLabel("C\u00D3DIGO RESTO");
-
 		lblCodResto.setForeground(new Color(153, 0, 0));
 		lblCodResto.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblCodResto.setBounds(195, 202, 106, 28);
 		contentInvo.add(lblCodResto);
-
 		
 		JSeparator separatorCodResto = new JSeparator();
-
-
 		separatorCodResto = new JSeparator();
-
 		separatorCodResto.setForeground(new Color(102, 0, 0));
 		separatorCodResto.setBackground(new Color(153, 0, 0));
 		separatorCodResto.setBounds(195, 228, 106, 2);
@@ -607,14 +603,12 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		textCodResto.setToolTipText("");
 		textCodResto.setColumns(10);
 		textCodResto.setBounds(195, 241, 187, 20);
-
 		contentInvo.add(textCodResto);
 		
-				JLabel imgErtzAO_1 = new JLabel("");
-				imgErtzAO_1
-						.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
-				imgErtzAO_1.setBounds(142, 68, 309, 303);
-				contentInvo.add(imgErtzAO_1);
+		JLabel imgErtzAO_1 = new JLabel("");
+		imgErtzAO_1.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
+		imgErtzAO_1.setBounds(142, 68, 309, 303);
+		contentInvo.add(imgErtzAO_1);
 
 		textCodResto.addKeyListener(new KeyAdapter() {
 			@Override
@@ -655,7 +649,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 			textFechaFin.setText(caso.getFechaFin().toString());
 		}
 	}
-	
+
 	// Abrir ventanas de menú
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
@@ -724,13 +718,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		} else if (e.getSource().equals(buttonEliminar)) {
 			eliminarCaso(caso.getCodCaso());
 		} else if (e.getSource().equals(buttonAgregar)) {
-
 			insertarInvolucrado(textCodResto.getText(),caso.getCodCaso());
 			Participante par = new Participante();
 			insertarParticipante(par);
 		} else if (e.getSource().equals(buttonMod)) {
 			modificarCaso(caso);
-
 			if (!textCodResto.getText().isBlank()) {
 				insertarInvolucrado(textCodResto.getText(), caso.getCodCaso());
 			}
@@ -770,7 +762,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 			caso.setFechaFin(LocalDate.parse(textFechaFin.getText()));
 		}
 		datos.modificarCaso(caso);
-
 		JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación éxitosa",
 				JOptionPane.CLOSED_OPTION);
 	}

@@ -6,7 +6,6 @@ public class Excepciones extends Exception {
 
 	public Excepciones() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Excepciones(String message) {
@@ -14,6 +13,5 @@ public class Excepciones extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
 }
+

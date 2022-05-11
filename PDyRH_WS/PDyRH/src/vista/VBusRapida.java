@@ -12,7 +12,6 @@ import modelo.clases.Persona;
 public class VBusRapida extends JDialog implements ContDatosBusqRap {
 
 	private static final long serialVersionUID = 1L;
-
 	ContDatosBusqRap datos = DataFactoryBusqRap.getDatos();
 	
 	public VBusRapida(VIniciarSesion padre, boolean modal, String[] info) {

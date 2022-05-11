@@ -883,7 +883,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			((ContDatosInsertPer) datos).altaPersona(crim);
 			limpiar();
 			habilitarBoton();
-			
 		}
 	}
 

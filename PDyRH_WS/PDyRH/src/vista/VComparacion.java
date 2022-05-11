@@ -5,7 +5,10 @@ import java.awt.BorderLayout;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+<<<<<<< HEAD
+=======
 import javax.swing.border.EmptyBorder;
+>>>>>>> 87029f207c365c8dc61429e9ab8c290c71b8847a
 import javax.swing.border.LineBorder;
 
 import controlador.DataFactoryComp;
@@ -94,6 +97,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		setBounds(100, 100, 607, 399);
 		contentPane.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
+
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		setUndecorated(true); 
@@ -150,7 +154,6 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		separator1.setBackground(new Color(153, 0, 0));
 		separator1.setBounds(24, 82, 559, 2);
 		contentPane.add(separator1);
-		
 
 		JS.setBounds(0, 0, 434, 261);
 		getContentPane().add(JS);
@@ -160,7 +163,6 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		lblComparacinPdyrh.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblComparacinPdyrh.setBounds(24, 60, 151, 19);
 		contentPane.add(lblComparacinPdyrh);
-
 		
 		separator = new JSeparator();
 		separator.setBackground(Color.DARK_GRAY);
@@ -341,7 +343,6 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 			panel.setBounds(104, 111, 402, 210);
 			contentPane.add(panel);
 		}
-		
 		// Fondo
 		lblImgErtzAC = new JLabel("");
 		lblImgErtzAC.setIcon(new ImageIcon(VComparacion.class.getResource("/imagenes/ertzAC.png")));
@@ -477,6 +478,5 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	public String obtenerIdentificado(String codResto) {
 		return null;
 	}
-	
 	
 }
