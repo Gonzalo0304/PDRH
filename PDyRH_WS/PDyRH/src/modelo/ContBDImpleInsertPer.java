@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import controlador.interfaces.ContDatosInsertPer;
+import excepciones.Excepciones;
 import modelo.clases.Agente;
 import modelo.clases.Criminal;
 import modelo.clases.Desaparecida;
@@ -60,7 +61,7 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	}
 
 	@Override
-	public void altaPersona(Persona per) {
+	public void altaPersona(Persona per) throws Excepciones {
 		this.openConnection();
 		
 		try {
@@ -131,10 +132,8 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 
 				stmnt.executeUpdate();
 			}
-			// Comprobar si stmnt funciona o habria que utilizar stmnt2
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			if (con != null) {
 				try {
 					con.rollback();
@@ -142,6 +141,9 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 					e.printStackTrace();
 				}
 			}
+			String msg = "Los campos no pueden exceder los 50 carácteres.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}

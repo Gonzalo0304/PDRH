@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -28,7 +29,7 @@ public class VInserciones extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private VIniciarSesion padre;
-	private JSeparator separator;
+	private JSeparator separatorMenu;
 	private Button btnPersona;
 	private Button btnRestoHumano;
 	private Button btnCaso;
@@ -45,7 +46,7 @@ public class VInserciones extends JDialog implements ActionListener {
 	private JMenuItem mCaso;
 	private JLabel imgErtzAO;
 	private JLabel lblBus;
-	private JSeparator separator1;
+	private JSeparator separatorIns;
 	private static Point point = new Point();
 	private JLabel lblCerrar;
 
@@ -53,7 +54,7 @@ public class VInserciones extends JDialog implements ActionListener {
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
-		setTitle("Gestionar");
+		setTitle("PDyRH: Insertar");
 		setBounds(100, 100, 607, 399);
 		contentPanel.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
@@ -107,10 +108,10 @@ public class VInserciones extends JDialog implements ActionListener {
 		contentPanel.add(lblCerrar);
 		
 		// Menú superior y título
-		separator = new JSeparator();
-		separator.setBackground(Color.DARK_GRAY);
-		separator.setBounds(2, 47, 603, 2);
-		contentPanel.add(separator);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBackground(Color.DARK_GRAY);
+		separatorMenu.setBounds(2, 47, 603, 2);
+		contentPanel.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
@@ -192,11 +193,6 @@ public class VInserciones extends JDialog implements ActionListener {
 		menBuscar.setForeground(Color.WHITE);
 		menuBar.add(menBuscar);
 
-		separator = new JSeparator();
-		separator.setBounds(93, 227, 27, -47);
-		separator.setOrientation(SwingConstants.VERTICAL);
-		contentPanel.add(separator);
-
 		btnPersona = new Button("PERSONA");
 		btnPersona.setBackground(new Color(153, 0, 0));
 		btnPersona.setForeground(Color.WHITE);
@@ -244,11 +240,11 @@ public class VInserciones extends JDialog implements ActionListener {
 		lblBus.setBounds(24, 60, 132, 19);
 		contentPanel.add(lblBus);
 		
-		separator1 = new JSeparator();
-		separator1.setForeground(new Color(102, 0, 0));
-		separator1.setBackground(new Color(153, 0, 0));
-		separator1.setBounds(24, 82, 561, 2);
-		contentPanel.add(separator1);
+		separatorIns = new JSeparator();
+		separatorIns.setForeground(new Color(102, 0, 0));
+		separatorIns.setBackground(new Color(153, 0, 0));
+		separatorIns.setBounds(24, 82, 561, 2);
+		contentPanel.add(separatorIns);
 	}
 
 	private void cerrar() {
@@ -280,8 +276,12 @@ public class VInserciones extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {

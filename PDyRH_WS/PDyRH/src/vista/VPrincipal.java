@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -48,7 +49,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private JLabel imgComparar;
 	private JLabel imgErtzAC;
 	private VIniciarSesion padre;
-	private JSeparator separator;
+	private JSeparator separatorMenu;
 	private JMenu menInsertar;
 	private JMenu menComparar;
 	private JMenu menGestionar;
@@ -58,10 +59,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private JMenuItem mPersona;
 	private JMenuItem mRestoHumano;
 	private JMenuItem mCaso;
-	private JSeparator separator1_1;
-	private JSeparator separator1_1_1;
-	private JSeparator separator1_1_2;
-	private JSeparator separator1_1_3;
+	private JSeparator separatorInsert;
+	private JSeparator separatorGest;
+	private JSeparator separatorBus;
+	private JSeparator separatorComp;
 	private String[] info;
 	private JMenuBar menuBar;
 	
@@ -127,10 +128,10 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		contentPane.add(lblCerrar);
 		
 		// Menú superior
-		separator = new JSeparator();
-		separator.setBackground(Color.DARK_GRAY);
-		separator.setBounds(2, 47, 603, 2);
-		contentPane.add(separator);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBackground(Color.DARK_GRAY);
+		separatorMenu.setBounds(2, 47, 603, 2);
+		contentPane.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
@@ -231,11 +232,11 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		lblInsert.setBounds(27, 102, 90, 14);
 		panelInsert.add(lblInsert);
 		
-		separator1_1 = new JSeparator();
-		separator1_1.setBounds(0, 141, 150, 2);
-		panelInsert.add(separator1_1);
-		separator1_1.setForeground(new Color(102, 0, 0));
-		separator1_1.setBackground(new Color(153, 0, 0));
+		separatorInsert = new JSeparator();
+		separatorInsert.setBounds(0, 141, 150, 2);
+		panelInsert.add(separatorInsert);
+		separatorInsert.setForeground(new Color(102, 0, 0));
+		separatorInsert.setBackground(new Color(153, 0, 0));
 		
 		panelGest = new JPanel();
 		panelGest.setBorder(null);
@@ -255,11 +256,11 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		lblGestionar.setBounds(29, 102, 100, 14);
 		panelGest.add(lblGestionar);
 		
-		separator1_1_1 = new JSeparator();
-		separator1_1_1.setForeground(new Color(102, 0, 0));
-		separator1_1_1.setBackground(new Color(153, 0, 0));
-		separator1_1_1.setBounds(0, 141, 150, 2);
-		panelGest.add(separator1_1_1);
+		separatorGest = new JSeparator();
+		separatorGest.setForeground(new Color(102, 0, 0));
+		separatorGest.setBackground(new Color(153, 0, 0));
+		separatorGest.setBounds(0, 141, 150, 2);
+		panelGest.add(separatorGest);
 		
 		// En caso de ser un agente inhabilitar insercción y gestión
 		if (info[2].equalsIgnoreCase("agente")) {
@@ -293,11 +294,11 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		lblBuscar.setBounds(40, 102, 73, 14);
 		panelBus.add(lblBuscar);
 		
-		separator1_1_2 = new JSeparator();
-		separator1_1_2.setBounds(0, 141, 150, 2);
-		panelBus.add(separator1_1_2);
-		separator1_1_2.setForeground(new Color(102, 0, 0));
-		separator1_1_2.setBackground(new Color(153, 0, 0));
+		separatorBus = new JSeparator();
+		separatorBus.setBounds(0, 141, 150, 2);
+		panelBus.add(separatorBus);
+		separatorBus.setForeground(new Color(102, 0, 0));
+		separatorBus.setBackground(new Color(153, 0, 0));
 		
 		panelComp = new JPanel();
 		panelComp.setLayout(null);
@@ -318,11 +319,11 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		lblComparar.setBounds(30, 102, 90, 14);
 		panelComp.add(lblComparar);
 		
-		separator1_1_3 = new JSeparator();
-		separator1_1_3.setBounds(0, 141, 150, 2);
-		panelComp.add(separator1_1_3);
-		separator1_1_3.setForeground(new Color(102, 0, 0));
-		separator1_1_3.setBackground(new Color(153, 0, 0));
+		separatorComp = new JSeparator();
+		separatorComp.setBounds(0, 141, 150, 2);
+		panelComp.add(separatorComp);
+		separatorComp.setForeground(new Color(102, 0, 0));
+		separatorComp.setBackground(new Color(153, 0, 0));
 		
 		// Fondo
 		imgErtzAC = new JLabel("New label");
@@ -377,7 +378,11 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			cerrar();
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				cerrar();
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {

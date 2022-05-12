@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import controlador.interfaces.ContDatosGestCaso;
+import excepciones.Excepciones;
 import modelo.clases.Caso;
 import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
@@ -64,7 +65,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 	}
 
 	@Override
-	public void modificarCaso(Caso caso) {
+	public void modificarCaso(Caso caso) throws Excepciones {
 		this.openConnection();
 
 		try {
@@ -87,7 +88,6 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			if (con != null) {
 				try {
 					con.rollback();
@@ -95,6 +95,9 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 					e.printStackTrace();
 				}
 			}
+			String msg = "Los campos no pueden exceder los 50 carácteres.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}	
@@ -163,7 +166,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 	}
 
 	@Override
-	public void insertarParticipante(Participante par) {
+	public void insertarParticipante(Participante par) throws Excepciones {
 		this.openConnection();
 
 		try {
@@ -176,7 +179,6 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			if (con != null) {
 				try {
 					con.rollback();
@@ -184,6 +186,9 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 					e.printStackTrace();
 				}
 			}
+			String msg = "Los campos no pueden exceder los 50 carácteres.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}	
@@ -248,7 +253,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 	}
 
 	@Override
-	public boolean buscarRH(String codResto) {
+	public boolean comprobarCodResto(String codResto) {
 		ResultSet rs = null;
 		boolean esta = false;
 		

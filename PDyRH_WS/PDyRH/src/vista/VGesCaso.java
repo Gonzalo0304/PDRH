@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.Map;
@@ -34,6 +35,7 @@ import javax.swing.border.LineBorder;
 
 import controlador.DataFactoryGestCaso;
 import controlador.interfaces.ContDatosGestCaso;
+import excepciones.Excepciones;
 import modelo.clases.Caso;
 import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
@@ -50,7 +52,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JTabbedPane tabbedPane;
 	private JPanel contentDatos;
 	private JLabel lblCerrar;
-	private JSeparator separator2;
+	private JSeparator separatorMenu2;
 	private JMenuBar menuBar;
 	private JLabel lblDni;
 	private JSeparator separatorCod;
@@ -103,12 +105,13 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JLabel lblCodResto;
 	private JSeparator separatorCodResto;
 	private JLabel imgErtzAO_1;
-	private JSeparator separator;
+	private JSeparator separatorMenu;
 
 	public VGesCaso(VIniciarSesion padre, boolean modal, Caso caso, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
+		setTitle("PDyRH: Gestionar caso");
 		setBounds(100, 100, 607, 399);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
@@ -171,10 +174,10 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		contentDatos.add(lblCerrar);
 
 		// Menú superior
-		separator = new JSeparator();
-		separator.setBackground(Color.DARK_GRAY);
-		separator.setBounds(2, 47, 603, 2);
-		contentDatos.add(separator);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBackground(Color.DARK_GRAY);
+		separatorMenu.setBounds(2, 47, 603, 2);
+		contentDatos.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
@@ -270,7 +273,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		contentDatos.add(separatorCod);
 
 		textCod = new JTextField();
-		textCod.setToolTipText("");
 		textCod.setEditable(false);
 		textCod.setEnabled(false);
 		textCod.setColumns(10);
@@ -290,7 +292,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		contentDatos.add(separatorNom);
 
 		textNom = new JTextField();
-		textNom.setToolTipText("");
 		textNom.setColumns(10);
 		textNom.setBounds(95, 192, 187, 20);
 		contentDatos.add(textNom);
@@ -308,13 +309,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		contentDatos.add(separatorEstado);
 
 		textFechaIni = new JTextField();
-		textFechaIni.setToolTipText("");
 		textFechaIni.setColumns(10);
 		textFechaIni.setBounds(328, 134, 187, 20);
 		contentDatos.add(textFechaIni);
 
 		textFechaFin = new JTextField();
-		textFechaFin.setToolTipText("");
 		textFechaFin.setColumns(10);
 		textFechaFin.setBounds(328, 192, 187, 20);
 		contentDatos.add(textFechaFin);
@@ -454,11 +453,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		contentInvo.add(lblCerrar_1);
 
 		// Menú superior
-		separator2 = new JSeparator();
-		separator2.setForeground(SystemColor.controlShadow);
-		separator2.setBackground(new Color(0, 51, 102));
-		separator2.setBounds(1, 45, 601, 2);
-		contentInvo.add(separator2);
+		separatorMenu2 = new JSeparator();
+		separatorMenu2.setForeground(SystemColor.controlShadow);
+		separatorMenu2.setBackground(new Color(0, 51, 102));
+		separatorMenu2.setBounds(1, 45, 601, 2);
+		contentInvo.add(separatorMenu2);
 
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
@@ -526,7 +525,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 				habilitarBoton();
 			}
 		});
-		textDniInv.setToolTipText("");
 		textDniInv.setColumns(10);
 		textDniInv.setBounds(61, 145, 187, 20);
 		contentInvo.add(textDniInv);
@@ -550,7 +548,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 				habilitarBoton();
 			}
 		});
-		textImp.setToolTipText("");
 		textImp.setColumns(10);
 		textImp.setBounds(344, 145, 187, 20);
 		contentInvo.add(textImp);
@@ -591,7 +588,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		contentInvo.add(separatorCodResto);
 
 		textCodResto = new JTextField();
-		textCodResto.setToolTipText("");
 		textCodResto.setColumns(10);
 		textCodResto.setBounds(195, 241, 187, 20);
 		textCodResto.addKeyListener(new KeyAdapter() {
@@ -632,7 +628,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 			textFechaFin.setText(caso.getFechaFin().toString());
 		}
 	}
-	
+
 	// Abrir ventanas de menú
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
@@ -653,7 +649,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	private void abrirInsertRH() {
-		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
+		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
@@ -669,7 +665,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}
-	
+
 	// Habilitar botón cuando haya texto introducido
 	public void habilitarBoton() {
 		if ((!textImp.getText().isBlank() && !textDniInv.getText().isBlank()) || !textCodResto.getText().isBlank()) {
@@ -693,11 +689,19 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCerrar2)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(buttonEliminar)) {
 			eliminarCaso(caso.getCodCaso());
 		} else if (e.getSource().equals(buttonAgregar)) {
@@ -711,10 +715,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 				} else if (listarParticipantes(textCod.getText()).get(textDniInv.getText()) == null) {
 					Participante par = new Participante();
 					insertarParticipante(par);
-					JOptionPane.showMessageDialog(this, "Insercción de persona participante realizada con éxito.",
-							"Insercción éxitosa", JOptionPane.CLOSED_OPTION);
-					textDniInv.setText("");
-					textImp.setText("");
 				} else {
 					JOptionPane.showMessageDialog(this, "El DNI introducido ya es un participante de este caso.",
 							"DNI existente.", JOptionPane.ERROR_MESSAGE);
@@ -726,6 +726,13 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 			abrirInsertPer();
 		} else if (e.getSource().equals(mRestoHumano)) {
 			abrirInsertRH();
+		} else if (e.getSource().equals(buttonMod)) {
+			try {
+				modificarCaso(caso);
+			} catch (DateTimeParseException e1) {
+				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
@@ -739,9 +746,13 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		if (!textFechaFin.getText().isBlank()) {
 			caso.setFechaFin(LocalDate.parse(textFechaFin.getText()));
 		}
-		datos.modificarCaso(caso);
-		JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación éxitosa",
-				JOptionPane.CLOSED_OPTION);
+		try {
+			datos.modificarCaso(caso);
+			JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación exitosa",
+					JOptionPane.CLOSED_OPTION);
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos.", JOptionPane.ERROR_MESSAGE);
+		} 
 	}
 
 	// Compronar que radio buttón está seleccionado
@@ -774,12 +785,20 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		par.setCodCaso(caso.getCodCaso());
 		par.setDni(textDniInv.getText());
 		par.setImplicacion(textImp.getText());
-		datos.insertarParticipante(par);
+		try {
+			datos.insertarParticipante(par);
+			JOptionPane.showMessageDialog(this, "Insercción de persona participante realizada con éxito.",
+					"Insercción exitosa", JOptionPane.CLOSED_OPTION);
+			textDniInv.setText("");
+			textImp.setText("");
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos.", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	@Override
 	public void insertarInvolucrado(String codResto, String codCaso) {
-		if (!buscarRH(textCodResto.getText())) {
+		if (!comprobarCodResto(textCodResto.getText())) {
 			JOptionPane.showMessageDialog(this,
 					"El código de resto introducido no está registrado en la base de datos.", "Código inexistente.",
 					JOptionPane.ERROR_MESSAGE);
@@ -787,6 +806,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 			datos.insertarInvolucrado(codResto, codCaso);
 			JOptionPane.showMessageDialog(this, "Insercción de resto involucrado realizada con éxito",
 					"Insercción exitosa", JOptionPane.CLOSED_OPTION);
+			textCod.setText("");
 			textCodResto.setText("");
 		} else {
 			JOptionPane.showMessageDialog(this, "El código introducido ya está involucrado en un caso.",
@@ -800,8 +820,8 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	@Override
-	public boolean buscarRH(String codResto) {
-		return datos.buscarRH(codResto);
+	public boolean comprobarCodResto(String codResto) {
+		return datos.comprobarCodResto(codResto);
 	}
 
 	@Override

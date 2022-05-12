@@ -6,14 +6,10 @@ public class Excepciones extends Exception {
 
 	public Excepciones() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Excepciones(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
-	}
-	
-	
+	}	
 
 }
