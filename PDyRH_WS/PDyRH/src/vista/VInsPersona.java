@@ -833,7 +833,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 	}
 
 	private void habilitarBoton() {
-		if (!verificarDNI() && !textNombre.getText().isEmpty()) {
+		if (!textNombre.getText().isEmpty()) {
 			btnAnadir.setEnabled(true);
 			btnAnadir.setBackground(new Color(153, 0, 0));
 		} else {
@@ -902,7 +902,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		String soloNum = "";
 		char letra = 0;
 		int modulo;
-		if ((nifnie.length() == 9 && Character.isLetter(nifnie.charAt(8))) || (nifnie.length() == 10 && nifnie.charAt(8) == '-' && Character.isLetter(nifnie.charAt(9)))) {
+		if ((nifnie.length() == 9 && Character.isLetter(nifnie.charAt(8)) && !Character.isLetter(nifnie.charAt(0))) || (nifnie.length() == 10 && nifnie.charAt(8) == '-' && Character.isLetter(nifnie.charAt(9)) && !Character.isLetter(nifnie.charAt(0)))) {
 			soloNum	= nifnie.substring(0,8);
 			for (int i = 0; i < soloNum.length(); i++) {
 				if (Character.isLetter(soloNum.charAt(i))) {
@@ -914,17 +914,17 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			} else {
 				letra = Character.toUpperCase(nifnie.charAt(9));
 			} 
-		} else if ((nifnie.length() == 10 && Character.isLetter(nifnie.charAt(0)) && Character.isLetter(nifnie.charAt(9)))|| (nifnie.length() == 11 && nifnie.charAt(9) == '-'  && Character.isLetter(nifnie.charAt(0)) && Character.isLetter(nifnie.charAt(10)))) {
-			soloNum = nifnie.substring(1,9);
+		} else if ((nifnie.length() == 9 && Character.isLetter(nifnie.charAt(0)) && Character.isLetter(nifnie.charAt(8)))|| (nifnie.length() == 10 && nifnie.charAt(9) == '-'  && Character.isLetter(nifnie.charAt(0)) && Character.isLetter(nifnie.charAt(9)))) {
+			soloNum = nifnie.substring(1,8);
 			for (int i = 0; i < soloNum.length(); i++) {
 				if (Character.isLetter(soloNum.charAt(i))) { 
 					return true;
 				}
 			}
-			if (nifnie.length() == 10) {
-				letra = Character.toUpperCase(nifnie.charAt(9));
+			if (nifnie.length() == 9) {
+				letra = Character.toUpperCase(nifnie.charAt(8));
 			}else {
-				letra = Character.toUpperCase(nifnie.charAt(10));
+				letra = Character.toUpperCase(nifnie.charAt(9));
 			}
 			switch (Character.toUpperCase(nifnie.charAt(0))) {
 			case 'X':
@@ -942,7 +942,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			default:
 				return true;
 			}
-			soloNum = nifnie.substring(0,9);
+			soloNum = nifnie.substring(0,8);
 		} else {
 			return true;
 		}
