@@ -720,9 +720,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 							"DNI existente.", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		}else if(e.getSource().equals(buttonMod)){
-			modificarCaso(caso);
-		}else if (e.getSource().equals(mCaso)) {
+		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {
 			abrirInsertPer();

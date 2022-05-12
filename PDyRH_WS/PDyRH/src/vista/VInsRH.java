@@ -70,7 +70,6 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 	private JLabel lblCod;
 	private JSeparator separator2_1;
 	private JLabel lblInsRH;
-	private JLabel lblGestRH;
 	private JSeparator separatorInsRH;
 	private Button btnBaja;
 	private Button btnMod;
@@ -94,7 +93,7 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 	private JSeparator separator2_2_1_1;
 	private JLabel lblCO2;
 	private boolean esGes;
-
+	
 	ContDatosRH datos = DataFactoryRH.getDatos();
 
 	public VInsRH(VIniciarSesion padre, boolean modal, String codigo, String[] infos, boolean esGes) {
@@ -449,12 +448,6 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblInsRH.setBounds(25, 48, 209, 24);
 		contentPanel.add(lblInsRH);
 
-		lblGestRH = new JLabel("Gesti\u00F3n de Resto Humano");
-		lblGestRH.setForeground(SystemColor.textInactiveText);
-		lblGestRH.setFont(new Font("Nirmala UI", Font.BOLD, 14));
-		lblGestRH.setBounds(25, 48, 209, 24);
-		contentPanel.add(lblGestRH);
-
 		separatorInsRH = new JSeparator();
 		separatorInsRH.setForeground(new Color(102, 0, 0));
 		separatorInsRH.setBackground(new Color(153, 0, 0));
@@ -482,14 +475,12 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		btnBaja.addActionListener(this);
 		contentPanel.add(btnBaja);
 
-		if (!esGes) {
+		if (esGes) {
 			btnMod.setVisible(false);
 			btnBaja.setVisible(false);
-			lblGestRH.setVisible(false);
 		} else {
 			btnAnadir.setVisible(false);
 			textCodigo.setEnabled(false);
-			lblInsRH.setVisible(false);
 			cargarDatos();
 		}
 	}
@@ -500,14 +491,8 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		if (rh.getFechaMuerte() != null) {
 			textFecha.setText(rh.getFechaMuerte().toString());
 		}
-		if (rh.getGenero() != null) {
-			if (rh.getGenero().equalsIgnoreCase("H")) {
-				comboBox.setSelectedItem("Hombre");
-			}
-			if (rh.getGenero().equalsIgnoreCase("M")) {
-				comboBox.setSelectedItem("Mujer");
-			}
-
+		if (rh.getGenero().equalsIgnoreCase("M")) {
+			
 		}
 		textCausa.setText(rh.getCausa());
 		textColorO.setText(rh.getColorOjos());
@@ -518,12 +503,12 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 	}
 
 	private void cerrar() {
-		if (!esGes) {
+		if (esGes) {
 			VInserciones insertar = new VInserciones(padre, true, info);
 			this.dispose();
 			insertar.setVisible(true);
 		} else {
-			VGestion vGes = new VGestion(padre, true, info);
+			VGestion vGes = new VGestion(padre,true,info);
 			this.dispose();
 			vGes.setVisible(true);
 		}
@@ -653,7 +638,7 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		rh.setColorOjos(textColorO.getText());
 		rh.setAltura(altura);
 		rh.setEspecificaciones(textEspecificaciones.getText());
-
+		
 		return rh;
 	}
 

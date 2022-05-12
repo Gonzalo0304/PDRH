@@ -108,9 +108,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(rs.getString("codCaso"));
-				if(rs.getDate("fechaMuerte") !=null) {
 				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
-				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
