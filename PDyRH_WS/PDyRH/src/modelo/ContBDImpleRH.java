@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import controlador.interfaces.ContDatosRH;
+import excepciones.Excepciones;
 import modelo.clases.RestoHumano;
 
 public class ContBDImpleRH implements ContDatosRH {
@@ -55,7 +56,7 @@ public class ContBDImpleRH implements ContDatosRH {
 	}
 
 	@Override
-	public void altaRH(RestoHumano rh) {
+	public void altaRH(RestoHumano rh) throws Excepciones {
 		this.openConnection();
 		
 		try {
@@ -79,7 +80,9 @@ public class ContBDImpleRH implements ContDatosRH {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			String msg = "Los campos no pueden exceder los 50 carácteres.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}
@@ -87,7 +90,7 @@ public class ContBDImpleRH implements ContDatosRH {
 	}
 
 	@Override
-	public void modificarRH(RestoHumano rh) {
+	public void modificarRH(RestoHumano rh) throws Excepciones {
 		this.openConnection();
 		
 		try {
@@ -101,14 +104,20 @@ public class ContBDImpleRH implements ContDatosRH {
 			stmnt.setString(6, rh.getColorOjos());
 			stmnt.setInt(7, rh.getAltura());
 			stmnt.setString(8, rh.getEspecificaciones());
-			stmnt.setDate(9, Date.valueOf(rh.getFechaMuerte()));
+			if (rh.getEspecificaciones() != null) {
+				stmnt.setDate(9, Date.valueOf(rh.getFechaMuerte()));
+			} else {
+				stmnt.setString(9, null);
+			}
 			stmnt.setString(10, rh.getCodResto());
 			
 			stmnt.executeUpdate();
 			
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			String msg = "Los campos no pueden exceder los 50 carácteres.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}
@@ -164,7 +173,10 @@ public class ContBDImpleRH implements ContDatosRH {
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(rs.getString("codCaso"));
-				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				if (rs.getDate("fechaMuerte") != null) {
+					resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				}
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -17,6 +17,7 @@ import javax.swing.border.LineBorder;
 
 import controlador.DataFactoryInsertCaso;
 import controlador.interfaces.ContDatosInsertCaso;
+import excepciones.Excepciones;
 import modelo.clases.Caso;
 
 import javax.swing.JLabel;
@@ -28,6 +29,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.ButtonGroup;
 import java.awt.event.KeyAdapter;
@@ -65,7 +67,7 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 	private JMenuItem mPersona;
 	private JMenuItem mRestoHumano;
 	private JMenuItem mCaso;
-	private JSeparator separator;
+	private JSeparator separatorMenu;
 
 	ContDatosInsertCaso datos = DataFactoryInsertCaso.getDatos();
 	private JLabel imgErtzAO;
@@ -74,7 +76,7 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
-		setTitle("Bustionar");
+		setTitle("PDyRH: Insertar caso");
 		setBounds(100, 100, 607, 399);
 		contentPanel.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
@@ -128,10 +130,10 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		contentPanel.add(lblCerrar);
 
 		// Menú superior
-		separator = new JSeparator();
-		separator.setBackground(Color.DARK_GRAY);
-		separator.setBounds(2, 47, 603, 2);
-		contentPanel.add(separator);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBackground(Color.DARK_GRAY);
+		separatorMenu.setBounds(2, 47, 603, 2);
+		contentPanel.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
@@ -352,7 +354,7 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		separatorGesCas.setBounds(12, 82, 580, 2);
 		contentPanel.add(separatorGesCas);
 		
-		JLabel lblGesPer = new JLabel("Gesti\u00F3n de Caso");
+		JLabel lblGesPer = new JLabel("Inserci\u00F3n de Caso");
 		lblGesPer.setForeground(SystemColor.textInactiveText);
 		lblGesPer.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblGesPer.setBounds(12, 60, 142, 19);
@@ -456,9 +458,13 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		caso.setNombre(textNombre.getText());
 		caso.setFechaIni(fechaIni);
 		caso.setFechaFin(fechaFin);
-		datos.altaCaso(caso);
-		JOptionPane.showMessageDialog(this, "Inserción realizada con éxito.","Inserción exitosa",JOptionPane.CLOSED_OPTION);
-		limpiar();
+		try {
+			datos.altaCaso(caso);
+			JOptionPane.showMessageDialog(this, "Inserción realizada con éxito.","Inserción exitosa",JOptionPane.CLOSED_OPTION);
+			limpiar();
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(),"Carácteres excedidos.",JOptionPane.ERROR_MESSAGE);
+		} 
 	}
 
 	@Override
@@ -472,11 +478,20 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 			if (comprobarCodCaso(textCodigo.getText())) {
 				JOptionPane.showMessageDialog(this, "El código introducido ya ha sido registrado.","Código existente",JOptionPane.ERROR_MESSAGE);
 			} else {
-				altaCaso(caso);
+				try {
+					altaCaso(caso);
+				} catch (DateTimeParseException e1) {
+					JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		} else if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {

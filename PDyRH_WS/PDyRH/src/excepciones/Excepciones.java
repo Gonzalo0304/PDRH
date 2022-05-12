@@ -12,6 +12,6 @@ public class Excepciones extends Exception {
 		super(message);
 	}
 	
-	
+
 
 }

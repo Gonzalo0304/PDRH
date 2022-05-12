@@ -48,9 +48,9 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 	private JLabel imgErtz;
 	private JLabel imgVizIz;
 	private JLabel lblPDyRH;
-	private JSeparator separator1;
-	private JSeparator separator2;
-	private JSeparator separator3;
+	private JSeparator separatorPDRH;
+	private JSeparator separatorUsu;
+	private JSeparator separatorContra;
 	private JLabel lblInfo;
 	private JLabel imgVizDer;
 	
@@ -202,23 +202,23 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		lblPDyRH.setBounds(329, 24, 295, 19);
 		contentPane.add(lblPDyRH);
 
-		separator1 = new JSeparator();
-		separator1.setForeground(new Color(102, 0, 0));
-		separator1.setBackground(new Color(153, 0, 0));
-		separator1.setBounds(329, 50, 303, 2);
-		contentPane.add(separator1);
+		separatorPDRH = new JSeparator();
+		separatorPDRH.setForeground(new Color(102, 0, 0));
+		separatorPDRH.setBackground(new Color(153, 0, 0));
+		separatorPDRH.setBounds(329, 50, 303, 2);
+		contentPane.add(separatorPDRH);
 
-		separator2 = new JSeparator();
-		separator2.setForeground(SystemColor.controlShadow);
-		separator2.setBackground(SystemColor.controlHighlight);
-		separator2.setBounds(341, 89, 114, 2);
-		contentPane.add(separator2);
+		separatorUsu = new JSeparator();
+		separatorUsu.setForeground(SystemColor.controlShadow);
+		separatorUsu.setBackground(SystemColor.controlHighlight);
+		separatorUsu.setBounds(341, 89, 114, 2);
+		contentPane.add(separatorUsu);
 
-		separator3 = new JSeparator();
-		separator3.setForeground(SystemColor.controlShadow);
-		separator3.setBackground(SystemColor.controlHighlight);
-		separator3.setBounds(341, 182, 114, 2);
-		contentPane.add(separator3);
+		separatorContra = new JSeparator();
+		separatorContra.setForeground(SystemColor.controlShadow);
+		separatorContra.setBackground(SystemColor.controlHighlight);
+		separatorContra.setBounds(341, 182, 114, 2);
+		contentPane.add(separatorContra);
 
 		lblInfo = new JLabel("El uso no autorizado de esta aplicaci\u00F3n queda totalmente prohibido.");
 		lblInfo.setForeground(SystemColor.controlHighlight);

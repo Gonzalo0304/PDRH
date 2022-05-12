@@ -56,7 +56,7 @@ public class ContBDImpleComp implements ContDatosComp {
 	}
 	
 	@Override
-	public Map<String, RestoHumano> obtenerRHs() {
+	public Map<String, RestoHumano> listarRHs() {
 		ResultSet rs = null;
 		RestoHumano resto = null;
 		Map<String,RestoHumano> restos = new TreeMap<>();
@@ -81,8 +81,9 @@ public class ContBDImpleComp implements ContDatosComp {
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(rs.getString("codCaso"));
-				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
-				
+				if (rs.getDate("fechaMuerte") != null) {
+					resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				}
 				if (obtenerIdentificado(resto.getCodResto()) == null) {
 					restos.put(resto.getCodResto(), resto);
 				}
@@ -104,7 +105,7 @@ public class ContBDImpleComp implements ContDatosComp {
 	}
 
 	@Override
-	public Map<String, Persona> obtenerDesaparecidas() {
+	public Map<String, Persona> listarDesaparecidas() {
 		ResultSet rs = null;
 		Persona des = null;
 		Map<String, Persona> desaparecidas = new TreeMap<>();
@@ -120,7 +121,9 @@ public class ContBDImpleComp implements ContDatosComp {
 				des = new Desaparecida();
 				
 				des.setDni(rs.getString("dni"));
-				((Desaparecida) des).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+				if (rs.getDate("fechaDes") != null) {
+					((Desaparecida) des).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+				}
 				((Desaparecida) des).setUltimaUbi(rs.getString("ultimaUbi"));
 				((Desaparecida) des).setGenero(rs.getString("genero"));
 				((Desaparecida) des).setTipoPelo(rs.getString("tipoPelo"));

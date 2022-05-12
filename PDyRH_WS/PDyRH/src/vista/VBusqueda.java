@@ -63,12 +63,12 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	private final JPanel contentPane = new JPanel();
 	private static Point point = new Point();
 	private JLabel lblCerrar;
-	private JSeparator separator;
+	private JSeparator separatorMenu;
 	private JSeparator separatorID;
 	private JSeparator separatorPer;
 	private JSeparator separatorRH;
 	private JSeparator separatorCaso;
-	private JSeparator separator1;
+	private JSeparator separatorBus;
 	private JLabel lblBus;
 	private Panel panel_2;
 	private Panel panel;
@@ -85,7 +85,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
-		setTitle("Gestionar");
+		setTitle("PDyRH: Gestionar");
 		setBounds(100, 100, 607, 399);
 		contentPane.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
@@ -139,10 +139,10 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		contentPane.add(lblCerrar);
 		
 		// Menú superior
-		separator = new JSeparator();
-		separator.setBackground(Color.DARK_GRAY);
-		separator.setBounds(2, 47, 603, 2);
-		contentPane.add(separator);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBackground(Color.DARK_GRAY);
+		separatorMenu.setBounds(2, 47, 603, 2);
+		contentPane.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
@@ -224,11 +224,11 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		menBuscar.setForeground(Color.WHITE);
 		menuBar.add(menBuscar);
 
-		separator1 = new JSeparator();
-		separator1.setForeground(new Color(102, 0, 0));
-		separator1.setBackground(new Color(153, 0, 0));
-		separator1.setBounds(22, 81, 561, 2);
-		contentPane.add(separator1);
+		separatorBus = new JSeparator();
+		separatorBus.setForeground(new Color(102, 0, 0));
+		separatorBus.setBackground(new Color(153, 0, 0));
+		separatorBus.setBounds(22, 81, 561, 2);
+		contentPane.add(separatorBus);
 
 		lblBus = new JLabel("Men\u00FA de B\u00FAsqueda");
 		lblBus.setForeground(SystemColor.textInactiveText);
@@ -348,20 +348,24 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	}
 
 	@Override
-	public boolean buscarRH(String codResto) {
-		return datos.buscarRH(codResto);
+	public boolean comprobarCodResto(String codResto) {
+		return datos.comprobarCodResto(codResto);
 	}
 
 	@Override
-	public Caso buscarCaso(String codCaso) {
-		return datos.buscarCaso(codCaso);
+	public Caso obtenerCaso(String codCaso) {
+		return datos.obtenerCaso(codCaso);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(buttonBuscar)) {
 			comprobarBus(info);
 		} else if (e.getSource().equals(mCaso)) {
@@ -429,7 +433,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 				}
 				break;
 			case "Resto Humano":
-				if (buscarRH(textID.getText())) {
+				if (comprobarCodResto(textID.getText())) {
 					VBusRH vBusRH = new VBusRH(padre, true, textID.getText(), info);
 					this.dispose();
 					vBusRH.setVisible(true);
@@ -438,8 +442,8 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 				}
 				break;
 			case "Caso":
-				if (buscarCaso(textID.getText()) != null) {
-					VBusCaso vBusCaso = new VBusCaso(padre, true, buscarCaso(textID.getText()), info);
+				if (obtenerCaso(textID.getText()) != null) {
+					VBusCaso vBusCaso = new VBusCaso(padre, true, obtenerCaso(textID.getText()), info);
 					this.dispose();
 					vBusCaso.setVisible(true);
 				} else {

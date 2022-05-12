@@ -20,6 +20,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Map;
 import java.awt.SystemColor;
 import javax.swing.JSeparator;
@@ -55,7 +56,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	private JTabbedPane tabbedPane;
 	private JPanel contentDatos;
 	private JLabel lblCerrar;
-	private JSeparator separator2;
+	private JSeparator separatorMenu;
 	private JMenuBar menuBar;
 	private JLabel lblDni;
 	private JSeparator separatorDni;
@@ -107,7 +108,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	private JLabel imgErtzAO;
 	private JPanel contentConos;
 	private JLabel lblCerrar_1;
-	private JSeparator separator2_6;
+	private JSeparator separatorMenu2;
 	private JLabel lblDniCon;
 	private JSeparator separatorDniCon;
 	private JTextField textDniCon;
@@ -156,11 +157,12 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	private String dni;
 	private Button buttonFA;
 	private VIniciarSesion padre;
-	
+
 	public VGesPersona(VIniciarSesion padre, boolean modal, String dni, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
+		setTitle("PDyRH: Gestionar persona");
 		setBounds(350, 150, 506, 690);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
@@ -168,7 +170,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		info = infos;
 		this.dni = dni;
 		this.padre = padre;
-		
+
 		// <--- Pestaña 1 --->
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(SystemColor.controlHighlight);
@@ -221,13 +223,13 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblCerrar.setForeground(Color.WHITE);
 		contentDatos.add(lblCerrar);
-		
+
 		// Menú superior
-		separator2 = new JSeparator();
-		separator2.setBounds(0, 36, 502, 2);
-		separator2.setForeground(SystemColor.controlShadow);
-		separator2.setBackground(new Color(0, 51, 102));
-		contentDatos.add(separator2);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBounds(0, 36, 502, 2);
+		separatorMenu.setForeground(SystemColor.controlShadow);
+		separatorMenu.setBackground(new Color(0, 51, 102));
+		contentDatos.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 1, 502, 37);
@@ -307,13 +309,13 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		menBuscar.setBackground(new Color(0, 0, 255));
 		menBuscar.setForeground(Color.WHITE);
 		menuBar.add(menBuscar);
-		
+
 		lblDni = new JLabel("DNI");
 		lblDni.setForeground(new Color(0, 51, 102));
 		lblDni.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblDni.setBounds(26, 77, 81, 28);
 		contentDatos.add(lblDni);
-		
+
 		// Campos de información de persona
 		separatorDni = new JSeparator();
 		separatorDni.setForeground(SystemColor.controlShadow);
@@ -322,7 +324,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorDni);
 
 		textDni = new JTextField();
-		textDni.setToolTipText("");
 		textDni.setEditable(false);
 		textDni.setEnabled(false);
 		textDni.setColumns(10);
@@ -342,7 +343,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorNom);
 
 		textNombre = new JTextField();
-		textNombre.setToolTipText("");
 		textNombre.setColumns(10);
 		textNombre.setBounds(26, 174, 187, 20);
 		contentDatos.add(textNombre);
@@ -360,7 +360,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorApe);
 
 		textApellido = new JTextField();
-		textApellido.setToolTipText("");
 		textApellido.setColumns(10);
 		textApellido.setBounds(26, 242, 187, 20);
 		contentDatos.add(textApellido);
@@ -378,7 +377,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorMovil);
 
 		textMovil = new JTextField();
-		textMovil.setToolTipText("");
 		textMovil.setColumns(10);
 		textMovil.setBounds(26, 300, 187, 20);
 		contentDatos.add(textMovil);
@@ -396,7 +394,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorOpc);
 
 		textTelf = new JTextField();
-		textTelf.setToolTipText("");
 		textTelf.setColumns(10);
 		textTelf.setBounds(26, 370, 187, 20);
 		contentDatos.add(textTelf);
@@ -414,7 +411,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorNac);
 
 		textNac = new JTextField();
-		textNac.setToolTipText("");
 		textNac.setColumns(10);
 		textNac.setBounds(26, 497, 187, 20);
 		contentDatos.add(textNac);
@@ -432,11 +428,10 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorFall);
 
 		textFall = new JTextField();
-		textFall.setToolTipText("");
 		textFall.setColumns(10);
 		textFall.setBounds(26, 565, 187, 20);
 		contentDatos.add(textFall);
-		
+
 		// Campos de información de agente
 		lblRango = new JLabel("RANGO");
 		lblRango.setForeground(new Color(153, 0, 0));
@@ -453,7 +448,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorRango);
 
 		textRango = new JTextField();
-		textRango.setToolTipText("");
 		textRango.setVisible(false);
 		textRango.setColumns(10);
 		textRango.setBounds(264, 116, 187, 20);
@@ -474,7 +468,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorIniServ);
 
 		textIniServ = new JTextField();
-		textIniServ.setToolTipText("");
 		textIniServ.setVisible(false);
 		textIniServ.setColumns(10);
 		textIniServ.setBounds(264, 174, 187, 20);
@@ -495,12 +488,11 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorFinServ);
 
 		textFinServ = new JTextField();
-		textFinServ.setToolTipText("");
 		textFinServ.setVisible(false);
 		textFinServ.setColumns(10);
 		textFinServ.setBounds(264, 242, 187, 20);
 		contentDatos.add(textFinServ);
-		
+
 		// Campos de información de criminal
 		lblPris = new JLabel("PRISIONERO");
 		lblPris.setForeground(new Color(153, 0, 0));
@@ -529,11 +521,11 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		rdbtnNo.setBounds(338, 118, 43, 23);
 		rdbtnNo.setVisible(false);
 		contentDatos.add(rdbtnNo);
-		
+
 		bgPris = new ButtonGroup();
 		bgPris.add(rdbtnSi);
 		bgPris.add(rdbtnNo);
-		
+
 		lblFechaArr = new JLabel("FECHA ARRESTO");
 		lblFechaArr.setForeground(new Color(153, 0, 0));
 		lblFechaArr.setVisible(false);
@@ -559,35 +551,30 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 				}
 			}
 		});
-		textFechaArr.setToolTipText("");
 		textFechaArr.setVisible(false);
 		textFechaArr.setColumns(10);
 		textFechaArr.setBounds(264, 174, 187, 20);
 		contentDatos.add(textFechaArr);
-		
+
 		// Campos de información de desaparecida
 		textFechaDes = new JTextField();
-		textFechaDes.setToolTipText("");
 		textFechaDes.setVisible(false);
 		textFechaDes.setColumns(10);
 		textFechaDes.setBounds(264, 116, 187, 20);
 		contentDatos.add(textFechaDes);
 
 		textTP = new JTextField();
-		textTP.setToolTipText("");
 		textTP.setVisible(false);
 		textTP.setColumns(10);
 		textTP.setBounds(264, 300, 187, 20);
 		contentDatos.add(textTP);
 
 		textLoc = new JTextField();
-		textLoc.setToolTipText("");
 		textLoc.setColumns(10);
 		textLoc.setBounds(26, 428, 187, 20);
 		contentDatos.add(textLoc);
 
 		textUltUbi = new JTextField();
-		textUltUbi.setToolTipText("");
 		textUltUbi.setVisible(false);
 		textUltUbi.setColumns(10);
 		textUltUbi.setBounds(264, 174, 187, 20);
@@ -662,14 +649,12 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorTP);
 
 		textSexo = new JTextField();
-		textSexo.setToolTipText("");
 		textSexo.setVisible(false);
 		textSexo.setColumns(10);
 		textSexo.setBounds(264, 242, 187, 20);
 		contentDatos.add(textSexo);
 
 		textCP = new JTextField();
-		textCP.setToolTipText("");
 		textCP.setVisible(false);
 		textCP.setColumns(10);
 		textCP.setBounds(264, 370, 187, 20);
@@ -690,7 +675,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorCP);
 
 		textCO = new JTextField();
-		textCO.setToolTipText("");
 		textCO.setVisible(false);
 		textCO.setColumns(10);
 		textCO.setBounds(264, 428, 187, 20);
@@ -711,7 +695,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorCO);
 
 		textAlt = new JTextField();
-		textAlt.setToolTipText("");
 		textAlt.setVisible(false);
 		textAlt.setColumns(10);
 		textAlt.setBounds(264, 497, 187, 20);
@@ -732,7 +715,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		contentDatos.add(separatorAlt);
 
 		textEsp = new JTextField();
-		textEsp.setToolTipText("");
 		textEsp.setVisible(false);
 		textEsp.setColumns(10);
 		textEsp.setBounds(264, 565, 187, 20);
@@ -751,13 +733,13 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		separatorEsp.setVisible(false);
 		separatorEsp.setBounds(264, 552, 106, 2);
 		contentDatos.add(separatorEsp);
-		
+
 		// Fondo
 		imgErtzAO = new JLabel("");
 		imgErtzAO.setIcon(new ImageIcon(VGesPersona.class.getResource("/imagenes/ertzAC.png")));
 		imgErtzAO.setBounds(90, 200, 309, 317);
 		contentDatos.add(imgErtzAO);
-		
+
 		// Título
 		separatorGesPer = new JSeparator();
 		separatorGesPer.setForeground(new Color(102, 0, 0));
@@ -772,7 +754,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		lblGesPer.setBounds(10, 42, 142, 19);
 		lblGesPer.setVisible(false);
 		contentDatos.add(lblGesPer);
-		
+
 		// Botón de modificación y eliminación
 		buttonMod = new Button("MODIFICAR");
 		buttonMod.setForeground(Color.WHITE);
@@ -789,16 +771,16 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		buttonBaja.setBounds(264, 610, 89, 28);
 		buttonBaja.addActionListener(this);
 		contentDatos.add(buttonBaja);
-		
+
 		buttonFA = new Button("+");
 		buttonFA.setEnabled(false);
 		buttonFA.setBounds(457, 174, 20, 20);
 		buttonFA.setVisible(false);
 		buttonFA.addActionListener(this);
 		contentDatos.add(buttonFA);
-		
+
 		cargarDatos(dni);
-		
+
 		// <--- Pestaña 2 --->
 		contentConos = new JPanel();
 		contentConos.setLayout(null);
@@ -863,19 +845,13 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		lblCerrar_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblCerrar_1.setForeground(Color.WHITE);
 		contentConos.add(lblCerrar_1);
-		
-		// Menú superior
-		separator2_6 = new JSeparator();
-		separator2_6.setForeground(SystemColor.controlShadow);
-		separator2_6.setBackground(new Color(0, 51, 102));
-		separator2_6.setBounds(0, 36, 502, 2);
-		contentConos.add(separator2_6);
 
-		separator2 = new JSeparator();
-		separator2.setForeground(SystemColor.controlShadow);
-		separator2.setBackground(new Color(0, 51, 102));
-		separator2.setBounds(0, 36, 502, 2);
-		contentConos.add(separator2);
+		// Menú superior
+		separatorMenu2 = new JSeparator();
+		separatorMenu2.setForeground(SystemColor.controlShadow);
+		separatorMenu2.setBackground(new Color(0, 51, 102));
+		separatorMenu2.setBounds(0, 36, 502, 2);
+		contentConos.add(separatorMenu2);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 1, 502, 37);
@@ -955,7 +931,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		menBuscar.setBackground(new Color(0, 0, 255));
 		menBuscar.setForeground(Color.WHITE);
 		menuBar.add(menBuscar);
-		
+
 		// Campos de información de conocido
 		lblDniCon = new JLabel("DNI");
 		lblDniCon.setForeground(new Color(0, 51, 102));
@@ -976,7 +952,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 				habilitarBoton();
 			}
 		});
-		textDniCon.setToolTipText("");
 		textDniCon.setColumns(10);
 		textDniCon.setBounds(26, 116, 187, 20);
 		contentConos.add(textDniCon);
@@ -1000,7 +975,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 				habilitarBoton();
 			}
 		});
-		textRel.setToolTipText("");
+
 		textRel.setColumns(10);
 		textRel.setBounds(26, 186, 187, 20);
 		contentConos.add(textRel);
@@ -1016,7 +991,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		separatorAnaCono.setBackground(new Color(153, 0, 0));
 		separatorAnaCono.setBounds(10, 64, 478, 2);
 		contentConos.add(separatorAnaCono);
-		
+
 		// Botón de agregar conocido
 		buttonAgregar = new Button("A\u00D1ADIR");
 		buttonAgregar.setForeground(Color.WHITE);
@@ -1026,14 +1001,14 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		buttonAgregar.setEnabled(false);
 		buttonAgregar.addActionListener(this);
 		contentConos.add(buttonAgregar);
-		
+
 		separator = new JSeparator();
 		separator.setForeground(new Color(153, 153, 255));
 		separator.setBackground(new Color(153, 153, 204));
 		separator.setBounds(0, 251, 502, 2);
 		contentConos.add(separator);
 	}
-	
+
 	// Cargar la información
 	private void cargarDatos(String dni) {
 		per = obtenerPersona(dni);
@@ -1049,7 +1024,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		if (per.getFechaFal() != null) {
 			textFall.setText(per.getFechaFal().toString());
 		}
-		
+
 		if (per instanceof Agente) {
 			lblRango.setVisible(true);
 			separatorRango.setVisible(true);
@@ -1116,9 +1091,9 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 			textCO.setText(((Desaparecida) per).getColorOjos());
 			textAlt.setText(Integer.toString(((Desaparecida) per).getAltura()));
 			textEsp.setText(((Desaparecida) per).getEspecificaciones());
-		} 
+		}
 	}
-	
+
 	// Habilitar botón si hay un dni y una relación introducidas
 	public void habilitarBoton() {
 		if (!textRel.getText().isBlank() && !textDniCon.getText().isBlank()) {
@@ -1137,68 +1112,76 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	public void modificarPersona(Persona per) {
 		int movil = 0;
 		int opc = 0;
-		if (!textMovil.getText().isBlank()) {
-			movil = Integer.valueOf(textMovil.getText());
+		try {
+			if (!textMovil.getText().isBlank()) {
+				movil = Integer.valueOf(textMovil.getText());
+			}
+			if (!textTelf.getText().isBlank()) {
+				opc = Integer.valueOf(textTelf.getText());
+			}
+			int[] telfs = { movil, opc };
+
+			per.setNombre(textNombre.getText());
+			per.setApellido(textApellido.getText());
+			per.setTelefonos(telfs);
+			per.setLocalidad(textLoc.getText());
+			if (!textNac.getText().isBlank()) {
+				per.setFechaNac(LocalDate.parse(textNac.getText()));
+			}
+			if (!textFall.getText().isBlank()) {
+				per.setFechaFal(LocalDate.parse(textFall.getText()));
+			}
+			if (per instanceof Agente) {
+				int rango = 0;
+				if (!textRango.getText().isBlank()) {
+					rango = Integer.parseInt(textRango.getText());
+				}
+				((Agente) per).setRango(rango);
+				if (!textIniServ.getText().isBlank()) {
+					((Agente) per).setInicioServ(LocalDate.parse(textIniServ.getText()));
+				}
+				if (!textFinServ.getText().isBlank()) {
+					((Agente) per).setFinServ(LocalDate.parse(textFinServ.getText()));
+				}
+
+			} else if (per instanceof Criminal) {
+				boolean pris = false;
+				if (rdbtnSi.isSelected()) {
+					pris = true;
+				}
+				((Criminal) per).setPrisionero(pris);
+			} else if (per instanceof Desaparecida) {
+				int altura = 0;
+				if (!textAlt.getText().isBlank()) {
+					altura = Integer.parseInt(textAlt.getText());
+				}
+				if (!textFechaDes.getText().isBlank()) {
+					((Desaparecida) per).setFechaDes(LocalDate.parse(textFechaDes.getText()));
+				}
+				((Desaparecida) per).setUltimaUbi(textUltUbi.getText());
+				((Desaparecida) per).setGenero(textSexo.getText());
+				((Desaparecida) per).setTipoPelo(textTP.getText());
+				((Desaparecida) per).setColorPelo(textCP.getText());
+				((Desaparecida) per).setColorOjos(textCO.getText());
+				((Desaparecida) per).setAltura(altura);
+				((Desaparecida) per).setEspecificaciones(textEsp.getText());
+			}
+			datos.modificarPersona(per);
+			JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación exitosa",
+					JOptionPane.CLOSED_OPTION);
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos", JOptionPane.ERROR_MESSAGE);
 		}
-		if (!textTelf.getText().isBlank()) {
-			opc = Integer.valueOf(textTelf.getText());
-		}
-		int[] telfs = {movil,opc};
-		
-		per.setNombre(textNombre.getText());
-		per.setApellido(textApellido.getText());
-		per.setTelefonos(telfs);
-		per.setLocalidad(textLoc.getText());
-		if (!textNac.getText().isBlank()) {
-			per.setFechaNac(LocalDate.parse(textNac.getText()));
-		}
-		if (!textFall.getText().isBlank()) {
-			per.setFechaFal(LocalDate.parse(textFall.getText()));
-		}
-		if (per instanceof Agente) {
-			int rango = 0;
-			if (!textRango.getText().isBlank()) {
-				rango = Integer.parseInt(textRango.getText());
-			}
-			((Agente) per).setRango(rango);
-			if (!textIniServ.getText().isBlank()) {
-				((Agente) per).setInicioServ(LocalDate.parse(textIniServ.getText()));
-			}
-			if (!textFinServ.getText().isBlank()) {
-				((Agente) per).setFinServ(LocalDate.parse(textFinServ.getText()));
-			}
-			
-		} else if (per instanceof Criminal) {
-			boolean pris = false;
-			if (rdbtnSi.isSelected()) {
-				pris = true;
-			}
-			((Criminal) per).setPrisionero(pris);
-		} else if (per instanceof Desaparecida) {
-			int altura = 0;
-			if (!textAlt.getText().isBlank()) {
-				altura = Integer.parseInt(textAlt.getText());
-			}
-			if (!textFechaDes.getText().isBlank()) {
-				((Desaparecida) per).setFechaDes(LocalDate.parse(textFechaDes.getText()));
-			}
-			((Desaparecida) per).setUltimaUbi(textUltUbi.getText());
-			((Desaparecida) per).setGenero(textSexo.getText());
-			((Desaparecida) per).setTipoPelo(textTP.getText());
-			((Desaparecida) per).setColorPelo(textCP.getText());
-			((Desaparecida) per).setColorOjos(textCO.getText());
-			((Desaparecida) per).setAltura(altura);
-			((Desaparecida) per).setEspecificaciones(textEsp.getText());
-		} 
-		datos.modificarPersona(per);
-		JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.","Modificación exitosa",JOptionPane.CLOSED_OPTION);
 	}
 
 	@Override
 	public void eliminarPersona(String dni) {
-		if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea dar de baja a esta persona? Es una acción irreversible.", "Confirmar baja", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+		if (JOptionPane.showConfirmDialog(this,
+				"¿Seguro que desea dar de baja a esta persona? Es una acción irreversible.", "Confirmar baja",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 			datos.eliminarPersona(dni);
-			JOptionPane.showMessageDialog(this, "Persona eliminada correctamente.","Baja realizada",JOptionPane.CLOSED_OPTION);
+			JOptionPane.showMessageDialog(this, "Persona eliminada correctamente.", "Baja realizada",
+					JOptionPane.CLOSED_OPTION);
 			cerrar();
 		}
 	}
@@ -1210,20 +1193,27 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 
 	@Override
 	public void agregarConocido(Conocido cono) {
-		Map <String,Conocido> conocidos = listarConocidos(dni);
+		Map<String, Conocido> conocidos = listarConocidos(dni);
 		if (conocidos.get(textDniCon.getText()) == null && comprobarDNI(textDniCon.getText())) {
 			cono = new Conocido();
 			cono.setDni1(dni);
 			cono.setDni2(textDniCon.getText());
 			cono.setRelacion(textRel.getText());
-			datos.agregarConocido(cono);
-			JOptionPane.showMessageDialog(this, "Conocido añadido con exito.","Insercción realizada",JOptionPane.CLOSED_OPTION);
+			try {
+				datos.agregarConocido(cono);
+			} catch (Excepciones e) {
+				JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos", JOptionPane.ERROR_MESSAGE);
+			}
+			JOptionPane.showMessageDialog(this, "Conocido añadido con exito.", "Insercción realizada",
+					JOptionPane.CLOSED_OPTION);
 			textDniCon.setText("");
 			textRel.setText("");
 		} else if (conocidos.get(textDniCon.getText()) != null) {
-			JOptionPane.showMessageDialog(this, "El DNI introducido pertenece ya a un conocido de esta persona.","DNI existente.",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "El DNI introducido pertenece ya a un conocido de esta persona.",
+					"DNI existente.", JOptionPane.ERROR_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(this, "El DNI introducido no está registrado en la base de datos.","DNI inexistente.",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "El DNI introducido no está registrado en la base de datos.",
+					"DNI inexistente.", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -1236,15 +1226,16 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	public void agregarFechaArresto(String dni, LocalDate fecha) {
 		try {
 			datos.agregarFechaArresto(dni, fecha);
-			JOptionPane.showMessageDialog(this, "Fecha agregada correctamente.","Insercción realizada",JOptionPane.CLOSED_OPTION);
+			JOptionPane.showMessageDialog(this, "Fecha agregada correctamente.", "Insercción realizada",
+					JOptionPane.CLOSED_OPTION);
 			textFechaArr.setText("");
 		} catch (Excepciones e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(),"Fecha existente.",JOptionPane.ERROR_MESSAGE);
-		}
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Fecha existente.", JOptionPane.ERROR_MESSAGE);
+		} 
 	}
 
 	public void cerrar() {
-		VGestion vGest = new VGestion(padre,true,info);
+		VGestion vGest = new VGestion(padre, true, info);
 		this.dispose();
 		vGest.setVisible(true);
 	}
@@ -1289,22 +1280,44 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(buttonMod)) {
-			modificarPersona(per);
+			try {
+				if ((!textMovil.getText().isBlank() && textMovil.getText().length() != 9) || (!textTelf.getText().isBlank() && textTelf.getText().length() != 9)) {
+					JOptionPane.showMessageDialog(this,"El teléfono debe tener 9 dígitos.","Telf. incorrecto",JOptionPane.ERROR_MESSAGE);
+				} else {
+					modificarPersona(per);
+				}
+			
+			} catch (DateTimeParseException e1) {
+				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
+						JOptionPane.ERROR_MESSAGE);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(this, "Los números deben ser dígitos sin espacios.","Formato erroneo",JOptionPane.ERROR_MESSAGE);
+			}
 		} else if (e.getSource().equals(buttonBaja)) {
 			eliminarPersona(dni);
 		} else if (e.getSource().equals(buttonFA)) {
-			agregarFechaArresto(per.getDni(),LocalDate.parse(textFechaArr.getText()));
+			try {
+				agregarFechaArresto(per.getDni(), LocalDate.parse(textFechaArr.getText()));
+			} catch (DateTimeParseException e1) {
+				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		} else if (e.getSource().equals(buttonAgregar)) {
 			agregarConocido(con);
 		} else if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCerrar2)) {
-			this.dispose();
-			padre.setVisible(true);
-		} else 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {

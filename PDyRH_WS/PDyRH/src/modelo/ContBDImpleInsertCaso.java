@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import controlador.interfaces.ContDatosInsertCaso;
+import excepciones.Excepciones;
 import modelo.clases.Caso;
 
 public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
@@ -52,7 +53,7 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 	}
 
 	@Override
-	public void altaCaso(Caso caso) {
+	public void altaCaso(Caso caso) throws Excepciones {
 		this.openConnection();
 		
 		try {
@@ -76,7 +77,9 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 			
 			stmnt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			String msg = "Los campos no pueden exceder los 50 carácteres.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}
