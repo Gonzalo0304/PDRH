@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -59,31 +60,31 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 	private JMenuItem mCaso;
 	private static Point point = new Point();
 	private JLabel lblCerrar;
-	private JSeparator separator2_5;
+	private JSeparator separatorMenu;
 	private JLabel lblCausa;
-	private JSeparator separator2;
+	private JSeparator separatorCausa;
 	private JLabel lblCod;
-	private JSeparator separator2_1;
+	private JSeparator separatorCod;
 	private JLabel lblInsRH;
 	private JSeparator separatorInsRH;
-	private JSeparator separator2_2_1_1_1;
+	private JSeparator separatorCO;
 	private JLabel lblFecha_1;
-	private JSeparator separator2_4;
+	private JSeparator separatorFecha;
 	private JLabel imgErtzAC;
 	private JLabel lblUbi_1;
 	private JLabel lblGen_1;
-	private JSeparator separator2_1_3;
+	private JSeparator separatorUbi;
 	private RestoHumano rh;
 	private String cod;
-	private JSeparator separator2_2_2;
+	private JSeparator separatorSexo;
 	private JLabel lblTP_1;
-	private JSeparator separator2_1_1_1;
+	private JSeparator separatorTP;
 	private JLabel lblCP_1;
-	private JSeparator separator2_3_1;
+	private JSeparator separatorCP;
 	private JLabel lblAlt_1;
-	private JSeparator separator2_1_2_1;
+	private JSeparator separatorAlt;
 	private JLabel lblEsp_1;
-	private JSeparator separator2_2_1_1;
+	private JSeparator separatorEsp;
 	private JLabel lblCO2;
 
 	ContDatosBusqRH datos = DataFactoryBusqRH.getDatos();
@@ -94,6 +95,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		super(padre);
 		this.setModal(modal);
 		setBounds(350, 150, 503, 627);
+		setTitle("PDyRH: Buscar RH");
 		contentPanel.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new LineBorder(new Color(128, 128, 128)));
@@ -147,11 +149,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		contentPanel.add(lblCerrar);
 
 		// Menú superior
-		separator2_5 = new JSeparator();
-		separator2_5.setBounds(0, 36, 502, 2);
-		separator2_5.setForeground(SystemColor.controlShadow);
-		separator2_5.setBackground(new Color(0, 51, 102));
-		contentPanel.add(separator2_5);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBounds(0, 36, 502, 2);
+		separatorMenu.setForeground(SystemColor.controlShadow);
+		separatorMenu.setBackground(new Color(0, 51, 102));
+		contentPanel.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 1, 502, 37);
@@ -304,11 +306,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblFecha_1.setBounds(45, 298, 81, 28);
 		contentPanel.add(lblFecha_1);
 
-		separator2_4 = new JSeparator();
-		separator2_4.setForeground(new Color(0, 51, 102));
-		separator2_4.setBackground(new Color(0, 0, 51));
-		separator2_4.setBounds(45, 324, 106, 2);
-		contentPanel.add(separator2_4);
+		separatorFecha = new JSeparator();
+		separatorFecha.setForeground(new Color(0, 51, 102));
+		separatorFecha.setBackground(new Color(0, 0, 51));
+		separatorFecha.setBounds(45, 324, 106, 2);
+		contentPanel.add(separatorFecha);
 
 		lblUbi_1 = new JLabel("UBICACI\u00D3N");
 		lblUbi_1.setForeground(new Color(0, 51, 102));
@@ -316,11 +318,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblUbi_1.setBounds(45, 383, 81, 28);
 		contentPanel.add(lblUbi_1);
 
-		separator2_1_3 = new JSeparator();
-		separator2_1_3.setForeground(new Color(0, 51, 102));
-		separator2_1_3.setBackground(new Color(0, 0, 51));
-		separator2_1_3.setBounds(45, 409, 106, 2);
-		contentPanel.add(separator2_1_3);
+		separatorUbi = new JSeparator();
+		separatorUbi.setForeground(new Color(0, 51, 102));
+		separatorUbi.setBackground(new Color(0, 0, 51));
+		separatorUbi.setBounds(45, 409, 106, 2);
+		contentPanel.add(separatorUbi);
 
 		lblGen_1 = new JLabel("SEXO");
 		lblGen_1.setForeground(new Color(0, 51, 102));
@@ -328,11 +330,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblGen_1.setBounds(45, 474, 81, 28);
 		contentPanel.add(lblGen_1);
 
-		separator2_2_2 = new JSeparator();
-		separator2_2_2.setForeground(new Color(0, 51, 102));
-		separator2_2_2.setBackground(new Color(0, 0, 51));
-		separator2_2_2.setBounds(45, 500, 106, 2);
-		contentPanel.add(separator2_2_2);
+		separatorSexo = new JSeparator();
+		separatorSexo.setForeground(new Color(0, 51, 102));
+		separatorSexo.setBackground(new Color(0, 0, 51));
+		separatorSexo.setBounds(45, 500, 106, 2);
+		contentPanel.add(separatorSexo);
 
 		lblTP_1 = new JLabel("TIPO DE PELO");
 		lblTP_1.setForeground(new Color(0, 51, 102));
@@ -340,11 +342,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblTP_1.setBounds(269, 120, 81, 28);
 		contentPanel.add(lblTP_1);
 
-		separator2_1_1_1 = new JSeparator();
-		separator2_1_1_1.setForeground(new Color(0, 51, 102));
-		separator2_1_1_1.setBackground(new Color(0, 0, 51));
-		separator2_1_1_1.setBounds(269, 146, 106, 2);
-		contentPanel.add(separator2_1_1_1);
+		separatorTP = new JSeparator();
+		separatorTP.setForeground(new Color(0, 51, 102));
+		separatorTP.setBackground(new Color(0, 0, 51));
+		separatorTP.setBounds(269, 146, 106, 2);
+		contentPanel.add(separatorTP);
 
 		lblCP_1 = new JLabel("COLOR DE PELO");
 		lblCP_1.setForeground(new Color(0, 51, 102));
@@ -352,11 +354,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblCP_1.setBounds(269, 211, 106, 28);
 		contentPanel.add(lblCP_1);
 
-		separator2_3_1 = new JSeparator();
-		separator2_3_1.setForeground(new Color(0, 51, 102));
-		separator2_3_1.setBackground(new Color(0, 0, 51));
-		separator2_3_1.setBounds(269, 237, 106, 2);
-		contentPanel.add(separator2_3_1);
+		separatorCP = new JSeparator();
+		separatorCP.setForeground(new Color(0, 51, 102));
+		separatorCP.setBackground(new Color(0, 0, 51));
+		separatorCP.setBounds(269, 237, 106, 2);
+		contentPanel.add(separatorCP);
 
 		lblAlt_1 = new JLabel("ALTURA");
 		lblAlt_1.setForeground(new Color(0, 51, 102));
@@ -364,11 +366,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblAlt_1.setBounds(269, 381, 81, 28);
 		contentPanel.add(lblAlt_1);
 
-		separator2_1_2_1 = new JSeparator();
-		separator2_1_2_1.setForeground(new Color(0, 51, 102));
-		separator2_1_2_1.setBackground(new Color(0, 0, 51));
-		separator2_1_2_1.setBounds(269, 407, 106, 2);
-		contentPanel.add(separator2_1_2_1);
+		separatorAlt = new JSeparator();
+		separatorAlt.setForeground(new Color(0, 51, 102));
+		separatorAlt.setBackground(new Color(0, 0, 51));
+		separatorAlt.setBounds(269, 407, 106, 2);
+		contentPanel.add(separatorAlt);
 
 		lblEsp_1 = new JLabel("ESPECIFICACIONES");
 		lblEsp_1.setForeground(new Color(0, 51, 102));
@@ -376,11 +378,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblEsp_1.setBounds(269, 476, 106, 28);
 		contentPanel.add(lblEsp_1);
 
-		separator2_2_1_1 = new JSeparator();
-		separator2_2_1_1.setForeground(new Color(0, 51, 102));
-		separator2_2_1_1.setBackground(new Color(0, 0, 51));
-		separator2_2_1_1.setBounds(269, 502, 106, 2);
-		contentPanel.add(separator2_2_1_1);
+		separatorEsp = new JSeparator();
+		separatorEsp.setForeground(new Color(0, 51, 102));
+		separatorEsp.setBackground(new Color(0, 0, 51));
+		separatorEsp.setBounds(269, 502, 106, 2);
+		contentPanel.add(separatorEsp);
 
 		lblCO2 = new JLabel("COLOR DE OJOS");
 		lblCO2.setForeground(new Color(0, 51, 102));
@@ -388,11 +390,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblCO2.setBounds(269, 298, 106, 28);
 		contentPanel.add(lblCO2);
 
-		separator2_2_1_1_1 = new JSeparator();
-		separator2_2_1_1_1.setForeground(new Color(0, 51, 102));
-		separator2_2_1_1_1.setBackground(new Color(0, 0, 51));
-		separator2_2_1_1_1.setBounds(269, 324, 106, 2);
-		contentPanel.add(separator2_2_1_1_1);
+		separatorCO = new JSeparator();
+		separatorCO.setForeground(new Color(0, 51, 102));
+		separatorCO.setBackground(new Color(0, 0, 51));
+		separatorCO.setBounds(269, 324, 106, 2);
+		contentPanel.add(separatorCO);
 
 		lblCausa = new JLabel("CAUSA");
 		lblCausa.setForeground(new Color(0, 51, 102));
@@ -400,11 +402,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblCausa.setBounds(45, 206, 81, 28);
 		contentPanel.add(lblCausa);
 
-		separator2 = new JSeparator();
-		separator2.setForeground(new Color(0, 51, 102));
-		separator2.setBackground(new Color(0, 0, 51));
-		separator2.setBounds(45, 232, 106, 2);
-		contentPanel.add(separator2);
+		separatorCausa = new JSeparator();
+		separatorCausa.setForeground(new Color(0, 51, 102));
+		separatorCausa.setBackground(new Color(0, 0, 51));
+		separatorCausa.setBounds(45, 232, 106, 2);
+		contentPanel.add(separatorCausa);
 
 		lblCod = new JLabel("C\u00D3DIGO");
 		lblCod.setForeground(new Color(0, 51, 102));
@@ -412,11 +414,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		lblCod.setBounds(45, 123, 81, 28);
 		contentPanel.add(lblCod);
 
-		separator2_1 = new JSeparator();
-		separator2_1.setForeground(new Color(0, 51, 102));
-		separator2_1.setBackground(new Color(0, 0, 51));
-		separator2_1.setBounds(45, 149, 106, 2);
-		contentPanel.add(separator2_1);
+		separatorCod = new JSeparator();
+		separatorCod.setForeground(new Color(0, 51, 102));
+		separatorCod.setBackground(new Color(0, 0, 51));
+		separatorCod.setBounds(45, 149, 106, 2);
+		contentPanel.add(separatorCod);
 
 		lblInsRH = new JLabel("B\u00FAsqueda de Resto Humano");
 		lblInsRH.setForeground(SystemColor.textInactiveText);
@@ -482,8 +484,12 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {

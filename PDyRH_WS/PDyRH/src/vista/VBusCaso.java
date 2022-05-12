@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -43,8 +44,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	private JTabbedPane tabbedPane;
 	private JPanel contentDatos;
 	private JLabel lblCerrar;
-	private JSeparator separator2;
-	private JSeparator separator2_1;
+	private JSeparator separatorMenu;
 	private JMenuBar menuBar;
 	private JMenuBar menuBar_1;
 	private JMenu menInsertar;
@@ -74,7 +74,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	private JLabel imgErtzAO;
 	private JPanel contentConos;
 	private JLabel lblCerrar_1;
-	private JSeparator separator2_6;
+	private JSeparator separatorMenu2;
 	private JLabel lblImp;
 	private JSeparator separatorImp;
 	private JTextField textImp;
@@ -100,6 +100,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
+		setTitle("PDyRH: Buscar caso");
 		setBounds(350, 150, 506, 690);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
@@ -162,11 +163,11 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(lblCerrar);
 
 		// Menú superior
-		separator2 = new JSeparator();
-		separator2.setForeground(SystemColor.controlShadow);
-		separator2.setBackground(new Color(0, 51, 102));
-		separator2.setBounds(0, 36, 502, 2);
-		contentDatos.add(separator2);
+		separatorMenu = new JSeparator();
+		separatorMenu.setForeground(SystemColor.controlShadow);
+		separatorMenu.setBackground(new Color(0, 51, 102));
+		separatorMenu.setBounds(0, 36, 502, 2);
+		contentDatos.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 1, 502, 37);
@@ -262,7 +263,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 
 		textCod = new JTextField();
 		textCod.setEditable(false);
-		textCod.setToolTipText("");
 		textCod.setColumns(10);
 		textCod.setBounds(151, 145, 187, 20);
 		contentDatos.add(textCod);
@@ -281,7 +281,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 
 		textNombre = new JTextField();
 		textNombre.setEditable(false);
-		textNombre.setToolTipText("");
 		textNombre.setColumns(10);
 		textNombre.setBounds(151, 244, 187, 20);
 		contentDatos.add(textNombre);
@@ -300,7 +299,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 
 		textEstado = new JTextField();
 		textEstado.setEditable(false);
-		textEstado.setToolTipText("");
 		textEstado.setColumns(10);
 		textEstado.setBounds(151, 347, 187, 20);
 		contentDatos.add(textEstado);
@@ -319,7 +317,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 
 		textNac = new JTextField();
 		textNac.setEditable(false);
-		textNac.setToolTipText("");
 		textNac.setColumns(10);
 		textNac.setBounds(151, 459, 187, 20);
 		contentDatos.add(textNac);
@@ -338,7 +335,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 
 		textFall = new JTextField();
 		textFall.setEditable(false);
-		textFall.setToolTipText("");
 		textFall.setColumns(10);
 		textFall.setBounds(151, 575, 187, 20);
 		contentDatos.add(textFall);
@@ -412,17 +408,11 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentConos.add(lblCerrar_1);
 
 		// Menú superior
-		separator2_6 = new JSeparator();
-		separator2_6.setBounds(0, 36, 502, 2);
-		separator2_6.setForeground(SystemColor.controlShadow);
-		separator2_6.setBackground(new Color(0, 51, 102));
-		contentConos.add(separator2_6);
-
-		separator2_1 = new JSeparator();
-		separator2_1.setBounds(0, 36, 502, 2);
-		separator2_1.setForeground(SystemColor.controlShadow);
-		separator2_1.setBackground(new Color(0, 51, 102));
-		contentConos.add(separator2_1);
+		separatorMenu2 = new JSeparator();
+		separatorMenu2.setBounds(0, 36, 502, 2);
+		separatorMenu2.setForeground(SystemColor.controlShadow);
+		separatorMenu2.setBackground(new Color(0, 51, 102));
+		contentConos.add(separatorMenu2);
 
 		menuBar_1 = new JMenuBar();
 		menuBar_1.setBounds(0, 1, 502, 37);
@@ -621,8 +611,12 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {

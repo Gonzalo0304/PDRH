@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -48,8 +49,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	private JTabbedPane tabbedPane;
 	private JPanel contentDatos;
 	private JLabel lblCerrar;
-	private JSeparator separator2;
-	private JSeparator separator2_1;
+	private JSeparator separatorMenu;
 	private JMenuBar menuBar;
 	private JMenuBar menuBar_1;
 	private JMenu menInsertar;
@@ -110,7 +110,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	private JLabel imgErtzAO;
 	private JPanel contentConos;
 	private JLabel lblCerrar_1;
-	private JSeparator separator2_6;
+	private JSeparator separatorMenu2;
 	private JLabel lblRel;
 	private JSeparator separatorRel;
 	private JTextField textRel;
@@ -152,6 +152,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
+		setTitle("PDyRH: Buscar persona");
 		setBounds(350, 150, 506, 690);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
@@ -213,11 +214,11 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(lblCerrar);
 
 		// Menú superior
-		separator2 = new JSeparator();
-		separator2.setForeground(SystemColor.controlShadow);
-		separator2.setBackground(new Color(0, 51, 102));
-		separator2.setBounds(0, 36, 502, 2);
-		contentDatos.add(separator2);
+		separatorMenu = new JSeparator();
+		separatorMenu.setForeground(SystemColor.controlShadow);
+		separatorMenu.setBackground(new Color(0, 51, 102));
+		separatorMenu.setBounds(0, 36, 502, 2);
+		contentDatos.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 1, 502, 37);
@@ -313,7 +314,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 		textDni = new JTextField();
 		textDni.setEnabled(false);
-		textDni.setToolTipText("");
 		textDni.setColumns(10);
 		textDni.setBounds(26, 116, 187, 20);
 		contentDatos.add(textDni);
@@ -332,7 +332,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 		textNombre = new JTextField();
 		textNombre.setEnabled(false);
-		textNombre.setToolTipText("");
 		textNombre.setColumns(10);
 		textNombre.setBounds(26, 174, 187, 20);
 		contentDatos.add(textNombre);
@@ -351,7 +350,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 		textApellido = new JTextField();
 		textApellido.setEnabled(false);
-		textApellido.setToolTipText("");
 		textApellido.setColumns(10);
 		textApellido.setBounds(26, 242, 187, 20);
 		contentDatos.add(textApellido);
@@ -370,7 +368,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 		textMovil = new JTextField();
 		textMovil.setEnabled(false);
-		textMovil.setToolTipText("");
 		textMovil.setColumns(10);
 		textMovil.setBounds(26, 300, 187, 20);
 		contentDatos.add(textMovil);
@@ -389,7 +386,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 		textTelf = new JTextField();
 		textTelf.setEnabled(false);
-		textTelf.setToolTipText("");
 		textTelf.setColumns(10);
 		textTelf.setBounds(26, 370, 187, 20);
 		contentDatos.add(textTelf);
@@ -408,7 +404,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 		textNac = new JTextField();
 		textNac.setEnabled(false);
-		textNac.setToolTipText("");
 		textNac.setColumns(10);
 		textNac.setBounds(26, 497, 187, 20);
 		contentDatos.add(textNac);
@@ -427,7 +422,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 		textFall = new JTextField();
 		textFall.setEnabled(false);
-		textFall.setToolTipText("");
 		textFall.setColumns(10);
 		textFall.setBounds(26, 565, 187, 20);
 		contentDatos.add(textFall);
@@ -448,7 +442,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 		textLoc = new JTextField();
 		textLoc.setEnabled(false);
-		textLoc.setToolTipText("");
 		textLoc.setText((String) null);
 		textLoc.setColumns(10);
 		textLoc.setBounds(26, 428, 187, 19);
@@ -514,21 +507,18 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textFechaDes.setEnabled(false);
 		textFechaDes.setBounds(21, 39, 187, 20);
 		panelDes.add(textFechaDes);
-		textFechaDes.setToolTipText("");
 		textFechaDes.setColumns(10);
 
 		textTP = new JTextField();
 		textTP.setEnabled(false);
 		textTP.setBounds(21, 223, 187, 20);
 		panelDes.add(textTP);
-		textTP.setToolTipText("");
 		textTP.setColumns(10);
 
 		textUltUbi = new JTextField();
 		textUltUbi.setEnabled(false);
 		textUltUbi.setBounds(21, 97, 187, 20);
 		panelDes.add(textUltUbi);
-		textUltUbi.setToolTipText("");
 		textUltUbi.setColumns(10);
 
 		separatorFechaDes = new JSeparator();
@@ -583,14 +573,12 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textSexo.setEnabled(false);
 		textSexo.setBounds(21, 165, 187, 20);
 		panelDes.add(textSexo);
-		textSexo.setToolTipText("");
 		textSexo.setColumns(10);
 
 		textCP = new JTextField();
 		textCP.setEnabled(false);
 		textCP.setBounds(21, 293, 187, 20);
 		panelDes.add(textCP);
-		textCP.setToolTipText("");
 		textCP.setColumns(10);
 
 		lblCP = new JLabel("COLOR PELO");
@@ -609,7 +597,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textCO.setEnabled(false);
 		textCO.setBounds(21, 351, 187, 20);
 		panelDes.add(textCO);
-		textCO.setToolTipText("");
 		textCO.setColumns(10);
 
 		lblCO = new JLabel("COLOR OJOS");
@@ -628,7 +615,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textAlt.setEnabled(false);
 		textAlt.setBounds(21, 420, 187, 20);
 		panelDes.add(textAlt);
-		textAlt.setToolTipText("");
 		textAlt.setColumns(10);
 
 		lblAlt = new JLabel("ALTURA");
@@ -647,7 +633,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textEsp.setEnabled(false);
 		textEsp.setBounds(21, 488, 187, 20);
 		panelDes.add(textEsp);
-		textEsp.setToolTipText("");
 		textEsp.setColumns(10);
 
 		lblEsp = new JLabel("ESPECIFICACIONES");
@@ -686,7 +671,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textRango.setEnabled(false);
 		textRango.setBounds(21, 42, 187, 20);
 		panelAgente.add(textRango);
-		textRango.setToolTipText("");
 		textRango.setColumns(10);
 
 		lblIniServ = new JLabel("INICIO SERVICIO");
@@ -705,7 +689,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textIniServ.setEnabled(false);
 		textIniServ.setBounds(21, 100, 187, 20);
 		panelAgente.add(textIniServ);
-		textIniServ.setToolTipText("");
 		textIniServ.setColumns(10);
 
 		lblFinServ = new JLabel("FIN SERVICIO");
@@ -724,7 +707,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textFinServ.setEnabled(false);
 		textFinServ.setBounds(21, 168, 187, 20);
 		panelAgente.add(textFinServ);
-		textFinServ.setToolTipText("");
 		textFinServ.setColumns(10);
 
 		// Fondo
@@ -796,17 +778,11 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentConos.add(lblCerrar_1);
 
 		// Menú superior
-		separator2_6 = new JSeparator();
-		separator2_6.setBounds(0, 36, 502, 2);
-		separator2_6.setForeground(SystemColor.controlShadow);
-		separator2_6.setBackground(new Color(0, 51, 102));
-		contentConos.add(separator2_6);
-
-		separator2_1 = new JSeparator();
-		separator2_1.setBounds(0, 36, 502, 2);
-		separator2_1.setForeground(SystemColor.controlShadow);
-		separator2_1.setBackground(new Color(0, 51, 102));
-		contentConos.add(separator2_1);
+		separatorMenu2 = new JSeparator();
+		separatorMenu2.setBounds(0, 36, 502, 2);
+		separatorMenu2.setForeground(SystemColor.controlShadow);
+		separatorMenu2.setBackground(new Color(0, 51, 102));
+		contentConos.add(separatorMenu2);
 
 		menuBar_1 = new JMenuBar();
 		menuBar_1.setBounds(0, 1, 502, 37);
@@ -1015,8 +991,12 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {

@@ -52,7 +52,7 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	}
 
 	@Override
-	public Caso buscarCaso(String codCaso) {
+	public Caso obtenerCaso(String codCaso) {
 		ResultSet rs = null;
 		Caso caso = null;
 		
@@ -122,7 +122,7 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	}
 
 	@Override
-	public boolean buscarRH(String codResto) {
+	public boolean comprobarCodResto(String codResto) {
 		ResultSet rs = null;
 		boolean esta = false;
 		

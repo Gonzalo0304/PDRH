@@ -107,7 +107,9 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(rs.getString("codCaso"));
-				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				if (rs.getDate("fechaMuerte") != null) {
+					resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,7 +151,9 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 				((Desaparecida) des).setColorOjos(rs.getString("colorOjos"));
 				((Desaparecida) des).setAltura(rs.getInt("altura"));
 				((Desaparecida) des).setEspecificaciones(rs.getString("especificaciones"));
-				((Desaparecida) des).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+				if (rs.getDate("fechaDes") != null) {
+					((Desaparecida) des).setFechaDes(rs.getDate("fechaDes").toLocalDate());
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

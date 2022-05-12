@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 
 import controlador.DataFactoryRH;
 import controlador.interfaces.ContDatosRH;
+import excepciones.Excepciones;
 import modelo.clases.RestoHumano;
 
 import javax.swing.JLabel;
@@ -27,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -64,42 +66,44 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 	private JMenuItem mCaso;
 	private static Point point = new Point();
 	private JLabel lblCerrar;
-	private JSeparator separator2_5;
+	private JSeparator separatorMenú;
 	private JLabel lblCausa;
-	private JSeparator separator2;
+	private JSeparator separatorCas;
 	private JLabel lblCod;
-	private JSeparator separator2_1;
+	private JSeparator separatorCod;
 	private JLabel lblInsRH;
 	private JSeparator separatorInsRH;
 	private Button btnBaja;
 	private Button btnMod;
-	private JSeparator separator2_2_1_1_1;
+	private JSeparator separatorCO;
 	private JLabel lblFecha_1;
-	private JSeparator separator2_4;
+	private JSeparator separatorFecha;
 	private JLabel imgErtzAC;
 	private JLabel lblUbi_1;
 	private JLabel lblGen_1;
-	private JSeparator separator2_1_3;
+	private JSeparator separatorUbi;
 	private RestoHumano rh;
 	private String cod;
-	private JSeparator separator2_2_2;
+	private JSeparator separatorSexo;
 	private JLabel lblTP_1;
-	private JSeparator separator2_1_1_1;
+	private JSeparator separatorTP;
 	private JLabel lblCP_1;
-	private JSeparator separator2_3_1;
+	private JSeparator separatorCP;
 	private JLabel lblAlt_1;
-	private JSeparator separator2_1_2_1;
+	private JSeparator separatorAlt;
 	private JLabel lblEsp_1;
-	private JSeparator separator2_2_1_1;
+	private JSeparator separatorEsp;
 	private JLabel lblCO2;
 	private boolean esGes;
-	
+	private JLabel lblGesRH;
+
 	ContDatosRH datos = DataFactoryRH.getDatos();
 
 	public VInsRH(VIniciarSesion padre, boolean modal, String codigo, String[] infos, boolean esGes) {
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
+		setTitle("PDyRH: Insertar RH");
 		setBounds(350, 150, 503, 627);
 		contentPanel.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
@@ -155,11 +159,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		contentPanel.add(lblCerrar);
 
 		// Menú superior
-		separator2_5 = new JSeparator();
-		separator2_5.setBounds(0, 36, 502, 2);
-		separator2_5.setForeground(SystemColor.controlShadow);
-		separator2_5.setBackground(new Color(0, 51, 102));
-		contentPanel.add(separator2_5);
+		separatorMenú = new JSeparator();
+		separatorMenú.setBounds(0, 36, 502, 2);
+		separatorMenú.setForeground(SystemColor.controlShadow);
+		separatorMenú.setBackground(new Color(0, 51, 102));
+		contentPanel.add(separatorMenú);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 1, 502, 37);
@@ -274,7 +278,6 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 
 		comboBox = new JComboBox<Object>();
 		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "", "Hombre", "Mujer" }));
-		comboBox.setToolTipText("");
 		comboBox.setBounds(47, 473, 180, 22);
 		contentPanel.add(comboBox);
 
@@ -308,7 +311,15 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 			public void actionPerformed(ActionEvent e) {
 				if (obtenerRH(textCodigo.getText()) == null) {
 					rh = new RestoHumano();
-					altaRH(rh);
+					
+					try {
+						altaRH(rh);
+					} catch (DateTimeParseException e1) {
+						JOptionPane.showMessageDialog(padre, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
+								JOptionPane.ERROR_MESSAGE);
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(padre, "Los números deben ser dígitos sin espacios.","Formato erroneo",JOptionPane.ERROR_MESSAGE);
+					}
 				} else {
 					JOptionPane.showMessageDialog(padre, "Este resto humano ya ha sido introducido.",
 							"Código existente.", JOptionPane.ERROR_MESSAGE);
@@ -328,11 +339,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblFecha_1.setBounds(47, 258, 81, 28);
 		contentPanel.add(lblFecha_1);
 
-		separator2_4 = new JSeparator();
-		separator2_4.setForeground(new Color(0, 51, 102));
-		separator2_4.setBackground(new Color(0, 0, 51));
-		separator2_4.setBounds(47, 284, 106, 2);
-		contentPanel.add(separator2_4);
+		separatorFecha = new JSeparator();
+		separatorFecha.setForeground(new Color(0, 51, 102));
+		separatorFecha.setBackground(new Color(0, 0, 51));
+		separatorFecha.setBounds(47, 284, 106, 2);
+		contentPanel.add(separatorFecha);
 
 		lblUbi_1 = new JLabel("UBICACI\u00D3N");
 		lblUbi_1.setForeground(new Color(0, 51, 102));
@@ -340,11 +351,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblUbi_1.setBounds(47, 343, 81, 28);
 		contentPanel.add(lblUbi_1);
 
-		separator2_1_3 = new JSeparator();
-		separator2_1_3.setForeground(new Color(0, 51, 102));
-		separator2_1_3.setBackground(new Color(0, 0, 51));
-		separator2_1_3.setBounds(47, 369, 106, 2);
-		contentPanel.add(separator2_1_3);
+		separatorUbi = new JSeparator();
+		separatorUbi.setForeground(new Color(0, 51, 102));
+		separatorUbi.setBackground(new Color(0, 0, 51));
+		separatorUbi.setBounds(47, 369, 106, 2);
+		contentPanel.add(separatorUbi);
 
 		lblGen_1 = new JLabel("SEXO");
 		lblGen_1.setForeground(new Color(0, 51, 102));
@@ -352,11 +363,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblGen_1.setBounds(47, 434, 81, 28);
 		contentPanel.add(lblGen_1);
 
-		separator2_2_2 = new JSeparator();
-		separator2_2_2.setForeground(new Color(0, 51, 102));
-		separator2_2_2.setBackground(new Color(0, 0, 51));
-		separator2_2_2.setBounds(47, 460, 106, 2);
-		contentPanel.add(separator2_2_2);
+		separatorSexo = new JSeparator();
+		separatorSexo.setForeground(new Color(0, 51, 102));
+		separatorSexo.setBackground(new Color(0, 0, 51));
+		separatorSexo.setBounds(47, 460, 106, 2);
+		contentPanel.add(separatorSexo);
 
 		lblTP_1 = new JLabel("TIPO DE PELO");
 		lblTP_1.setForeground(new Color(0, 51, 102));
@@ -364,11 +375,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblTP_1.setBounds(271, 80, 81, 28);
 		contentPanel.add(lblTP_1);
 
-		separator2_1_1_1 = new JSeparator();
-		separator2_1_1_1.setForeground(new Color(0, 51, 102));
-		separator2_1_1_1.setBackground(new Color(0, 0, 51));
-		separator2_1_1_1.setBounds(271, 106, 106, 2);
-		contentPanel.add(separator2_1_1_1);
+		separatorTP = new JSeparator();
+		separatorTP.setForeground(new Color(0, 51, 102));
+		separatorTP.setBackground(new Color(0, 0, 51));
+		separatorTP.setBounds(271, 106, 106, 2);
+		contentPanel.add(separatorTP);
 
 		lblCP_1 = new JLabel("COLOR DE PELO");
 		lblCP_1.setForeground(new Color(0, 51, 102));
@@ -376,11 +387,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblCP_1.setBounds(271, 171, 106, 28);
 		contentPanel.add(lblCP_1);
 
-		separator2_3_1 = new JSeparator();
-		separator2_3_1.setForeground(new Color(0, 51, 102));
-		separator2_3_1.setBackground(new Color(0, 0, 51));
-		separator2_3_1.setBounds(271, 197, 106, 2);
-		contentPanel.add(separator2_3_1);
+		separatorCP = new JSeparator();
+		separatorCP.setForeground(new Color(0, 51, 102));
+		separatorCP.setBackground(new Color(0, 0, 51));
+		separatorCP.setBounds(271, 197, 106, 2);
+		contentPanel.add(separatorCP);
 
 		lblAlt_1 = new JLabel("ALTURA");
 		lblAlt_1.setForeground(new Color(0, 51, 102));
@@ -388,11 +399,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblAlt_1.setBounds(271, 341, 81, 28);
 		contentPanel.add(lblAlt_1);
 
-		separator2_1_2_1 = new JSeparator();
-		separator2_1_2_1.setForeground(new Color(0, 51, 102));
-		separator2_1_2_1.setBackground(new Color(0, 0, 51));
-		separator2_1_2_1.setBounds(271, 367, 106, 2);
-		contentPanel.add(separator2_1_2_1);
+		separatorAlt = new JSeparator();
+		separatorAlt.setForeground(new Color(0, 51, 102));
+		separatorAlt.setBackground(new Color(0, 0, 51));
+		separatorAlt.setBounds(271, 367, 106, 2);
+		contentPanel.add(separatorAlt);
 
 		lblEsp_1 = new JLabel("ESPECIFICACIONES");
 		lblEsp_1.setForeground(new Color(0, 51, 102));
@@ -400,11 +411,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblEsp_1.setBounds(271, 436, 106, 28);
 		contentPanel.add(lblEsp_1);
 
-		separator2_2_1_1 = new JSeparator();
-		separator2_2_1_1.setForeground(new Color(0, 51, 102));
-		separator2_2_1_1.setBackground(new Color(0, 0, 51));
-		separator2_2_1_1.setBounds(271, 462, 106, 2);
-		contentPanel.add(separator2_2_1_1);
+		separatorEsp = new JSeparator();
+		separatorEsp.setForeground(new Color(0, 51, 102));
+		separatorEsp.setBackground(new Color(0, 0, 51));
+		separatorEsp.setBounds(271, 462, 106, 2);
+		contentPanel.add(separatorEsp);
 
 		lblCO2 = new JLabel("COLOR DE OJOS");
 		lblCO2.setForeground(new Color(0, 51, 102));
@@ -412,11 +423,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblCO2.setBounds(271, 258, 106, 28);
 		contentPanel.add(lblCO2);
 
-		separator2_2_1_1_1 = new JSeparator();
-		separator2_2_1_1_1.setForeground(new Color(0, 51, 102));
-		separator2_2_1_1_1.setBackground(new Color(0, 0, 51));
-		separator2_2_1_1_1.setBounds(271, 284, 106, 2);
-		contentPanel.add(separator2_2_1_1_1);
+		separatorCO = new JSeparator();
+		separatorCO.setForeground(new Color(0, 51, 102));
+		separatorCO.setBackground(new Color(0, 0, 51));
+		separatorCO.setBounds(271, 284, 106, 2);
+		contentPanel.add(separatorCO);
 
 		lblCausa = new JLabel("CAUSA");
 		lblCausa.setForeground(new Color(0, 51, 102));
@@ -424,11 +435,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblCausa.setBounds(47, 166, 81, 28);
 		contentPanel.add(lblCausa);
 
-		separator2 = new JSeparator();
-		separator2.setForeground(new Color(0, 51, 102));
-		separator2.setBackground(new Color(0, 0, 51));
-		separator2.setBounds(47, 192, 106, 2);
-		contentPanel.add(separator2);
+		separatorCas = new JSeparator();
+		separatorCas.setForeground(new Color(0, 51, 102));
+		separatorCas.setBackground(new Color(0, 0, 51));
+		separatorCas.setBounds(47, 192, 106, 2);
+		contentPanel.add(separatorCas);
 
 		lblCod = new JLabel("C\u00D3DIGO");
 		lblCod.setForeground(new Color(0, 51, 102));
@@ -436,17 +447,23 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		lblCod.setBounds(47, 83, 81, 28);
 		contentPanel.add(lblCod);
 
-		separator2_1 = new JSeparator();
-		separator2_1.setForeground(new Color(0, 51, 102));
-		separator2_1.setBackground(new Color(0, 0, 51));
-		separator2_1.setBounds(47, 109, 106, 2);
-		contentPanel.add(separator2_1);
+		separatorCod = new JSeparator();
+		separatorCod.setForeground(new Color(0, 51, 102));
+		separatorCod.setBackground(new Color(0, 0, 51));
+		separatorCod.setBounds(47, 109, 106, 2);
+		contentPanel.add(separatorCod);
 
 		lblInsRH = new JLabel("Inserci\u00F3n de Resto Humano");
 		lblInsRH.setForeground(SystemColor.textInactiveText);
 		lblInsRH.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblInsRH.setBounds(25, 48, 209, 24);
 		contentPanel.add(lblInsRH);
+
+		lblGesRH = new JLabel("Gesti\u00F3n de Resto Humano");
+		lblGesRH.setForeground(SystemColor.textInactiveText);
+		lblGesRH.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+		lblGesRH.setBounds(25, 48, 209, 24);
+		contentPanel.add(lblGesRH);
 
 		separatorInsRH = new JSeparator();
 		separatorInsRH.setForeground(new Color(102, 0, 0));
@@ -475,12 +492,14 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		btnBaja.addActionListener(this);
 		contentPanel.add(btnBaja);
 
-		if (esGes) {
+		if (!esGes) {
 			btnMod.setVisible(false);
 			btnBaja.setVisible(false);
+			lblGesRH.setVisible(false);
 		} else {
 			btnAnadir.setVisible(false);
 			textCodigo.setEnabled(false);
+			lblInsRH.setVisible(false);
 			cargarDatos();
 		}
 	}
@@ -491,9 +510,14 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		if (rh.getFechaMuerte() != null) {
 			textFecha.setText(rh.getFechaMuerte().toString());
 		}
-		if (rh.getGenero().equalsIgnoreCase("M")) {
-			
+		if (rh.getGenero() != null) {
+			if (rh.getGenero().equalsIgnoreCase("M")) {
+				comboBox.setSelectedItem("Mujer");
+			} else {
+				comboBox.setSelectedItem("Hombre");
+			}
 		}
+		textAltura.setText(Integer.toString(rh.getAltura()));
 		textCausa.setText(rh.getCausa());
 		textColorO.setText(rh.getColorOjos());
 		textColorP.setText(rh.getColorPelo());
@@ -503,12 +527,12 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 	}
 
 	private void cerrar() {
-		if (esGes) {
+		if (!esGes) {
 			VInserciones insertar = new VInserciones(padre, true, info);
 			this.dispose();
 			insertar.setVisible(true);
 		} else {
-			VGestion vGes = new VGestion(padre,true,info);
+			VGestion vGes = new VGestion(padre, true, info);
 			this.dispose();
 			vGes.setVisible(true);
 		}
@@ -538,8 +562,12 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {
@@ -547,7 +575,14 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		} else if (e.getSource().equals(mRestoHumano)) {
 			abrirInsertRH();
 		} else if (e.getSource().equals(btnMod)) {
-			modificarRH(rh);
+			try {
+				modificarRH(rh);
+			} catch (DateTimeParseException e1) {
+				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
+						JOptionPane.ERROR_MESSAGE);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(this, "Los números deben ser dígitos sin espacios.","Formato erroneo",JOptionPane.ERROR_MESSAGE);
+			}
 		} else if (e.getSource().equals(btnBaja)) {
 			eliminarRH(cod);
 		}
@@ -606,11 +641,15 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 	@Override
 	public void altaRH(RestoHumano rh) {
 		rh = registrarDatos();
-		datos.altaRH(rh);
-		JOptionPane.showMessageDialog(this, "Inserción realizada con éxito.", "Inserción exitosa.",
-				JOptionPane.CLOSED_OPTION);
-		limpiar();
-		habilitarBoton();
+		try {
+			datos.altaRH(rh);
+			JOptionPane.showMessageDialog(this, "Inserción realizada con éxito.", "Inserción exitosa.",
+					JOptionPane.CLOSED_OPTION);
+			limpiar();
+			habilitarBoton();
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos", JOptionPane.ERROR_MESSAGE);
+		} 
 	}
 
 	private RestoHumano registrarDatos() {
@@ -638,21 +677,31 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		rh.setColorOjos(textColorO.getText());
 		rh.setAltura(altura);
 		rh.setEspecificaciones(textEspecificaciones.getText());
-		
+
 		return rh;
 	}
 
 	@Override
 	public void modificarRH(RestoHumano rh) {
 		rh = registrarDatos();
-		datos.modificarRH(rh);
-		JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación exitosa.",
-				JOptionPane.CLOSED_OPTION);
+		try {
+			datos.modificarRH(rh);
+			JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación exitosa",
+					JOptionPane.CLOSED_OPTION);
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos", JOptionPane.ERROR_MESSAGE);
+		} 
 	}
 
 	@Override
 	public void eliminarRH(String codResto) {
-		datos.eliminarRH(codResto);
+		if (JOptionPane.showConfirmDialog(this,
+				"¿Seguro que desea eliminar este resto? Es una acción irreversible.", "Confirmar baja",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+			datos.eliminarRH(codResto);
+			JOptionPane.showMessageDialog(this, "Resto eliminado correctamente.","Baja exitosa",JOptionPane.CLOSED_OPTION);
+			cerrar();
+		}
 	}
 
 	@Override

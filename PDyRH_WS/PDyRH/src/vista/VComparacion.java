@@ -24,6 +24,7 @@ import javax.swing.JSeparator;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import java.awt.event.MouseAdapter;
@@ -67,10 +68,10 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	private JPanel panel;
 	private JPanel panel1;
 	private JLabel lblND;
-	private JSeparator separator;
+	private JSeparator separatorMenu;
 	private JLabel lblImgErtzAC;
 	private JLabel lblComparacinPdyrh;
-	private JSeparator separator1;
+	private JSeparator separatorComp;
 	private String[] info;
 	private VIniciarSesion padre;
 	
@@ -81,7 +82,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
-		setTitle("Comparar");
+		setTitle("PDyRH: Comparar");
 		setBounds(100, 100, 607, 399);
 		contentPane.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
@@ -135,11 +136,11 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		contentPane.add(lblCerrar);
 		
 		// Menú superior y título
-		separator1 = new JSeparator();
-		separator1.setForeground(new Color(102, 0, 0));
-		separator1.setBackground(new Color(153, 0, 0));
-		separator1.setBounds(24, 82, 559, 2);
-		contentPane.add(separator1);
+		separatorComp = new JSeparator();
+		separatorComp.setForeground(new Color(102, 0, 0));
+		separatorComp.setBackground(new Color(153, 0, 0));
+		separatorComp.setBounds(24, 82, 559, 2);
+		contentPane.add(separatorComp);
 		
 		lblComparacinPdyrh = new JLabel("Comparaci\u00F3n PDyRH");
 		lblComparacinPdyrh.setForeground(SystemColor.textInactiveText);
@@ -147,15 +148,10 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		lblComparacinPdyrh.setBounds(24, 60, 151, 19);
 		contentPane.add(lblComparacinPdyrh);
 		
-		separator = new JSeparator();
-		separator.setBackground(Color.DARK_GRAY);
-		separator.setBounds(2, 47, 603, 2);
-		contentPane.add(separator);
-
-		separator = new JSeparator();
-		separator.setBackground(Color.DARK_GRAY);
-		separator.setBounds(2, 47, 603, 2);
-		contentPane.add(separator);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBackground(Color.DARK_GRAY);
+		separatorMenu.setBounds(2, 47, 603, 2);
+		contentPane.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
@@ -238,8 +234,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		menuBar.add(menBuscar);
 
 		// Creacion de tablas de comparacion
-		restos = obtenerRHs();
-		desaparecidas = datos.obtenerDesaparecidas();
+		restos = listarRHs();
+		desaparecidas = listarDesaparecidas();
 
 		if (!restos.isEmpty() && !desaparecidas.isEmpty()) {
 			for (RestoHumano r : restos.values()) {
@@ -262,7 +258,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 					datosTabla[i][1] = comparados.get(i).getCodResto();
 					datosTabla[i][2] = String.format("%.2f",comparados.get(i).getPorcentaje());
 				}
-				int posicion = 20 + (comparados.size() * 19);
+				int posicion = 20 + (comparados.size() * 17);
 				JS = new JScrollPane();
 				JS.setBounds(55, 100, 450, posicion);
 				posicion = posicion + 100;
@@ -361,25 +357,38 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		// Calcular diferencia de fechas y su valor
 		fechaM = rh.getFechaMuerte();
 		fechaDes = ((Desaparecida) des).getFechaDes();
-		diasDiff = Period.between(fechaDes, fechaM).getDays();
-		xFecha = (diasDiff - 14) / -7;
-		if (diasDiff < 0 || xFecha < 0) {
+		if (fechaDes != null &&  fechaM != null) {
+			diasDiff = Period.between(fechaDes, fechaM).getDays();
+			xFecha = (diasDiff - 14) / -7;
+			if (diasDiff < 0 || xFecha < 0) {
+				xFecha = 0;
+			}
+		} else {
 			xFecha = 0;
 		}
+	
 		// Calcular diferencia de alturas y su valor
-		cmDiff = Math.abs(rh.getAltura() - ((Desaparecida) des).getAltura());
-		xAltura = (cmDiff - 5) / -2.5f;
-		if (xAltura < 0) {
+		if (rh.getAltura() != 0 && ((Desaparecida) des).getAltura() != 0) {
+			cmDiff = Math.abs(rh.getAltura() - ((Desaparecida) des).getAltura());
+			xAltura = (cmDiff - 5) / -2.5f;
+			if (xAltura < 0) {
+				xAltura = 0;
+			}
+		} else {
 			xAltura = 0;
 		}
 		for (int i = 0; i < rhCar1.length; i++) {
-			if (rhCar1[i].equalsIgnoreCase(desCar1[i])) {
-				xTotal++;
+			if (rhCar1[i] != null) {
+				if (rhCar1[i].equalsIgnoreCase(desCar1[i])) {
+					xTotal++;
+				}
 			}
 		}
 		for (int i = 0; i < rhCar2.length; i++) {
-			if (rhCar2[i].equalsIgnoreCase(desCar2[i])) {
-				xTotal += 2;
+			if (rhCar2[i] != null) {
+				if (rhCar2[i].equalsIgnoreCase(desCar2[i])) {
+					xTotal += 2;
+				}
 			}
 		}
 		// Calcular el porcentaje + especificaciones
@@ -396,8 +405,12 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {
@@ -445,13 +458,13 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		}
 	
 	@Override
-	public Map<String, RestoHumano> obtenerRHs() {
-		return datos.obtenerRHs();
+	public Map<String, RestoHumano> listarRHs() {
+		return datos.listarRHs();
 	}
 
 	@Override
-	public Map<String, Persona> obtenerDesaparecidas() {
-		return datos.obtenerDesaparecidas();
+	public Map<String, Persona> listarDesaparecidas() {
+		return datos.listarDesaparecidas();
 	}
 
 	@Override

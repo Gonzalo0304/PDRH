@@ -70,7 +70,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
-	public void modificarPersona(Persona per) {
+	public void modificarPersona(Persona per) throws Excepciones {
 		this.openConnection();
 
 		try {
@@ -141,7 +141,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			if (con != null) {
 				try {
 					con.rollback();
@@ -149,6 +148,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 					e.printStackTrace();
 				}
 			}
+			String msg = "Los campos no pueden exceder los 50 carácteres.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}
@@ -355,7 +357,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
-	public void agregarConocido(Conocido cono) {
+	public void agregarConocido(Conocido cono) throws Excepciones {
 		this.openConnection();
 
 		try {
@@ -376,7 +378,6 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			if (con != null) {
 				try {
 					con.rollback();
@@ -384,6 +385,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 					e.printStackTrace();
 				}
 			}
+			String msg = "Los campos no pueden exceder los 50 carácteres.";
+			Excepciones exc = new Excepciones(msg);
+			throw exc;
 		} finally {
 			this.closeConnection();
 		}

@@ -56,7 +56,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	private JTextField textEsp2;
 	private JTextField textCO;
 	private JTextField textCO2;
-	private JSeparator separator2_5;
+	private JSeparator separatorMenu;
 	private JMenuBar menuBar;
 	private JMenu menUsuario;
 	private JMenuItem mCerrar;
@@ -69,41 +69,41 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	private JMenuItem mCaso;
 	private Button button;
 	private JLabel lblFecha;
-	private JSeparator separator2;
+	private JSeparator separatorFecha;
 	private JLabel lblUbi;
-	private JSeparator separator2_1;
+	private JSeparator separatorUbi;
 	private JLabel lblGen;
 	private JLabel lblTP;
-	private JSeparator separator2_2;
-	private JSeparator separator2_1_1;
+	private JSeparator separatorSexo;
+	private JSeparator separatorTP;
 	private JLabel lblCP;
-	private JSeparator separator2_3;
+	private JSeparator separatorCP;
 	private JLabel lblAlt;
-	private JSeparator separator2_1_2;
+	private JSeparator separatorAlt;
 	private JLabel lblEsp;
-	private JSeparator separator2_2_1;
+	private JSeparator separatorEsp;
 	private JLabel lblFecha_1;
-	private JSeparator separator2_4;
+	private JSeparator separatorFecha2;
 	private JLabel lblUbi_1;
-	private JSeparator separator2_1_3;
+	private JSeparator separatorUbi2;
 	private JLabel lblGen_1;
-	private JSeparator separator2_2_2;
+	private JSeparator separatorSexo2;
 	private JLabel lblTP_1;
-	private JSeparator separator2_1_1_1;
+	private JSeparator separatorTP2;
 	private JLabel lblCP_1;
-	private JSeparator separator2_3_1;
+	private JSeparator separatorCP2;
 	private JLabel lblAlt_1;
-	private JSeparator separator2_1_2_1;
+	private JSeparator separatorAlt2;
 	private JLabel lblEsp_1;
-	private JSeparator separator2_2_1_1;
+	private JSeparator separatorEsp2;
 	private JLabel lblRestoHumano;
-	private JSeparator separator1;
+	private JSeparator separatorRH;
 	private JLabel lblDesaparecida;
-	private JSeparator separator1_1;
+	private JSeparator separatorDes;
 	private JLabel lblCO;
-	private JSeparator separator2_2_1_2;
+	private JSeparator separatorCO;
 	private JLabel lblCO2;
-	private JSeparator separator2_2_1_1_1;
+	private JSeparator separatorCO2;
 	private JLabel imgErtzAC;
 	private RestoHumano resto;
 	private Persona des;
@@ -117,6 +117,7 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
+		setTitle("PDyRH: Comparación específica");
 		setBounds(350, 150, 503, 627);
 		contentPane.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
@@ -170,11 +171,11 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		contentPane.add(lblCerrar);
 
 		// Menú superior
-		separator2_5 = new JSeparator();
-		separator2_5.setBounds(0, 36, 502, 2);
-		separator2_5.setForeground(SystemColor.controlShadow);
-		separator2_5.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator2_5);
+		separatorMenu = new JSeparator();
+		separatorMenu.setBounds(0, 36, 502, 2);
+		separatorMenu.setForeground(SystemColor.controlShadow);
+		separatorMenu.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorMenu);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 1, 502, 37);
@@ -278,16 +279,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblFecha);
 
-		separator2 = new JSeparator();
-		separator2.setBounds(36, 104, 106, 2);
-		separator2.setForeground(SystemColor.controlShadow);
-		separator2.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator2);
+		separatorFecha = new JSeparator();
+		separatorFecha.setBounds(36, 104, 106, 2);
+		separatorFecha.setForeground(SystemColor.controlShadow);
+		separatorFecha.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorFecha);
 
 		textFECHA = new JTextField();
 		textFECHA.setBounds(36, 117, 187, 20);
 		textFECHA.setEditable(false);
-		textFECHA.setToolTipText("");
 		textFECHA.setColumns(10);
 		contentPane.add(textFECHA);
 
@@ -297,16 +297,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblUbi.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblUbi);
 
-		separator2_1 = new JSeparator();
-		separator2_1.setBounds(36, 162, 106, 2);
-		separator2_1.setForeground(SystemColor.controlShadow);
-		separator2_1.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator2_1);
+		separatorUbi = new JSeparator();
+		separatorUbi.setBounds(36, 162, 106, 2);
+		separatorUbi.setForeground(SystemColor.controlShadow);
+		separatorUbi.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorUbi);
 
 		textUbi = new JTextField();
 		textUbi.setBounds(36, 175, 187, 20);
 		textUbi.setEditable(false);
-		textUbi.setToolTipText("");
 		textUbi.setColumns(10);
 		contentPane.add(textUbi);
 
@@ -316,16 +315,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblGen.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblGen);
 
-		separator2_2 = new JSeparator();
-		separator2_2.setBounds(36, 230, 106, 2);
-		separator2_2.setForeground(SystemColor.controlShadow);
-		separator2_2.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator2_2);
+		separatorSexo = new JSeparator();
+		separatorSexo.setBounds(36, 230, 106, 2);
+		separatorSexo.setForeground(SystemColor.controlShadow);
+		separatorSexo.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorSexo);
 
 		textGen = new JTextField();
 		textGen.setBounds(36, 243, 187, 20);
 		textGen.setEditable(false);
-		textGen.setToolTipText("");
 		textGen.setColumns(10);
 		contentPane.add(textGen);
 
@@ -335,16 +333,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblTP.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblTP);
 
-		separator2_1_1 = new JSeparator();
-		separator2_1_1.setBounds(36, 288, 106, 2);
-		separator2_1_1.setForeground(SystemColor.controlShadow);
-		separator2_1_1.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator2_1_1);
+		separatorTP = new JSeparator();
+		separatorTP.setBounds(36, 288, 106, 2);
+		separatorTP.setForeground(SystemColor.controlShadow);
+		separatorTP.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorTP);
 
 		textTP = new JTextField();
 		textTP.setBounds(36, 301, 187, 20);
 		textTP.setEditable(false);
-		textTP.setToolTipText("");
 		textTP.setColumns(10);
 		contentPane.add(textTP);
 
@@ -354,16 +351,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblCP.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblCP);
 
-		separator2_3 = new JSeparator();
-		separator2_3.setBounds(36, 358, 106, 2);
-		separator2_3.setForeground(SystemColor.controlShadow);
-		separator2_3.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator2_3);
+		separatorCP = new JSeparator();
+		separatorCP.setBounds(36, 358, 106, 2);
+		separatorCP.setForeground(SystemColor.controlShadow);
+		separatorCP.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorCP);
 
 		textCP = new JTextField();
 		textCP.setBounds(36, 371, 187, 20);
 		textCP.setEditable(false);
-		textCP.setToolTipText("");
 		textCP.setColumns(10);
 		contentPane.add(textCP);
 
@@ -373,16 +369,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblAlt.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblAlt);
 
-		separator2_1_2 = new JSeparator();
-		separator2_1_2.setBounds(36, 485, 106, 2);
-		separator2_1_2.setForeground(SystemColor.controlShadow);
-		separator2_1_2.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator2_1_2);
+		separatorAlt = new JSeparator();
+		separatorAlt.setBounds(36, 485, 106, 2);
+		separatorAlt.setForeground(SystemColor.controlShadow);
+		separatorAlt.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorAlt);
 
 		textAlt = new JTextField();
 		textAlt.setBounds(36, 498, 187, 20);
 		textAlt.setEditable(false);
-		textAlt.setToolTipText("");
 		textAlt.setColumns(10);
 		contentPane.add(textAlt);
 
@@ -392,16 +387,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblEsp.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblEsp);
 
-		separator2_2_1 = new JSeparator();
-		separator2_2_1.setBounds(36, 553, 106, 2);
-		separator2_2_1.setForeground(SystemColor.controlShadow);
-		separator2_2_1.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator2_2_1);
+		separatorEsp = new JSeparator();
+		separatorEsp.setBounds(36, 553, 106, 2);
+		separatorEsp.setForeground(SystemColor.controlShadow);
+		separatorEsp.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorEsp);
 
 		textEsp = new JTextField();
 		textEsp.setBounds(36, 566, 187, 20);
 		textEsp.setEditable(false);
-		textEsp.setToolTipText("");
 		textEsp.setColumns(10);
 		contentPane.add(textEsp);
 
@@ -411,16 +405,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblFecha_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblFecha_1);
 
-		separator2_4 = new JSeparator();
-		separator2_4.setBounds(274, 101, 106, 2);
-		separator2_4.setForeground(SystemColor.controlShadow);
-		separator2_4.setBackground(new Color(153, 0, 0));
-		contentPane.add(separator2_4);
+		separatorFecha2 = new JSeparator();
+		separatorFecha2.setBounds(274, 101, 106, 2);
+		separatorFecha2.setForeground(SystemColor.controlShadow);
+		separatorFecha2.setBackground(new Color(153, 0, 0));
+		contentPane.add(separatorFecha2);
 
 		textFecha2 = new JTextField();
 		textFecha2.setBounds(274, 114, 187, 20);
 		textFecha2.setEditable(false);
-		textFecha2.setToolTipText("");
 		textFecha2.setColumns(10);
 		contentPane.add(textFecha2);
 
@@ -430,16 +423,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblUbi_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblUbi_1);
 
-		separator2_1_3 = new JSeparator();
-		separator2_1_3.setBounds(274, 159, 106, 2);
-		separator2_1_3.setForeground(SystemColor.controlShadow);
-		separator2_1_3.setBackground(new Color(153, 0, 0));
-		contentPane.add(separator2_1_3);
+		separatorUbi2 = new JSeparator();
+		separatorUbi2.setBounds(274, 159, 106, 2);
+		separatorUbi2.setForeground(SystemColor.controlShadow);
+		separatorUbi2.setBackground(new Color(153, 0, 0));
+		contentPane.add(separatorUbi2);
 
 		textUbi2 = new JTextField();
 		textUbi2.setBounds(274, 172, 187, 20);
 		textUbi2.setEditable(false);
-		textUbi2.setToolTipText("");
 		textUbi2.setColumns(10);
 		contentPane.add(textUbi2);
 
@@ -449,16 +441,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblGen_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblGen_1);
 
-		separator2_2_2 = new JSeparator();
-		separator2_2_2.setBounds(274, 227, 106, 2);
-		separator2_2_2.setForeground(SystemColor.controlShadow);
-		separator2_2_2.setBackground(new Color(153, 0, 0));
-		contentPane.add(separator2_2_2);
+		separatorSexo2 = new JSeparator();
+		separatorSexo2.setBounds(274, 227, 106, 2);
+		separatorSexo2.setForeground(SystemColor.controlShadow);
+		separatorSexo2.setBackground(new Color(153, 0, 0));
+		contentPane.add(separatorSexo2);
 
 		textGen2 = new JTextField();
 		textGen2.setBounds(274, 240, 187, 20);
 		textGen2.setEditable(false);
-		textGen2.setToolTipText("");
 		textGen2.setColumns(10);
 		contentPane.add(textGen2);
 
@@ -468,16 +459,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblTP_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblTP_1);
 
-		separator2_1_1_1 = new JSeparator();
-		separator2_1_1_1.setBounds(274, 285, 106, 2);
-		separator2_1_1_1.setForeground(SystemColor.controlShadow);
-		separator2_1_1_1.setBackground(new Color(153, 0, 0));
-		contentPane.add(separator2_1_1_1);
+		separatorTP2 = new JSeparator();
+		separatorTP2.setBounds(274, 285, 106, 2);
+		separatorTP2.setForeground(SystemColor.controlShadow);
+		separatorTP2.setBackground(new Color(153, 0, 0));
+		contentPane.add(separatorTP2);
 
 		textTP2 = new JTextField();
 		textTP2.setBounds(274, 298, 187, 20);
 		textTP2.setEditable(false);
-		textTP2.setToolTipText("");
 		textTP2.setColumns(10);
 		contentPane.add(textTP2);
 
@@ -487,16 +477,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblCP_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblCP_1);
 
-		separator2_3_1 = new JSeparator();
-		separator2_3_1.setBounds(274, 355, 106, 2);
-		separator2_3_1.setForeground(SystemColor.controlShadow);
-		separator2_3_1.setBackground(new Color(153, 0, 0));
-		contentPane.add(separator2_3_1);
+		separatorCP2 = new JSeparator();
+		separatorCP2.setBounds(274, 355, 106, 2);
+		separatorCP2.setForeground(SystemColor.controlShadow);
+		separatorCP2.setBackground(new Color(153, 0, 0));
+		contentPane.add(separatorCP2);
 
 		textCP2 = new JTextField();
 		textCP2.setBounds(274, 368, 187, 20);
 		textCP2.setEditable(false);
-		textCP2.setToolTipText("");
 		textCP2.setColumns(10);
 		contentPane.add(textCP2);
 
@@ -506,16 +495,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblAlt_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblAlt_1);
 
-		separator2_1_2_1 = new JSeparator();
-		separator2_1_2_1.setBounds(274, 485, 106, 2);
-		separator2_1_2_1.setForeground(SystemColor.controlShadow);
-		separator2_1_2_1.setBackground(new Color(153, 0, 0));
-		contentPane.add(separator2_1_2_1);
+		separatorAlt2 = new JSeparator();
+		separatorAlt2.setBounds(274, 485, 106, 2);
+		separatorAlt2.setForeground(SystemColor.controlShadow);
+		separatorAlt2.setBackground(new Color(153, 0, 0));
+		contentPane.add(separatorAlt2);
 
 		textAlt2 = new JTextField();
 		textAlt2.setBounds(274, 498, 187, 20);
 		textAlt2.setEditable(false);
-		textAlt2.setToolTipText("");
 		textAlt2.setColumns(10);
 		contentPane.add(textAlt2);
 
@@ -525,16 +513,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblEsp_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblEsp_1);
 
-		separator2_2_1_1 = new JSeparator();
-		separator2_2_1_1.setBounds(274, 553, 106, 2);
-		separator2_2_1_1.setForeground(SystemColor.controlShadow);
-		separator2_2_1_1.setBackground(new Color(153, 0, 0));
-		contentPane.add(separator2_2_1_1);
+		separatorEsp2 = new JSeparator();
+		separatorEsp2.setBounds(274, 553, 106, 2);
+		separatorEsp2.setForeground(SystemColor.controlShadow);
+		separatorEsp2.setBackground(new Color(153, 0, 0));
+		contentPane.add(separatorEsp2);
 
 		textEsp2 = new JTextField();
 		textEsp2.setBounds(274, 566, 187, 20);
 		textEsp2.setEditable(false);
-		textEsp2.setToolTipText("");
 		textEsp2.setColumns(10);
 		contentPane.add(textEsp2);
 
@@ -544,11 +531,11 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblRestoHumano.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		contentPane.add(lblRestoHumano);
 
-		separator1 = new JSeparator();
-		separator1.setBounds(64, 68, 126, 2);
-		separator1.setForeground(new Color(0, 51, 102));
-		separator1.setBackground(new Color(0, 51, 102));
-		contentPane.add(separator1);
+		separatorRH = new JSeparator();
+		separatorRH.setBounds(64, 68, 126, 2);
+		separatorRH.setForeground(new Color(0, 51, 102));
+		separatorRH.setBackground(new Color(0, 51, 102));
+		contentPane.add(separatorRH);
 
 		lblDesaparecida = new JLabel("Desaparecida");
 		lblDesaparecida.setBounds(313, 49, 96, 19);
@@ -556,11 +543,11 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblDesaparecida.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		contentPane.add(lblDesaparecida);
 
-		separator1_1 = new JSeparator();
-		separator1_1.setBounds(297, 68, 126, 2);
-		separator1_1.setForeground(new Color(153, 0, 0));
-		separator1_1.setBackground(new Color(153, 0, 0));
-		contentPane.add(separator1_1);
+		separatorDes = new JSeparator();
+		separatorDes.setBounds(297, 68, 126, 2);
+		separatorDes.setForeground(new Color(153, 0, 0));
+		separatorDes.setBackground(new Color(153, 0, 0));
+		contentPane.add(separatorDes);
 
 		lblCO = new JLabel("COLOR DE OJOS");
 		lblCO.setForeground(new Color(0, 51, 102));
@@ -568,14 +555,13 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblCO.setBounds(36, 390, 106, 28);
 		contentPane.add(lblCO);
 
-		separator2_2_1_2 = new JSeparator();
-		separator2_2_1_2.setForeground(SystemColor.controlShadow);
-		separator2_2_1_2.setBackground(new Color(0, 51, 102));
-		separator2_2_1_2.setBounds(36, 416, 106, 2);
-		contentPane.add(separator2_2_1_2);
+		separatorCO = new JSeparator();
+		separatorCO.setForeground(SystemColor.controlShadow);
+		separatorCO.setBackground(new Color(0, 51, 102));
+		separatorCO.setBounds(36, 416, 106, 2);
+		contentPane.add(separatorCO);
 
 		textCO = new JTextField();
-		textCO.setToolTipText("");
 		textCO.setEditable(false);
 		textCO.setColumns(10);
 		textCO.setBounds(36, 429, 187, 20);
@@ -587,14 +573,13 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		lblCO2.setBounds(274, 387, 106, 28);
 		contentPane.add(lblCO2);
 
-		separator2_2_1_1_1 = new JSeparator();
-		separator2_2_1_1_1.setForeground(SystemColor.controlShadow);
-		separator2_2_1_1_1.setBackground(new Color(153, 0, 0));
-		separator2_2_1_1_1.setBounds(274, 413, 106, 2);
-		contentPane.add(separator2_2_1_1_1);
+		separatorCO2 = new JSeparator();
+		separatorCO2.setForeground(SystemColor.controlShadow);
+		separatorCO2.setBackground(new Color(153, 0, 0));
+		separatorCO2.setBounds(274, 413, 106, 2);
+		contentPane.add(separatorCO2);
 
 		textCO2 = new JTextField();
-		textCO2.setToolTipText("");
 		textCO2.setEditable(false);
 		textCO2.setColumns(10);
 		textCO2.setBounds(274, 426, 187, 20);
@@ -613,8 +598,10 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	private void cargarDatos(String dni, String codigo) {
 		des = obtenerPersona(dni);
 		resto = obtenerRH(codigo);
-
-		textFECHA.setText(resto.getFechaMuerte().toString());
+		
+		if (resto.getFechaMuerte() != null) {
+			textFECHA.setText(resto.getFechaMuerte().toString());
+		}
 		textUbi.setText(resto.getUbicacion());
 		textGen.setText(resto.getGenero());
 		textTP.setText(resto.getTipoPelo());
@@ -622,7 +609,9 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		textCO.setText(resto.getColorOjos());
 		textAlt.setText(String.valueOf(resto.getAltura()));
 		textEsp.setText(resto.getEspecificaciones());
-		textFecha2.setText(((Desaparecida) des).getFechaDes().toString());
+		if (((Desaparecida) des).getFechaDes() != null) {
+			textFecha2.setText(((Desaparecida) des).getFechaDes().toString());
+		}
 		textUbi2.setText(((Desaparecida) des).getUltimaUbi());
 		textGen2.setText(((Desaparecida) des).getGenero());
 		textTP2.setText(((Desaparecida) des).getTipoPelo());
@@ -663,8 +652,12 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			this.dispose();
-			padre.setVisible(true);
+			if (JOptionPane.showConfirmDialog(this,
+					"¿Seguro que desea cerrar sesión?",
+					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+				this.dispose();
+				padre.setVisible(true);
+			}
 		} else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {
