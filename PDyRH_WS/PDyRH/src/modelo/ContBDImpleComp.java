@@ -81,7 +81,10 @@ public class ContBDImpleComp implements ContDatosComp {
 				resto.setAltura(rs.getInt("altura"));
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(rs.getString("codCaso"));
+				
+				if(rs.getDate("fechaMuerte") !=null) {
 				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
+				}
 				
 				if (obtenerIdentificado(resto.getCodResto()) == null) {
 					restos.put(resto.getCodResto(), resto);

@@ -100,14 +100,10 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JRadioButton rdbtnAbi;
 	private Caso caso;
 	private JTextField textCodResto;
-
-	
-	// <--- Ejecución --->
 	private JLabel lblCodResto;
 	private JSeparator separatorCodResto;
 	private JLabel imgErtzAO_1;
 	private JSeparator separator;
-
 
 	public VGesCaso(VIniciarSesion padre, boolean modal, Caso caso, String[] infos) {
 		// <--- Diseño de ventana --->
@@ -581,23 +577,14 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		buttonAgregar.addActionListener(this);
 		contentInvo.add(buttonAgregar);
 
-		JLabel lblCodResto = new JLabel("C\u00D3DIGO RESTO");
-
-
 		// Campo de resto involucrado
 		lblCodResto = new JLabel("C\u00D3DIGO RESTO");
-
 		lblCodResto.setForeground(new Color(153, 0, 0));
 		lblCodResto.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblCodResto.setBounds(195, 202, 106, 28);
 		contentInvo.add(lblCodResto);
 
-		
-		JSeparator separatorCodResto = new JSeparator();
-
-
 		separatorCodResto = new JSeparator();
-
 		separatorCodResto.setForeground(new Color(102, 0, 0));
 		separatorCodResto.setBackground(new Color(153, 0, 0));
 		separatorCodResto.setBounds(195, 228, 106, 2);
@@ -607,15 +594,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		textCodResto.setToolTipText("");
 		textCodResto.setColumns(10);
 		textCodResto.setBounds(195, 241, 187, 20);
-
-		contentInvo.add(textCodResto);
-		
-				JLabel imgErtzAO_1 = new JLabel("");
-				imgErtzAO_1
-						.setIcon(new ImageIcon("C:\\Users\\haize\\OneDrive\\Documentos\\GitHub\\PDRH\\Multimedia\\ertzAC.png"));
-				imgErtzAO_1.setBounds(142, 68, 309, 303);
-				contentInvo.add(imgErtzAO_1);
-
 		textCodResto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -629,7 +607,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		imgErtzAO_1.setIcon(new ImageIcon(VGesCaso.class.getResource("/imagenes/ertzAC.png")));
 		imgErtzAO_1.setBounds(142, 68, 309, 303);
 		contentInvo.add(imgErtzAO_1);
-
 	}
 
 	// <--- Métodos --->
@@ -724,13 +701,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		} else if (e.getSource().equals(buttonEliminar)) {
 			eliminarCaso(caso.getCodCaso());
 		} else if (e.getSource().equals(buttonAgregar)) {
-
-			insertarInvolucrado(textCodResto.getText(),caso.getCodCaso());
-			Participante par = new Participante();
-			insertarParticipante(par);
-		} else if (e.getSource().equals(buttonMod)) {
-			modificarCaso(caso);
-
 			if (!textCodResto.getText().isBlank()) {
 				insertarInvolucrado(textCodResto.getText(), caso.getCodCaso());
 			}
@@ -750,7 +720,9 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 							"DNI existente.", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		} else if (e.getSource().equals(mCaso)) {
+		}else if(e.getSource().equals(buttonMod)){
+			modificarCaso(caso);
+		}else if (e.getSource().equals(mCaso)) {
 			abrirInsertCaso();
 		} else if (e.getSource().equals(mPersona)) {
 			abrirInsertPer();
@@ -770,7 +742,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 			caso.setFechaFin(LocalDate.parse(textFechaFin.getText()));
 		}
 		datos.modificarCaso(caso);
-
 		JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación éxitosa",
 				JOptionPane.CLOSED_OPTION);
 	}

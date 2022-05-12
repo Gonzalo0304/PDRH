@@ -352,7 +352,7 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		separatorGesCas.setBounds(12, 82, 580, 2);
 		contentPanel.add(separatorGesCas);
 		
-		JLabel lblGesPer = new JLabel("Gesti\u00F3n de Caso");
+		JLabel lblGesPer = new JLabel("Inserci\u00F3n de Caso");
 		lblGesPer.setForeground(SystemColor.textInactiveText);
 		lblGesPer.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblGesPer.setBounds(12, 60, 142, 19);
