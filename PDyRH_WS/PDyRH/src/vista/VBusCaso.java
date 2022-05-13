@@ -493,7 +493,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		menBuscar.setForeground(Color.WHITE);
 		menuBar_1.add(menBuscar);
 		
-		// Mostrar Involucrados
+		// Mostrar Participantes
 		participantes = listarParticipantes(caso.getCodCaso());
 		for (Participante par : participantes.values()) {
 			if (posicion == 0) {
@@ -541,6 +541,8 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 			
 			posicion = posicion + 76;
 		}
+		
+		//Mostrar Involucrados
 		involucrados = listarInvolucrados(caso.getCodCaso());
 		int pos = posicion;
 		for (RestoHumano res : involucrados.values()) {
@@ -601,7 +603,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 			textFall.setText(cas.getFechaFin().toString());
 		}
 	}
-
+	
 	public void cerrar() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
@@ -611,6 +613,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
+			//Confirmacion para cerrar sesion
 			if (JOptionPane.showConfirmDialog(this,
 					"¿Seguro que desea cerrar sesión?",
 					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
@@ -674,7 +677,8 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		this.dispose();
 		vBusRH.setVisible(true);
 	}
-
+	
+	//Metodos
 	@Override
 	public Map<String, Participante> listarParticipantes(String codCaso) {
 		return datos.listarParticipantes(codCaso);

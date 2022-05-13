@@ -991,6 +991,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
+			//Confirmacion para cerrar sesion
 			if (JOptionPane.showConfirmDialog(this,
 					"¿Seguro que desea cerrar sesión?",
 					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {

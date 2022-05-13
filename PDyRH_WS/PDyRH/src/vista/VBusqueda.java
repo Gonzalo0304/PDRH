@@ -360,6 +360,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
+			//Confirmacion para cerrar sesion
 			if (JOptionPane.showConfirmDialog(this,
 					"¿Seguro que desea cerrar sesión?",
 					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
@@ -414,7 +415,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		vInsCaso.setVisible(true);
 	}
 
-	// Abrir ventanas de gestión
+	// Abrir ventanas de Busqueda
 	private void comprobarBus(String[] info) {
 		esta = true;
 		String selec = rbSeleccionado(bgTipo);

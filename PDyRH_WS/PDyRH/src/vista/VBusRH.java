@@ -442,7 +442,8 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		textSexo.setColumns(10);
 		textSexo.setBounds(45, 515, 180, 20);
 		contentPanel.add(textSexo);
-
+		
+		//Cargar Datos de los restos Humanos
 		cargarDatos();
 	}
 
@@ -470,7 +471,8 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		this.dispose();
 		vBus.setVisible(true);
 	}
-
+	
+	//Habilitacion del boton añadir
 	private void habilitarBoton() {
 		if (!textCodigo.getText().isEmpty() && !textCausa.getText().isEmpty()) {
 			btnAnadir.setEnabled(true);
