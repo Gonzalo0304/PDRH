@@ -598,8 +598,10 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	private void cargarDatos(String dni, String codigo) {
 		des = obtenerPersona(dni);
 		resto = obtenerRH(codigo);
-
-		textFECHA.setText(resto.getFechaMuerte().toString());
+		
+		if (resto.getFechaMuerte() != null) {
+			textFECHA.setText(resto.getFechaMuerte().toString());
+		}
 		textUbi.setText(resto.getUbicacion());
 		textGen.setText(resto.getGenero());
 		textTP.setText(resto.getTipoPelo());
@@ -607,7 +609,9 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		textCO.setText(resto.getColorOjos());
 		textAlt.setText(String.valueOf(resto.getAltura()));
 		textEsp.setText(resto.getEspecificaciones());
-		textFecha2.setText(((Desaparecida) des).getFechaDes().toString());
+		if (((Desaparecida) des).getFechaDes() != null) {
+			textFecha2.setText(((Desaparecida) des).getFechaDes().toString());
+		}
 		textUbi2.setText(((Desaparecida) des).getUltimaUbi());
 		textGen2.setText(((Desaparecida) des).getGenero());
 		textTP2.setText(((Desaparecida) des).getTipoPelo());

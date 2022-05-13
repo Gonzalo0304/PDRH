@@ -140,6 +140,8 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 	private JSeparator separatorAlt;
 	private JLabel lblEsp;
 	private JSeparator separatorEsp;
+	private JLabel lblTelfM;
+	private JLabel lblTelfO;
 
 	public VInsPersona(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño de ventana --->
@@ -324,12 +326,32 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		textApellido.setColumns(10);
 
 		textTelefonoM = new JTextField();
+		textTelefonoM.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (!textTelefonoM.getText().isBlank() && textTelefonoM.getText().length() != 9) {
+					lblTelfM.setVisible(true);
+				} else {
+					lblTelfM.setVisible(false);
+				}
+			}
+		});
 		textTelefonoM.setBounds(30, 298, 192, 20);
 		contentPanel.add(textTelefonoM);
 		textTelefonoM.setColumns(10);
 
 		textTelefonoO = new JTextField();
 		textTelefonoO.setBounds(30, 358, 192, 20);
+		textTelefonoO.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (!textTelefonoO.getText().isBlank() && textTelefonoO.getText().length() != 9) {
+					lblTelfO.setVisible(true);
+				} else {
+					lblTelfO.setVisible(false);
+				}
+			}
+		});
 		contentPanel.add(textTelefonoO);
 		textTelefonoO.setColumns(10);
 
@@ -739,6 +761,20 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		lblErrorDni.setBounds(138, 132, 81, 14);
 		lblErrorDni.setVisible(false);
 		contentPanel.add(lblErrorDni);
+		
+		lblTelfM = new JLabel("TELF NO COM\u00DAN");
+		lblTelfM.setForeground(new Color(204, 102, 0));
+		lblTelfM.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTelfM.setBounds(126, 319, 96, 14);
+		lblTelfM.setVisible(false);
+		contentPanel.add(lblTelfM);
+		
+		lblTelfO = new JLabel("TELF NO COM\u00DAN");
+		lblTelfO.setForeground(new Color(204, 102, 0));
+		lblTelfO.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTelfO.setBounds(126, 378, 96, 14);
+		lblTelfO.setVisible(false);
+		contentPanel.add(lblTelfO);
 		
 		imgErtzAC = new JLabel("");
 		imgErtzAC.setIcon(new ImageIcon(VInsPersona.class.getResource("/imagenes/ertzAC.png")));

@@ -235,7 +235,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		menuBar.add(menBuscar);
 
 		textCodigo = new JTextField();
-		textCodigo.setEditable(false);
+		textCodigo.setEnabled(false);
 		textCodigo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -247,7 +247,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		textCodigo.setColumns(10);
 
 		textCausa = new JTextField();
-		textCausa.setEditable(false);
+		textCausa.setEnabled(false);
 		textCausa.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -259,43 +259,43 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		contentPanel.add(textCausa);
 
 		textFecha = new JTextField();
-		textFecha.setEditable(false);
+		textFecha.setEnabled(false);
 		textFecha.setColumns(10);
 		textFecha.setBounds(45, 337, 180, 20);
 		contentPanel.add(textFecha);
 
 		textUbicacion = new JTextField();
-		textUbicacion.setEditable(false);
+		textUbicacion.setEnabled(false);
 		textUbicacion.setColumns(10);
 		textUbicacion.setBounds(45, 422, 180, 20);
 		contentPanel.add(textUbicacion);
 
 		textTipoP = new JTextField();
-		textTipoP.setEditable(false);
+		textTipoP.setEnabled(false);
 		textTipoP.setColumns(10);
 		textTipoP.setBounds(269, 159, 180, 20);
 		contentPanel.add(textTipoP);
 
 		textColorP = new JTextField();
-		textColorP.setEditable(false);
+		textColorP.setEnabled(false);
 		textColorP.setColumns(10);
 		textColorP.setBounds(269, 247, 180, 20);
 		contentPanel.add(textColorP);
 
 		textColorO = new JTextField();
-		textColorO.setEditable(false);
+		textColorO.setEnabled(false);
 		textColorO.setColumns(10);
 		textColorO.setBounds(269, 334, 180, 20);
 		contentPanel.add(textColorO);
 
 		textAltura = new JTextField();
-		textAltura.setEditable(false);
+		textAltura.setEnabled(false);
 		textAltura.setColumns(10);
 		textAltura.setBounds(269, 420, 180, 20);
 		contentPanel.add(textAltura);
 
 		textEspecificaciones = new JTextField();
-		textEspecificaciones.setEditable(false);
+		textEspecificaciones.setEnabled(false);
 		textEspecificaciones.setColumns(10);
 		textEspecificaciones.setBounds(269, 515, 180, 20);
 		contentPanel.add(textEspecificaciones);
@@ -438,7 +438,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		contentPanel.add(imgErtzAC);
 
 		textSexo = new JTextField();
-		textSexo.setEditable(false);
+		textSexo.setEnabled(false);
 		textSexo.setColumns(10);
 		textSexo.setBounds(45, 515, 180, 20);
 		contentPanel.add(textSexo);

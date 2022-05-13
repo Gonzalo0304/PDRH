@@ -923,8 +923,12 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		textDni.setText(dni);
 		textNombre.setText(per.getNombre());
 		textApellido.setText(per.getApellido());
-		textMovil.setText(Integer.toString(per.getTelefonos()[0]));
-		textTelf.setText(Integer.toString(per.getTelefonos()[1]));
+		if (per.getTelefonos()[0] != 0) {
+			textMovil.setText(Integer.toString(per.getTelefonos()[0]));
+		}
+		if (per.getTelefonos()[1] != 0) {
+			textTelf.setText(Integer.toString(per.getTelefonos()[1]));
+		}
 		if (per.getFechaNac() != null) {
 			textNac.setText(per.getFechaNac().toString());
 		}

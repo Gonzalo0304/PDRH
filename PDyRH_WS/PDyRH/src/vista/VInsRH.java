@@ -686,7 +686,7 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		rh = registrarDatos();
 		try {
 			datos.modificarRH(rh);
-			JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación exitosa.",
+			JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación exitosa",
 					JOptionPane.CLOSED_OPTION);
 		} catch (Excepciones e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos", JOptionPane.ERROR_MESSAGE);
@@ -695,7 +695,13 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 
 	@Override
 	public void eliminarRH(String codResto) {
-		datos.eliminarRH(codResto);
+		if (JOptionPane.showConfirmDialog(this,
+				"¿Seguro que desea eliminar este resto? Es una acción irreversible.", "Confirmar baja",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+			datos.eliminarRH(codResto);
+			JOptionPane.showMessageDialog(this, "Resto eliminado correctamente.","Baja exitosa",JOptionPane.CLOSED_OPTION);
+			cerrar();
+		}
 	}
 
 	@Override
