@@ -38,6 +38,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JRadioButton;
 import javax.swing.JList;
 
+/**
+ * Esta clase representa la ventana de busqueda de persona junto con el controlador de busqueda 
+ * @author Elias
+ *
+ */
 public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -148,6 +153,13 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	private int posicion = 0;
 	private JLabel imgErtzAO_1;
 	
+	/**
+	 * Constructor de la ventana
+	 * @param padre: Es la ventana de inicio de sesion siendo la principal
+	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
+	 * @param dni: Es el DNI de la persona que obtiene de la ventana de busqueda.
+	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
+	 */
 	public VBusPer(VIniciarSesion padre, boolean modal, String dni, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -864,6 +876,17 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		menuBar_1.add(menBuscar);
 		
 		// Mostrar conocidos
+		/**
+		 * Codigo para listar los conocidos en su pestaña
+		 * 
+		 * conocidos : Es un Map que contiene un metodo del controlador con el dni de la persona.
+		 * posicion : indica la posicion donde se ubica los campos. 
+		 * 
+		 * Recorrera todos los datos de la clase Conocido, aparecera el nombre de la persona conocida
+		 * y que relacion tiene con ella.
+		 * 
+		 * 
+		 */
 		conocidos = listarConocidos(dni);
 		for (Conocido con : conocidos.values()) {
 			lblRel = new JLabel("RELACI\u00D3N");
@@ -898,6 +921,8 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 			
 			posicion = posicion + 85;
 		}
+		
+		
 		lblLisCono = new JLabel("Lista Conocidos");
 		lblLisCono.setBounds(10, 42, 142, 19);
 		lblLisCono.setForeground(SystemColor.textInactiveText);
@@ -917,7 +942,18 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 	}
 
-	// Cargar la información
+	/**
+	 * Metodo para cargar los datos de la persona
+	 *  
+	 * @param dni: Esta variable contiene el dni que recibe del constructor. 
+	 * String[] fechasArresto: Sirve para intercambiar de ArrayList a un Array normal, ademas de cambiarlo a un String ya que es LocalDate. Tambien para recorrer las fechas de arresto que contiene la clase criminal.
+	 * per: Esta variable contiene el metodo del controlador que obtiene la persona con el dni que se se encuentra en el constructor.
+	 * 
+	 * En los TextField(campos) muestra la informacion que contiene la clase Persona.
+	 * Ademas se controla que si la persona es un agente, criminal o desaparecida,
+	 * mostrara los datos que contiene las diferentes clases con sus campos correspondientes 
+	 * y se visualizara con sus respectivos paneles. 
+	 */
 	private void cargarDatos(String dni) {
 		per = obtenerPersona(dni);
 		textDni.setText(dni);
@@ -981,7 +1017,10 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	public Map<String, Conocido> listarConocidos(String dni1) {
 		return datos.listarConocidos(dni1);
 	}
-
+	
+	/**
+	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
+	 */
 	public void cerrar() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
@@ -991,6 +1030,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
+			//Confirmacion para cerrar sesion
 			if (JOptionPane.showConfirmDialog(this,
 					"¿Seguro que desea cerrar sesión?",
 					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
@@ -1006,6 +1046,12 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		} 
 	}
 	
+	/**
+	 *
+	 * Metodo para abrir la ventana de Gestion. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Gestionar'.
+	 * 
+	 */
 	// Abrir ventanas de menú
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre,true,info);
@@ -1013,36 +1059,69 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de Comparacion. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Comparar'.
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre,true,info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 *  Metodo para abrir la ventana de Busqueda. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Busqueda'.
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre,true,info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de personas.
+	 * 
+	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que 
+	 * despliegara tres opciones para pulsar y este metodo se realiza en 'Resto Humano'.
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de personas.
+	 * 
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' 
+	 * y este metodo se realiza en 'Persona'.
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre,true,info);
 		this.dispose();
 		vInsPer.setVisible(true);		
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de casos.
+	 * 
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' y en 'Caso'.
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}	
 	
+	/**
+	 * Metodo para abrir la ventana de busqeuda de persona.
+	 * 
+	 * @param dni: Esta variable contiene el dni de la clase.
+	 * 
+	 * Funciona al clickar el nombre y apellido de la persona en la pestaña de conocidos,
+	 * y mostrara la informacion de esa persona en la siguiente ventana.
+	 */
 	private void abrirBusPer(String dni) {
 		VBusPer vBusPer = new VBusPer(padre, true, dni, info);
 		this.dispose();

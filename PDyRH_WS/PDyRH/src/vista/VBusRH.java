@@ -32,6 +32,11 @@ import javax.swing.JSeparator;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 
+/**
+ * Esta clase representa la busqueda de restos humanos junto con el controlador de busqueda 
+ * @author Elias
+ *
+ */
 public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 
 	private static final long serialVersionUID = 1L;
@@ -90,6 +95,13 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 	ContDatosBusqRH datos = DataFactoryBusqRH.getDatos();
 	private JTextField textSexo;
 
+	/**
+	 * Conntructor de la ventana
+	 * @param padre: Es la ventana de inicio de sesion siendo la principal
+	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
+	 * @param codigo: Es el codigo del resto humano que obtiene de la ventana de busqueda.
+	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
+	 */
 	public VBusRH(VIniciarSesion padre, boolean modal, String codigo, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -442,10 +454,20 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		textSexo.setColumns(10);
 		textSexo.setBounds(45, 515, 180, 20);
 		contentPanel.add(textSexo);
-
+		
+		//Cargar Datos de los restos Humanos
 		cargarDatos();
 	}
 
+	/**
+	 * Metodo para cargar los datos de Restos Humanos
+	 * 
+	 * rh = es la variable que contiene un metodo del controlador para obtener la informacion con el codigo que recibe del constructor. .
+	 * 
+	 * Mostrara la informacion que contiene la clase en sus respectivos TextField(campos),
+	 * y controla que si el genero del resto es M en el campo mostrara que es mujer o sino sera hombre
+	 * 
+	 */
 	private void cargarDatos() {
 		rh = obtenerRH(cod);
 		textCodigo.setText(rh.getCodResto());
@@ -465,12 +487,21 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		textUbicacion.setText(rh.getUbicacion());
 	}
 
+	/**
+	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
+	 */
 	private void cerrar() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
-
+	
+	/**
+	 * Metodo para habilitar el boton de añadir
+	 * 
+	 * Controla que si el campo del codigo y la causa 
+	 * no estan vacios se habilitara el boton añadir 
+	 */
 	private void habilitarBoton() {
 		if (!textCodigo.getText().isEmpty() && !textCausa.getText().isEmpty()) {
 			btnAnadir.setEnabled(true);
@@ -499,37 +530,66 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		}
 	}
 
-	// Abrir ventanas de menú
+	/**
+	 * Metodo para abrir la ventana de Gestion. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Gestionar'.
+	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de Comparacion. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Comparar'.
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de Busqueda. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Busqueda'.
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de restos humanos.
+	 * 
+	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que 
+	 * despliegara tres opciones para pulsar y este metodo se realiza en 'Resto Humano'
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de personas.
+	 * 
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' 
+	 * y este metodo se realiza en 'Persona'.
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de casos.
+	 * 
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' 
+	 * y este metodo se realiza en 'Caso'.
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
