@@ -40,6 +40,12 @@ import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Esta clase representa la ventana de Busqueda junto con el controlador de busqueda 
+ * 
+ * @author Elias
+ *
+ */
 public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq {
 	private static final long serialVersionUID = 1L;
 
@@ -81,6 +87,13 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	// <--- Datos BD --->
 	ContDatosBusq datos = DataFactoryBusq.getDatos();
 
+	/**
+	 * Constructor de la ventana
+	 * 
+	 * @param padre: Es la ventana de inicio de sesion siendo la principal
+	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
+	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
+	 */
 	public VBusqueda(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -379,43 +392,82 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	}
 	
 	// Abrir ventanas de menú
+	/**
+	 * Metodo para abrir la ventana de Gestion. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Gestionar'.
+	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre,true,info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de Comparacion. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Comparar'.
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre,true,info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 *  Metodo para abrir la ventana de Busqueda. 
+	 * Se realiza al pulsar en la barra de menu el boton 'Busqueda'.
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre,true,info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de restos humanos.
+	 * 
+	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que 
+	 * despliegara tres opciones para pulsar y este metodo se realiza en 'Resto Humano'
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de personas.
+	 * 
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' y en 'Persona'.
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre,true,info);
 		this.dispose();
 		vInsPer.setVisible(true);		
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de casos.
+	 * 
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' y en 'Caso'.
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}
 
-	// Abrir ventanas de Busqueda
+	/**
+	 * Metodo para comprobar el dni o el codigo que se introduce.
+	 * 
+	 * @param info: Es la variable que contiene los datos del usuario que recibe del constructor.
+	 * 
+	 * Controla que si no selecciona una opcion mostrara un mensaje de error.
+	 * 
+	 * Y si lo hace, se comprobara que el dni o el codigo corresponde con la opcion que has seleccionado,
+	 * y si lo encuentra navegara a la ventana correspondiente de cada una.
+	 * 
+	 * Si resulta que no lo encuentra saltara un mensaje de ID incorrecto.
+	 */
 	private void comprobarBus(String[] info) {
 		esta = true;
 		String selec = rbSeleccionado(bgTipo);
@@ -459,13 +511,22 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		}
 	}
 
+	/**
+	 * Metodo para cerrar la ventana y volver a la ventana principal
+	 */
 	private void cerrar() {
 		VPrincipal vMain = new VPrincipal(padre,true,info);
 		this.dispose();
 		vMain.setVisible(true);
 	}
 	
-	// Comprobar que radio button está seleccionado
+	/**
+	 * Comprobar que radio button está seleccionado(se utiliza en el metodo anterior)
+	 * @param bg: Esta variable contiene las opciones en un solo grupo
+	 * Recorre las opciones y verifica cual ha sido seleccionado
+	 * 
+	 * @return Devuelve la opcion que ha sido seleccionada
+	 */
 	public String rbSeleccionado(ButtonGroup bg) {
 		for (Enumeration<AbstractButton> botones = bg.getElements(); botones.hasMoreElements();) {
 			AbstractButton boton = botones.nextElement();
