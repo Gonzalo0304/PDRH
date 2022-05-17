@@ -27,7 +27,6 @@ import javax.swing.border.LineBorder;
 
 import controlador.DataFactoryIS;
 import controlador.interfaces.ControladorDatosIS;
-
 import java.awt.Toolkit;
 
 public class VIniciarSesion extends JFrame implements ActionListener,ControladorDatosIS {
