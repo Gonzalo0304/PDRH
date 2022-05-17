@@ -73,6 +73,9 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		});
 	}
 	
+	/**
+	 * Constructor
+	 */
 	public VIniciarSesion() {
 		setTitle("PDyRH: Iniciar sesi\u00F3n");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VIniciarSesion.class.getResource("/imagenes/Ertzaintza3.png")));
@@ -241,12 +244,19 @@ public class VIniciarSesion extends JFrame implements ActionListener,Controlador
 		}
 	}
 	
-	// Cerrar la ventana
+	/**
+	 * Cerrar la ventana
+	 */
 	public void cerrar() {
 		this.dispose();
 	}
 	
 	// Comprobar los datos introducidos
+	/**
+	 * Comprobar las credenciales de inicio de sesion si alguno de los campos se deja en blaco y se le da a iniciar sesion mostrara unos mensajes de que faltan datos debajo de cada campo. 
+	 * Si los campos tienen datos comprobara las credenciales con los datos de la tabla de usuarios si no estan bien introducidos saldra un JOptionPane. Luego ponemos el tamaño de la ventana
+	 * a cero para hacer invisible al abrir la ventana principal y que se pueda ver el icono en la taskbar.
+	 */
 	private void verificar() {
 		boolean vacio = false;
 		lblIntroUsu.setVisible(false);
