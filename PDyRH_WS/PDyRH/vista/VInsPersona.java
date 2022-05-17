@@ -141,12 +141,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 	private JLabel lblEsp;
 	private JSeparator separatorEsp;
 
-	/**
-	 * Es el constructor de la venta.
-	 * @param padre es la ventana padre de esta.
-	 * @param modal es el valor del modal para dasabilitar la ventana anterior
-	 * @param infos es la informacion del usuario
-	 */
 	public VInsPersona(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -530,7 +524,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		separatorEsp.setBounds(20, 475, 106, 2);
 		panelDes.add(separatorEsp);
 		
-		//ComboBox
 		comboBox = new JComboBox<Object>();
 		comboBox.setBounds(20, 161, 180, 22);
 		panelDes.add(comboBox);
@@ -752,8 +745,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		imgErtzAC.setBounds(93, 174, 309, 317);
 		contentPanel.add(imgErtzAC);
 	}
-	
-	//Eventos
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnAnadir)) {
@@ -811,12 +803,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 
 	}
 
-	//Vaciar campos
-	/**
-	 * Vaciar los campos modificados de la ventana.
-	 * Desmarcar los radio buttons.
-	 * Poner el ComboBox a su opcion predeterminada. 
-	 */
 	private void limpiar() {
 		textDni.setText("");
 		textNombre.setText("");
@@ -846,11 +832,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 
 	}
 
-	//Habilitar Boton al rellenar campos
-	/**
-	 * Habilita el boton de añadir personas al compribar que los campos del dni y del nombre no estan vacios.
-	 * Cambiar el color del boton cuando pasa de esatr desactivado a activado y  viceversa.
-	 */
 	private void habilitarBoton() {
 		if (!textNombre.getText().isEmpty()) {
 			btnAnadir.setEnabled(true);
@@ -862,99 +843,59 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 
 	}
 
-	//Cerrar ventana
-	/**
-	 * Cerrar la venta actual y abrir la anterior.
-	 */
 	private void cerrar() {
 		VInserciones insercion = new VInserciones(padre, true, info);
 		this.dispose();
 		insercion.setVisible(true);
 	}
 
-	//Parseos
-	/**
-	 * Parsear de String a Fecha.
-	 * @param string el dato a parsear
-	 */
 	private LocalDate stringDate(String string) {
 		LocalDate nacimiento = LocalDate.parse(string);
 		return nacimiento;
 	}
-	
-	/**
-	 * Parsear de int a String
-	 */
+
 	private int stringInt(String string) {
 		int altura = Integer.parseInt(string);
 		return altura;
 	}
 
-	//Abrir ventanas de menú
-	/**
-	 * Abrir ventana de gestion de personas desde JMenuBar 
-	 */
+	// Abrir ventanas de menú
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
-	
-	/**
-	 * Abrir ventana de comparacion de personas desde JMenuBar 
-	 */
+
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
-	
-	/**
-	 * Abrir ventana de busqueda de personas desde JMenuBar 
-	 */
+
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
-	/**
-	 * Abrir ventana de insercion de restos humanos desde JMenuBar 
-	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
-	/**
-	 * Abrir ventana de insercion de personas desde JMenuBar 
-	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
-	/**
-	 * Abrir ventana de insercion de casos desde JMenuBar 
-	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}
 	
-	//verificar el DNI
-	/**
-	 * Primero verefica si es dni o nie, luego si esta bien escrito(comprueba la longitud teniendo en cuenta si tiene guion o no y luego calcula que la letra este bien escrita).
-	 *     <--Variables-->
-	 * char[] letraC: guarda las letras de dni o nie.
-	 * String nifnie: recoje el dni o nie.
-	 * String soloNum: guardar los numeros del dni o nie.
-	 * char letra: guarda la letra del dni o nie de este coje la ultima.
-	 * modulo: se guarda el resultado de calcuar la letra del dni o nie.
-	 */
 	private boolean verificarDNI() {
 		char[] letraC = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'}; 
 		String nifnie = textDni.getText();
@@ -1012,28 +953,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		return false;
 	}
 
-	//Dar de alta una persona
-	/**
-	 * Registra una persona en la base de datos para ello primero mira que radiobutton esta marcado para añadir un agente, un criminal o una desaparecida, luego comprueba si los campos de
-	 * fechas estan en blanco o no si no se handejado en blanco se pasean de string a Localdate tambien se hace lo mismo con numeros y se parsean de string a int en caso de que sea necesario.
-	 * despues se introducen los datos en la base de datos de dicha persona tanto en la tabla de personas como en la de el tipo de persona que sea(Al introducir los datos de persona se 
-	 * comprueba tambien las fechas como se hace en agente criminal y desaparecida). Por ultimo si se realiza correctamente el alta se limpian los campos con el metodo {@link #limpiar()}
-	 * para introducir una nuva persona y se desbilita el boton al limpiarse los campos con el metodo {@link #habilitarBoton()}.<br><br>
-	 * 
-	 * @param per se le manda la clase persona.
-	 * 
-	 * <h3><--Variables-->
-	 * <li>int telefonoM: para en caso de que sea necesario para guardar el parseo del telefono movil y si es 0 que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>int telefonoO: para en caso de que sea necesario para guardar el parseo del telefono opcional y si es 0 que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>LocalDate fechaNac: para en caso de que sea necesario guardar el parseo de la fecha de nacimiento y si es null que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>LocalDate fechaFall: para en caso que sea necesario guardar el parseo de la fecha de fallecimiento y si es null que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>LocalDate fechaIni: para en caso que sea necesario guardar el parseo de la fecha de inicio de  y si es null que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>LocalDate fechaFin: para en caso que sea necesario guardar el parseo de la fecha de fallecimiento y si es null que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>int altura: para en caso de que sea necesario para guardar el parseo de la altura y si es 0 que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>LocalDate fechaDes: para en caso que sea necesario guardar el parseo de la fecha de desaparicion y si es null que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>LocalDate arrDate:  para en caso que sea necesario guardar el parseo de la fecha de arresto y si es null que no de fallo a la hora de guardarlo en la base de datos.
-	 * <li>{@code ArrayList<LocalDate>} arrest: para guardar las fechas de arresto.
-	 */
 	@Override
 	public void altaPersona(Persona per) {
 		int telefonoM = 0;
@@ -1041,7 +960,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 		LocalDate fechaNac = null;
 		LocalDate fechaFall = null;
 		if (rdbtnAge.isSelected()) {
-			//Agentes
 			per = new Agente();
 			LocalDate fechaIni = null;
 			LocalDate fechaFin = null;
@@ -1058,7 +976,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			((Agente) per).setInicioServ(fechaIni);
 			((Agente) per).setFinServ(fechaFin);
 		} else if (rdbtnDes.isSelected()) {
-			//Desaparecidas
 			per = new Desaparecida();
 			int altura = 0;
 			LocalDate fechaDes = null;
@@ -1084,7 +1001,6 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			((Desaparecida) per).setAltura(altura);
 			((Desaparecida) per).setEspecificaciones(textFieldEspecifi.getText());
 		} else if (rdbtnCri.isSelected()) {
-			//Criminales
 			per = new Criminal();
 			LocalDate arrDate = null;
 
@@ -1133,7 +1049,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos", JOptionPane.ERROR_MESSAGE);
 		} 
 	}
-	
+
 	@Override
 	public boolean comprobarDNI(String dni) {
 		return datos.comprobarDNI(dni);

@@ -72,11 +72,6 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 	ContDatosInsertCaso datos = DataFactoryInsertCaso.getDatos();
 	private JLabel imgErtzAO;
 	
-	/**
-	 * @param padre es la ventana padre de esta.
-	 * @param modal es el valor del modal para dasabilitar la ventana anterior
-	 * @param infos es la informacion del usuario
-	 */
 	public VInsCaso(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -372,19 +367,12 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		
 	}
 	
-	/**
-	 * Cerrar la venta actual y abrir la anterior.
-	 */
 	private void cerrar() {
 		VInserciones insercion = new VInserciones(padre,true,info);
 		this.dispose();
 		insercion.setVisible(true);
 	}
 	
-	/**
-	 * Habilita el boton de añadir personas al compribar que los campos del dni y del nombre no estan vacios.
-	 * Cambiar el color del boton cuando pasa de esatr desactivado a activado y  viceversa.
-	 */
 	private void habilitarBoton() {
 		if (!textCodigo.getText().isEmpty() && (rdbtnAbierto.isSelected() || rdbtnCerrado.isSelected() || rdbtnSinResolver.isSelected())) {
 			btnAnadir.setEnabled(true);
@@ -395,11 +383,6 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		}
 	}
 	
-	/**
-	 * Vaciar los campos modificados de la ventana.
-	 * Desmarcar los radio buttons.
-	 * Poner el ComboBox a su opcion predeterminada. 
-	 */
 	private void limpiar() {
 		textCodigo.setText("");
 		rdbtnAbierto.setSelected(false);
@@ -410,12 +393,6 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 		textFechaFin.setText("");
 		
 	}
-	
-	/**
-	 * Parsea de string a LocalDate
-	 * @param string el dato a parsear
-	 * @return
-	 */
 	private LocalDate stringDate(String string) {
 		LocalDate nacimiento = LocalDate.parse(string);
 		return nacimiento;
@@ -423,69 +400,42 @@ public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionList
 	
 
 	// Abrir ventanas de menú
-	/**
-	 * Abrir ventana de gestion de personas desde JMenuBar 
-	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
-	/**
-	 * Abrir ventana de comparacion de personas desde JMenuBar 
-	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
-	/**
-	 * Abrir ventana de busqueda de personas desde JMenuBar 
-	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
-	/**
-	 * Abrir ventana de insercion de restos humanos desde JMenuBar 
-	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
-	/**
-	 * Abrir ventana de insercion de personas desde JMenuBar 
-	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
-	/**
-	 * Abrir ventana de insercion de c desde JMenuBar 
-	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}
 
-	/**
-	 * Registra un caso, los datos que sean fechas se comprueba si se han dejado en blanco si no se parsean los datos de String a LocalDate. Luego se introducen los datos del caso en la base
-	 * de datos. Una vez introducidos se usa el metodo {@link #limpiar()} para vaciar los campos y poder introducir un nuevo caso.<br><br>
-	 * <h3><--Variables-->
-	 * <li>LocalDate fechaIni: para en caso de que sea necesario para guardar el parseo de la fecha de inicio de servicio y si es null que no de fallo a la hora de guardarlo en la base de 
-	 * datos.
-	 * <li>LocalDate fechaFin: para en caso de que sea necesario para guardar el parseo de la fecha de final de servicio y si es null que no de fallo a la hora de guardarlo en la base de 
-	 * datos.
-	 */
 	@Override
 	public void altaCaso(Caso caso) {
 		caso = new Caso();

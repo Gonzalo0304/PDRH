@@ -39,6 +39,7 @@ import excepciones.Excepciones;
 import modelo.clases.Caso;
 import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
+
 import javax.swing.JRadioButton;
 
 public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListener {

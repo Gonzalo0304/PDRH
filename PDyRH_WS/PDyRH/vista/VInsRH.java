@@ -14,16 +14,21 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import controlador.DataFactoryBusqRH;
-import controlador.interfaces.ContDatosBusqRH;
+import controlador.DataFactoryRH;
+import controlador.interfaces.ContDatosRH;
+import excepciones.Excepciones;
 import modelo.clases.RestoHumano;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -32,12 +37,7 @@ import javax.swing.JSeparator;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 
-/**
- * Esta clase representa la busqueda de restos humanos junto con el controlador de busqueda 
- * @author Elias
- *
- */
-public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
+public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -50,6 +50,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 	private JTextField textAltura;
 	private JTextField textEspecificaciones;
 	private Button btnAnadir;
+	private JComboBox<Object> comboBox;
 	private JTextField textColorO;
 	private VIniciarSesion padre;
 	private String[] info;
@@ -65,13 +66,15 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 	private JMenuItem mCaso;
 	private static Point point = new Point();
 	private JLabel lblCerrar;
-	private JSeparator separatorMenu;
+	private JSeparator separatorMenú;
 	private JLabel lblCausa;
-	private JSeparator separatorCausa;
+	private JSeparator separatorCas;
 	private JLabel lblCod;
 	private JSeparator separatorCod;
 	private JLabel lblInsRH;
 	private JSeparator separatorInsRH;
+	private Button btnBaja;
+	private Button btnMod;
 	private JSeparator separatorCO;
 	private JLabel lblFecha_1;
 	private JSeparator separatorFecha;
@@ -91,23 +94,17 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 	private JLabel lblEsp_1;
 	private JSeparator separatorEsp;
 	private JLabel lblCO2;
+	private boolean esGes;
+	private JLabel lblGesRH;
 
-	ContDatosBusqRH datos = DataFactoryBusqRH.getDatos();
-	private JTextField textSexo;
+	ContDatosRH datos = DataFactoryRH.getDatos();
 
-	/**
-	 * Conntructor de la ventana
-	 * @param padre: Es la ventana de inicio de sesion siendo la principal
-	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
-	 * @param codigo: Es el codigo del resto humano que obtiene de la ventana de busqueda.
-	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
-	 */
-	public VBusRH(VIniciarSesion padre, boolean modal, String codigo, String[] infos) {
+	public VInsRH(VIniciarSesion padre, boolean modal, String codigo, String[] infos, boolean esGes) {
 		// <--- Diseño de ventana --->
 		super(padre);
 		this.setModal(modal);
+		setTitle("PDyRH: Insertar RH");
 		setBounds(350, 150, 503, 627);
-		setTitle("PDyRH: Buscar RH");
 		contentPanel.setBackground(Color.WHITE);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new LineBorder(new Color(128, 128, 128)));
@@ -116,6 +113,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
 		this.padre = padre;
+		this.esGes = esGes;
 		info = infos;
 		cod = codigo;
 
@@ -161,11 +159,11 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		contentPanel.add(lblCerrar);
 
 		// Menú superior
-		separatorMenu = new JSeparator();
-		separatorMenu.setBounds(0, 36, 502, 2);
-		separatorMenu.setForeground(SystemColor.controlShadow);
-		separatorMenu.setBackground(new Color(0, 51, 102));
-		contentPanel.add(separatorMenu);
+		separatorMenú = new JSeparator();
+		separatorMenú.setBounds(0, 36, 502, 2);
+		separatorMenú.setForeground(SystemColor.controlShadow);
+		separatorMenú.setBackground(new Color(0, 51, 102));
+		contentPanel.add(separatorMenú);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 1, 502, 37);
@@ -247,19 +245,17 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		menuBar.add(menBuscar);
 
 		textCodigo = new JTextField();
-		textCodigo.setEditable(false);
 		textCodigo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				habilitarBoton();
 			}
 		});
-		textCodigo.setBounds(45, 159, 180, 20);
+		textCodigo.setBounds(47, 119, 180, 20);
 		contentPanel.add(textCodigo);
 		textCodigo.setColumns(10);
 
 		textCausa = new JTextField();
-		textCausa.setEditable(false);
 		textCausa.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -267,176 +263,207 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 			}
 		});
 		textCausa.setColumns(10);
-		textCausa.setBounds(45, 245, 180, 20);
+		textCausa.setBounds(47, 205, 180, 20);
 		contentPanel.add(textCausa);
 
 		textFecha = new JTextField();
-		textFecha.setEditable(false);
 		textFecha.setColumns(10);
-		textFecha.setBounds(45, 337, 180, 20);
+		textFecha.setBounds(47, 297, 180, 20);
 		contentPanel.add(textFecha);
 
 		textUbicacion = new JTextField();
-		textUbicacion.setEditable(false);
 		textUbicacion.setColumns(10);
-		textUbicacion.setBounds(45, 422, 180, 20);
+		textUbicacion.setBounds(47, 382, 180, 20);
 		contentPanel.add(textUbicacion);
 
+		comboBox = new JComboBox<Object>();
+		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "", "Hombre", "Mujer" }));
+		comboBox.setBounds(47, 473, 180, 22);
+		contentPanel.add(comboBox);
+
 		textTipoP = new JTextField();
-		textTipoP.setEditable(false);
 		textTipoP.setColumns(10);
-		textTipoP.setBounds(269, 159, 180, 20);
+		textTipoP.setBounds(271, 119, 180, 20);
 		contentPanel.add(textTipoP);
 
 		textColorP = new JTextField();
-		textColorP.setEditable(false);
 		textColorP.setColumns(10);
-		textColorP.setBounds(269, 247, 180, 20);
+		textColorP.setBounds(271, 207, 180, 20);
 		contentPanel.add(textColorP);
 
 		textColorO = new JTextField();
-		textColorO.setEditable(false);
 		textColorO.setColumns(10);
-		textColorO.setBounds(269, 334, 180, 20);
+		textColorO.setBounds(271, 294, 180, 20);
 		contentPanel.add(textColorO);
 
 		textAltura = new JTextField();
-		textAltura.setEditable(false);
 		textAltura.setColumns(10);
-		textAltura.setBounds(269, 420, 180, 20);
+		textAltura.setBounds(271, 380, 180, 20);
 		contentPanel.add(textAltura);
 
 		textEspecificaciones = new JTextField();
-		textEspecificaciones.setEditable(false);
 		textEspecificaciones.setColumns(10);
-		textEspecificaciones.setBounds(269, 515, 180, 20);
+		textEspecificaciones.setBounds(271, 475, 180, 20);
 		contentPanel.add(textEspecificaciones);
+
+		btnAnadir = new Button("A\u00F1adir");
+		btnAnadir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (obtenerRH(textCodigo.getText()) == null) {
+					rh = new RestoHumano();
+					
+					try {
+						altaRH(rh);
+					} catch (DateTimeParseException e1) {
+						JOptionPane.showMessageDialog(padre, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
+								JOptionPane.ERROR_MESSAGE);
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(padre, "Los números deben ser dígitos sin espacios.","Formato erroneo",JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(padre, "Este resto humano ya ha sido introducido.",
+							"Código existente.", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnAnadir.setBackground(new Color(153, 0, 0));
+		btnAnadir.setForeground(Color.WHITE);
+		btnAnadir.setEnabled(false);
+		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnAnadir.setBounds(210, 532, 87, 28);
+		contentPanel.add(btnAnadir);
 
 		lblFecha_1 = new JLabel("FECHA");
 		lblFecha_1.setForeground(new Color(0, 51, 102));
 		lblFecha_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblFecha_1.setBounds(45, 298, 81, 28);
+		lblFecha_1.setBounds(47, 258, 81, 28);
 		contentPanel.add(lblFecha_1);
 
 		separatorFecha = new JSeparator();
 		separatorFecha.setForeground(new Color(0, 51, 102));
 		separatorFecha.setBackground(new Color(0, 0, 51));
-		separatorFecha.setBounds(45, 324, 106, 2);
+		separatorFecha.setBounds(47, 284, 106, 2);
 		contentPanel.add(separatorFecha);
 
 		lblUbi_1 = new JLabel("UBICACI\u00D3N");
 		lblUbi_1.setForeground(new Color(0, 51, 102));
 		lblUbi_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblUbi_1.setBounds(45, 383, 81, 28);
+		lblUbi_1.setBounds(47, 343, 81, 28);
 		contentPanel.add(lblUbi_1);
 
 		separatorUbi = new JSeparator();
 		separatorUbi.setForeground(new Color(0, 51, 102));
 		separatorUbi.setBackground(new Color(0, 0, 51));
-		separatorUbi.setBounds(45, 409, 106, 2);
+		separatorUbi.setBounds(47, 369, 106, 2);
 		contentPanel.add(separatorUbi);
 
 		lblGen_1 = new JLabel("SEXO");
 		lblGen_1.setForeground(new Color(0, 51, 102));
 		lblGen_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblGen_1.setBounds(45, 474, 81, 28);
+		lblGen_1.setBounds(47, 434, 81, 28);
 		contentPanel.add(lblGen_1);
 
 		separatorSexo = new JSeparator();
 		separatorSexo.setForeground(new Color(0, 51, 102));
 		separatorSexo.setBackground(new Color(0, 0, 51));
-		separatorSexo.setBounds(45, 500, 106, 2);
+		separatorSexo.setBounds(47, 460, 106, 2);
 		contentPanel.add(separatorSexo);
 
 		lblTP_1 = new JLabel("TIPO DE PELO");
 		lblTP_1.setForeground(new Color(0, 51, 102));
 		lblTP_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblTP_1.setBounds(269, 120, 81, 28);
+		lblTP_1.setBounds(271, 80, 81, 28);
 		contentPanel.add(lblTP_1);
 
 		separatorTP = new JSeparator();
 		separatorTP.setForeground(new Color(0, 51, 102));
 		separatorTP.setBackground(new Color(0, 0, 51));
-		separatorTP.setBounds(269, 146, 106, 2);
+		separatorTP.setBounds(271, 106, 106, 2);
 		contentPanel.add(separatorTP);
 
 		lblCP_1 = new JLabel("COLOR DE PELO");
 		lblCP_1.setForeground(new Color(0, 51, 102));
 		lblCP_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblCP_1.setBounds(269, 211, 106, 28);
+		lblCP_1.setBounds(271, 171, 106, 28);
 		contentPanel.add(lblCP_1);
 
 		separatorCP = new JSeparator();
 		separatorCP.setForeground(new Color(0, 51, 102));
 		separatorCP.setBackground(new Color(0, 0, 51));
-		separatorCP.setBounds(269, 237, 106, 2);
+		separatorCP.setBounds(271, 197, 106, 2);
 		contentPanel.add(separatorCP);
 
 		lblAlt_1 = new JLabel("ALTURA");
 		lblAlt_1.setForeground(new Color(0, 51, 102));
 		lblAlt_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblAlt_1.setBounds(269, 381, 81, 28);
+		lblAlt_1.setBounds(271, 341, 81, 28);
 		contentPanel.add(lblAlt_1);
 
 		separatorAlt = new JSeparator();
 		separatorAlt.setForeground(new Color(0, 51, 102));
 		separatorAlt.setBackground(new Color(0, 0, 51));
-		separatorAlt.setBounds(269, 407, 106, 2);
+		separatorAlt.setBounds(271, 367, 106, 2);
 		contentPanel.add(separatorAlt);
 
 		lblEsp_1 = new JLabel("ESPECIFICACIONES");
 		lblEsp_1.setForeground(new Color(0, 51, 102));
 		lblEsp_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblEsp_1.setBounds(269, 476, 106, 28);
+		lblEsp_1.setBounds(271, 436, 106, 28);
 		contentPanel.add(lblEsp_1);
 
 		separatorEsp = new JSeparator();
 		separatorEsp.setForeground(new Color(0, 51, 102));
 		separatorEsp.setBackground(new Color(0, 0, 51));
-		separatorEsp.setBounds(269, 502, 106, 2);
+		separatorEsp.setBounds(271, 462, 106, 2);
 		contentPanel.add(separatorEsp);
 
 		lblCO2 = new JLabel("COLOR DE OJOS");
 		lblCO2.setForeground(new Color(0, 51, 102));
 		lblCO2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblCO2.setBounds(269, 298, 106, 28);
+		lblCO2.setBounds(271, 258, 106, 28);
 		contentPanel.add(lblCO2);
 
 		separatorCO = new JSeparator();
 		separatorCO.setForeground(new Color(0, 51, 102));
 		separatorCO.setBackground(new Color(0, 0, 51));
-		separatorCO.setBounds(269, 324, 106, 2);
+		separatorCO.setBounds(271, 284, 106, 2);
 		contentPanel.add(separatorCO);
 
 		lblCausa = new JLabel("CAUSA");
 		lblCausa.setForeground(new Color(0, 51, 102));
 		lblCausa.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblCausa.setBounds(45, 206, 81, 28);
+		lblCausa.setBounds(47, 166, 81, 28);
 		contentPanel.add(lblCausa);
 
-		separatorCausa = new JSeparator();
-		separatorCausa.setForeground(new Color(0, 51, 102));
-		separatorCausa.setBackground(new Color(0, 0, 51));
-		separatorCausa.setBounds(45, 232, 106, 2);
-		contentPanel.add(separatorCausa);
+		separatorCas = new JSeparator();
+		separatorCas.setForeground(new Color(0, 51, 102));
+		separatorCas.setBackground(new Color(0, 0, 51));
+		separatorCas.setBounds(47, 192, 106, 2);
+		contentPanel.add(separatorCas);
 
 		lblCod = new JLabel("C\u00D3DIGO");
 		lblCod.setForeground(new Color(0, 51, 102));
 		lblCod.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblCod.setBounds(45, 123, 81, 28);
+		lblCod.setBounds(47, 83, 81, 28);
 		contentPanel.add(lblCod);
 
 		separatorCod = new JSeparator();
 		separatorCod.setForeground(new Color(0, 51, 102));
 		separatorCod.setBackground(new Color(0, 0, 51));
-		separatorCod.setBounds(45, 149, 106, 2);
+		separatorCod.setBounds(47, 109, 106, 2);
 		contentPanel.add(separatorCod);
 
-		lblInsRH = new JLabel("B\u00FAsqueda de Resto Humano");
+		lblInsRH = new JLabel("Inserci\u00F3n de Resto Humano");
 		lblInsRH.setForeground(SystemColor.textInactiveText);
 		lblInsRH.setFont(new Font("Nirmala UI", Font.BOLD, 14));
 		lblInsRH.setBounds(25, 48, 209, 24);
 		contentPanel.add(lblInsRH);
+
+		lblGesRH = new JLabel("Gesti\u00F3n de Resto Humano");
+		lblGesRH.setForeground(SystemColor.textInactiveText);
+		lblGesRH.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+		lblGesRH.setBounds(25, 48, 209, 24);
+		contentPanel.add(lblGesRH);
 
 		separatorInsRH = new JSeparator();
 		separatorInsRH.setForeground(new Color(102, 0, 0));
@@ -449,36 +476,48 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		imgErtzAC.setBounds(91, 178, 309, 317);
 		contentPanel.add(imgErtzAC);
 
-		textSexo = new JTextField();
-		textSexo.setEditable(false);
-		textSexo.setColumns(10);
-		textSexo.setBounds(45, 515, 180, 20);
-		contentPanel.add(textSexo);
-		
-		//Cargar Datos de los restos Humanos
-		cargarDatos();
+		btnMod = new Button("Modificar");
+		btnMod.setForeground(Color.WHITE);
+		btnMod.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnMod.setBackground(new Color(153, 0, 0));
+		btnMod.setBounds(146, 532, 87, 28);
+		btnMod.addActionListener(this);
+		contentPanel.add(btnMod);
+
+		btnBaja = new Button("Dar Baja");
+		btnBaja.setForeground(Color.WHITE);
+		btnBaja.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnBaja.setBackground(new Color(153, 0, 0));
+		btnBaja.setBounds(277, 532, 87, 28);
+		btnBaja.addActionListener(this);
+		contentPanel.add(btnBaja);
+
+		if (!esGes) {
+			btnMod.setVisible(false);
+			btnBaja.setVisible(false);
+			lblGesRH.setVisible(false);
+		} else {
+			btnAnadir.setVisible(false);
+			textCodigo.setEnabled(false);
+			lblInsRH.setVisible(false);
+			cargarDatos();
+		}
 	}
 
-	/**
-	 * Metodo para cargar los datos de Restos Humanos
-	 * 
-	 * rh = es la variable que contiene un metodo del controlador para obtener la informacion con el codigo que recibe del constructor. .
-	 * 
-	 * Mostrara la informacion que contiene la clase en sus respectivos TextField(campos),
-	 * y controla que si el genero del resto es M en el campo mostrara que es mujer o sino sera hombre
-	 * 
-	 */
 	private void cargarDatos() {
 		rh = obtenerRH(cod);
 		textCodigo.setText(rh.getCodResto());
 		if (rh.getFechaMuerte() != null) {
 			textFecha.setText(rh.getFechaMuerte().toString());
 		}
-		if (rh.getGenero().equalsIgnoreCase("M")) {
-			textSexo.setText("Mujer");
-		} else {
-			textSexo.setText("Hombre");
+		if (rh.getGenero() != null) {
+			if (rh.getGenero().equalsIgnoreCase("M")) {
+				comboBox.setSelectedItem("Mujer");
+			} else {
+				comboBox.setSelectedItem("Hombre");
+			}
 		}
+		textAltura.setText(Integer.toString(rh.getAltura()));
 		textCausa.setText(rh.getCausa());
 		textColorO.setText(rh.getColorOjos());
 		textColorP.setText(rh.getColorPelo());
@@ -487,21 +526,29 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		textUbicacion.setText(rh.getUbicacion());
 	}
 
-	/**
-	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
-	 */
 	private void cerrar() {
-		VBusqueda vBus = new VBusqueda(padre, true, info);
-		this.dispose();
-		vBus.setVisible(true);
+		if (!esGes) {
+			VInserciones insertar = new VInserciones(padre, true, info);
+			this.dispose();
+			insertar.setVisible(true);
+		} else {
+			VGestion vGes = new VGestion(padre, true, info);
+			this.dispose();
+			vGes.setVisible(true);
+		}
+
 	}
-	
-	/**
-	 * Metodo para habilitar el boton de añadir
-	 * 
-	 * Controla que si el campo del codigo y la causa 
-	 * no estan vacios se habilitara el boton añadir 
-	 */
+
+	private LocalDate stringDate(String string) {
+		LocalDate nacimiento = LocalDate.parse(string);
+		return nacimiento;
+	}
+
+	private int stringInt(String string) {
+		int altura = Integer.parseInt(string);
+		return altura;
+	}
+
 	private void habilitarBoton() {
 		if (!textCodigo.getText().isEmpty() && !textCausa.getText().isEmpty()) {
 			btnAnadir.setEnabled(true);
@@ -527,82 +574,138 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 			abrirInsertPer();
 		} else if (e.getSource().equals(mRestoHumano)) {
 			abrirInsertRH();
+		} else if (e.getSource().equals(btnMod)) {
+			try {
+				modificarRH(rh);
+			} catch (DateTimeParseException e1) {
+				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
+						JOptionPane.ERROR_MESSAGE);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(this, "Los números deben ser dígitos sin espacios.","Formato erroneo",JOptionPane.ERROR_MESSAGE);
+			}
+		} else if (e.getSource().equals(btnBaja)) {
+			eliminarRH(cod);
 		}
 	}
 
-	/**
-	 * Metodo para abrir la ventana de Gestion. 
-	 * Se realiza al pulsar en la barra de menu el boton 'Gestionar'.
-	 */
+	// Abrir ventanas de menú
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de Comparacion. 
-	 * Se realiza al pulsar en la barra de menu el boton 'Comparar'.
-	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de Busqueda. 
-	 * Se realiza al pulsar en la barra de menu el boton 'Busqueda'.
-	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de insercion de restos humanos.
-	 * 
-	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que 
-	 * despliegara tres opciones para pulsar y este metodo se realiza en 'Resto Humano'
-	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de insercion de personas.
-	 * 
-	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' 
-	 * y este metodo se realiza en 'Persona'.
-	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de insercion de casos.
-	 * 
-	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' 
-	 * y este metodo se realiza en 'Caso'.
-	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}
 
-	@Override
-	public RestoHumano obtenerRH(String codResto) {
-		return datos.obtenerRH(codResto);
+	private void limpiar() {
+		textCodigo.setText("");
+		textCausa.setText("");
+		textFecha.setText("");
+		textUbicacion.setText("");
+		comboBox.setSelectedIndex(0);
+		textTipoP.setText("");
+		textColorP.setText("");
+		textColorO.setText("");
+		textAltura.setText("");
+		textEspecificaciones.setText("");
 	}
 
 	@Override
-	public String obtenerIdentificado(String codResto) {
-		return datos.obtenerIdentificado(codResto);
+	public void altaRH(RestoHumano rh) {
+		rh = registrarDatos();
+		try {
+			datos.altaRH(rh);
+			JOptionPane.showMessageDialog(this, "Inserción realizada con éxito.", "Inserción exitosa.",
+					JOptionPane.CLOSED_OPTION);
+			limpiar();
+			habilitarBoton();
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos", JOptionPane.ERROR_MESSAGE);
+		} 
+	}
+
+	private RestoHumano registrarDatos() {
+		LocalDate fechaMuer = null;
+		int altura = 0;
+		if (!textFecha.getText().isBlank()) {
+			fechaMuer = stringDate(textFecha.getText());
+		}
+
+		if (!textAltura.getText().isBlank()) {
+			altura = stringInt(textAltura.getText());
+		}
+
+		rh.setCodResto(textCodigo.getText());
+		rh.setCausa(textCausa.getText());
+		rh.setFechaMuerte(fechaMuer);
+		rh.setUbicacion(textUbicacion.getText());
+		if (comboBox.getSelectedItem() == "Hombre") {
+			rh.setGenero("H");
+		} else if (comboBox.getSelectedItem() == "Mujer") {
+			rh.setGenero("M");
+		}
+		rh.setTipoPelo(textTipoP.getText());
+		rh.setColorPelo(textColorP.getText());
+		rh.setColorOjos(textColorO.getText());
+		rh.setAltura(altura);
+		rh.setEspecificaciones(textEspecificaciones.getText());
+
+		return rh;
+	}
+
+	@Override
+	public void modificarRH(RestoHumano rh) {
+		rh = registrarDatos();
+		try {
+			datos.modificarRH(rh);
+			JOptionPane.showMessageDialog(this, "Modificación realizada con éxito.", "Modificación exitosa",
+					JOptionPane.CLOSED_OPTION);
+		} catch (Excepciones e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Carácteres excedidos", JOptionPane.ERROR_MESSAGE);
+		} 
+	}
+
+	@Override
+	public void eliminarRH(String codResto) {
+		if (JOptionPane.showConfirmDialog(this,
+				"¿Seguro que desea eliminar este resto? Es una acción irreversible.", "Confirmar baja",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+			datos.eliminarRH(codResto);
+			JOptionPane.showMessageDialog(this, "Resto eliminado correctamente.","Baja exitosa",JOptionPane.CLOSED_OPTION);
+			cerrar();
+		}
+	}
+
+	@Override
+	public RestoHumano obtenerRH(String codResto) {
+		return datos.obtenerRH(codResto);
 	}
 }
