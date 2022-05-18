@@ -462,7 +462,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 	/**
 	 * Metodo para cargar los datos de Restos Humanos
 	 *
-	 * rh = es la variable que contiene un método del controlador para obtener la información con el código que recibe del constructor. .
+	 * <li>rh = es la variable que contiene un método del controlador para obtener la información con el código que recibe del constructor. .
 	 *
 	 * Mostrara la informacion que contiene la clase en sus respectivos TextField(campos),
 	 * y controla que si el genero del resto es hombre en el campo muestra que es mujer o sino sera hombre

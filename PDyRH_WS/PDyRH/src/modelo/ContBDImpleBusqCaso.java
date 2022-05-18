@@ -13,6 +13,12 @@ import controlador.interfaces.ContDatosBusqCaso;
 import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
 
+/**
+ * Esta clase representa el controlador de la base de datos de la ventana de busqueda de caso
+ * @author Elias
+ * Utiliza sentencias SQL para seleccionar los datos de los casos 
+ * y utiliza metodos de la interfaz para listar los participantes y los involucrados 
+ */
 public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	// <--- Sentencias --->
 	final String SELECTparticipantes = "SELECT * FROM participa WHERE codCaso = ?";
@@ -20,15 +26,33 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	final String SELECTrestos = "SELECT * FROM restohumano WHERE codCaso = ?";
 	
 	// <--- Conexión --->
+	/**
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en el metodo.
+	 */
 	private PreparedStatement stmnt;
+	/**
+	 * <li>Connection: Es la conexion de la base de datos
+	 */
 	private Connection con;
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
+	/**
+	 * <li> url: Es el enlace donde se encuentra la base de datos.
+	 */
 	private String url = bundle.getString("URL");
+	/**
+	 * <li> user: Es el usuario para iniciar sesion.
+	 */
 	private String user = bundle.getString("USER");
+	/**
+	 * <li> pass: Es la contraseña del usuario
+	 */
 	private String pass = bundle.getString("PASS");
 
+	/**
+	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -37,6 +61,9 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 		}
 	}
 
+	/**
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL.
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {

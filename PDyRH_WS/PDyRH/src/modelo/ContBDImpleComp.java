@@ -14,6 +14,12 @@ import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
+/**
+ * Esta clase representa el controlador de la base de datos de la ventana de comparacion
+ * @author Elias
+ * Utiliza sentencias SQL para seleccionar datos. Ademas utiliza metodos de la interfaz para listar a los restos humanos y las desaparecidas, 
+ * y obtener el identificado mediante el codigo del resto.
+ */
 public class ContBDImpleComp implements ContDatosComp {
 	// <--- Sentencias --->
 	final String SELECTrhs = "SELECT * FROM restohumano";
@@ -21,15 +27,33 @@ public class ContBDImpleComp implements ContDatosComp {
 	final String SELECTidentificado = "SELECT dni FROM identifica WHERE codResto = ?";
 	
 	// <--- Conexión --->
+	/**
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los metodos.
+	 */
 	private PreparedStatement stmnt;
+	/**
+	 * <li>Connection: Es la conexion de la base de datos
+	 */
 	private Connection con;
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
+	/**
+	 * <li> url: Es el enlace donde se encuentra la base de datos.
+	 */
 	private String url = bundle.getString("URL");
+	/**
+	 * <li> user: Es el usuario para iniciar sesion.
+	 */
 	private String user = bundle.getString("USER");
+	/**
+	 * <li> pass: Es la contraseña del usuario
+	 */
 	private String pass = bundle.getString("PASS");
 
+	/**
+	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -38,6 +62,9 @@ public class ContBDImpleComp implements ContDatosComp {
 		}
 	}
 
+	/**
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL.
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {

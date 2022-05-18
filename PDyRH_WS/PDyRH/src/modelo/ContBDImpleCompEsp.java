@@ -12,6 +12,13 @@ import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
+/**
+ * Esta clase representa el control de la base de datos de la ventana de comparacion de los restos humanos.
+ * @author Elias
+ * Utiliza sentencias SQL para seleccionar datos de los restos humanos y los desaparecidos, ademas de insertar a los identificados.
+ * Utiliza metodos de la interfaz para agregar a los identificados, obtener al resto humano y a la persona.
+ *
+ */
 public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	// <--- Sentencias --->
 	final String INSERTident = "INSERT INTO identifica(dni,codResto) VALUES(?,?)";
@@ -28,6 +35,9 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	private String user = bundle.getString("USER");
 	private String pass = bundle.getString("PASS");
 
+	/**
+	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -37,6 +47,9 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 		}
 	}
 
+	/**
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL.
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {
@@ -80,7 +93,9 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 			this.closeConnection();
 		}
 	}
-
+	
+	
+	
 	@Override
 	public RestoHumano obtenerRH(String codResto) {
 		ResultSet rs = null;

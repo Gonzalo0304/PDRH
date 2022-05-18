@@ -87,7 +87,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	ContDatosBusq datos = DataFactoryBusq.getDatos();
 
 	/**
-	 *  Constructor de la ventana
+	 * <h2> Constructor de la ventana
 	 * @param padre: Es la ventana de inicio de sesion siendo la principal
 	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
 	 * @param codigo: Es el codigo del resto humano que obtiene de la ventana de busqueda.

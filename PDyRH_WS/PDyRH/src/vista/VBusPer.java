@@ -154,7 +154,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 	private JLabel imgErtzAO_1;
 	
 	/**
-	 * Constructor de la ventana
+	 * <h2>Constructor de la ventana
 	 * @param padre: Es la ventana de inicio de sesion siendo la principal
 	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
 	 * @param dni: Es el DNI de la persona que obtiene de la ventana de busqueda.

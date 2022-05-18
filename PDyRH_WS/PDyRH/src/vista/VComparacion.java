@@ -542,7 +542,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		return null;
 	}
 	/**
-	 * 
+	 * Metodo para cerrar la ventana al pulsar alguna columna de la tabla
 	 */
 	public void cer() {
 		this.dispose();

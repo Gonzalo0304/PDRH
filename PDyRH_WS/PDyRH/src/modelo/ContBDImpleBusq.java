@@ -10,6 +10,11 @@ import java.util.ResourceBundle;
 import controlador.interfaces.ContDatosBusq;
 import modelo.clases.Caso;
 
+/**
+ * Esta clase representa el controlador de la base de datos de la ventana de busqueda
+ * @author Elias
+ * Utiliza sentencias SQL para seleccionar datos, ademas utiliza metodos de la interfaz para comprobar los codigos o dni de las clases.
+ */
 public class ContBDImpleBusq implements ContDatosBusq {
 	// <--- Sentencias -->
 	final String SELECTcaso = "SELECT * FROM caso WHERE codCaso = ?";
@@ -17,15 +22,33 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	final String CALLbuscarRH = "{CALL buscarRH(?)}";
 	
 	// <--- Conexión --->
+	/**
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los metodos.
+	 */
 	private PreparedStatement stmnt;
+	/**
+	 * <li>Connection: Es la conexion de la base de datos
+	 */
 	private Connection con;
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
+	/**
+	 * <li> url: Es el enlace donde se encuentra la base de datos.
+	 */
 	private String url = bundle.getString("URL");
+	/**
+	 * <li> user: Es el usuario para iniciar sesion.
+	 */
 	private String user = bundle.getString("USER");
+	/**
+	 * <li> pass: Es la contraseña del usuarios
+	 */
 	private String pass = bundle.getString("PASS");
 
+	/**
+	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -34,6 +57,9 @@ public class ContBDImpleBusq implements ContDatosBusq {
 		}
 	}
 
+	/**
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL.
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {
