@@ -41,6 +41,11 @@ import java.util.TreeMap;
 import javax.swing.ImageIcon;
 import java.awt.SystemColor;
 
+/**
+ * Esta clase representa la comparacion de los restos humanos y desaparecidos junto con el controlador de comparacion
+ * @author Elias
+ *
+ */
 public class VComparacion extends JDialog implements ActionListener, ContDatosComp {
 	private static final long serialVersionUID = 1L;
 
@@ -78,6 +83,13 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	// <--- Datos BD --->
 	ContDatosComp datos = DataFactoryComp.getDatos();
 
+	/**
+	 * Constructor de la ventana 
+	 *
+	 * @param padre: Es la ventana de inicio de sesion siendo la principal
+	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
+	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
+	 */
 	public VComparacion(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -331,6 +343,9 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	}
 
 	// <--- Métodos --->
+	/**
+	 * 
+	 */
 	private void cerrar() {
 		VPrincipal vMain = new VPrincipal(padre,true,info);
 		this.dispose();
@@ -338,6 +353,30 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	}
 	
 	// Calcular porcentaje entre resto humano y persona desaparecida
+	/**
+	 * Metodo para calcular el porcentaje entre resto humano y persona desaparecida
+	 * 
+	 * @param rh: Esta variable contiene los datos de la clase de RestoHumano
+	 * @param des: Esta variable contiene los datos de la persona desaparecida
+	 * 
+	 * <li>float xAltura: Sirve para poder diferenciar la altura de las dos clases
+	 * <li>float xFecha: Sirve para diferenciar las fechas
+	 * <li>int diasDiff: Se utiliza para obtener los dias
+	 * <li>int cmDiff: Se utiliza para calcular la altura de las dos clases
+	 * <li>float xTotal: Contiene el valor total de la altura
+	 * <li>LocalDate fechaM: Contiene la fecha muerte del resto humano
+	 * <li>LocalDate fechaDes: Contiene la fecha de desaparicion
+	 * <li>String[] rhCar1: contiene la ubicacion y el tipo de pelo del resto humano
+	 * <li>String[] rhCar2: contiene el genero, el color de pelo y color de ojos
+	 * <li>String[] desCar1: contiene los atributos al igual que rhCar1
+	 * <li>String[] desCar2: contiene los atributos al igual que rhCar2
+	 * <li> float res: Calcula el porcentaje
+	 * 
+	 * Su funcion es encontrar las coincidencias que hay entre una persona desaparecida y un resto humano
+	 * y si la informacion coincide se calcula el porcentaje que hay entre los dos.
+	 * 
+	 * @return Devuelve el porcentaje 
+	 */
 	private float calcularPor(RestoHumano rh, Persona des) {
 		// <--- Variables --->
 		float xAltura;
@@ -421,41 +460,72 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	}
 	
 	// Abrir ventanas de menú
-		private void abrirGes() {
-			VGestion vBus = new VGestion(padre, true, info);
-			this.dispose();
-			vBus.setVisible(true);
-		}
+	/**
+	 * Metodo para abrir la ventana de Gestion. Se realiza al pulsar en la barra de
+	 * menú el botón 'Gestionar'.
+	 */
+	private void abrirGes() {
+		VGestion vBus = new VGestion(padre, true, info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
 
-		private void abrirCom() {
-			VComparacion vCom = new VComparacion(padre, true, info);
-			this.dispose();
-			vCom.setVisible(true);
-		}
+	/**
+	 * Metodo para abrir la ventana de Comparacion. Se realiza al pulsar en la barra
+	 * de menú el botón 'Comparar'.
+	 */
+	private void abrirCom() {
+		VComparacion vCom = new VComparacion(padre, true, info);
+		this.dispose();
+		vCom.setVisible(true);
+	}
 
-		private void abrirBus() {
-			VBusqueda vBus = new VBusqueda(padre, true, info);
-			this.dispose();
-			vBus.setVisible(true);
-		}
+	/**
+	 * Método para abrir la ventana de Busqueda. Se realiza al pulsar en la barra de
+	 * menú el botón 'Busqueda'.
+	 */
+	private void abrirBus() {
+		VBusqueda vBus = new VBusqueda(padre, true, info);
+		this.dispose();
+		vBus.setVisible(true);
+	}
 
-		private void abrirInsertRH() {
-			VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
-			this.dispose();
-			vInsRH.setVisible(true);
-		}
+	/**
+	 * Metodo para abrir la ventana de insercion de restos humanos.
+	 *
+	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que
+	 * Despliegara tres opciones para pulsar y este método se realiza en 'Resto
+	 * Humano'
+	 */
+	private void abrirInsertRH() {
+		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
+		this.dispose();
+		vInsRH.setVisible(true);
+	}
 
-		private void abrirInsertPer() {
-			VInsPersona vInsPer = new VInsPersona(padre, true, info);
-			this.dispose();
-			vInsPer.setVisible(true);
-		}
+	/**
+	 * Método para abrir la ventana de inserción de personas.
+	 *
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' y este método
+	 * se realiza en 'Persona'.
+	 */
+	private void abrirInsertPer() {
+		VInsPersona vInsPer = new VInsPersona(padre, true, info);
+		this.dispose();
+		vInsPer.setVisible(true);
+	}
 
-		private void abrirInsertCaso() {
-			VInsCaso vInsCaso = new VInsCaso(padre, true, info);
-			this.dispose();
-			vInsCaso.setVisible(true);
-		}
+	/**
+	 * Metodo para abrir la ventana de insercion de casos.
+	 *
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' y este método
+	 * se realiza en 'Caso'.
+	 */
+	private void abrirInsertCaso() {
+		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
+		this.dispose();
+		vInsCaso.setVisible(true);
+	}
 	
 	@Override
 	public Map<String, RestoHumano> listarRHs() {
@@ -471,6 +541,9 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 	public String obtenerIdentificado(String codResto) {
 		return null;
 	}
+	/**
+	 * 
+	 */
 	public void cer() {
 		this.dispose();
 	}

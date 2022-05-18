@@ -33,6 +33,11 @@ import modelo.clases.Desaparecida;
 
 import javax.swing.ImageIcon;
 
+/**
+ * Esta clase representa la informacion de los resto humanos y las personas desaparecidas
+ * @author Elias
+ *
+ */
 public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -113,6 +118,15 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	// <--- Datos BD --->
 	ContDatosCompEsp datos = DataFactoryCompEsp.getDatos();
 
+	/**
+	 * Constructor de la ventana
+	 *
+	 * @param padre: Es la ventana de inicio de sesion siendo la principal
+	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
+	 * @param dni: Este parametro contiene el DNI de la persona
+	 * @param codigo: Esta parametro contiene el codigo del resto humano
+	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
+	 */
 	public VComRH(VIniciarSesion padre, boolean modal, String dni, String codigo, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -595,6 +609,17 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 
 	// <--- Métodos --->
 	// Cargar la información en los campos de texto
+	/**
+	 * Metodo para cargar los datos 
+	 * 
+	 * @param dni: El DNI de la persona
+	 * @param codigo: El codigo del resto humano
+	 * <li>des: La variable se utiliza para obtener a la persona desparecida que se encuentra en el controlador
+	 * <li>resto: La variable se utiliza para obtener al resto humano.
+	 * 
+	 * Su funcion es mostrar la informacion en sus respectivos campos con la informacion de las clases,
+	 * y controla que si la fechas no esta vacias que los muestre en su campo.
+	 */
 	private void cargarDatos(String dni, String codigo) {
 		des = obtenerPersona(dni);
 		resto = obtenerRH(codigo);
@@ -621,6 +646,9 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 		textEsp2.setText(((Desaparecida) des).getEspecificaciones());
 	}
 
+	/**
+	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
+	 */
 	private void cerrar() {
 		VComparacion vComp = new VComparacion(padre, true, info);
 		this.dispose();
@@ -668,36 +696,66 @@ public class VComRH extends JDialog implements ContDatosCompEsp, ActionListener 
 	}
 
 	// Abrir ventanas de menú
+	/**
+	 * Metodo para abrir la ventana de Gestion.
+	 * Se realiza al pulsar en la barra de menú el botón 'Gestionar'.
+	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de Comparacion.
+	 * Se realiza al pulsar en la barra de menú el botón 'Comparar'.
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 * Método para abrir la ventana de Busqueda.
+	 * Se realiza al pulsar en la barra de menú el botón 'Busqueda'.
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 *  Metodo para abrir la ventana de insercion de restos humanos.
+	 *
+	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que
+	 * Despliegara tres opciones para pulsar y este método se realiza en 'Resto Humano'
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Método para abrir la ventana de inserción de personas.
+	 *
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar'
+	 * y este método se realiza en 'Persona'.
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de insercion de casos.
+	 *
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar'
+	 * y este método se realiza en 'Caso'
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();

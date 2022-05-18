@@ -38,6 +38,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JRadioButton;
 import javax.swing.JList;
 
+/**
+ * Esta clase representa la ventana de busqueda de persona junto con el controlador de busqueda
+ * @autor Elías
+ *
+ */
 public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -917,6 +922,18 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 	}
 
+	/**
+	 * Metodo para cargar los datos de la persona
+	 *  
+	 * @param dni: Esta variable contiene el dni que recibe del constructor.
+	 * String[] fechasArresto: Sirve para intercambiar de ArrayList a un Array normal, además de cambiarlo a un String ya que es LocalDate. Tambien para recorrer las fechas de arresto que contiene la clase criminal.
+	 * per: Esta variable contiene el método del controlador que obtiene la persona con el dni que se encuentra en el constructor.
+	 *
+	 * En los TextField(campos) muestra la informacion que contiene la clase Persona.
+	 * Además se controla que si la persona es un agente, criminal o desaparecida,
+	 * mostrara los datos que contiene las diferentes clases con sus campos correspondientes
+	 * y se visualiza con sus respectivos paneles.
+	 */
 	// Cargar la información
 	private void cargarDatos(String dni) {
 		per = obtenerPersona(dni);
@@ -982,6 +999,9 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		return datos.listarConocidos(dni1);
 	}
 
+	/**
+	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
+	 */
 	public void cerrar() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
@@ -1005,7 +1025,11 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 			abrirInsertRH();
 		} 
 	}
-	
+
+	/**
+	 * Metodo para abrir la ventana de Gestion.
+	 * Se realiza al pulsar en la barra de menú el botón 'Gestionar'.
+	 */
 	// Abrir ventanas de menú
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre,true,info);
@@ -1013,36 +1037,69 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Metodo para abrir la ventana de Comparacion.
+	 * Se realiza al pulsar en la barra de menú el botón 'Comparar'.
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre,true,info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 * Método para abrir la ventana de Busqueda.
+	 * Se realiza al pulsar en la barra de menú el botón 'Busqueda'.
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre,true,info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Método para abrir la ventana de inserción de personas.
+	 *
+	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que
+	 * Despliegara tres opciones para pulsar y este método se realiza en 'Resto Humano'.
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Método para abrir la ventana de inserción de personas.
+	 *
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar'
+	 * y este método se realiza en 'Persona'.
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre,true,info);
 		this.dispose();
 		vInsPer.setVisible(true);		
 	}
 
+	/**
+	 *  Metodo para abrir la ventana de insercion de casos.
+	 *
+	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' y en 'Caso'.
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}	
-	
+
+	/**
+	 * Método para abrir la ventana de búsqueda de persona.
+	 *
+	 * @param dni: Esta variable contiene el dni de la clase.
+	 *
+	 * Funciona al hacer clic en el nombre y apellido de la persona en la pestaña de conocidos,
+	 * y mostrara la informacion de esa persona en la siguiente ventana.
+	 */
 	private void abrirBusPer(String dni) {
 		VBusPer vBusPer = new VBusPer(padre, true, dni, info);
 		this.dispose();
