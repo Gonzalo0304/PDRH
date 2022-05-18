@@ -33,11 +33,6 @@ import modelo.clases.Participante;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
-/**
- * Esta clase representa la ventana de busqueda de caso junto con el controlador de busqueda 
- * @author Elias
- * 
- */
 public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -101,14 +96,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	private JLabel lblRes;
 	private JLabel imgErtzAO_1;
 
-	/**
-	 * Constructor de la ventana de Busqueda de Caso
-	 * 
-	 * @param padre: Es la ventana de inicio de sesion siendo la principal
-	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
-	 * @param cas: Es la variable que contiene la clase Caso que obtiene de la clase busqueda
-	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
-	 */
 	public VBusCaso(VIniciarSesion padre, boolean modal, Caso cas, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -506,7 +493,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		menBuscar.setForeground(Color.WHITE);
 		menuBar_1.add(menBuscar);
 		
-		// Mostrar Participantes
+		// Mostrar Involucrados
 		participantes = listarParticipantes(caso.getCodCaso());
 		for (Participante par : participantes.values()) {
 			if (posicion == 0) {
@@ -554,8 +541,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 			
 			posicion = posicion + 76;
 		}
-		
-		//Mostrar Involucrados
 		involucrados = listarInvolucrados(caso.getCodCaso());
 		int pos = posicion;
 		for (RestoHumano res : involucrados.values()) {
@@ -582,6 +567,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 				}
 			});
 			contentConos.add(textCodResto);
+			
 			posicion = posicion + 30;
 		}
 		
@@ -603,15 +589,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentConos.add(imgErtzAO_1);
 	}
 
-	/**
-	 * Metodo para cargar los datos de caso.
-	 * 
-	 * @param cas: variable que contiene los datos la clase caso y se utilizara para recoger la informacion de sus atributos.
-	 * 
-	 * Muestra los datos que contiene la clase caso en los textField(campos) y  
-	 * en las fechas se controla que si no esta vacio que muestre la informacion en su campo correspondiente.
-	 * 
-	 */
 	// Cargar la información
 	private void cargarDatos(Caso cas) {
 		textCod.setText(cas.getCodCaso());
@@ -624,10 +601,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 			textFall.setText(cas.getFechaFin().toString());
 		}
 	}
-	
-	/**
-	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
-	 */
+
 	public void cerrar() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
@@ -637,7 +611,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
-			//Confirmacion para cerrar sesion
 			if (JOptionPane.showConfirmDialog(this,
 					"¿Seguro que desea cerrar sesión?",
 					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
@@ -653,11 +626,6 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		} 
 	}
 	
-	/**
-	 * Metodo para abrir la ventana de Gestion. 
-	 * Se realiza al pulsar en la barra de menu el boton 'Gestionar'.
-	 * 
-	 */
 	// Abrir ventanas de menú
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre,true,info);
@@ -665,88 +633,48 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		vBus.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de Comparacion. 
-	 * Se realiza al pulsar en la barra de menu el boton 'Comparar'.
-	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre,true,info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de Busqueda. 
-	 * Se realiza al pulsar en la barra de menu el boton 'Busqueda'.
-	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre,true,info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de insercion de restos humanos.
-	 * 
-	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que 
-	 * despliegara tres opciones para pulsar y este metodo se realiza en 'Resto Humano'
-	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
-	/**
-	 * Metodo para abrir la ventana de insercion de personas.
-	 * 
-	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' y en 'Persona'.
-	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre,true,info);
 		this.dispose();
 		vInsPer.setVisible(true);		
 	}
 
-	/**
-	 * Metodo para abrir la ventana de insercion de casos.
-	 * 
-	 * Al igual que el metodo anterior funciona al pulsar 'Insertar' y en 'Caso'.
-	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}	
 	
-	/**
-	 * Metodo para abrir la ventana que muestra los datos de la persona.
-	 * 
-	 * @param dni: esta variable contiene el dni de la clase Persona.
-	 * 
-	 * Funciona al pulsar el nombre la persona que aparece en la pestaña de involucrados.
-	 */
 	private void abrirBusPer(String dni) {
 		VBusPer vBusPer = new VBusPer(padre, true, dni, info);
 		this.dispose();
 		vBusPer.setVisible(true);
 	}
 	
-	/**
-	 * Metodo para abrir la ventana que muestra los datos de los restos humanos
-	 * 
-	 * @param codigo: esta variable contiene el codigo del resto humano que recibe del constructor. 
-	 * 
-	 * Funciona al pulsar el codigo del resto que aparece en la pestaña involucrados para visualizar la información.
-	 * 
-	 */
 	private void abrirBusRH(String codigo) {
 		VBusRH vBusRH = new VBusRH(padre, true, codigo, info);
 		this.dispose();
 		vBusRH.setVisible(true);
 	}
-	
-	//Metodos
+
 	@Override
 	public Map<String, Participante> listarParticipantes(String codCaso) {
 		return datos.listarParticipantes(codCaso);

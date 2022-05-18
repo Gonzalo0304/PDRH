@@ -177,607 +177,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		tabbedPane.setBounds(0, 0, 506, 690);
 		getContentPane().add(tabbedPane);
 
-		contentDatos = new JPanel();
-		contentDatos.setLayout(null);
-		contentDatos.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		contentDatos.setBackground(Color.WHITE);
-		tabbedPane.addTab("Datos", null, contentDatos, null);
-
-		// Movimiento de la ventana
-		contentDatos.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				point.x = e.getX();
-				point.y = e.getY();
-			}
-		});
-		contentDatos.addMouseMotionListener(new MouseMotionAdapter() {
-			public void mouseDragged(MouseEvent e) {
-				Point p = getLocation();
-				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
-			}
-		});
-
-		// Botón para cerrar la ventana
-		lblCerrar = new JLabel("x");
-		lblCerrar.setBounds(470, 2, 31, 19);
-		lblCerrar.setBackground(new Color(153, 0, 0));
-		lblCerrar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblCerrar.setForeground(new Color(0, 51, 102));
-				lblCerrar.setOpaque(true);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblCerrar.setForeground(Color.WHITE);
-				lblCerrar.setOpaque(false);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cerrar();
-			}
-		});
-		lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblCerrar.setForeground(Color.WHITE);
-		contentDatos.add(lblCerrar);
-
-		// Menú superior
-		separatorMenu = new JSeparator();
-		separatorMenu.setBounds(0, 36, 502, 2);
-		separatorMenu.setForeground(SystemColor.controlShadow);
-		separatorMenu.setBackground(new Color(0, 51, 102));
-		contentDatos.add(separatorMenu);
-
-		menuBar = new JMenuBar();
-		menuBar.setBounds(0, 1, 502, 37);
-		menuBar.setBorderPainted(false);
-		menuBar.setBackground(new Color(0, 51, 102));
-		contentDatos.add(menuBar);
-
-		menUsuario = new JMenu(" " + info[0] + " ");
-		menuBar.add(menUsuario);
-		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
-		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		menUsuario.setBackground(new Color(0, 0, 255));
-		menUsuario.setForeground(new Color(255, 255, 255));
-
-		mCerrar = new JMenuItem("Cerrar Sesion");
-		mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
-		mCerrar.setBackground(new Color(32, 178, 170));
-		mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mCerrar.setForeground(Color.BLACK);
-		mCerrar.addActionListener(this);
-		menUsuario.add(mCerrar);
-
-		menInsertar = new JMenu("Insertar");
-		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
-		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menInsertar.setBackground(new Color(0, 0, 255));
-		menInsertar.setForeground(Color.WHITE);
-		menuBar.add(menInsertar);
-
-		mPersona = new JMenuItem("Persona");
-		mPersona.addActionListener(this);
-		menInsertar.add(mPersona);
-
-		mRestoHumano = new JMenuItem("Resto Humano");
-		mRestoHumano.addActionListener(this);
-		menInsertar.add(mRestoHumano);
-
-		mCaso = new JMenuItem("Caso");
-		mCaso.addActionListener(this);
-		menInsertar.add(mCaso);
-
-		menGestionar = new JMenu("Gestionar");
-		menGestionar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				abrirGes();
-			}
-		});
-		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
-		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menGestionar.setBackground(new Color(0, 0, 255));
-		menGestionar.setForeground(Color.WHITE);
-		menuBar.add(menGestionar);
-
-		menComparar = new JMenu("Comparar");
-		menComparar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				abrirCom();
-			}
-		});
-		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
-		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menComparar.setBackground(new Color(0, 0, 255));
-		menComparar.setForeground(Color.WHITE);
-		menuBar.add(menComparar);
-
-		menBuscar = new JMenu("Busqueda");
-		menBuscar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				abrirBus();
-			}
-		});
-		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
-		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menBuscar.setBackground(new Color(0, 0, 255));
-		menBuscar.setForeground(Color.WHITE);
-		menuBar.add(menBuscar);
-
-		lblDni = new JLabel("DNI");
-		lblDni.setForeground(new Color(0, 51, 102));
-		lblDni.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblDni.setBounds(26, 77, 81, 28);
-		contentDatos.add(lblDni);
-
-		// Campos de información de persona
-		separatorDni = new JSeparator();
-		separatorDni.setForeground(SystemColor.controlShadow);
-		separatorDni.setBackground(new Color(0, 51, 102));
-		separatorDni.setBounds(26, 103, 106, 2);
-		contentDatos.add(separatorDni);
-
-		textDni = new JTextField();
-		textDni.setEditable(false);
-		textDni.setEnabled(false);
-		textDni.setColumns(10);
-		textDni.setBounds(26, 116, 187, 20);
-		contentDatos.add(textDni);
-
-		lblNombre = new JLabel("NOMBRE");
-		lblNombre.setForeground(new Color(0, 51, 102));
-		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNombre.setBounds(26, 135, 81, 28);
-		contentDatos.add(lblNombre);
-
-		separatorNom = new JSeparator();
-		separatorNom.setForeground(SystemColor.controlShadow);
-		separatorNom.setBackground(new Color(0, 51, 102));
-		separatorNom.setBounds(26, 161, 106, 2);
-		contentDatos.add(separatorNom);
-
-		textNombre = new JTextField();
-		textNombre.setColumns(10);
-		textNombre.setBounds(26, 174, 187, 20);
-		contentDatos.add(textNombre);
-
-		lblApellido = new JLabel("APELLIDO");
-		lblApellido.setForeground(new Color(0, 51, 102));
-		lblApellido.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblApellido.setBounds(26, 203, 81, 28);
-		contentDatos.add(lblApellido);
-
-		separatorApe = new JSeparator();
-		separatorApe.setForeground(SystemColor.controlShadow);
-		separatorApe.setBackground(new Color(0, 51, 102));
-		separatorApe.setBounds(26, 229, 106, 2);
-		contentDatos.add(separatorApe);
-
-		textApellido = new JTextField();
-		textApellido.setColumns(10);
-		textApellido.setBounds(26, 242, 187, 20);
-		contentDatos.add(textApellido);
-
-		lblMovil = new JLabel("TEL\u00C9FONO M\u00D3VIL");
-		lblMovil.setForeground(new Color(0, 51, 102));
-		lblMovil.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblMovil.setBounds(26, 261, 106, 28);
-		contentDatos.add(lblMovil);
-
-		separatorMovil = new JSeparator();
-		separatorMovil.setForeground(SystemColor.controlShadow);
-		separatorMovil.setBackground(new Color(0, 51, 102));
-		separatorMovil.setBounds(26, 287, 106, 2);
-		contentDatos.add(separatorMovil);
-
-		textMovil = new JTextField();
-		textMovil.setColumns(10);
-		textMovil.setBounds(26, 300, 187, 20);
-		contentDatos.add(textMovil);
-
-		lblTelf = new JLabel("TEL\u00C9FONO OPC.");
-		lblTelf.setForeground(new Color(0, 51, 102));
-		lblTelf.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblTelf.setBounds(26, 331, 106, 28);
-		contentDatos.add(lblTelf);
-
-		separatorOpc = new JSeparator();
-		separatorOpc.setForeground(SystemColor.controlShadow);
-		separatorOpc.setBackground(new Color(0, 51, 102));
-		separatorOpc.setBounds(26, 357, 106, 2);
-		contentDatos.add(separatorOpc);
-
-		textTelf = new JTextField();
-		textTelf.setColumns(10);
-		textTelf.setBounds(26, 370, 187, 20);
-		contentDatos.add(textTelf);
-
-		lblNac = new JLabel("NACIMIENTO");
-		lblNac.setForeground(new Color(0, 51, 102));
-		lblNac.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNac.setBounds(26, 458, 81, 28);
-		contentDatos.add(lblNac);
-
-		separatorNac = new JSeparator();
-		separatorNac.setForeground(SystemColor.controlShadow);
-		separatorNac.setBackground(new Color(0, 51, 102));
-		separatorNac.setBounds(26, 484, 106, 2);
-		contentDatos.add(separatorNac);
-
-		textNac = new JTextField();
-		textNac.setColumns(10);
-		textNac.setBounds(26, 497, 187, 20);
-		contentDatos.add(textNac);
-
-		lblFall = new JLabel("FALLECIMIENTO");
-		lblFall.setForeground(new Color(0, 51, 102));
-		lblFall.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblFall.setBounds(26, 526, 106, 28);
-		contentDatos.add(lblFall);
-
-		separatorFall = new JSeparator();
-		separatorFall.setForeground(SystemColor.controlShadow);
-		separatorFall.setBackground(new Color(0, 51, 102));
-		separatorFall.setBounds(26, 552, 106, 2);
-		contentDatos.add(separatorFall);
-
-		textFall = new JTextField();
-		textFall.setColumns(10);
-		textFall.setBounds(26, 565, 187, 20);
-		contentDatos.add(textFall);
-
-		// Campos de información de agente
-		lblRango = new JLabel("RANGO");
-		lblRango.setForeground(new Color(153, 0, 0));
-		lblRango.setVisible(false);
-		lblRango.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblRango.setBounds(264, 74, 81, 28);
-		contentDatos.add(lblRango);
-
-		separatorRango = new JSeparator();
-		separatorRango.setForeground(SystemColor.controlShadow);
-		separatorRango.setBackground(new Color(153, 0, 0));
-		separatorRango.setVisible(false);
-		separatorRango.setBounds(264, 100, 106, 2);
-		contentDatos.add(separatorRango);
-
-		textRango = new JTextField();
-		textRango.setVisible(false);
-		textRango.setColumns(10);
-		textRango.setBounds(264, 116, 187, 20);
-		contentDatos.add(textRango);
-
-		lblIniServ = new JLabel("INICIO SERVICIO");
-		lblIniServ.setForeground(new Color(153, 0, 0));
-		lblIniServ.setVisible(false);
-		lblIniServ.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblIniServ.setBounds(264, 132, 106, 28);
-		contentDatos.add(lblIniServ);
-
-		separatorIniServ = new JSeparator();
-		separatorIniServ.setForeground(SystemColor.controlShadow);
-		separatorIniServ.setBackground(new Color(153, 0, 0));
-		separatorIniServ.setVisible(false);
-		separatorIniServ.setBounds(264, 158, 106, 2);
-		contentDatos.add(separatorIniServ);
-
-		textIniServ = new JTextField();
-		textIniServ.setVisible(false);
-		textIniServ.setColumns(10);
-		textIniServ.setBounds(264, 174, 187, 20);
-		contentDatos.add(textIniServ);
-
-		lblFinServ = new JLabel("FIN SERVICIO");
-		lblFinServ.setForeground(new Color(153, 0, 0));
-		lblFinServ.setVisible(false);
-		lblFinServ.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblFinServ.setBounds(264, 200, 81, 28);
-		contentDatos.add(lblFinServ);
-
-		separatorFinServ = new JSeparator();
-		separatorFinServ.setForeground(SystemColor.controlShadow);
-		separatorFinServ.setBackground(new Color(153, 0, 0));
-		separatorFinServ.setVisible(false);
-		separatorFinServ.setBounds(264, 226, 106, 2);
-		contentDatos.add(separatorFinServ);
-
-		textFinServ = new JTextField();
-		textFinServ.setVisible(false);
-		textFinServ.setColumns(10);
-		textFinServ.setBounds(264, 242, 187, 20);
-		contentDatos.add(textFinServ);
-
-		// Campos de información de criminal
-		lblPris = new JLabel("PRISIONERO");
-		lblPris.setForeground(new Color(153, 0, 0));
-		lblPris.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblPris.setBounds(267, 77, 81, 28);
-		lblPris.setVisible(false);
-		contentDatos.add(lblPris);
-
-		separatorPris = new JSeparator();
-		separatorPris.setForeground(SystemColor.controlShadow);
-		separatorPris.setBackground(new Color(153, 0, 0));
-		separatorPris.setVisible(false);
-		separatorPris.setBounds(267, 103, 106, 2);
-		contentDatos.add(separatorPris);
-
-		rdbtnSi = new JRadioButton("S\u00ED");
-		rdbtnSi.setOpaque(false);
-		rdbtnSi.setFont(new Font("Tahoma", Font.BOLD, 11));
-		rdbtnSi.setBounds(264, 118, 43, 23);
-		rdbtnSi.setVisible(false);
-		contentDatos.add(rdbtnSi);
-
-		rdbtnNo = new JRadioButton("No");
-		rdbtnNo.setOpaque(false);
-		rdbtnNo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		rdbtnNo.setBounds(338, 118, 43, 23);
-		rdbtnNo.setVisible(false);
-		contentDatos.add(rdbtnNo);
-
 		bgPris = new ButtonGroup();
-		bgPris.add(rdbtnSi);
-		bgPris.add(rdbtnNo);
-
-		lblFechaArr = new JLabel("FECHA ARRESTO");
-		lblFechaArr.setForeground(new Color(153, 0, 0));
-		lblFechaArr.setVisible(false);
-		lblFechaArr.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblFechaArr.setBounds(264, 132, 106, 28);
-		contentDatos.add(lblFechaArr);
-
-		separatorFechaArr = new JSeparator();
-		separatorFechaArr.setForeground(SystemColor.controlShadow);
-		separatorFechaArr.setBackground(new Color(153, 0, 0));
-		separatorFechaArr.setVisible(false);
-		separatorFechaArr.setBounds(264, 158, 106, 2);
-		contentDatos.add(separatorFechaArr);
-
-		textFechaArr = new JTextField();
-		textFechaArr.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (textFechaArr.getText().isBlank()) {
-					buttonFA.setEnabled(false);
-				} else {
-					buttonFA.setEnabled(true);
-				}
-			}
-		});
-		textFechaArr.setVisible(false);
-		textFechaArr.setColumns(10);
-		textFechaArr.setBounds(264, 174, 187, 20);
-		contentDatos.add(textFechaArr);
-
-		// Campos de información de desaparecida
-		textFechaDes = new JTextField();
-		textFechaDes.setVisible(false);
-		textFechaDes.setColumns(10);
-		textFechaDes.setBounds(264, 116, 187, 20);
-		contentDatos.add(textFechaDes);
-
-		textTP = new JTextField();
-		textTP.setVisible(false);
-		textTP.setColumns(10);
-		textTP.setBounds(264, 300, 187, 20);
-		contentDatos.add(textTP);
-
-		textLoc = new JTextField();
-		textLoc.setColumns(10);
-		textLoc.setBounds(26, 428, 187, 20);
-		contentDatos.add(textLoc);
-
-		textUltUbi = new JTextField();
-		textUltUbi.setVisible(false);
-		textUltUbi.setColumns(10);
-		textUltUbi.setBounds(264, 174, 187, 20);
-		contentDatos.add(textUltUbi);
-
-		separatorLoc = new JSeparator();
-		separatorLoc.setForeground(SystemColor.controlShadow);
-		separatorLoc.setBackground(new Color(0, 51, 102));
-		separatorLoc.setBounds(26, 415, 106, 2);
-		contentDatos.add(separatorLoc);
-
-		separatorFechaDes = new JSeparator();
-		separatorFechaDes.setForeground(SystemColor.controlShadow);
-		separatorFechaDes.setBackground(new Color(153, 0, 0));
-		separatorFechaDes.setVisible(false);
-		separatorFechaDes.setBounds(264, 103, 106, 2);
-		contentDatos.add(separatorFechaDes);
-
-		lblSexo = new JLabel("SEXO");
-		lblSexo.setForeground(new Color(153, 0, 0));
-		lblSexo.setVisible(false);
-		lblSexo.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblSexo.setBounds(264, 207, 81, 28);
-		contentDatos.add(lblSexo);
-
-		separatorSexo = new JSeparator();
-		separatorSexo.setForeground(SystemColor.controlShadow);
-		separatorSexo.setBackground(new Color(153, 0, 0));
-		separatorSexo.setVisible(false);
-		separatorSexo.setBounds(264, 233, 106, 2);
-		contentDatos.add(separatorSexo);
-
-		lblUltUbi = new JLabel("\u00DALTIMA UBI.");
-		lblUltUbi.setForeground(new Color(153, 0, 0));
-		lblUltUbi.setVisible(false);
-		lblUltUbi.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblUltUbi.setBounds(264, 135, 106, 28);
-		contentDatos.add(lblUltUbi);
-
-		lblLoc = new JLabel("LOCALIDAD");
-		lblLoc.setForeground(new Color(0, 51, 102));
-		lblLoc.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblLoc.setBounds(26, 389, 106, 28);
-		contentDatos.add(lblLoc);
-
-		separatorUltimaUbi = new JSeparator();
-		separatorUltimaUbi.setForeground(SystemColor.controlShadow);
-		separatorUltimaUbi.setBackground(new Color(153, 0, 0));
-		separatorUltimaUbi.setVisible(false);
-		separatorUltimaUbi.setBounds(264, 161, 106, 2);
-		contentDatos.add(separatorUltimaUbi);
-
-		lblFechaDes = new JLabel("FECHA DES.");
-		lblFechaDes.setForeground(new Color(153, 0, 0));
-		lblFechaDes.setVisible(false);
-		lblFechaDes.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblFechaDes.setBounds(264, 77, 106, 28);
-		contentDatos.add(lblFechaDes);
-
-		lblTP = new JLabel("TIPO PELO");
-		lblTP.setForeground(new Color(153, 0, 0));
-		lblTP.setVisible(false);
-		lblTP.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblTP.setBounds(264, 261, 106, 28);
-		contentDatos.add(lblTP);
-
-		separatorTP = new JSeparator();
-		separatorTP.setForeground(SystemColor.controlShadow);
-		separatorTP.setBackground(new Color(153, 0, 0));
-		separatorTP.setVisible(false);
-		separatorTP.setBounds(264, 287, 106, 2);
-		contentDatos.add(separatorTP);
-
-		textSexo = new JTextField();
-		textSexo.setVisible(false);
-		textSexo.setColumns(10);
-		textSexo.setBounds(264, 242, 187, 20);
-		contentDatos.add(textSexo);
-
-		textCP = new JTextField();
-		textCP.setVisible(false);
-		textCP.setColumns(10);
-		textCP.setBounds(264, 370, 187, 20);
-		contentDatos.add(textCP);
-
-		lblCP = new JLabel("COLOR PELO");
-		lblCP.setForeground(new Color(153, 0, 0));
-		lblCP.setVisible(false);
-		lblCP.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblCP.setBounds(264, 331, 106, 28);
-		contentDatos.add(lblCP);
-
-		separatorCP = new JSeparator();
-		separatorCP.setForeground(SystemColor.controlShadow);
-		separatorCP.setBackground(new Color(153, 0, 0));
-		separatorCP.setVisible(false);
-		separatorCP.setBounds(264, 357, 106, 2);
-		contentDatos.add(separatorCP);
-
-		textCO = new JTextField();
-		textCO.setVisible(false);
-		textCO.setColumns(10);
-		textCO.setBounds(264, 428, 187, 20);
-		contentDatos.add(textCO);
-
-		lblCO = new JLabel("COLOR OJOS");
-		lblCO.setForeground(new Color(153, 0, 0));
-		lblCO.setVisible(false);
-		lblCO.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblCO.setBounds(264, 389, 106, 28);
-		contentDatos.add(lblCO);
-
-		separatorCO = new JSeparator();
-		separatorCO.setForeground(SystemColor.controlShadow);
-		separatorCO.setBackground(new Color(153, 0, 0));
-		separatorCO.setVisible(false);
-		separatorCO.setBounds(264, 415, 106, 2);
-		contentDatos.add(separatorCO);
-
-		textAlt = new JTextField();
-		textAlt.setVisible(false);
-		textAlt.setColumns(10);
-		textAlt.setBounds(264, 497, 187, 20);
-		contentDatos.add(textAlt);
-
-		lblAlt = new JLabel("ALTURA");
-		lblAlt.setForeground(new Color(153, 0, 0));
-		lblAlt.setVisible(false);
-		lblAlt.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblAlt.setBounds(264, 458, 106, 28);
-		contentDatos.add(lblAlt);
-
-		separatorAlt = new JSeparator();
-		separatorAlt.setForeground(SystemColor.controlShadow);
-		separatorAlt.setBackground(new Color(153, 0, 0));
-		separatorAlt.setVisible(false);
-		separatorAlt.setBounds(264, 484, 106, 2);
-		contentDatos.add(separatorAlt);
-
-		textEsp = new JTextField();
-		textEsp.setVisible(false);
-		textEsp.setColumns(10);
-		textEsp.setBounds(264, 565, 187, 20);
-		contentDatos.add(textEsp);
-
-		lblEsp = new JLabel("ESPECIFICACIONES");
-		lblEsp.setForeground(new Color(153, 0, 0));
-		lblEsp.setVisible(false);
-		lblEsp.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblEsp.setBounds(264, 526, 106, 28);
-		contentDatos.add(lblEsp);
-
-		separatorEsp = new JSeparator();
-		separatorEsp.setForeground(SystemColor.controlShadow);
-		separatorEsp.setBackground(new Color(153, 0, 0));
-		separatorEsp.setVisible(false);
-		separatorEsp.setBounds(264, 552, 106, 2);
-		contentDatos.add(separatorEsp);
-
-		// Fondo
-		imgErtzAO = new JLabel("");
-		imgErtzAO.setIcon(new ImageIcon(VGesPersona.class.getResource("/imagenes/ertzAC.png")));
-		imgErtzAO.setBounds(90, 200, 309, 317);
-		contentDatos.add(imgErtzAO);
-
-		// Título
-		separatorGesPer = new JSeparator();
-		separatorGesPer.setForeground(new Color(102, 0, 0));
-		separatorGesPer.setVisible(false);
-		separatorGesPer.setBackground(new Color(153, 0, 0));
-		separatorGesPer.setBounds(10, 64, 478, 2);
-		contentDatos.add(separatorGesPer);
-
-		lblGesPer = new JLabel("Gesti\u00F3n de Persona");
-		lblGesPer.setForeground(SystemColor.textInactiveText);
-		lblGesPer.setFont(new Font("Nirmala UI", Font.BOLD, 14));
-		lblGesPer.setBounds(10, 42, 142, 19);
-		lblGesPer.setVisible(false);
-		contentDatos.add(lblGesPer);
-
-		// Botón de modificación y eliminación
-		buttonMod = new Button("MODIFICAR");
-		buttonMod.setForeground(Color.WHITE);
-		buttonMod.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonMod.setBackground(new Color(153, 0, 0));
-		buttonMod.setBounds(124, 610, 89, 28);
-		buttonMod.addActionListener(this);
-		contentDatos.add(buttonMod);
-
-		buttonBaja = new Button("DAR BAJA");
-		buttonBaja.setForeground(Color.WHITE);
-		buttonBaja.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonBaja.setBackground(new Color(153, 0, 0));
-		buttonBaja.setBounds(264, 610, 89, 28);
-		buttonBaja.addActionListener(this);
-		contentDatos.add(buttonBaja);
-
-		buttonFA = new Button("+");
-		buttonFA.setEnabled(false);
-		buttonFA.setBounds(457, 174, 20, 20);
-		buttonFA.setVisible(false);
-		buttonFA.addActionListener(this);
-		contentDatos.add(buttonFA);
 
 		cargarDatos(dni);
 
@@ -1007,9 +407,613 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		separator.setBackground(new Color(153, 153, 204));
 		separator.setBounds(0, 251, 502, 2);
 		contentConos.add(separator);
+		
+				contentDatos = new JPanel();
+				contentDatos.setLayout(null);
+				contentDatos.setBorder(new LineBorder(Color.LIGHT_GRAY));
+				contentDatos.setBackground(Color.WHITE);
+				tabbedPane.addTab("Datos", null, contentDatos, null);
+				
+						// Movimiento de la ventana
+						contentDatos.addMouseListener(new MouseAdapter() {
+							public void mousePressed(MouseEvent e) {
+								point.x = e.getX();
+								point.y = e.getY();
+							}
+						});
+						contentDatos.addMouseMotionListener(new MouseMotionAdapter() {
+							public void mouseDragged(MouseEvent e) {
+								Point p = getLocation();
+								setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
+							}
+						});
+						
+								// Botón para cerrar la ventana
+								lblCerrar = new JLabel("x");
+								lblCerrar.setBounds(470, 2, 31, 19);
+								lblCerrar.setBackground(new Color(153, 0, 0));
+								lblCerrar.addMouseListener(new MouseAdapter() {
+									@Override
+									public void mouseEntered(MouseEvent e) {
+										lblCerrar.setForeground(new Color(0, 51, 102));
+										lblCerrar.setOpaque(true);
+									}
+
+									@Override
+									public void mouseExited(MouseEvent e) {
+										lblCerrar.setForeground(Color.WHITE);
+										lblCerrar.setOpaque(false);
+									}
+
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										cerrar();
+									}
+								});
+								lblCerrar.setHorizontalAlignment(SwingConstants.CENTER);
+								lblCerrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+								lblCerrar.setForeground(Color.WHITE);
+								contentDatos.add(lblCerrar);
+								
+										// Menú superior
+										separatorMenu = new JSeparator();
+										separatorMenu.setBounds(0, 36, 502, 2);
+										separatorMenu.setForeground(SystemColor.controlShadow);
+										separatorMenu.setBackground(new Color(0, 51, 102));
+										contentDatos.add(separatorMenu);
+										
+												menuBar = new JMenuBar();
+												menuBar.setBounds(0, 1, 502, 37);
+												menuBar.setBorderPainted(false);
+												menuBar.setBackground(new Color(0, 51, 102));
+												contentDatos.add(menuBar);
+												
+														menUsuario = new JMenu(" " + info[0] + " ");
+														menuBar.add(menUsuario);
+														menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+														menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+														menUsuario.setBackground(new Color(0, 0, 255));
+														menUsuario.setForeground(new Color(255, 255, 255));
+														
+																mCerrar = new JMenuItem("Cerrar Sesion");
+																mCerrar.setHorizontalAlignment(SwingConstants.TRAILING);
+																mCerrar.setBackground(new Color(32, 178, 170));
+																mCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+																mCerrar.setForeground(Color.BLACK);
+																mCerrar.addActionListener(this);
+																menUsuario.add(mCerrar);
+																
+																		menInsertar = new JMenu("Insertar");
+																		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+																		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+																		menInsertar.setBackground(new Color(0, 0, 255));
+																		menInsertar.setForeground(Color.WHITE);
+																		menuBar.add(menInsertar);
+																		
+																				mPersona = new JMenuItem("Persona");
+																				mPersona.addActionListener(this);
+																				menInsertar.add(mPersona);
+																				
+																						mRestoHumano = new JMenuItem("Resto Humano");
+																						mRestoHumano.addActionListener(this);
+																						menInsertar.add(mRestoHumano);
+																						
+																								mCaso = new JMenuItem("Caso");
+																								mCaso.addActionListener(this);
+																								menInsertar.add(mCaso);
+																								
+																										menGestionar = new JMenu("Gestionar");
+																										menGestionar.addMouseListener(new MouseAdapter() {
+																											@Override
+																											public void mouseClicked(java.awt.event.MouseEvent e) {
+																												abrirGes();
+																											}
+																										});
+																										menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+																										menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+																										menGestionar.setBackground(new Color(0, 0, 255));
+																										menGestionar.setForeground(Color.WHITE);
+																										menuBar.add(menGestionar);
+																										
+																												menComparar = new JMenu("Comparar");
+																												menComparar.addMouseListener(new MouseAdapter() {
+																													@Override
+																													public void mouseClicked(java.awt.event.MouseEvent e) {
+																														abrirCom();
+																													}
+																												});
+																												menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+																												menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+																												menComparar.setBackground(new Color(0, 0, 255));
+																												menComparar.setForeground(Color.WHITE);
+																												menuBar.add(menComparar);
+																												
+																														menBuscar = new JMenu("Busqueda");
+																														menBuscar.addMouseListener(new MouseAdapter() {
+																															@Override
+																															public void mouseClicked(java.awt.event.MouseEvent e) {
+																																abrirBus();
+																															}
+																														});
+																														menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+																														menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+																														menBuscar.setBackground(new Color(0, 0, 255));
+																														menBuscar.setForeground(Color.WHITE);
+																														menuBar.add(menBuscar);
+																														
+																																lblDni = new JLabel("DNI");
+																																lblDni.setForeground(new Color(0, 51, 102));
+																																lblDni.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																lblDni.setBounds(26, 77, 81, 28);
+																																contentDatos.add(lblDni);
+																																
+																																		// Campos de información de persona
+																																		separatorDni = new JSeparator();
+																																		separatorDni.setForeground(SystemColor.controlShadow);
+																																		separatorDni.setBackground(new Color(0, 51, 102));
+																																		separatorDni.setBounds(26, 103, 106, 2);
+																																		contentDatos.add(separatorDni);
+																																		
+																																				textDni = new JTextField();
+																																				textDni.setEditable(false);
+																																				textDni.setEnabled(false);
+																																				textDni.setColumns(10);
+																																				textDni.setBounds(26, 116, 187, 20);
+																																				contentDatos.add(textDni);
+																																				
+																																						lblNombre = new JLabel("NOMBRE");
+																																						lblNombre.setForeground(new Color(0, 51, 102));
+																																						lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																						lblNombre.setBounds(26, 135, 81, 28);
+																																						contentDatos.add(lblNombre);
+																																						
+																																								separatorNom = new JSeparator();
+																																								separatorNom.setForeground(SystemColor.controlShadow);
+																																								separatorNom.setBackground(new Color(0, 51, 102));
+																																								separatorNom.setBounds(26, 161, 106, 2);
+																																								contentDatos.add(separatorNom);
+																																								
+																																										textNombre = new JTextField();
+																																										textNombre.setColumns(10);
+																																										textNombre.setBounds(26, 174, 187, 20);
+																																										contentDatos.add(textNombre);
+																																										
+																																												lblApellido = new JLabel("APELLIDO");
+																																												lblApellido.setForeground(new Color(0, 51, 102));
+																																												lblApellido.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																												lblApellido.setBounds(26, 203, 81, 28);
+																																												contentDatos.add(lblApellido);
+																																												
+																																														separatorApe = new JSeparator();
+																																														separatorApe.setForeground(SystemColor.controlShadow);
+																																														separatorApe.setBackground(new Color(0, 51, 102));
+																																														separatorApe.setBounds(26, 229, 106, 2);
+																																														contentDatos.add(separatorApe);
+																																														
+																																																textApellido = new JTextField();
+																																																textApellido.setColumns(10);
+																																																textApellido.setBounds(26, 242, 187, 20);
+																																																contentDatos.add(textApellido);
+																																																
+																																																		lblMovil = new JLabel("TEL\u00C9FONO M\u00D3VIL");
+																																																		lblMovil.setForeground(new Color(0, 51, 102));
+																																																		lblMovil.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																		lblMovil.setBounds(26, 261, 106, 28);
+																																																		contentDatos.add(lblMovil);
+																																																		
+																																																				separatorMovil = new JSeparator();
+																																																				separatorMovil.setForeground(SystemColor.controlShadow);
+																																																				separatorMovil.setBackground(new Color(0, 51, 102));
+																																																				separatorMovil.setBounds(26, 287, 106, 2);
+																																																				contentDatos.add(separatorMovil);
+																																																				
+																																																						textMovil = new JTextField();
+																																																						textMovil.setColumns(10);
+																																																						textMovil.setBounds(26, 300, 187, 20);
+																																																						contentDatos.add(textMovil);
+																																																						
+																																																								lblTelf = new JLabel("TEL\u00C9FONO OPC.");
+																																																								lblTelf.setForeground(new Color(0, 51, 102));
+																																																								lblTelf.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																								lblTelf.setBounds(26, 331, 106, 28);
+																																																								contentDatos.add(lblTelf);
+																																																								
+																																																										separatorOpc = new JSeparator();
+																																																										separatorOpc.setForeground(SystemColor.controlShadow);
+																																																										separatorOpc.setBackground(new Color(0, 51, 102));
+																																																										separatorOpc.setBounds(26, 357, 106, 2);
+																																																										contentDatos.add(separatorOpc);
+																																																										
+																																																												textTelf = new JTextField();
+																																																												textTelf.setColumns(10);
+																																																												textTelf.setBounds(26, 370, 187, 20);
+																																																												contentDatos.add(textTelf);
+																																																												
+																																																														lblNac = new JLabel("NACIMIENTO");
+																																																														lblNac.setForeground(new Color(0, 51, 102));
+																																																														lblNac.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																														lblNac.setBounds(26, 458, 81, 28);
+																																																														contentDatos.add(lblNac);
+																																																														
+																																																																separatorNac = new JSeparator();
+																																																																separatorNac.setForeground(SystemColor.controlShadow);
+																																																																separatorNac.setBackground(new Color(0, 51, 102));
+																																																																separatorNac.setBounds(26, 484, 106, 2);
+																																																																contentDatos.add(separatorNac);
+																																																																
+																																																																		textNac = new JTextField();
+																																																																		textNac.setColumns(10);
+																																																																		textNac.setBounds(26, 497, 187, 20);
+																																																																		contentDatos.add(textNac);
+																																																																		
+																																																																				lblFall = new JLabel("FALLECIMIENTO");
+																																																																				lblFall.setForeground(new Color(0, 51, 102));
+																																																																				lblFall.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																				lblFall.setBounds(26, 526, 106, 28);
+																																																																				contentDatos.add(lblFall);
+																																																																				
+																																																																						separatorFall = new JSeparator();
+																																																																						separatorFall.setForeground(SystemColor.controlShadow);
+																																																																						separatorFall.setBackground(new Color(0, 51, 102));
+																																																																						separatorFall.setBounds(26, 552, 106, 2);
+																																																																						contentDatos.add(separatorFall);
+																																																																						
+																																																																								textFall = new JTextField();
+																																																																								textFall.setColumns(10);
+																																																																								textFall.setBounds(26, 565, 187, 20);
+																																																																								contentDatos.add(textFall);
+																																																																								
+																																																																										// Campos de información de agente
+																																																																										lblRango = new JLabel("RANGO");
+																																																																										lblRango.setForeground(new Color(153, 0, 0));
+																																																																										lblRango.setVisible(false);
+																																																																										lblRango.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																										lblRango.setBounds(264, 74, 81, 28);
+																																																																										contentDatos.add(lblRango);
+																																																																										
+																																																																												separatorRango = new JSeparator();
+																																																																												separatorRango.setForeground(SystemColor.controlShadow);
+																																																																												separatorRango.setBackground(new Color(153, 0, 0));
+																																																																												separatorRango.setVisible(false);
+																																																																												separatorRango.setBounds(264, 100, 106, 2);
+																																																																												contentDatos.add(separatorRango);
+																																																																												
+																																																																														textRango = new JTextField();
+																																																																														textRango.setVisible(false);
+																																																																														textRango.setColumns(10);
+																																																																														textRango.setBounds(264, 116, 187, 20);
+																																																																														contentDatos.add(textRango);
+																																																																														
+																																																																																lblIniServ = new JLabel("INICIO SERVICIO");
+																																																																																lblIniServ.setForeground(new Color(153, 0, 0));
+																																																																																lblIniServ.setVisible(false);
+																																																																																lblIniServ.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																lblIniServ.setBounds(264, 132, 106, 28);
+																																																																																contentDatos.add(lblIniServ);
+																																																																																
+																																																																																		separatorIniServ = new JSeparator();
+																																																																																		separatorIniServ.setForeground(SystemColor.controlShadow);
+																																																																																		separatorIniServ.setBackground(new Color(153, 0, 0));
+																																																																																		separatorIniServ.setVisible(false);
+																																																																																		separatorIniServ.setBounds(264, 158, 106, 2);
+																																																																																		contentDatos.add(separatorIniServ);
+																																																																																		
+																																																																																				textIniServ = new JTextField();
+																																																																																				textIniServ.setVisible(false);
+																																																																																				textIniServ.setColumns(10);
+																																																																																				textIniServ.setBounds(264, 174, 187, 20);
+																																																																																				contentDatos.add(textIniServ);
+																																																																																				
+																																																																																						lblFinServ = new JLabel("FIN SERVICIO");
+																																																																																						lblFinServ.setForeground(new Color(153, 0, 0));
+																																																																																						lblFinServ.setVisible(false);
+																																																																																						lblFinServ.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																						lblFinServ.setBounds(264, 200, 81, 28);
+																																																																																						contentDatos.add(lblFinServ);
+																																																																																						
+																																																																																								separatorFinServ = new JSeparator();
+																																																																																								separatorFinServ.setForeground(SystemColor.controlShadow);
+																																																																																								separatorFinServ.setBackground(new Color(153, 0, 0));
+																																																																																								separatorFinServ.setVisible(false);
+																																																																																								separatorFinServ.setBounds(264, 226, 106, 2);
+																																																																																								contentDatos.add(separatorFinServ);
+																																																																																								
+																																																																																										textFinServ = new JTextField();
+																																																																																										textFinServ.setVisible(false);
+																																																																																										textFinServ.setColumns(10);
+																																																																																										textFinServ.setBounds(264, 242, 187, 20);
+																																																																																										contentDatos.add(textFinServ);
+																																																																																										
+																																																																																												// Campos de información de criminal
+																																																																																												lblPris = new JLabel("PRISIONERO");
+																																																																																												lblPris.setForeground(new Color(153, 0, 0));
+																																																																																												lblPris.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																												lblPris.setBounds(267, 77, 81, 28);
+																																																																																												lblPris.setVisible(false);
+																																																																																												contentDatos.add(lblPris);
+																																																																																												
+																																																																																														separatorPris = new JSeparator();
+																																																																																														separatorPris.setForeground(SystemColor.controlShadow);
+																																																																																														separatorPris.setBackground(new Color(153, 0, 0));
+																																																																																														separatorPris.setVisible(false);
+																																																																																														separatorPris.setBounds(267, 103, 106, 2);
+																																																																																														contentDatos.add(separatorPris);
+																																																																																														
+																																																																																																rdbtnSi = new JRadioButton("S\u00ED");
+																																																																																																rdbtnSi.setOpaque(false);
+																																																																																																rdbtnSi.setFont(new Font("Tahoma", Font.BOLD, 11));
+																																																																																																rdbtnSi.setBounds(264, 118, 43, 23);
+																																																																																																rdbtnSi.setVisible(false);
+																																																																																																contentDatos.add(rdbtnSi);
+																																																																																																
+																																																																																																		rdbtnNo = new JRadioButton("No");
+																																																																																																		rdbtnNo.setOpaque(false);
+																																																																																																		rdbtnNo.setFont(new Font("Tahoma", Font.BOLD, 11));
+																																																																																																		rdbtnNo.setBounds(338, 118, 43, 23);
+																																																																																																		rdbtnNo.setVisible(false);
+																																																																																																		contentDatos.add(rdbtnNo);
+																																																																																																		bgPris.add(rdbtnSi);
+																																																																																																		bgPris.add(rdbtnNo);
+																																																																																																		
+																																																																																																				lblFechaArr = new JLabel("FECHA ARRESTO");
+																																																																																																				lblFechaArr.setForeground(new Color(153, 0, 0));
+																																																																																																				lblFechaArr.setVisible(false);
+																																																																																																				lblFechaArr.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																				lblFechaArr.setBounds(264, 132, 106, 28);
+																																																																																																				contentDatos.add(lblFechaArr);
+																																																																																																				
+																																																																																																						separatorFechaArr = new JSeparator();
+																																																																																																						separatorFechaArr.setForeground(SystemColor.controlShadow);
+																																																																																																						separatorFechaArr.setBackground(new Color(153, 0, 0));
+																																																																																																						separatorFechaArr.setVisible(false);
+																																																																																																						separatorFechaArr.setBounds(264, 158, 106, 2);
+																																																																																																						contentDatos.add(separatorFechaArr);
+																																																																																																						
+																																																																																																								textFechaArr = new JTextField();
+																																																																																																								textFechaArr.addKeyListener(new KeyAdapter() {
+																																																																																																									@Override
+																																																																																																									public void keyReleased(KeyEvent e) {
+																																																																																																										if (textFechaArr.getText().isBlank()) {
+																																																																																																											buttonFA.setEnabled(false);
+																																																																																																										} else {
+																																																																																																											buttonFA.setEnabled(true);
+																																																																																																										}
+																																																																																																									}
+																																																																																																								});
+																																																																																																								textFechaArr.setVisible(false);
+																																																																																																								textFechaArr.setColumns(10);
+																																																																																																								textFechaArr.setBounds(264, 174, 187, 20);
+																																																																																																								contentDatos.add(textFechaArr);
+																																																																																																								
+																																																																																																										// Campos de información de desaparecida
+																																																																																																										textFechaDes = new JTextField();
+																																																																																																										textFechaDes.setVisible(false);
+																																																																																																										textFechaDes.setColumns(10);
+																																																																																																										textFechaDes.setBounds(264, 116, 187, 20);
+																																																																																																										contentDatos.add(textFechaDes);
+																																																																																																										
+																																																																																																												textTP = new JTextField();
+																																																																																																												textTP.setVisible(false);
+																																																																																																												textTP.setColumns(10);
+																																																																																																												textTP.setBounds(264, 300, 187, 20);
+																																																																																																												contentDatos.add(textTP);
+																																																																																																												
+																																																																																																														textLoc = new JTextField();
+																																																																																																														textLoc.setColumns(10);
+																																																																																																														textLoc.setBounds(26, 428, 187, 20);
+																																																																																																														contentDatos.add(textLoc);
+																																																																																																														
+																																																																																																																textUltUbi = new JTextField();
+																																																																																																																textUltUbi.setVisible(false);
+																																																																																																																textUltUbi.setColumns(10);
+																																																																																																																textUltUbi.setBounds(264, 174, 187, 20);
+																																																																																																																contentDatos.add(textUltUbi);
+																																																																																																																
+																																																																																																																		separatorLoc = new JSeparator();
+																																																																																																																		separatorLoc.setForeground(SystemColor.controlShadow);
+																																																																																																																		separatorLoc.setBackground(new Color(0, 51, 102));
+																																																																																																																		separatorLoc.setBounds(26, 415, 106, 2);
+																																																																																																																		contentDatos.add(separatorLoc);
+																																																																																																																		
+																																																																																																																				separatorFechaDes = new JSeparator();
+																																																																																																																				separatorFechaDes.setForeground(SystemColor.controlShadow);
+																																																																																																																				separatorFechaDes.setBackground(new Color(153, 0, 0));
+																																																																																																																				separatorFechaDes.setVisible(false);
+																																																																																																																				separatorFechaDes.setBounds(264, 103, 106, 2);
+																																																																																																																				contentDatos.add(separatorFechaDes);
+																																																																																																																				
+																																																																																																																						lblSexo = new JLabel("SEXO");
+																																																																																																																						lblSexo.setForeground(new Color(153, 0, 0));
+																																																																																																																						lblSexo.setVisible(false);
+																																																																																																																						lblSexo.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																						lblSexo.setBounds(264, 207, 81, 28);
+																																																																																																																						contentDatos.add(lblSexo);
+																																																																																																																						
+																																																																																																																								separatorSexo = new JSeparator();
+																																																																																																																								separatorSexo.setForeground(SystemColor.controlShadow);
+																																																																																																																								separatorSexo.setBackground(new Color(153, 0, 0));
+																																																																																																																								separatorSexo.setVisible(false);
+																																																																																																																								separatorSexo.setBounds(264, 233, 106, 2);
+																																																																																																																								contentDatos.add(separatorSexo);
+																																																																																																																								
+																																																																																																																										lblUltUbi = new JLabel("\u00DALTIMA UBI.");
+																																																																																																																										lblUltUbi.setForeground(new Color(153, 0, 0));
+																																																																																																																										lblUltUbi.setVisible(false);
+																																																																																																																										lblUltUbi.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																										lblUltUbi.setBounds(264, 135, 106, 28);
+																																																																																																																										contentDatos.add(lblUltUbi);
+																																																																																																																										
+																																																																																																																												lblLoc = new JLabel("LOCALIDAD");
+																																																																																																																												lblLoc.setForeground(new Color(0, 51, 102));
+																																																																																																																												lblLoc.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																												lblLoc.setBounds(26, 389, 106, 28);
+																																																																																																																												contentDatos.add(lblLoc);
+																																																																																																																												
+																																																																																																																														separatorUltimaUbi = new JSeparator();
+																																																																																																																														separatorUltimaUbi.setForeground(SystemColor.controlShadow);
+																																																																																																																														separatorUltimaUbi.setBackground(new Color(153, 0, 0));
+																																																																																																																														separatorUltimaUbi.setVisible(false);
+																																																																																																																														separatorUltimaUbi.setBounds(264, 161, 106, 2);
+																																																																																																																														contentDatos.add(separatorUltimaUbi);
+																																																																																																																														
+																																																																																																																																lblFechaDes = new JLabel("FECHA DES.");
+																																																																																																																																lblFechaDes.setForeground(new Color(153, 0, 0));
+																																																																																																																																lblFechaDes.setVisible(false);
+																																																																																																																																lblFechaDes.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																																lblFechaDes.setBounds(264, 77, 106, 28);
+																																																																																																																																contentDatos.add(lblFechaDes);
+																																																																																																																																
+																																																																																																																																		lblTP = new JLabel("TIPO PELO");
+																																																																																																																																		lblTP.setForeground(new Color(153, 0, 0));
+																																																																																																																																		lblTP.setVisible(false);
+																																																																																																																																		lblTP.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																																		lblTP.setBounds(264, 261, 106, 28);
+																																																																																																																																		contentDatos.add(lblTP);
+																																																																																																																																		
+																																																																																																																																				separatorTP = new JSeparator();
+																																																																																																																																				separatorTP.setForeground(SystemColor.controlShadow);
+																																																																																																																																				separatorTP.setBackground(new Color(153, 0, 0));
+																																																																																																																																				separatorTP.setVisible(false);
+																																																																																																																																				separatorTP.setBounds(264, 287, 106, 2);
+																																																																																																																																				contentDatos.add(separatorTP);
+																																																																																																																																				
+																																																																																																																																						textSexo = new JTextField();
+																																																																																																																																						textSexo.setVisible(false);
+																																																																																																																																						textSexo.setColumns(10);
+																																																																																																																																						textSexo.setBounds(264, 242, 187, 20);
+																																																																																																																																						contentDatos.add(textSexo);
+																																																																																																																																						
+																																																																																																																																								textCP = new JTextField();
+																																																																																																																																								textCP.setVisible(false);
+																																																																																																																																								textCP.setColumns(10);
+																																																																																																																																								textCP.setBounds(264, 370, 187, 20);
+																																																																																																																																								contentDatos.add(textCP);
+																																																																																																																																								
+																																																																																																																																										lblCP = new JLabel("COLOR PELO");
+																																																																																																																																										lblCP.setForeground(new Color(153, 0, 0));
+																																																																																																																																										lblCP.setVisible(false);
+																																																																																																																																										lblCP.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																																										lblCP.setBounds(264, 331, 106, 28);
+																																																																																																																																										contentDatos.add(lblCP);
+																																																																																																																																										
+																																																																																																																																												separatorCP = new JSeparator();
+																																																																																																																																												separatorCP.setForeground(SystemColor.controlShadow);
+																																																																																																																																												separatorCP.setBackground(new Color(153, 0, 0));
+																																																																																																																																												separatorCP.setVisible(false);
+																																																																																																																																												separatorCP.setBounds(264, 357, 106, 2);
+																																																																																																																																												contentDatos.add(separatorCP);
+																																																																																																																																												
+																																																																																																																																														textCO = new JTextField();
+																																																																																																																																														textCO.setVisible(false);
+																																																																																																																																														textCO.setColumns(10);
+																																																																																																																																														textCO.setBounds(264, 428, 187, 20);
+																																																																																																																																														contentDatos.add(textCO);
+																																																																																																																																														
+																																																																																																																																																lblCO = new JLabel("COLOR OJOS");
+																																																																																																																																																lblCO.setForeground(new Color(153, 0, 0));
+																																																																																																																																																lblCO.setVisible(false);
+																																																																																																																																																lblCO.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																																																lblCO.setBounds(264, 389, 106, 28);
+																																																																																																																																																contentDatos.add(lblCO);
+																																																																																																																																																
+																																																																																																																																																		separatorCO = new JSeparator();
+																																																																																																																																																		separatorCO.setForeground(SystemColor.controlShadow);
+																																																																																																																																																		separatorCO.setBackground(new Color(153, 0, 0));
+																																																																																																																																																		separatorCO.setVisible(false);
+																																																																																																																																																		separatorCO.setBounds(264, 415, 106, 2);
+																																																																																																																																																		contentDatos.add(separatorCO);
+																																																																																																																																																		
+																																																																																																																																																				textAlt = new JTextField();
+																																																																																																																																																				textAlt.setVisible(false);
+																																																																																																																																																				textAlt.setColumns(10);
+																																																																																																																																																				textAlt.setBounds(264, 497, 187, 20);
+																																																																																																																																																				contentDatos.add(textAlt);
+																																																																																																																																																				
+																																																																																																																																																						lblAlt = new JLabel("ALTURA");
+																																																																																																																																																						lblAlt.setForeground(new Color(153, 0, 0));
+																																																																																																																																																						lblAlt.setVisible(false);
+																																																																																																																																																						lblAlt.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																																																						lblAlt.setBounds(264, 458, 106, 28);
+																																																																																																																																																						contentDatos.add(lblAlt);
+																																																																																																																																																						
+																																																																																																																																																								separatorAlt = new JSeparator();
+																																																																																																																																																								separatorAlt.setForeground(SystemColor.controlShadow);
+																																																																																																																																																								separatorAlt.setBackground(new Color(153, 0, 0));
+																																																																																																																																																								separatorAlt.setVisible(false);
+																																																																																																																																																								separatorAlt.setBounds(264, 484, 106, 2);
+																																																																																																																																																								contentDatos.add(separatorAlt);
+																																																																																																																																																								
+																																																																																																																																																										textEsp = new JTextField();
+																																																																																																																																																										textEsp.setVisible(false);
+																																																																																																																																																										textEsp.setColumns(10);
+																																																																																																																																																										textEsp.setBounds(264, 565, 187, 20);
+																																																																																																																																																										contentDatos.add(textEsp);
+																																																																																																																																																										
+																																																																																																																																																												lblEsp = new JLabel("ESPECIFICACIONES");
+																																																																																																																																																												lblEsp.setForeground(new Color(153, 0, 0));
+																																																																																																																																																												lblEsp.setVisible(false);
+																																																																																																																																																												lblEsp.setFont(new Font("Tahoma", Font.BOLD, 10));
+																																																																																																																																																												lblEsp.setBounds(264, 526, 106, 28);
+																																																																																																																																																												contentDatos.add(lblEsp);
+																																																																																																																																																												
+																																																																																																																																																														separatorEsp = new JSeparator();
+																																																																																																																																																														separatorEsp.setForeground(SystemColor.controlShadow);
+																																																																																																																																																														separatorEsp.setBackground(new Color(153, 0, 0));
+																																																																																																																																																														separatorEsp.setVisible(false);
+																																																																																																																																																														separatorEsp.setBounds(264, 552, 106, 2);
+																																																																																																																																																														contentDatos.add(separatorEsp);
+																																																																																																																																																														
+																																																																																																																																																																// Fondo
+																																																																																																																																																																imgErtzAO = new JLabel("");
+																																																																																																																																																																imgErtzAO.setIcon(new ImageIcon(VGesPersona.class.getResource("/imagenes/ertzAC.png")));
+																																																																																																																																																																imgErtzAO.setBounds(90, 200, 309, 317);
+																																																																																																																																																																contentDatos.add(imgErtzAO);
+																																																																																																																																																																
+																																																																																																																																																																		// Título
+																																																																																																																																																																		separatorGesPer = new JSeparator();
+																																																																																																																																																																		separatorGesPer.setForeground(new Color(102, 0, 0));
+																																																																																																																																																																		separatorGesPer.setVisible(false);
+																																																																																																																																																																		separatorGesPer.setBackground(new Color(153, 0, 0));
+																																																																																																																																																																		separatorGesPer.setBounds(10, 64, 478, 2);
+																																																																																																																																																																		contentDatos.add(separatorGesPer);
+																																																																																																																																																																		
+																																																																																																																																																																				lblGesPer = new JLabel("Gesti\u00F3n de Persona");
+																																																																																																																																																																				lblGesPer.setForeground(SystemColor.textInactiveText);
+																																																																																																																																																																				lblGesPer.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+																																																																																																																																																																				lblGesPer.setBounds(10, 42, 142, 19);
+																																																																																																																																																																				lblGesPer.setVisible(false);
+																																																																																																																																																																				contentDatos.add(lblGesPer);
+																																																																																																																																																																				
+																																																																																																																																																																						// Botón de modificación y eliminación
+																																																																																																																																																																						buttonMod = new Button("MODIFICAR");
+																																																																																																																																																																						buttonMod.setForeground(Color.WHITE);
+																																																																																																																																																																						buttonMod.setFont(new Font("Tahoma", Font.BOLD, 12));
+																																																																																																																																																																						buttonMod.setBackground(new Color(153, 0, 0));
+																																																																																																																																																																						buttonMod.setBounds(124, 610, 89, 28);
+																																																																																																																																																																						buttonMod.addActionListener(this);
+																																																																																																																																																																						contentDatos.add(buttonMod);
+																																																																																																																																																																						
+																																																																																																																																																																								buttonBaja = new Button("DAR BAJA");
+																																																																																																																																																																								buttonBaja.setForeground(Color.WHITE);
+																																																																																																																																																																								buttonBaja.setFont(new Font("Tahoma", Font.BOLD, 12));
+																																																																																																																																																																								buttonBaja.setBackground(new Color(153, 0, 0));
+																																																																																																																																																																								buttonBaja.setBounds(264, 610, 89, 28);
+																																																																																																																																																																								buttonBaja.addActionListener(this);
+																																																																																																																																																																								contentDatos.add(buttonBaja);
+																																																																																																																																																																								
+																																																																																																																																																																										buttonFA = new Button("+");
+																																																																																																																																																																										buttonFA.setEnabled(false);
+																																																																																																																																																																										buttonFA.setBounds(457, 174, 20, 20);
+																																																																																																																																																																										buttonFA.setVisible(false);
+																																																																																																																																																																										buttonFA.addActionListener(this);
+																																																																																																																																																																										contentDatos.add(buttonFA);
 	}
 
 	// Cargar la información
+	/**
+	 * Carga los datos de la persona que se busca para gestionar la persona. En funcion del tipo buscado mostrara unos campos u otros.
+	 * @param dni se manda el dni introducido en la pestaña de gestion
+	 */
 	private void cargarDatos(String dni) {
 		per = obtenerPersona(dni);
 		textDni.setText(dni);
@@ -1095,6 +1099,9 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	// Habilitar botón si hay un dni y una relación introducidas
+	/**
+	 * Habilitar botón si hay un dni y una relación introducidas 
+	 */
 	public void habilitarBoton() {
 		if (!textRel.getText().isBlank() && !textDniCon.getText().isBlank()) {
 			buttonAgregar.setEnabled(true);
@@ -1109,6 +1116,17 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	@Override
+	/**
+	 * Modifica la persona introducida. Comprueba si los int o LoacalDate estan vacios si estan vacios las variables que se usan para parsearlos se dejan a 0 o null y si estan llenos se 
+	 * parsea de String a LocalDate o String a int. Si la modificacion es realizada con exito se notificara aocn un JOptionPane.</br></br>
+	 * 
+	 * <h3><--Variables-->
+	 * <li>int movil: se usa para dejar a 0 el campo de movil y si es necesario parsear los datos introducidos.
+	 * <li>int opc: se usa para dejar a 0 el campo de movil y si es necesario parsear los datos introducidos.
+	 * <li>int rango: se usa para parsear el rango introducido a int.
+	 * <li>boolean pris: se usa para si el radiobutton de preso si se guarde true.
+	 * <lI>int altura: se usa para parsear de String a int la altura.
+	 */
 	public void modificarPersona(Persona per) {
 		int movil = 0;
 		int opc = 0;
@@ -1175,6 +1193,9 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	@Override
+	/**
+	 * Se pedira confirmacion para eliminar a una persona y si se elimina del todo se notificara con un JOptionPane
+	 */
 	public void eliminarPersona(String dni) {
 		if (JOptionPane.showConfirmDialog(this,
 				"¿Seguro que desea dar de baja a esta persona? Es una acción irreversible.", "Confirmar baja",
@@ -1192,6 +1213,10 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	@Override
+	/**
+	 * Agrega un conocido a una persona lo primero que hace es comprobar el dni y si esta bien introducido añade a conocidos el dni de la persona y de su conocido y el tipo de relacion. Si
+	 * la relacion se añade con exito se notificara con un JOptionPane.
+	 */
 	public void agregarConocido(Conocido cono) {
 		Map<String, Conocido> conocidos = listarConocidos(dni);
 		if (conocidos.get(textDniCon.getText()) == null && comprobarDNI(textDniCon.getText())) {
@@ -1234,6 +1259,9 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		} 
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la anterior
+	 */
 	public void cerrar() {
 		VGestion vGest = new VGestion(padre, true, info);
 		this.dispose();
@@ -1241,36 +1269,54 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	// Abrir ventanas de menú
+	/**
+	 * Abrir ventana de gestion desde JMenuBar 
+	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de comparacion desde JMenuBar 
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de busqueda desde JMenuBar 
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de restos humanos desde JMenuBar 
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de personas desde JMenuBar 
+	 */	
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de casos desde JMenuBar 
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
