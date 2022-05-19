@@ -39,6 +39,11 @@ import javax.swing.JSeparator;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 
+/**
+ * Esta clase representa la ventana de insercion de casos
+ * @autor Gonzalo
+ *
+ */
 public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionListener {
 
 	private static final long serialVersionUID = 1L;

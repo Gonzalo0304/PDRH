@@ -12,6 +12,10 @@ import controlador.interfaces.ContDatosInsertCaso;
 import excepciones.Excepciones;
 import modelo.clases.Caso;
 
+/**
+ * Esta clase representa la ventana de Implementacion de Gestion de Personas. Las sentencias sirven para llamar insertar Casos.
+ * @author Gonzalo
+ */
 public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 	// <--- Sentencias --->
 	final String INSERTcaso = "INSERT INTO caso(codCaso,estado,nombre,fechaIni,fechaFin) VALUES(?,?,?,?,?)";
@@ -27,6 +31,9 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 	private String user = bundle.getString("USER");
 	private String pass = bundle.getString("PASS");
 
+	/**
+	 * Abre la conexion con la base de datos.
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -35,6 +42,9 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 		}
 	}
 
+	/**
+	 * Cierra la conexion con la base de datos.
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {
@@ -53,6 +63,9 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 	}
 
 	@Override
+	/**
+	 * Llama al proceso INSERTcaso para añadir casos a la base de datos.
+	 */
 	public void altaCaso(Caso caso) throws Excepciones {
 		this.openConnection();
 		

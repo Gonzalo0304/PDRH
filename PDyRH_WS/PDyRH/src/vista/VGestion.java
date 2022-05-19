@@ -40,6 +40,11 @@ import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Esta clase representa la ventana de busqueda para introducir el codigo/DNI de el elemento a gestionar
+ * @autor Gonzalo
+ *
+ */
 public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	private static final long serialVersionUID = 1L;
 
