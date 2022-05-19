@@ -1,17 +1,43 @@
 package modelo.clases;
 
+/**
+ * Esta clase representa 
+ * @author 1dam
+ *
+ */
 public class Participante {
 	// <--- Atributos --->
+	/**
+	 * 
+	 */
 	private String nomComp;
+	/**
+	 * 
+	 */
 	private String dni;
+	/**
+	 * 
+	 */
 	private String implicacion;
+	/**
+	 * 
+	 */
 	private String codCaso;
 	
 	// <--- Constructores --->
+	/**
+	 * 
+	 */
 	public Participante() {
 		super();
 	}
 
+	/**
+	 * @param nomComp
+	 * @param dni
+	 * @param codCaso
+	 * @param implicacion
+	 */
 	public Participante(String nomComp, String dni, String codCaso, String implicacion) {
 
 		super();
