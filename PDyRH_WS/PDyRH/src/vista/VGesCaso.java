@@ -802,7 +802,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 			JOptionPane.showMessageDialog(this,
 					"El código de resto introducido no está registrado en la base de datos.", "Código inexistente.",
 					JOptionPane.ERROR_MESSAGE);
-		} else if (listarInvolucrados(textCod.getText()).get(textCodResto.getText()) == null) {
+		} else if (listarInvolucrados().get(textCodResto.getText()) == null) {
 			datos.insertarInvolucrado(codResto, codCaso);
 			JOptionPane.showMessageDialog(this, "Insercción de resto involucrado realizada con éxito",
 					"Insercción exitosa", JOptionPane.CLOSED_OPTION);
@@ -825,7 +825,7 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	@Override
-	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
-		return datos.listarInvolucrados(codCaso);
+	public Map<String, RestoHumano> listarInvolucrados() {
+		return datos.listarInvolucrados();
 	}
 }

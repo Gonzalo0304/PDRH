@@ -15,7 +15,7 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	final String SELECTcaso = "SELECT * FROM caso WHERE codCaso = ?";
 	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
 	final String CALLbuscarRH = "{CALL buscarRH(?)}";
-	
+
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
 	private Connection con;
@@ -34,7 +34,7 @@ public class ContBDImpleBusq implements ContDatosBusq {
 		}
 	}
 
-	public void closeConnection() {
+	public void closeConnection()  {
 		if (con != null) {
 			try {
 				con.close();
@@ -52,17 +52,17 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	}
 
 	@Override
-	public Caso obtenerCaso(String codCaso) {
+	public Caso obtenerCaso(String codCaso)  {
 		ResultSet rs = null;
 		Caso caso = null;
-		
+
 		this.openConnection();
 		try {
 			stmnt = con.prepareStatement(SELECTcaso);
 			stmnt.setString(1, codCaso);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				caso = new Caso();
 				caso.setCodCaso(codCaso);
@@ -91,18 +91,18 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	}
 
 	@Override
-	public boolean comprobarDNI(String dni) {
+	public boolean comprobarDNI(String dni)  {
 		ResultSet rs = null;
 		boolean esta = false;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareCall(CALLcomprobarDNI);
 			stmnt.setString(1, dni);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				esta = rs.getBoolean("esta");
 			}
@@ -122,17 +122,17 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	}
 
 	@Override
-	public boolean comprobarCodResto(String codResto) {
+	public boolean comprobarCodResto(String codResto)  {
 		ResultSet rs = null;
 		boolean esta = false;
-		
+
 		this.openConnection();
 		try {
 			stmnt = con.prepareCall(CALLbuscarRH);
 			stmnt.setString(1, codResto);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				esta = rs.getBoolean("esta");
 			}

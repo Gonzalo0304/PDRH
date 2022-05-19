@@ -258,7 +258,7 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 					datosTabla[i][1] = comparados.get(i).getCodResto();
 					datosTabla[i][2] = String.format("%.2f",comparados.get(i).getPorcentaje());
 				}
-				int posicion = 20 + (comparados.size() * 17);
+				int posicion = 16 + (comparados.size() * 17);
 				JS = new JScrollPane();
 				JS.setBounds(55, 100, 450, posicion);
 				posicion = posicion + 100;

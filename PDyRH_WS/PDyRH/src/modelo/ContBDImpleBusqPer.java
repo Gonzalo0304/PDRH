@@ -22,7 +22,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	final String SELECTconoce = "SELECT * FROM conoce WHERE dniP1 = ?";
 	final String SELECTfechas = "SELECT fechaArresto FROM fechaarresto WHERE dni = ?";
 	final String SELECTnomComp = "SELECT nombre,apellido FROM persona WHERE dni = ?";
-	
+
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
 	private Connection con;
@@ -33,7 +33,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	private String user = bundle.getString("USER");
 	private String pass = bundle.getString("PASS");
 
-	public void openConnection() {
+	public void openConnection()  {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
@@ -41,7 +41,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 		}
 	}
 
-	public void closeConnection() {
+	public void closeConnection()  {
 		if (con != null) {
 			try {
 				con.close();
@@ -59,7 +59,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	}
 
 	@Override
-	public Map<String, Conocido> listarConocidos(String dni1) {
+	public Map<String, Conocido> listarConocidos(String dni1)  {
 		ResultSet rs = null;
 		ResultSet rs2 = null;
 		Conocido cono;
@@ -75,7 +75,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 
 			while (rs.next()) {
 				cono = new Conocido();
-				
+
 				cono.setDni1(rs.getString("dniP1"));
 				cono.setDni2(rs.getString("dniP2"));
 				cono.setRelacion(rs.getString("relacion"));
@@ -104,12 +104,12 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	}
 
 	@Override
-	public Persona obtenerPersona(String dni) {
+	public Persona obtenerPersona(String dni)  {
 		ResultSet rs = null;
 		ResultSet rs2 = null;
 		Persona per = null;
 		String tipo = null;
-		
+
 		this.openConnection();
 
 		try {
@@ -132,14 +132,14 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				} else if (tipo.equalsIgnoreCase("criminal")) {
 					per = new Criminal();
 					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));
-					
+
 					PreparedStatement stmnt2 = con.prepareStatement(SELECTfechas);
 					stmnt2.setString(1, dni);
 					rs2 = stmnt2.executeQuery();
 					while (rs2.next()) {
 						((Criminal) per).getFechasArresto().add(rs2.getDate("fechaArresto").toLocalDate());
 					}
-					
+
 					rs2.close();
 				} else if (tipo.equalsIgnoreCase("desaparecida")) {
 					per = new Desaparecida();

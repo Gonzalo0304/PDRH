@@ -32,7 +32,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	final String INSERTconoce = "INSERT INTO conoce(dniP1,dniP2,relacion) VALUES(?,?,?)";
 	final String SELECTconoce = "SELECT * FROM conoce WHERE dniP1 = ?";
 	final String SELECTfechas = "SELECT fechaArresto FROM fechaarresto WHERE dni = ?";
-	
+
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
 	private Connection con;
@@ -48,6 +48,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			con = DriverManager.getConnection(url, user, pass);
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -57,6 +58,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			try {
 				con.close();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -64,6 +66,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -80,7 +83,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				stmnt.setInt(1, ((Agente) per).getRango());
 				if (((Agente) per).getInicioServ() != null) {
 					stmnt.setDate(2, Date.valueOf(((Agente) per).getInicioServ()));
-				}else {
+				} else {
 					stmnt.setDate(2, null);
 				}
 				if (((Agente) per).getFinServ() != null) {
@@ -89,14 +92,14 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 					stmnt.setDate(3, null);
 				}
 				stmnt.setString(4, per.getDni());
-				
+
 				stmnt.executeUpdate();
 			} else if (per instanceof Criminal) {
 				stmnt = con.prepareStatement(UPDATEcrim);
 
 				stmnt.setBoolean(1, ((Criminal) per).isPrisionero());
 				stmnt.setString(2, per.getDni());
-				
+
 				stmnt.executeUpdate();
 			} else if (per instanceof Desaparecida) {
 				stmnt = con.prepareStatement(UPDATEdes);
@@ -114,10 +117,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				stmnt.setFloat(7, ((Desaparecida) per).getAltura());
 				stmnt.setString(8, ((Desaparecida) per).getEspecificaciones());
 				stmnt.setString(9, per.getDni());
-				
+
 				stmnt.executeUpdate();
 			}
-			// Comprobar si stmnt funciona o habria que utilizar stmnt2
 			stmnt = con.prepareStatement(UPDATEper);
 
 			stmnt.setString(1, per.getNombre());
@@ -138,14 +140,14 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			stmnt.setString(8, per.getDni());
 
 			stmnt.executeUpdate();
-			
+
 			con.commit();
 		} catch (SQLException e) {
 			if (con != null) {
 				try {
 					con.rollback();
-				} catch (SQLException e2) {
-					e.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
 			}
 			String msg = "Los campos no pueden exceder los 50 carácteres.";
@@ -172,19 +174,19 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 
 			while (rs.next()) {
 				cono = new Conocido();
-				
+
 				cono.setDni1(rs.getString("dniP1"));
 				cono.setDni2(rs.getString("dniP2"));
 				cono.setRelacion(rs.getString("relacion"));
 				conocidos.put(cono.getDni2(), cono);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -226,7 +228,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 		ResultSet rs = null;
 		Persona per = null;
 		String tipo = null;
-		
+
 		this.openConnection();
 
 		try {
@@ -328,15 +330,15 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	public boolean comprobarDNI(String dni) {
 		ResultSet rs = null;
 		boolean esta = false;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareCall(CALLcomprobarDNI);
 			stmnt.setString(1, dni);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				esta = rs.getBoolean("esta");
 			}
@@ -352,7 +354,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			}
 			this.closeConnection();
 		}
-		
+
 		return esta;
 	}
 

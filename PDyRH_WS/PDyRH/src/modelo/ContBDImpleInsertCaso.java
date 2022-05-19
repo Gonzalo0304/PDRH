@@ -30,6 +30,7 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
+			con.setAutoCommit(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -76,6 +77,7 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 			}
 			
 			stmnt.executeUpdate();
+			con.commit();
 		} catch (SQLException e) {
 			String msg = "Los campos no pueden exceder los 50 carácteres.";
 			Excepciones exc = new Excepciones(msg);

@@ -14,7 +14,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	// <--- Sentencias --->
 	final String SELECTidentificado = "SELECT dni FROM identifica WHERE codResto = ?";
 	final String SELECTrh = "SELECT * FROM restohumano WHERE codResto = ?";
-	
+
 	// <--- Conexión --->
 	private PreparedStatement stmnt;
 	private Connection con;
@@ -25,7 +25,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	private String user = bundle.getString("USER");
 	private String pass = bundle.getString("PASS");
 
-	public void openConnection() {
+	public void openConnection()  {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
@@ -33,7 +33,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 		}
 	}
 
-	public void closeConnection() {
+	public void closeConnection()  {
 		if (con != null) {
 			try {
 				con.close();
@@ -49,20 +49,20 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 			}
 		}
 	}
-	
+
 	@Override
-	public String obtenerIdentificado(String codResto) {
+	public String obtenerIdentificado(String codResto)  {
 		ResultSet rs = null;
 		String dni = null;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTidentificado);
 			stmnt.setString(1, codResto);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				dni = rs.getString("dni");
 			}
@@ -78,26 +78,26 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 			}
 			this.closeConnection();
 		}
-		
+
 		return dni;
 	}
 
 	@Override
-	public RestoHumano obtenerRH(String codResto) {
+	public RestoHumano obtenerRH(String codResto)  {
 		ResultSet rs = null;
 		RestoHumano resto = null;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTrh);
 			stmnt.setString(1, codResto);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				resto = new RestoHumano();
-				
+
 				resto.setCodResto(codResto);
 				resto.setCausa(rs.getString("causa"));
 				resto.setUbicacion(rs.getString("ubicacion"));
@@ -124,7 +124,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 			}
 			this.closeConnection();
 		}
-		
+
 		return resto;
 	}
 
