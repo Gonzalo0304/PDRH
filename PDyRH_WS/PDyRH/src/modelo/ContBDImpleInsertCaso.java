@@ -13,7 +13,7 @@ import excepciones.Excepciones;
 import modelo.clases.Caso;
 
 /**
- * Esta clase representa la ventana de Implementacion de Gestion de Personas. Las sentencias sirven para llamar insertar Casos.
+ * Esta clase representa la ventana de Implementacion de inserion de casos. Las sentencias sirven para llamar insertar Casos.
  * @author Gonzalo
  */
 public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
@@ -64,7 +64,8 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 
 	@Override
 	/**
-	 * Llama al proceso INSERTcaso para añadir casos a la base de datos.
+	 * Llama al proceso INSERTcaso para añadir casos a la base de datos.En caso de que sea la fecha de inicio o de fin  se comprobara si esta en null si no es asi se imprimira la fecha si 
+	 * no es asi se pone en null. 
 	 */
 	public void altaCaso(Caso caso) throws Excepciones {
 		this.openConnection();
@@ -99,6 +100,9 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 	}
 
 	@Override
+	/**
+	 * Se llama al proceso CALLcompCodCaso para comprobar si el caso introducido existe.Si lo esta devuelve a variable esta conmo true si no como false.
+	 */
 	public boolean comprobarCodCaso(String codCaso) {
 		ResultSet rs = null;
 		boolean esta = false;

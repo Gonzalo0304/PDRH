@@ -15,6 +15,10 @@ import modelo.clases.Criminal;
 import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 
+/**
+ * Esta clase representa la ventana de Implementacion de insercion de Personas. Las sentencias sirven para llamar insertar Persona.
+ * @author Gonzalo
+ */
 public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	// <--- Sentencias --->
 	final String INSERTper = "INSERT INTO persona(dni,nombre,apellido,telf1,localidad,fechaNac,fechaFal,telf2) VALUES(?,?,?,?,?,?,?,?)";
@@ -34,6 +38,9 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	private String user = bundle.getString("USER");
 	private String pass = bundle.getString("PASS");
 
+	/**
+	 * Abre la conexion con la base de datos.
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -43,6 +50,9 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 		}
 	}
 
+	/**
+	 * Cierra la conexion con la base de datos
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {
@@ -61,6 +71,13 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	}
 
 	@Override
+	/**
+	 * Llama al proceso de INSERTper para insertar personas. Con la fecha de nacimiento y fallecimiento se comprueba si estan vacias si no lo estan se insertan los datos y si esta vacio se
+	 *  dejan a null. Luego se comprueba el tipo, si es agente se llama al proceso INSERTage para añadir agentes Con las fechas de inicio y fin de servicio se comprueba si estan vacias si 
+	 *  no lo estan se insertan los datos y si esta vacio se dejan a null, si es criminal se llama al proceso INSERTcrim para insertar criminales y si es desparecida se llama al proceso al
+	 *  INSERTdes se comprueba la fecha de desaparicion si estan vacias si no lo estan se insertan los datos y si esta vacio se dejan a null. Si te pasas de cracteres al introducirse te 
+	 *  avisara con un JOptionPane.
+	 */
 	public void altaPersona(Persona per) throws Excepciones {
 		this.openConnection();
 		
@@ -150,6 +167,9 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	}
 
 	@Override
+	/**
+	 * Llama al proceso CALLcomprobarDNI para comprobar que el dni esta bien introducido. Si esta bien introducido se devuelve esta en true.s
+	 */
 	public boolean comprobarDNI(String dni) {
 		ResultSet rs = null;
 		boolean esta = false;
