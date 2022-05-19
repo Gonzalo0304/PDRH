@@ -13,7 +13,20 @@ import modelo.clases.RestoHumano;
  *
  */
 public interface ContDatosComp {
+	/**
+	 * Esta metodo lista los restos humanos que se encuentran en la clase
+	 * @return Devuelve los datos de los restos humanos.
+	 */
 	public Map<String,RestoHumano> listarRHs();
+	/**
+	 * Este metodo lista a las personas desaparecidas
+	 * @return Devuelve los datos de las personas desaparecidas.
+	 */
 	public Map<String,Persona> listarDesaparecidas();
+	/**
+	 * Este metodo obtiene el resto humano identificado
+	 * @param codResto
+	 * @return Devuelve la identificacion
+	 */
 	public String obtenerIdentificado(String codResto);
 }

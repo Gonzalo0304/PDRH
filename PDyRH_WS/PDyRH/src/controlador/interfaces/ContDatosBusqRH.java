@@ -9,6 +9,16 @@ import modelo.clases.RestoHumano;
  *
  */
 public interface ContDatosBusqRH {
+	/**
+	 * Este metodo obtiene el resto humano identificado
+	 * @param codResto
+	 * @return Devuelve la identificacion
+	 */
 	public String obtenerIdentificado(String codResto);
+	/**
+	 * Este metodo obtiene el resto humano
+	 * @param codResto
+	 * @return Devuelve los datos del resto humano.
+	 */
 	public RestoHumano obtenerRH(String codResto);
 }

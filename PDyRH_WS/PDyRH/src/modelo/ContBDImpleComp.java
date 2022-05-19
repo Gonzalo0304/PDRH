@@ -15,7 +15,7 @@ import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
 /**
- * Esta clase representa el controlador de la base de datos de la ventana de comparacion
+ * Esta clase representa la implementación de la ventana de comparacion
  * @autor Elías
  * Utiliza sentencias SQL para seleccionar datos del resto humano, la persona desaparecida y la persona identificada. 
  *

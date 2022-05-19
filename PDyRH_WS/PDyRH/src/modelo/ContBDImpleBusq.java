@@ -11,7 +11,7 @@ import controlador.interfaces.ContDatosBusq;
 import modelo.clases.Caso;
 
 /**
- * Esta clase representa el controlador de la base de datos de la ventana de busqueda
+ * Esta clase representa la implementacion de la ventana de busqueda
  * @autor Elías
  * Utiliza sentencias SQL para seleccionar datos, un procedimiento que combrueba el dni de la persona
  * y otro que buscar al resto humano.

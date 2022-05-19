@@ -11,7 +11,23 @@ import modelo.clases.RestoHumano;
  *
  */
 public interface ContDatosCompEsp {
+	/**
+	 * Este metodo obtiene el resto humano
+	 * @param codResto
+	 * @return Devuelve los datos del resto humano.
+	 */
 	public RestoHumano obtenerRH(String codResto);
+	/**
+	 * Este metodo obtiene una persona especifica
+	 * @param dni
+	 * @return Devuelve los datos de esa persona.
+	 */
 	public Persona obtenerPersona(String dni);
+	/**
+	 * Este metodo agrega el identificado que hay entre 
+	 * el codigo del resto humano y el dni de la persona.
+	 * @param codResto
+	 * @param dni
+	 */
 	public void agregarIdentificado(String codResto,String dni);
 }

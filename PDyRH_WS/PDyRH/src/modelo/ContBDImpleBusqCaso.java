@@ -14,7 +14,7 @@ import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
 
 /**
- * Esta clase representa el controlador de la base de datos de la ventana de busqueda de caso
+ * Esta clase representa la implementacion de la ventana de busqueda de caso
  * @autor Elías
  * Utiliza sentencias SQL para seleccionar los datos de los casos.
  *

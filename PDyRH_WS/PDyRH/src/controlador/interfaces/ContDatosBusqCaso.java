@@ -12,6 +12,16 @@ import modelo.clases.RestoHumano;
  *
  */
 public interface ContDatosBusqCaso {
+	/**
+	 * Este metodo lista los participantes del caso
+	 * @param codCaso
+	 * @return Devuelve los datos del participante
+	 */
 	public Map<String,Participante> listarParticipantes(String codCaso);
+	/**
+	 * Esta metodo lista los involucrados del caso
+	 * @param codCaso
+	 * @return Devuelve los datos del Resto Humano que se encuentra en el caso.
+	 */
 	public Map<String,RestoHumano> listarInvolucrados(String codCaso);
 }

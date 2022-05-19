@@ -2,24 +2,79 @@ package modelo.clases;
 
 import java.time.LocalDate;
 
+/**
+ * Esta clase representa al Resto Humano
+ * @author Elias
+ *
+ */
 public class RestoHumano {
 	// <--- Atributos --->
+	/**
+	 * El codigo del Resto
+	 */
 	private String codResto;
+	/**
+	 * La causa de su muerte
+	 */
 	private String causa;
+	/**
+	 * La fecha de muerte
+	 */
 	private LocalDate fechaMuerte;
+	/**
+	 * La ubicacion del Resto humano
+	 */
 	private String ubicacion;
+	/**
+	 * El genero
+	 */
 	private String genero;
+	/**
+	 * El tipo de pelo
+	 */
 	private String tipoPelo;
+	/**
+	 * El color de pelo
+	 */
 	private String colorPelo;
+	/**
+	 * El color de ojos
+	 */
 	private String colorOjos;
+	/**
+	 * La altura
+	 */
 	private int altura;
+	/**
+	 * La especificaciones del Resto
+	 */
 	private String especificaciones;
+	/**
+	 * El codigo del caso
+	 */
 	private String codCaso;
 	
 	// <--- Constructores --->
+	/**
+	 * Constructor vacio
+	 */
 	public RestoHumano() {
 		super();
 	}
+	/**
+	 * Constructor con parametros
+	 * @param codResto
+	 * @param causa
+	 * @param fechaMuerte
+	 * @param ubicacion
+	 * @param genero
+	 * @param tipoPelo
+	 * @param colorPelo
+	 * @param colorOjos
+	 * @param altura
+	 * @param especificaciones
+	 * @param codCaso
+	 */
 	public RestoHumano(String codResto, String causa, LocalDate fechaMuerte, String ubicacion, String genero,
 			String tipoPelo, String colorPelo, String colorOjos, int altura, String especificaciones, String codCaso) {
 		super();

@@ -11,7 +11,7 @@ import controlador.interfaces.ContDatosBusqRH;
 import modelo.clases.RestoHumano;
 
 /**
- * Esta clase representa el controlador de la base de datos de la ventana de resto humano
+ * Esta clase representa la implementacion de la ventana de resto humano
  * @autor Elías
  * Utiliza sentencias SQL para seleccionar los datos de la tabla restos humanos y de la tabla identifica.
  *

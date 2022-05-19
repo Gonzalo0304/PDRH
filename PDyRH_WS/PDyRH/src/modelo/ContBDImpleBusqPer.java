@@ -17,7 +17,7 @@ import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 
 /**
- *Esta clase representa el controlador de la base de datos de la ventana de persona.
+ *Esta clase representa la implementacion de la ventana de persona.
  * @autor Elías
  * Utiliza sentencias SQL para seleccionar los datos de las personas junto a un procedimiento que comprueba los datos.
  *

@@ -17,7 +17,7 @@ import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
 
 /**
- * Esta clase representa el controlador de la base de datos de  la ventana de gestion de casos.
+ * Esta clase representa la implementacion de  la ventana de gestion de casos.
  * @author Elias
  * Utiliza sentencias SQL para insertar los participantes, borrar casos, actualizar la tabla de casos y de resto humano,
  * seleccionar los datos(participantes y resto humanos) y procedimientos para comprobar el DNI de la persona y buscar el resto.
