@@ -12,9 +12,9 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta clase representa el controlador de la base de datos de la ventana de resto humano
- * @author Elias
- * Utiliza sentencias SQL para seleccionar los datos de los resto humanos
- * y utiliza metodos de la interfaz para obtener algun identificado y el resto humano mediante el codigo del Resto.
+ * @autor Elías
+ * Utiliza sentencias SQL para seleccionar los datos de la tabla restos humanos y de la tabla identifica.
+ *
  */
 public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	// <--- Sentencias --->
@@ -23,11 +23,11 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	
 	// <--- Conexión --->
 	/**
-	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los metodos.
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
 	 */
 	private PreparedStatement stmnt;
 	/**
-	 * <li>Connection: Es la conexion de la base de datos
+	 * <li>Conexión: Es la conexión de la base de dato
 	 */
 	private Connection con;
 
@@ -38,11 +38,11 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	 */
 	private String url = bundle.getString("URL");
 	/**
-	 * <li> user: Es el usuario para iniciar sesion.
+	 * <li> user: Es el usuario para iniciar sesión.
 	 */
 	private String user = bundle.getString("USER");
 	/**
-	 * <li> pass: Es la contraseña del usuario
+	 * <li> pass: Es la contraseña de los usuarios
 	 */
 	private String pass = bundle.getString("PASS");
 
@@ -58,7 +58,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	}
 
 	/**
-	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL.
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
 	 */
 	public void closeConnection() {
 		if (con != null) {
@@ -77,6 +77,16 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 		}
 	}
 	
+	/**
+	 * Metodo para obtener el identificado mediante el codigo del resto humano
+	 * <li> ResultSet rs:  Contiene el resultado de la consulta ejecutada
+	 * <li> String dni: En esta variable guarda el DNI de la persona.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para seleccionar el identificado, 
+	 * el dni guarda el resultado y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve el DNI de la persona.
+	 */
 	@Override
 	public String obtenerIdentificado(String codResto) {
 		ResultSet rs = null;
@@ -109,6 +119,16 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 		return dni;
 	}
 
+	/**
+	 * Metodo para obtener el Resto Humano mediante el codigo.
+	 * <li> ResultSet rs:  Contiene el resultado de la consulta ejecutada
+	 * <li> RestoHumano resto: Contiene los datos de la clase.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para seleccionar el resto humano, 
+	 * guarda los resultados en los atributos de la clase y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve los datos del resto.
+	 */
 	@Override
 	public RestoHumano obtenerRH(String codResto) {
 		ResultSet rs = null;

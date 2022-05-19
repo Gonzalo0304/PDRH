@@ -6,10 +6,11 @@ import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
 /**
- * Esta interfaz representa el control de  comparacion
- * @author Elias
- * Contiene metodos para listar a los restos humanos y las personas desaparecidas
+ * Esta interfaz representa el control de comparación
+ * @autor Elías
+ * Contiene métodos para enumerar los restos humanos y las personas desaparecidas
  * y obtener al identificado.
+ *
  */
 public interface ContDatosComp {
 	public Map<String,RestoHumano> listarRHs();

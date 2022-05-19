@@ -439,7 +439,12 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 
 	// Abrir ventanas de gestión
 	/**
-	 * 
+	 * Controlamos si la busqueda se realiza correctamente. Primero si no se ha seleccionado el tipo de busqueda se avisara al usuario con JOptionPane. Luego en funcion del tipo comprobara si
+	 * el codigo introducido se comprobara si existe y en caso de coincida con alguno de los introducidos en la base de datos se abrira la perstaña de modificacion del tipo introducido en caso
+	 * de que no coincida se mostrara un mensaje de error.</br></br>
+	 * <h3><--Variables-->
+	 * <li>esta: para saber si no se ha encontrado el id o dni.
+	 * <li>String selec: para guardar la seleccion del radiobutton. 
 	 * @param info pasar la informacion del usuario
 	 */
 	private void comprobarBus(String[] info) {

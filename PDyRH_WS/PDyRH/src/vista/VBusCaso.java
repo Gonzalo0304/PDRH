@@ -33,11 +33,13 @@ import modelo.clases.Participante;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
+
 /**
  * Esta clase representa la ventana de busqueda de caso junto con el controlador de busqueda
  * @autor Elías
  *
  */
+
 public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -623,6 +625,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		}
 	}
 
+
 	/**
 	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
 	 */
@@ -671,6 +674,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		vCom.setVisible(true);
 	}
 
+
 	/**
 	 * Método para abrir la ventana de Busqueda.
 	 * Se realiza al pulsar en la barra de menú el botón 'Busqueda'.
@@ -680,6 +684,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		this.dispose();
 		vBus.setVisible(true);
 	}
+
 
 	/**
 	 * Metodo para abrir la ventana de insercion de restos humanos.
@@ -692,6 +697,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
+
 
 	/**
 	 * Método para abrir la ventana de inserción de personas.
@@ -728,6 +734,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		vBusPer.setVisible(true);
 	}
 	
+
 	/**
 	 * Metodo para abrir la ventana que muestra los datos de los restos humanos
 	 *

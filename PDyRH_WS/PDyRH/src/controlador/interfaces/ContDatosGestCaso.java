@@ -7,6 +7,12 @@ import modelo.clases.Caso;
 import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
 
+/**
+ * Esta interfaz representa el control de gestion de los casos
+ * @author Elias
+ * Contiene metodos para modificar, eliminar, insertar participantes e involucrados, 
+ * listarlos, comprobar el dni y el codigo del resto.
+ */
 public interface ContDatosGestCaso {
 	public void modificarCaso(Caso caso) throws Excepciones;
 	public void eliminarCaso(String codCaso);

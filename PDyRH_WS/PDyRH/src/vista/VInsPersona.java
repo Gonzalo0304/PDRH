@@ -892,7 +892,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 
 	//Abrir ventanas de menú
 	/**
-	 * Abrir ventana de gestion de personas desde JMenuBar 
+	 * Abrir ventana de gestion desde JMenuBar 
 	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
@@ -901,7 +901,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 	}
 	
 	/**
-	 * Abrir ventana de comparacion de personas desde JMenuBar 
+	 * Abrir ventana de comparacion desde JMenuBar 
 	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
@@ -910,7 +910,7 @@ public class VInsPersona extends JDialog implements ActionListener, ContDatosIns
 	}
 	
 	/**
-	 * Abrir ventana de busqueda de personas desde JMenuBar 
+	 * Abrir ventana de busqueda desde JMenuBar 
 	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);

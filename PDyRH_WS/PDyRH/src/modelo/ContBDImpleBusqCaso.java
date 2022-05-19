@@ -15,9 +15,9 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta clase representa el controlador de la base de datos de la ventana de busqueda de caso
- * @author Elias
- * Utiliza sentencias SQL para seleccionar los datos de los casos 
- * y utiliza metodos de la interfaz para listar los participantes y los involucrados 
+ * @autor Elías
+ * Utiliza sentencias SQL para seleccionar los datos de los casos.
+ *
  */
 public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	// <--- Sentencias --->
@@ -27,11 +27,11 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	
 	// <--- Conexión --->
 	/**
-	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en el metodo.
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
 	 */
 	private PreparedStatement stmnt;
 	/**
-	 * <li>Connection: Es la conexion de la base de datos
+	 * <li>Connectión: Es la conexión de la base de dato
 	 */
 	private Connection con;
 
@@ -42,11 +42,11 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	 */
 	private String url = bundle.getString("URL");
 	/**
-	 * <li> user: Es el usuario para iniciar sesion.
+	 * <li> usuario: Es el usuario para iniciar sesión.
 	 */
 	private String user = bundle.getString("USER");
 	/**
-	 * <li> pass: Es la contraseña del usuario
+	 * <li> pass: Es la contraseña de los usuarios
 	 */
 	private String pass = bundle.getString("PASS");
 
@@ -62,7 +62,7 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	}
 
 	/**
-	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL.
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
 	 */
 	public void closeConnection() {
 		if (con != null) {
@@ -81,6 +81,18 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 		}
 	}
 
+	/**
+	 * Metodo para listar a los participantes de los casos mediante el codigo del caso.
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> ResultSet rs2: Contiene el resultado de la consulta ejecutada
+	 * <li> Participante par: Contiene los datos de los participantes
+	 * <li> Map<String, Participante> participantes: Se utiliza para introducir los datos dentro del Map.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia que selecciona los participantes, 
+	 * guardara los resultados en los atributos de la clase  y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve el los ressultados que se encuentran en el Map.
+	 */
 	@Override
 	public Map<String, Participante> listarParticipantes(String codCaso) {
 		ResultSet rs = null;
@@ -129,6 +141,17 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 		return participantes;
 	}
 
+	/**
+	 *  Metodo para listar a los involucrados de los casos mediante el codigo del caso.
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> RestoHumano resto: Contiene los datos de los participantes
+	 * <li> Map<String, RestoHumano> restos: Se utiliza para introducir los datos dentro del Map.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia que selecciona los restos humanos, 
+	 * guarda los resultados en los atributos de la clase  y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve los resultados que se encuentran en el Map.
+	 */
 	@Override
 	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
 		ResultSet rs = null;

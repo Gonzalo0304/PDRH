@@ -32,6 +32,7 @@ import javax.swing.JSeparator;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 
+
 /**
 * Esta clase representa la busqueda de restos humanos junto con el controlador de busqueda
 *
@@ -95,6 +96,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 
 	ContDatosBusqRH datos = DataFactoryBusqRH.getDatos();
 	private JTextField textSexo;
+
 
 	/**
 	 * Constructor de la ventana
@@ -459,6 +461,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		cargarDatos();
 	}
 
+
 	/**
 	 * Metodo para cargar los datos de Restos Humanos
 	 *
@@ -486,14 +489,12 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		textUbicacion.setText(rh.getUbicacion());
 	}
 
-	/**
-	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
-	 */
 	private void cerrar() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
+
 
 	/**
 	 * Metodo para habilitar el boton de agregar
@@ -530,6 +531,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 	}
 
 	// Abrir ventanas de menú
+
 	/**
 	 * Metodo para abrir la ventana de Gestion.
 	 * Se realiza al pulsar en la barra de menú el botón 'Gestionar'.
@@ -539,6 +541,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		this.dispose();
 		vBus.setVisible(true);
 	}
+
 
 	/**
 	 * Metodo para abrir la ventana de Comparacion.
@@ -560,6 +563,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		vBus.setVisible(true);
 	}
 
+
 	/**
 	 *  Metodo para abrir la ventana de insercion de restos humanos.
 	 *
@@ -572,6 +576,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		vInsRH.setVisible(true);
 	}
 
+
 	/**
 	 *  Método para abrir la ventana de inserción de personas.
 	 *
@@ -583,6 +588,7 @@ public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
+
 
 	/**
 	 *  Metodo para abrir la ventana de insercion de casos.

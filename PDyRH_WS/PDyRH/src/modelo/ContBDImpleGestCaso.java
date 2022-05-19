@@ -16,6 +16,12 @@ import modelo.clases.Caso;
 import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
 
+/**
+ * Esta clase representa el controlador de la base de datos de  la ventana de gestion de casos.
+ * @author Elias
+ * Utiliza sentencias SQL para insertar los participantes, borrar casos, actualizar la tabla de casos y de resto humano,
+ * seleccionar los datos(participantes y resto humanos) y procedimientos para comprobar el DNI de la persona y buscar el resto.
+ */
 public class ContBDImpleGestCaso implements ContDatosGestCaso {
 	
 	// <--- Sentencias --->
@@ -29,15 +35,33 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 	final String SELECTinvolucrados = "SELECT * FROM restohumano WHERE codCaso IS NOT NULL";
 	
 	// <--- Conexión --->
+	/**
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
+	 */
 	private PreparedStatement stmnt;
+	/**
+	 * <li>Conexión: Es la conexión de la base de dato
+	 */
 	private Connection con;
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
+	/**
+	 * <li> url: Es el enlace donde se encuentra la base de datos.
+	 */
 	private String url = bundle.getString("URL");
+	/**
+	 * <li> usuario: Es el usuario para iniciar sesión.
+	 */
 	private String user = bundle.getString("USER");
+	/**
+	 * <li> pass: Es la contraseña de los usuarios
+	 */
 	private String pass = bundle.getString("PASS");
 	
+	/**
+	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -47,6 +71,9 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		}
 	}
 
+	/**
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {
@@ -64,6 +91,12 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		}
 	}
 
+	/**
+	 * Metodo para modificar el caso
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para actualizar los datos del caso, 
+	 * la informacion nueva introducida se guarda en la clase y finalmente se cierra la conexion.
+	 */
 	@Override
 	public void modificarCaso(Caso caso) throws Excepciones {
 		this.openConnection();
@@ -103,6 +136,19 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		}	
 	}
 
+	/**
+	 * Metodo para lista los participantes mediante el codigo del caso
+	 * 
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> Participante par: Contiene los datos de los participantes
+	 * <li> Map<String, Participante> participantes: Se utiliza para introducir los datos dentro del Map.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia que selecciona los participantes, 
+	 * guarda los resultados en los atributos de la clase  y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve el los resultados que se encuentran en el Map.
+	 * 
+	 */
 	@Override
 	public Map<String, Participante> listarParticipantes(String codCaso) {
 		ResultSet rs = null;
@@ -140,6 +186,13 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		return participantes;
 	}
 	
+	/**
+	 * Metodo para elminar el caso mediante el codigo
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia que borra los datos del caso, 
+	 * se escribe el codigo en la sentencia y se elimina y finalmente se cierra la conexion.
+	 * 
+	 */
 	@Override
 	public void eliminarCaso(String codCaso) {
 		this.openConnection();
@@ -165,6 +218,13 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		}
 	}
 
+	/**
+	 * Metodo para insertar participantes en el caso
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para actualizar los datos del caso, 
+	 * la informacion introducida se guarda en los atributos de la clase, controla que los campos no puedan 
+	 * superar el maximo de caracteres mediante un excepcion y finalmente se cierra la conexion.
+	 */
 	@Override
 	public void insertarParticipante(Participante par) throws Excepciones {
 		this.openConnection();
@@ -194,6 +254,12 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		}	
 	}
 
+	/**
+	 * Metodo para insertar los involucrados mediante el codido del resto humano y el codigo del caso
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para actualizar los datos del caso, 
+	 * la informacion introducida se guarda en los atributos de la clase y finalmente se cierra la conexion.
+	 */
 	@Override
 	public void insertarInvolucrado(String codResto, String codCaso) {
 		this.openConnection();
@@ -220,6 +286,16 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		}
 	}
 
+	/**
+	 * Metodo para comprobar si el DNI de la persona existe.
+	 * <li>ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li>boolean esta: Esta variable se encarga de encontrar a la persona.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta el procedimiento que buscara a la persona con el DNI introducido, 
+	 * guardara en la variable 'esta' el resultado del procedimiento  y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve si ha encontrado el DNI o no.
+	 */
 	@Override
 	public boolean comprobarDNI(String dni) {
 		ResultSet rs = null;
@@ -252,6 +328,16 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		return esta;
 	}
 
+	/**
+	 * Metodo para comprobar si el codigo del caso existe.
+	 * <li>ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li>boolean esta: Esta variable se encarga de encontrar a la persona.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta el procedimiento que buscara al resto humano, 
+	 * guardara en la variable 'esta' el resultado del procedimiento  y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve si ha encontrado el codigo o no.
+	 */
 	@Override
 	public boolean comprobarCodResto(String codResto) {
 		ResultSet rs = null;
@@ -283,6 +369,17 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 		return esta;
 	}
 
+	/**
+	 * Metodo para listar a los involucrados de los casos mediante el codigo del caso.
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> RestoHumano resto: Contiene los datos de los participantes
+	 * <li> Map<String, RestoHumano> restos: Se utiliza para introducir los datos dentro del Map.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia que selecciona los restos humanos, 
+	 * guarda los resultados en los atributos de la clase  y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve los resultados que se encuentran en el Map.
+	 */
 	@Override
 	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
 		ResultSet rs = null;

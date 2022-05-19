@@ -12,8 +12,10 @@ import modelo.clases.Caso;
 
 /**
  * Esta clase representa el controlador de la base de datos de la ventana de busqueda
- * @author Elias
- * Utiliza sentencias SQL para seleccionar datos, ademas utiliza metodos de la interfaz para comprobar los codigos o dni de las clases.
+ * @autor Elías
+ * Utiliza sentencias SQL para seleccionar datos, un procedimiento que combrueba el dni de la persona
+ * y otro que buscar al resto humano.
+ *
  */
 public class ContBDImpleBusq implements ContDatosBusq {
 	// <--- Sentencias -->
@@ -23,11 +25,11 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	
 	// <--- Conexión --->
 	/**
-	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los metodos.
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
 	 */
 	private PreparedStatement stmnt;
 	/**
-	 * <li>Connection: Es la conexion de la base de datos
+	 * <li>Conexión: Es la conexión de la base de dato
 	 */
 	private Connection con;
 
@@ -38,11 +40,11 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	 */
 	private String url = bundle.getString("URL");
 	/**
-	 * <li> user: Es el usuario para iniciar sesion.
+	 * <li> usuario: Es el usuario para iniciar sesión.
 	 */
 	private String user = bundle.getString("USER");
 	/**
-	 * <li> pass: Es la contraseña del usuarios
+	 * <li> pass: Es la contraseña de los usuarios
 	 */
 	private String pass = bundle.getString("PASS");
 
@@ -58,7 +60,7 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	}
 
 	/**
-	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL.
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
 	 */
 	public void closeConnection() {
 		if (con != null) {
@@ -77,6 +79,17 @@ public class ContBDImpleBusq implements ContDatosBusq {
 		}
 	}
 
+	/**
+	 * Metodo para obtener el caso con el codigo del caso.
+	 * <li>ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li>Caso caso: Contiene los datos de la clase Caso.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia de seleccion, 
+	 * guarda los resultados en los atributos de la clase y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve la informacion del caso.
+	 * 
+	 */
 	@Override
 	public Caso obtenerCaso(String codCaso) {
 		ResultSet rs = null;
@@ -116,6 +129,16 @@ public class ContBDImpleBusq implements ContDatosBusq {
 		return caso;
 	}
 
+	/**
+	 * Metodo para comprobar que el DNI de la persona existe.
+	 * <li>ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li>boolean esta: Esta variable se encarga de encontrar a la persona.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta el procedimiento que buscara a la persona con el DNI introducido, 
+	 * guardara en la variable 'esta' el resultado del procedimiento  y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve si ha encontrado el DNI o no.
+	 */
 	@Override
 	public boolean comprobarDNI(String dni) {
 		ResultSet rs = null;
@@ -147,6 +170,16 @@ public class ContBDImpleBusq implements ContDatosBusq {
 		return esta;
 	}
 
+	/**
+	 * Metodo para Comprobar el Resto Humano mediante el codigo del resto
+	 * <li>ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li>boolean esta: Esta variable se encarga de encontrar al Resto Humano.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta el procedimiento que buscara al resto humano con el codigo introducido, 
+	 * guardara en la variable 'esta' el resultado del procedimiento  y finalmente se cierra el resultado y la conexion. 
+	 * 
+	 * @return Devuelve si ha encontrado el codigo o no.
+	 */
 	@Override
 	public boolean comprobarCodResto(String codResto) {
 		ResultSet rs = null;

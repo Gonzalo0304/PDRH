@@ -400,6 +400,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		vBus.setVisible(true);
 	}
 
+
 	/**
 	 * Metodo para abrir la ventana de Comparacion.
 	 * Se realiza al pulsar en la barra de menú el botón 'Comparar'.
@@ -410,6 +411,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		vCom.setVisible(true);
 	}
 
+
 	/**
 	 * Método para abrir la ventana de Busqueda.
 	 * Se realiza al pulsar en la barra de menú el botón 'Busqueda'.
@@ -419,6 +421,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		this.dispose();
 		vBus.setVisible(true);
 	}
+
 
 	/**
 	 * Metodo para abrir la ventana de insercion de restos humanos.
@@ -510,16 +513,13 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 		}
 	}
 
-	/**
-	 * Metodo para cerrar la ventana y volver a la ventana principal
-	 */
 	private void cerrar() {
 		VPrincipal vMain = new VPrincipal(padre,true,info);
 		this.dispose();
 		vMain.setVisible(true);
 	}
 	
-	// Comprobar que radio button está seleccionado
+
 	/**
 	 * Comprobar que el botón de opción está seleccionado (se utiliza en el método anterior)
 	 * @param bg: Esta variable contiene las opciones en un solo grupo

@@ -4,10 +4,11 @@ import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
 /**
- * Esta interfaz representa el control de comparacion de restos humanos. 
- * @author Elias
- * Contiene metodos para obtener al resto humano y a las persona
- * y tambien agregar a un identificado.
+ * Esta interfaz representa el control de comparación de restos humanos.
+ * @autor Elías
+ * Contiene metodos para obtener al resto humano ya la persona
+ * y tambien agregar un identificador.
+ *
  */
 public interface ContDatosCompEsp {
 	public RestoHumano obtenerRH(String codResto);

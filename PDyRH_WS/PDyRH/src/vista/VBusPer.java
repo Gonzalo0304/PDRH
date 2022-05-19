@@ -929,6 +929,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 
 	}
 
+
 	/**
 	 * Metodo para cargar los datos de la persona
 	 *  
@@ -1006,6 +1007,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		return datos.listarConocidos(dni1);
 	}
 
+
 	/**
 	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
 	 */
@@ -1032,6 +1034,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 			abrirInsertRH();
 		} 
 	}
+
 	/**
 	 * Metodo para abrir la ventana de Gestion.
 	 * Se realiza al pulsar en la barra de menú el botón 'Gestionar'.
@@ -1042,6 +1045,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		this.dispose();
 		vBus.setVisible(true);
 	}
+
 
 	/**
 	 * Metodo para abrir la ventana de Comparacion.
@@ -1063,6 +1067,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		vBus.setVisible(true);
 	}
 
+
 	/**
 	 * Método para abrir la ventana de inserción de personas.
 	 *
@@ -1074,6 +1079,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
+
 
 	/**
 	 * Método para abrir la ventana de inserción de personas.
@@ -1087,6 +1093,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		vInsPer.setVisible(true);		
 	}
 
+
 	/**
 	 *  Metodo para abrir la ventana de insercion de casos.
 	 *
@@ -1098,6 +1105,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		vInsCaso.setVisible(true);
 	}	
 	
+
 	/**
 	 * Método para abrir la ventana de búsqueda de persona.
 	 *
