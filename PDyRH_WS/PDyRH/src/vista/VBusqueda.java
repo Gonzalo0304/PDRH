@@ -40,11 +40,13 @@ import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+
 /**
  * Esta clase representa la ventana de Busqueda junto con el controlador
  *  @autor Elías
  *
  */
+
 public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq {
 	private static final long serialVersionUID = 1L;
 
@@ -86,13 +88,14 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	// <--- Datos BD --->
 	ContDatosBusq datos = DataFactoryBusq.getDatos();
 
+
 	/**
 	 * <h2> Constructor de la ventana
 	 * @param padre: Es la ventana de inicio de sesion siendo la principal
 	 * @param modal: Sirve para impedir la navegacion de la ventana anterior
-	 * @param codigo: Es el codigo del resto humano que obtiene de la ventana de busqueda.
 	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
 	 */
+
 	public VBusqueda(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -390,10 +393,12 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	}
 	
 	// Abrir ventanas de menú
+
 	/**
 	 * Metodo para abrir la ventana de Gestion.
 	 * Se realiza al pulsar en la barra de menú el botón 'Gestionar'.
 	 */
+
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre,true,info);
 		this.dispose();
@@ -458,6 +463,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	}
 
 	// Abrir ventanas de gestión
+
 	/**
 	 * Metodo para comprobar el dni o el codigo que se introduce.
 	 *
@@ -470,6 +476,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	 *
 	 * Si resulta que no lo encuentra saltara un mensaje de ID incorrecto.
 	 */
+
 	private void comprobarBus(String[] info) {
 		esta = true;
 		String selec = rbSeleccionado(bgTipo);
@@ -520,6 +527,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	}
 	
 
+	// Comprobar que radio button está seleccionado
 	/**
 	 * Comprobar que el botón de opción está seleccionado (se utiliza en el método anterior)
 	 * @param bg: Esta variable contiene las opciones en un solo grupo
@@ -527,6 +535,7 @@ public class VBusqueda extends JDialog implements ActionListener, ContDatosBusq 
 	 *
 	 * @return Devuelve la opción que ha sido seleccionada
 	 */
+
 	public String rbSeleccionado(ButtonGroup bg) {
 		for (Enumeration<AbstractButton> botones = bg.getElements(); botones.hasMoreElements();) {
 			AbstractButton boton = botones.nextElement();

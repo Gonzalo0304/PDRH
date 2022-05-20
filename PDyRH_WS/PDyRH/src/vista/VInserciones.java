@@ -24,6 +24,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.SystemColor;
 
+/**
+ * Esta clase representa la ventana desde la cual se puede acceder a las diferentes inserciones: 
+ * @autor Gonzalo
+ *
+ */
 public class VInserciones extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

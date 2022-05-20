@@ -9,6 +9,10 @@ import java.util.ResourceBundle;
 
 import controlador.interfaces.ControladorDatosIS;
 
+/**
+ * Esta clase representa la ventana de Implementacion de inicio de sesion. Las sentencias sirven para comprobar el inicio de sesion.
+ * @author Gonzalo
+ */
 public class ContBDImpleIS implements ControladorDatosIS {
 	// <--- Sentencias --->
 	final String SELECTusuario = "SELECT * FROM usuario WHERE usuario = ?";
@@ -23,6 +27,9 @@ public class ContBDImpleIS implements ControladorDatosIS {
 		private String user = bundle.getString("USER");
 		private String pass = bundle.getString("PASS");
 		
+		/**
+		 * Abre la conexion con la base de datos 
+		 */
 		public void openConnection() {
 			try {
 				con = DriverManager.getConnection(url, user, pass);
@@ -31,6 +38,9 @@ public class ContBDImpleIS implements ControladorDatosIS {
 			} 
 		}
 
+		/**
+		 * Cierra la conexion con la base de datos
+		 */
 		public void closeConnection() {
 			if (con != null) {
 				try {
@@ -49,6 +59,9 @@ public class ContBDImpleIS implements ControladorDatosIS {
 		}
 		
 	@Override
+	/**
+	 * Llama al proceso SELECTusuario para comprobar si las credenciales son correctas.
+	 */
 	public String[] comprobarCredenciales(String usuario) {
 		ResultSet rs = null;
 		String[] datos = null;

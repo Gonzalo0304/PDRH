@@ -32,7 +32,6 @@ import modelo.clases.RestoHumano;
 import modelo.clases.Desaparecida;
 
 import javax.swing.ImageIcon;
-
 /**
  * Esta clase representa la informacion de los resto humanos y las personas desaparecidas
  * @author Elias

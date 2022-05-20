@@ -103,6 +103,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	private JLabel lblRes;
 	private JLabel imgErtzAO_1;
 
+
 	/**
 	 * Constructor de la ventana de Busqueda de Caso
 	 *
@@ -111,6 +112,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	 * @param cas: Es la variable que contiene la clase Caso que obtiene de la clase busqueda
 	 * @param infos: Este parametro recibe los datos del usuario que ha iniciado sesion
 	 */
+
 	public VBusCaso(VIniciarSesion padre, boolean modal, Caso cas, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -692,6 +694,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	 * Funciona al pulsar en la barra de menu el boton 'Insertar' en la que
 	 * Despliegara tres opciones para pulsar y este método se realiza en 'Resto Humano'
 	 */
+
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
 		this.dispose();
@@ -720,7 +723,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}	
-	
+
 	/**
 	 * Metodo para abrir la ventana que muestra los datos de la persona.
 	 *
@@ -742,6 +745,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 	 *
 	 * Funciona al pulsar el código del resto que aparece en la pestaña involucrada para visualizar la información.
 	 */
+
 	private void abrirBusRH(String codigo) {
 		VBusRH vBusRH = new VBusRH(padre, true, codigo, info);
 		this.dispose();

@@ -45,6 +45,11 @@ import java.awt.Button;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Esta clase representa la ventana de Gestion de personas
+ * @autor Gonzalo
+ *
+ */
 public class VGesPersona extends JDialog implements ContDatosGestPer, ActionListener {
 	private static final long serialVersionUID = 1L;
 

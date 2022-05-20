@@ -29,6 +29,11 @@ import controlador.DataFactoryIS;
 import controlador.interfaces.ControladorDatosIS;
 import java.awt.Toolkit;
 
+/**
+ * Esta clase representa la ventana de Inicio de Sesion
+ * @autor Gonzalo
+ *
+ */
 public class VIniciarSesion extends JFrame implements ActionListener,ControladorDatosIS {
 
 	private static final long serialVersionUID = 1L;

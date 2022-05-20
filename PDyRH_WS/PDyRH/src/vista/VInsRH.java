@@ -37,6 +37,11 @@ import javax.swing.JSeparator;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 
+/**
+ * Esta clase representa la ventana de insercion y gestion de restps humanos
+ * @autor Gonzalo
+ *
+ */
 public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 
 	private static final long serialVersionUID = 1L;

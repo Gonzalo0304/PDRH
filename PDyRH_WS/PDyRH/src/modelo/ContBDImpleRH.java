@@ -12,6 +12,10 @@ import controlador.interfaces.ContDatosRH;
 import excepciones.Excepciones;
 import modelo.clases.RestoHumano;
 
+/**
+ * Esta clase representa la ventana de Implementacion de gestion e insercion de restos humanos. Las sentencias sirven para insertar, actualizar y borrar los restos humanos.
+ * @author Gonzalo
+ */
 public class ContBDImpleRH implements ContDatosRH {
 	// <--- Sentencias --->	
 	final String INSERTrh = "INSERT INTO restohumano(codResto,causa,ubicacion,genero,tipoPelo,colorPelo,colorOjos,altura,especificaciones,fechaMuerte) VALUES(?,?,?,?,?,?,?,?,?,?)";
@@ -29,6 +33,9 @@ public class ContBDImpleRH implements ContDatosRH {
 	private String user = bundle.getString("USER");
 	private String pass = bundle.getString("PASS");
 
+	/**
+	 * Abre la conexion con la base de datos
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -38,6 +45,9 @@ public class ContBDImpleRH implements ContDatosRH {
 		}
 	}
 
+	/**
+	 * Cierra la conexion con la base de datos
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {
@@ -56,6 +66,10 @@ public class ContBDImpleRH implements ContDatosRH {
 	}
 
 	@Override
+	/**
+	 * Llama al proceso INSERTrh para insertar restos humanos en la base de datos. Comprueba si las fecha de muerte esta vacia si no es asi se introduce la fecha si no se deja a null y 
+	 * controla si se exceden los caracteres maximos.
+	 */
 	public void altaRH(RestoHumano rh) throws Excepciones {
 		this.openConnection();
 		
@@ -90,6 +104,10 @@ public class ContBDImpleRH implements ContDatosRH {
 	}
 
 	@Override
+	/**
+	 * Llama a la sentcia UDATErh para actualizar los datos de retsio humano en la base de datos. Con las especificaciones se comprueba si estan vacias si no es asi se insertan si esta 
+	 * vacio se dejan a null y controla si se exceden los caracteres maximos.
+	 */
 	public void modificarRH(RestoHumano rh) throws Excepciones {
 		this.openConnection();
 		
@@ -124,6 +142,9 @@ public class ContBDImpleRH implements ContDatosRH {
 	}
 	
 	@Override
+	/**
+	 * Llama ala sentencia DELETErh para borrar restos humanos.
+	 */
 	public void eliminarRH(String codResto) {
 		this.openConnection();
 		
@@ -149,6 +170,9 @@ public class ContBDImpleRH implements ContDatosRH {
 	}
 
 	@Override
+	/**
+	 * Llama a la sentencia SELECTrh para recibir los restos humanos buscados para modificar.
+	 */
 	public RestoHumano obtenerRH(String codResto) {
 		ResultSet rs = null;
 		RestoHumano resto = null;

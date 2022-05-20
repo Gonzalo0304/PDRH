@@ -1007,7 +1007,6 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		return datos.listarConocidos(dni1);
 	}
 
-
 	/**
 	 * Metodo para cerrar la ventana y volver a la ventana de busqueda
 	 */
@@ -1104,7 +1103,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}	
-	
+
 
 	/**
 	 * Método para abrir la ventana de búsqueda de persona.

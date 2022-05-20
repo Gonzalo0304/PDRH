@@ -40,7 +40,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import javax.swing.ImageIcon;
 import java.awt.SystemColor;
-
 /**
  * Esta clase representa la comparacion de los restos humanos y desaparecidos junto con el controlador de comparacion
  * @author Elias

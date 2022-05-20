@@ -27,7 +27,11 @@ import javax.swing.JComponent;
 
 import java.awt.SystemColor;
 import java.awt.Toolkit;
-
+/**
+ * Esta clase representa la ventana Principal del programa
+ * @autor Gonzalo
+ *
+ */
 public class VPrincipal extends JDialog implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
 

@@ -45,6 +45,11 @@ import javax.swing.ImageIcon;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+/**
+ * Esta clase representa la ventana de insercion de personas
+ * @autor Gonzalo
+ *
+ */
 public class VInsPersona extends JDialog implements ActionListener, ContDatosInsertPer {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();

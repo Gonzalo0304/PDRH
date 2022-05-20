@@ -41,6 +41,11 @@ import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
 import javax.swing.JRadioButton;
 
+/**
+ * Esta clase representa la ventana de Gestion de casos
+ * @autor Gonzalo
+ *
+ */
 public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListener {
 	private static final long serialVersionUID = 1L;
 

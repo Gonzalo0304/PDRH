@@ -19,8 +19,15 @@ import modelo.clases.Criminal;
 import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 
+/**
+ * Esta clase representa la ventana de Implementacion de Gestion de Personas. Las sentencias sirven para llamar procedimientos, actualizar datos de las personas, eliminar personas e 
+ * insertar datos nuevos.
+ * @autor Gonzalo
+ *
+ */
 public class ContBDImpleGestPer implements ContDatosGestPer {
 	// <--- Sentencias --->
+	
 	final String CALLcompPer = "{CALL comprobarPer(?)}";
 	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
 	final String UPDATEper = "UPDATE persona SET nombre = ?,apellido = ?,telf1 = ?,localidad = ?,fechaNac = ?,fechaFal = ?,telf2 = ? WHERE dni = ?";
@@ -43,6 +50,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	private String user = bundle.getString("USER");
 	private String pass = bundle.getString("PASS");
 
+	/**
+	 * Abre la conexion con la base de datos.
+	 */
 	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
@@ -52,6 +62,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 		}
 	}
 
+	/**
+	 * Cerrar la conexion con la base de datos.
+	 */
 	public void closeConnection() {
 		if (con != null) {
 			try {
@@ -70,6 +83,12 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
+	/**
+	 * Llama al proceso UPDATEage para actualizar las personas. Primero comprueba que tipo de persona es. Si es agente comprueba que las fechas de inicio y fin de servicio se comprueba si 
+	 * esta vacio el campo si no es asi se paresa la fehca de String a LocalDate si no se guarda como null, si es criminal se introduce normal y si es desparecida la fecha desaparecida se
+	 * comprueba si esta vacia y si no es asi se parsea de String a LocalDate si no se guarda como null. Por ultimo para los datos generales de persona abra que comprobar la fehca de 
+	 * nacimiento y fallecimiento se comprueba si se han dejado en blaco si no es asi se parsea de String a LocalDate si no se guarda como null. 
+	 */
 	public void modificarPersona(Persona per) throws Excepciones {
 		this.openConnection();
 
@@ -157,6 +176,10 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
+	/**
+	 * Llama al metodo SELECTconoce selecciona los conocidos. Lista los conocidos de una persona, los va guardando en un map para luego mostrarlos.
+	 * @return conocido
+	 */
 	public Map<String, Conocido> listarConocidos(String dni1) {
 		ResultSet rs = null;
 		Conocido cono;
@@ -194,6 +217,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
+	/**
+	 * Se llama al proceso INSERTfechAr para insertar las fechas en las que es arrestado un criminal. 
+	 */
 	public void agregarFechaArresto(String dni, LocalDate fecha) throws Excepciones {
 		this.openConnection();
 
@@ -222,6 +248,10 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
+	/**
+	 * LLama al proceso CALLcomper qeu se usa para obtener el dni. comprobar persona.Obtiene los datos de una persona para imprimirlos en la ventana de gestion. Con las fechas de 
+	 * naicimiento y fallecimiento se comprueba si estan vacias si no estan vacias se muestran los datos. 
+	 */
 	public Persona obtenerPersona(String dni) {
 		ResultSet rs = null;
 		Persona per = null;
@@ -300,6 +330,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
+	/**
+	 * Elimina una persona para ello llama a la sentencia DELETEper que elimina a alguien po su dni
+	 */
 	public void eliminarPersona(String dni) {
 		this.openConnection();
 
@@ -325,6 +358,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
+	/**
+	 * Llama al proceso CALLcomprobardni para comprobar que eñ dmo esta introducido.
+	 */
 	public boolean comprobarDNI(String dni) {
 		ResultSet rs = null;
 		boolean esta = false;
@@ -357,6 +393,9 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 	}
 
 	@Override
+	/**
+	 * Llama al proceso INSERTconoce para añadir conocidos. Si se exceden los caracteres se avisara con JOptionPane. 
+	 */
 	public void agregarConocido(Conocido cono) throws Excepciones {
 		this.openConnection();
 
