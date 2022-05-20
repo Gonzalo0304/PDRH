@@ -1,27 +1,78 @@
 package modelo.clases;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+/**
+ * Esta clase representa a la desaparecida que extiende de Persona
+ * @author Equipo5
+ *
+ */
 public class Desaparecida extends Persona {
 	// <--- Atributos --->
-	private LocalDateTime fechaDes;
+	/**
+	 * La fecha que ha desaparecido
+	 */
+	private LocalDate fechaDes;
+	/**
+	 * La ultima ubicacion que ha sido vista
+	 */
 	private String ultimaUbi;
+	/**
+	 * El genero de la persona
+	 */
 	private String genero;
+	/**
+	 * El tipo de pelo
+	 */
 	private String tipoPelo;
+	/**
+	 * El color de pelo
+	 */
 	private String colorPelo;
+	/**
+	 * El color de ojos 
+	 */
 	private String colorOjos;
-	private float altura;
+	/**
+	 * La altura
+	 */
+	private int altura;
+	/**
+	 * La especificaciones de la persona desaparecida
+	 */
 	private String especificaciones;
 	
 	// <--- Constructores --->
+	/**
+	 * Constructor vacio
+	 */
 	public Desaparecida() {
+		super();
 	}
 
+			
+
+	/**
+	 * Constructor con parametros
+	 * @param dni
+	 * @param nombre
+	 * @param apellido
+	 * @param telefonos
+	 * @param localidad
+	 * @param fechaNac
+	 * @param fechaDes
+	 * @param ultimaUbi
+	 * @param genero
+	 * @param tipoPelo
+	 * @param colorPelo
+	 * @param colorOjos
+	 * @param altura
+	 * @param especificaciones
+	 */
 	public Desaparecida(String dni, String nombre, String apellido, int[] telefonos, String localidad,
-			LocalDate fechaNac, LocalDate fechaFal, LocalDateTime fechaDes, String ultimaUbi, String genero,
-			String tipoPelo, String colorPelo, String colorOjos, float altura, String especificaciones) {
-		super(dni, nombre, apellido, telefonos, localidad, fechaNac, fechaFal);
+			LocalDate fechaNac, LocalDate fechaDes, String ultimaUbi, String genero, String tipoPelo,
+			String colorPelo, String colorOjos, int altura, String especificaciones) {
+		super(dni, nombre, apellido, telefonos, localidad, fechaNac, fechaDes);
 		this.fechaDes = fechaDes;
 		this.ultimaUbi = ultimaUbi;
 		this.genero = genero;
@@ -32,27 +83,15 @@ public class Desaparecida extends Persona {
 		this.especificaciones = especificaciones;
 	}
 
-	public Desaparecida(String dni, String nombre, String apellido, int[] telefonos, String localidad,
-			LocalDate fechaNac, LocalDateTime fechaDes, String ultimaUbi, String genero, String tipoPelo,
-			String colorPelo, String colorOjos, float altura, String especificaciones) {
-		super(dni, nombre, apellido, telefonos, localidad, fechaNac);
-		this.fechaDes = fechaDes;
-		this.ultimaUbi = ultimaUbi;
-		this.genero = genero;
-		this.tipoPelo = tipoPelo;
-		this.colorPelo = colorPelo;
-		this.colorOjos = colorOjos;
-		this.altura = altura;
-		this.especificaciones = especificaciones;
-	}
 	
 	// <--- Getters y Setters --->
-	public LocalDateTime getFechaDes() {
+	public LocalDate getFechaDes() {
 		return fechaDes;
 	}
 
-	public void setFechaDes(LocalDateTime fechaDes) {
-		this.fechaDes = fechaDes;
+	public void setFechaDes(LocalDate localDate) {
+		this.fechaDes = localDate;
+
 	}
 
 	public String getUltimaUbi() {
@@ -95,11 +134,11 @@ public class Desaparecida extends Persona {
 		this.colorOjos = colorOjos;
 	}
 
-	public float getAltura() {
+	public int getAltura() {
 		return altura;
 	}
 
-	public void setAltura(float altura) {
+	public void setAltura(int altura) {
 		this.altura = altura;
 	}
 
