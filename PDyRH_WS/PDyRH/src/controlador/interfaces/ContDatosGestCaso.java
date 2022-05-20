@@ -60,5 +60,5 @@ public interface ContDatosGestCaso {
 	 * @param codCaso
 	 * @return Devuelve los datos del Resto Humano que se encuentra en el caso.
 	 */
-	public Map<String,RestoHumano> listarInvolucrados(String codCaso);
+	public Map<String,RestoHumano> listarInvolucrados();
 }

@@ -383,7 +383,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 	 * @return Devuelve los resultados que se encuentran en el Map.
 	 */
 	@Override
-	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
+	public Map<String, RestoHumano> listarInvolucrados() {
 		ResultSet rs = null;
 		RestoHumano resto = null;
 		Map<String, RestoHumano> restos = new TreeMap<>();;
