@@ -6,7 +6,7 @@ import modelo.ContBDImpleBusqRH;
 public class DataFactoryBusqRH {
 	private static ContDatosBusqRH datos;
 	
-	public static synchronized ContDatosBusqRH getDatos() {
+	public static ContDatosBusqRH getDatos() {
 		if (datos == null) {
 			datos = new ContBDImpleBusqRH();
 		}

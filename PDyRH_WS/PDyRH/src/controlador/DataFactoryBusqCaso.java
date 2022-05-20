@@ -6,7 +6,7 @@ import modelo.ContBDImpleBusqCaso;
 public class DataFactoryBusqCaso {
 	private static ContDatosBusqCaso datos;
 	
-	public static synchronized ContDatosBusqCaso getDatos() {
+	public static ContDatosBusqCaso getDatos() {
 		if (datos == null) {
 			datos = new ContBDImpleBusqCaso();
 		}

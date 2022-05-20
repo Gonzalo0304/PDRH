@@ -6,7 +6,7 @@ import modelo.ContBDImpleRH;
 public class DataFactoryRH {
 	private static ContDatosRH datos;
 	
-	public static synchronized ContDatosRH getDatos() {
+	public static ContDatosRH getDatos() {
 		if (datos == null) {
 			datos = new ContBDImpleRH();
 		}

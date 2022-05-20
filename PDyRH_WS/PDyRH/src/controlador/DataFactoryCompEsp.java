@@ -6,7 +6,7 @@ import modelo.ContBDImpleCompEsp;
 public class DataFactoryCompEsp {
 	private static ContDatosCompEsp datos;
 	
-	public static synchronized ContDatosCompEsp getDatos() {
+	public static ContDatosCompEsp getDatos() {
 		if (datos == null) {
 			datos = new ContBDImpleCompEsp();
 		}

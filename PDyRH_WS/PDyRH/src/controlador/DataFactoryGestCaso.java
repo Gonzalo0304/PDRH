@@ -6,7 +6,7 @@ import modelo.ContBDImpleGestCaso;
 public class DataFactoryGestCaso {
 	private static ContDatosGestCaso datos;
 	
-	public static synchronized ContDatosGestCaso getDatos() {
+	public static ContDatosGestCaso getDatos() {
 		if (datos == null) {
 			datos = new ContBDImpleGestCaso();
 		}

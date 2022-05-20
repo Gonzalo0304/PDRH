@@ -6,7 +6,7 @@ import modelo.ContBDImpleGestPer;
 public class DataFactoryGestPer {
 	private static ContDatosGestPer datos;
 	
-	public static synchronized ContDatosGestPer getDatos() {
+	public static ContDatosGestPer getDatos() {
 		if (datos == null) {
 			datos = new ContBDImpleGestPer();
 		}
