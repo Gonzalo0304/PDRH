@@ -20,7 +20,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	// <--- Sentencias --->
 	final String SELECTidentificado = "SELECT dni FROM identifica WHERE codResto = ?";
 	final String SELECTrh = "SELECT * FROM restohumano WHERE codResto = ?";
-	
+
 	// <--- Conexión --->
 	/**
 	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
@@ -88,18 +88,18 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	 * @return Devuelve el DNI de la persona.
 	 */
 	@Override
-	public String obtenerIdentificado(String codResto) {
+	public String obtenerIdentificado(String codResto)  {
 		ResultSet rs = null;
 		String dni = null;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTidentificado);
 			stmnt.setString(1, codResto);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				dni = rs.getString("dni");
 			}
@@ -115,7 +115,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 			}
 			this.closeConnection();
 		}
-		
+
 		return dni;
 	}
 
@@ -130,21 +130,21 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 	 * @return Devuelve los datos del resto.
 	 */
 	@Override
-	public RestoHumano obtenerRH(String codResto) {
+	public RestoHumano obtenerRH(String codResto)  {
 		ResultSet rs = null;
 		RestoHumano resto = null;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTrh);
 			stmnt.setString(1, codResto);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				resto = new RestoHumano();
-				
+
 				resto.setCodResto(codResto);
 				resto.setCausa(rs.getString("causa"));
 				resto.setUbicacion(rs.getString("ubicacion"));
@@ -171,7 +171,7 @@ public class ContBDImpleBusqRH implements ContDatosBusqRH {
 			}
 			this.closeConnection();
 		}
-		
+
 		return resto;
 	}
 

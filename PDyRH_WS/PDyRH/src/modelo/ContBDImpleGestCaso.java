@@ -246,9 +246,11 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 					e.printStackTrace();
 				}
 			}
-			String msg = "Los campos no pueden exceder los 50 carácteres.";
-			Excepciones exc = new Excepciones(msg);
-			throw exc;
+			if (par.getCodCaso().length() > 50 || par.getImplicacion().length() > 50) {
+				String msg = "Los campos no pueden exceder los 50 carácteres.";
+				Excepciones exc = new Excepciones(msg);
+				throw exc;
+			} 
 		} finally {
 			this.closeConnection();
 		}	

@@ -269,7 +269,8 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 					datosTabla[i][1] = comparados.get(i).getCodResto();
 					datosTabla[i][2] = String.format("%.2f",comparados.get(i).getPorcentaje());
 				}
-				int posicion = 20 + (comparados.size() * 17);
+
+				int posicion = 16 + (comparados.size() * 17);
 				JS = new JScrollPane();
 				JS.setBounds(55, 100, 450, posicion);
 				posicion = posicion + 100;
@@ -404,7 +405,6 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 		} else {
 			xFecha = 0;
 		}
-	
 		// Calcular diferencia de alturas y su valor
 		if (rh.getAltura() != 0 && ((Desaparecida) des).getAltura() != 0) {
 			cmDiff = Math.abs(rh.getAltura() - ((Desaparecida) des).getAltura());
@@ -416,14 +416,14 @@ public class VComparacion extends JDialog implements ActionListener, ContDatosCo
 			xAltura = 0;
 		}
 		for (int i = 0; i < rhCar1.length; i++) {
-			if (rhCar1[i] != null) {
+			if (!rhCar1[i].isBlank()) {
 				if (rhCar1[i].equalsIgnoreCase(desCar1[i])) {
 					xTotal++;
 				}
 			}
 		}
 		for (int i = 0; i < rhCar2.length; i++) {
-			if (rhCar2[i] != null) {
+			if (rhCar2[i] != null && !rhCar2[i].isBlank()) {
 				if (rhCar2[i].equalsIgnoreCase(desCar2[i])) {
 					xTotal += 2;
 				}

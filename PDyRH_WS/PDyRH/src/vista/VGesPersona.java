@@ -19,6 +19,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
@@ -162,6 +164,8 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	private String dni;
 	private Button buttonFA;
 	private VIniciarSesion padre;
+	private JLabel lblTelfM;
+	private JLabel lblTelfO;
 
 	public VGesPersona(VIniciarSesion padre, boolean modal, String dni, String[] infos) {
 		// <--- Diseño de ventana --->
@@ -615,6 +619,16 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		textMovil = new JTextField();
 		textMovil.setColumns(10);
 		textMovil.setBounds(26, 300, 187, 20);
+		textMovil.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (!textMovil.getText().isBlank() && textMovil.getText().length() != 9) {
+					lblTelfO.setVisible(true);
+				} else {
+					lblTelfO.setVisible(false);
+				}
+			}
+		});
 		contentDatos.add(textMovil);
 
 		lblTelf = new JLabel("TEL\u00C9FONO OPC.");
@@ -632,6 +646,16 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		textTelf = new JTextField();
 		textTelf.setColumns(10);
 		textTelf.setBounds(26, 370, 187, 20);
+		textTelf.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (!textTelf.getText().isBlank() && textTelf.getText().length() != 9) {
+					lblTelfO.setVisible(true);
+				} else {
+					lblTelfO.setVisible(false);
+				}
+			}
+		});
 		contentDatos.add(textTelf);
 
 		lblNac = new JLabel("NACIMIENTO");
@@ -967,6 +991,20 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		separatorEsp.setVisible(false);
 		separatorEsp.setBounds(264, 552, 106, 2);
 		contentDatos.add(separatorEsp);
+		
+		lblTelfM = new JLabel("TELF NO COM\u00DAN");
+		lblTelfM.setForeground(new Color(204, 102, 0));
+		lblTelfM.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTelfM.setBounds(126, 319, 96, 14);
+		lblTelfM.setVisible(false);
+		contentDatos.add(lblTelfM);
+		
+		lblTelfO = new JLabel("TELF NO COM\u00DAN");
+		lblTelfO.setForeground(new Color(204, 102, 0));
+		lblTelfO.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTelfO.setBounds(126, 378, 96, 14);
+		lblTelfO.setVisible(false);
+		contentDatos.add(lblTelfO);
 
 		// Fondo
 		imgErtzAO = new JLabel("");
@@ -1024,8 +1062,12 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		textDni.setText(dni);
 		textNombre.setText(per.getNombre());
 		textApellido.setText(per.getApellido());
-		textMovil.setText(Integer.toString(per.getTelefonos()[0]));
-		textTelf.setText(Integer.toString(per.getTelefonos()[1]));
+		if (per.getTelefonos()[0] != 0) {
+			textMovil.setText(Integer.toString(per.getTelefonos()[0]));
+		}
+		if (per.getTelefonos()[1] != 0) {
+			textTelf.setText(Integer.toString(per.getTelefonos()[1]));
+		}
 		textLoc.setText(per.getLocalidad());
 		if (per.getFechaNac() != null) {
 			textNac.setText(per.getFechaNac().toString());

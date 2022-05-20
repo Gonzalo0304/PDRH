@@ -15,6 +15,7 @@ public interface ContDatosBusq {
 	 * @return <true>El dni existe</true> <false>El dni no existe</false> 
 	 */
 	public boolean comprobarDNI(String dni);
+
 	/**
 	 * 	Este metodo comprueba que el codigo del caso existe
 	 * @param codResto

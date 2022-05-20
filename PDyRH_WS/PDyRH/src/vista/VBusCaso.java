@@ -279,7 +279,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorCod);
 
 		textCod = new JTextField();
-		textCod.setEditable(false);
+		textCod.setEnabled(false);
 		textCod.setColumns(10);
 		textCod.setBounds(151, 145, 187, 20);
 		contentDatos.add(textCod);
@@ -297,7 +297,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorNom);
 
 		textNombre = new JTextField();
-		textNombre.setEditable(false);
+		textNombre.setEnabled(false);
 		textNombre.setColumns(10);
 		textNombre.setBounds(151, 244, 187, 20);
 		contentDatos.add(textNombre);
@@ -315,7 +315,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorEstado);
 
 		textEstado = new JTextField();
-		textEstado.setEditable(false);
+		textEstado.setEnabled(false);
 		textEstado.setColumns(10);
 		textEstado.setBounds(151, 347, 187, 20);
 		contentDatos.add(textEstado);
@@ -333,7 +333,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorNac);
 
 		textNac = new JTextField();
-		textNac.setEditable(false);
+		textNac.setEnabled(false);
 		textNac.setColumns(10);
 		textNac.setBounds(151, 459, 187, 20);
 		contentDatos.add(textNac);
@@ -351,7 +351,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorFall);
 
 		textFall = new JTextField();
-		textFall.setEditable(false);
+		textFall.setEnabled(false);
 		textFall.setColumns(10);
 		textFall.setBounds(151, 575, 187, 20);
 		contentDatos.add(textFall);

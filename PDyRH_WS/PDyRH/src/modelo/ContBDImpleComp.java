@@ -25,7 +25,7 @@ public class ContBDImpleComp implements ContDatosComp {
 	final String SELECTrhs = "SELECT * FROM restohumano";
 	final String SELECTdesaparecidas = "SELECT * FROM desaparecida";
 	final String SELECTidentificado = "SELECT dni FROM identifica WHERE codResto = ?";
-	
+
 	// <--- Conexión --->
 	/**
 	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
@@ -62,6 +62,7 @@ public class ContBDImpleComp implements ContDatosComp {
 		}
 	}
 
+
 	/**
 	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
 	 */
@@ -94,18 +95,18 @@ public class ContBDImpleComp implements ContDatosComp {
 	 * @return Devuelve los datos de los restos.
 	 */
 	@Override
-	public Map<String, RestoHumano> listarRHs() {
+	public Map<String, RestoHumano> listarRHs()  {
 		ResultSet rs = null;
 		RestoHumano resto = null;
-		Map<String,RestoHumano> restos = new TreeMap<>();
-		
+		Map<String, RestoHumano> restos = new TreeMap<>();
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTrhs);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			while (rs.next()) {
 				resto = new RestoHumano();
 
@@ -138,7 +139,7 @@ public class ContBDImpleComp implements ContDatosComp {
 			}
 			this.closeConnection();
 		}
-		
+
 		return restos;
 	}
 
@@ -154,21 +155,21 @@ public class ContBDImpleComp implements ContDatosComp {
 	 * @return Devuelve los datos de las desaparecidas.
 	 */
 	@Override
-	public Map<String, Persona> listarDesaparecidas() {
+	public Map<String, Persona> listarDesaparecidas()  {
 		ResultSet rs = null;
 		Persona des = null;
 		Map<String, Persona> desaparecidas = new TreeMap<>();
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTdesaparecidas);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			while (rs.next()) {
 				des = new Desaparecida();
-				
+
 				des.setDni(rs.getString("dni"));
 				if (rs.getDate("fechaDes") != null) {
 					((Desaparecida) des).setFechaDes(rs.getDate("fechaDes").toLocalDate());
@@ -180,11 +181,10 @@ public class ContBDImpleComp implements ContDatosComp {
 				((Desaparecida) des).setColorOjos(rs.getString("colorOjos"));
 				((Desaparecida) des).setAltura(rs.getInt("altura"));
 				((Desaparecida) des).setEspecificaciones(rs.getString("especificaciones"));
-				
+
 				desaparecidas.put(des.getDni(), des);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -209,18 +209,18 @@ public class ContBDImpleComp implements ContDatosComp {
 	 * @return Devuelve el DNI de la persona.
 	 */
 	@Override
-	public String obtenerIdentificado(String codResto) {
+	public String obtenerIdentificado(String codResto)  {
 		ResultSet rs = null;
 		String dni = null;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTidentificado);
 			stmnt.setString(1, codResto);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				dni = rs.getString("dni");
 			}
@@ -236,7 +236,7 @@ public class ContBDImpleComp implements ContDatosComp {
 			}
 			this.closeConnection();
 		}
-		
+
 		return dni;
 	}
 }

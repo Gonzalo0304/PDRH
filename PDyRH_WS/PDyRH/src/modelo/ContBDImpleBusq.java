@@ -22,7 +22,7 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	final String SELECTcaso = "SELECT * FROM caso WHERE codCaso = ?";
 	final String CALLcomprobarDNI = "{CALL comprobarDNI(?)}";
 	final String CALLbuscarRH = "{CALL buscarRH(?)}";
-	
+
 	// <--- Conexión --->
 	/**
 	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
@@ -59,6 +59,7 @@ public class ContBDImpleBusq implements ContDatosBusq {
 		}
 	}
 
+
 	/**
 	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
 	 */
@@ -91,17 +92,17 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	 * 
 	 */
 	@Override
-	public Caso obtenerCaso(String codCaso) {
+	public Caso obtenerCaso(String codCaso)  {
 		ResultSet rs = null;
 		Caso caso = null;
-		
+
 		this.openConnection();
 		try {
 			stmnt = con.prepareStatement(SELECTcaso);
 			stmnt.setString(1, codCaso);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				caso = new Caso();
 				caso.setCodCaso(codCaso);
@@ -140,18 +141,18 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	 * @return Devuelve si ha encontrado el DNI o no.
 	 */
 	@Override
-	public boolean comprobarDNI(String dni) {
+	public boolean comprobarDNI(String dni)  {
 		ResultSet rs = null;
 		boolean esta = false;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareCall(CALLcomprobarDNI);
 			stmnt.setString(1, dni);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				esta = rs.getBoolean("esta");
 			}
@@ -181,17 +182,17 @@ public class ContBDImpleBusq implements ContDatosBusq {
 	 * @return Devuelve si ha encontrado el codigo o no.
 	 */
 	@Override
-	public boolean comprobarCodResto(String codResto) {
+	public boolean comprobarCodResto(String codResto)  {
 		ResultSet rs = null;
 		boolean esta = false;
-		
+
 		this.openConnection();
 		try {
 			stmnt = con.prepareCall(CALLbuscarRH);
 			stmnt.setString(1, codResto);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				esta = rs.getBoolean("esta");
 			}

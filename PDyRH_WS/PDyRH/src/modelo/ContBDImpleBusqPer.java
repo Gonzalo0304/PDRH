@@ -28,7 +28,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	final String SELECTconoce = "SELECT * FROM conoce WHERE dniP1 = ?";
 	final String SELECTfechas = "SELECT fechaArresto FROM fechaarresto WHERE dni = ?";
 	final String SELECTnomComp = "SELECT nombre,apellido FROM persona WHERE dni = ?";
-	
+
 	// <--- Conexión --->
 	/**
 	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
@@ -53,6 +53,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	 * <li> pass: Es la contraseña de los usuarios
 	 */
 	private String pass = bundle.getString("PASS");
+
 
 	/**
 	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
@@ -98,7 +99,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	 * @return Devuelve el los ressultados que se encuentran en el Map.
 	 */
 	@Override
-	public Map<String, Conocido> listarConocidos(String dni1) {
+	public Map<String, Conocido> listarConocidos(String dni1)  {
 		ResultSet rs = null;
 		ResultSet rs2 = null;
 		Conocido cono;
@@ -114,7 +115,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 
 			while (rs.next()) {
 				cono = new Conocido();
-				
+
 				cono.setDni1(rs.getString("dniP1"));
 				cono.setDni2(rs.getString("dniP2"));
 				cono.setRelacion(rs.getString("relacion"));
@@ -156,12 +157,12 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	 * @return Devuelve los datos de la persona.
 	 */
 	@Override
-	public Persona obtenerPersona(String dni) {
+	public Persona obtenerPersona(String dni)  {
 		ResultSet rs = null;
 		ResultSet rs2 = null;
 		Persona per = null;
 		String tipo = null;
-		
+
 		this.openConnection();
 
 		try {
@@ -184,14 +185,14 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				} else if (tipo.equalsIgnoreCase("criminal")) {
 					per = new Criminal();
 					((Criminal) per).setPrisionero(rs.getBoolean("prisionero"));
-					
+
 					PreparedStatement stmnt2 = con.prepareStatement(SELECTfechas);
 					stmnt2.setString(1, dni);
 					rs2 = stmnt2.executeQuery();
 					while (rs2.next()) {
 						((Criminal) per).getFechasArresto().add(rs2.getDate("fechaArresto").toLocalDate());
 					}
-					
+
 					rs2.close();
 				} else if (tipo.equalsIgnoreCase("desaparecida")) {
 					per = new Desaparecida();

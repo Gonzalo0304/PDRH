@@ -24,7 +24,7 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	final String SELECTparticipantes = "SELECT * FROM participa WHERE codCaso = ?";
 	final String SELECTnomCom = "SELECT nombre,apellido FROM persona WHERE dni = ?";
 	final String SELECTrestos = "SELECT * FROM restohumano WHERE codCaso = ?";
-	
+
 	// <--- Conexión --->
 	/**
 	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
@@ -61,6 +61,7 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 		}
 	}
 
+
 	/**
 	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
 	 */
@@ -94,36 +95,36 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	 * @return Devuelve el los ressultados que se encuentran en el Map.
 	 */
 	@Override
-	public Map<String, Participante> listarParticipantes(String codCaso) {
+	public Map<String, Participante> listarParticipantes(String codCaso)  {
 		ResultSet rs = null;
 		ResultSet rs2 = null;
 		PreparedStatement stmnt2;
 		Participante par = null;
-		Map<String, Participante> participantes =  new TreeMap<>();
-		
+		Map<String, Participante> participantes = new TreeMap<>();
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTparticipantes);
 			stmnt.setString(1, codCaso);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			while (rs.next()) {
 				par = new Participante();
-				
+
 				par.setCodCaso(codCaso);
 				par.setDni(rs.getString("dni"));
 				par.setImplicacion(rs.getString("implicacion"));
-				
+
 				stmnt2 = con.prepareStatement(SELECTnomCom);
 				stmnt2.setString(1, par.getDni());
-				
+
 				rs2 = stmnt2.executeQuery();
 				if (rs2.next()) {
 					par.setNomComp(rs2.getString("nombre") + " " + rs2.getString("apellido"));
 				}
-				
+
 				participantes.put(par.getDni(), par);
 			}
 		} catch (SQLException e) {
@@ -153,22 +154,22 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 	 * @return Devuelve los resultados que se encuentran en el Map.
 	 */
 	@Override
-	public Map<String, RestoHumano> listarInvolucrados(String codCaso) {
+	public Map<String, RestoHumano> listarInvolucrados(String codCaso)  {
 		ResultSet rs = null;
 		RestoHumano resto = null;
-		Map<String, RestoHumano> restos = new TreeMap<>();;
-		
+		Map<String, RestoHumano> restos = new TreeMap<>();
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTrestos);
 			stmnt.setString(1, codCaso);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			while (rs.next()) {
 				resto = new RestoHumano();
-				
+
 				resto.setCodResto(rs.getString("codResto"));
 				resto.setCausa(rs.getString("causa"));
 				resto.setUbicacion(rs.getString("ubicacion"));
@@ -180,8 +181,8 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 				resto.setEspecificaciones(rs.getString("especificaciones"));
 				resto.setCodCaso(codCaso);
 				resto.setFechaMuerte(rs.getDate("fechaMuerte").toLocalDate());
-				
-				restos.put(resto.getCodResto(),resto);
+
+				restos.put(resto.getCodResto(), resto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

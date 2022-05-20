@@ -23,7 +23,7 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	final String INSERTident = "INSERT INTO identifica(dni,codResto) VALUES(?,?)";
 	final String SELECTrh = "SELECT * FROM restohumano WHERE codResto = ?";
 	final String SELECTdes = "SELECT * FROM desaparecida WHERE dni = ?";
-	
+
 	// <--- Conexión --->
 	/**
 	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
@@ -48,6 +48,7 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	 * <li> pass: Es la contraseña de los usuarios
 	 */
 	private String pass = bundle.getString("PASS");
+
 
 	/**
 	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
@@ -88,25 +89,24 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	 * guarda el dni y el codigo introducido en la sentencia y finalmente se cierra la conexion.
 	 */
 	@Override
-	public void agregarIdentificado(String codResto, String dni) {
+	public void agregarIdentificado(String codResto, String dni)  {
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(INSERTident);
-			
+
 			stmnt.setString(1, dni);
 			stmnt.setString(2, codResto);
-			
+
 			stmnt.executeUpdate();
-			
+
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			if (con != null) {
 				try {
 					con.rollback();
-				} catch (SQLException e2) {
-					e.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
 			}
 		} finally {
@@ -125,21 +125,21 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	 * @return Devuelve los datos del resto.
 	 */
 	@Override
-	public RestoHumano obtenerRH(String codResto) {
+	public RestoHumano obtenerRH(String codResto)  {
 		ResultSet rs = null;
 		RestoHumano resto = null;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTrh);
 			stmnt.setString(1, codResto);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				resto = new RestoHumano();
-				
+
 				resto.setCodResto(codResto);
 				resto.setCausa(rs.getString("causa"));
 				resto.setUbicacion(rs.getString("ubicacion"));
@@ -166,7 +166,7 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 			}
 			this.closeConnection();
 		}
-		
+
 		return resto;
 	}
 
@@ -181,21 +181,21 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	 * @return Devuelve los datos de la persona desaparecida.
 	 */
 	@Override
-	public Persona obtenerPersona(String dni) {
+	public Persona obtenerPersona(String dni)  {
 		ResultSet rs = null;
 		Persona des = null;
-		
+
 		this.openConnection();
-		
+
 		try {
 			stmnt = con.prepareStatement(SELECTdes);
 			stmnt.setString(1, dni);
-			
+
 			rs = stmnt.executeQuery();
-			
+
 			if (rs.next()) {
 				des = new Desaparecida();
-				
+
 				des.setDni(dni);
 				((Desaparecida) des).setUltimaUbi(rs.getString("ultimaUbi"));
 				((Desaparecida) des).setGenero(rs.getString("genero"));
@@ -220,7 +220,7 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 			}
 			this.closeConnection();
 		}
-		
+
 		return des;
 	}
 
