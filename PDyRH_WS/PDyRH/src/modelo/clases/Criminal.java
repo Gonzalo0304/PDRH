@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Esta clase representa el Criminal que extiende de persona
- * @author Elias
+ * @author Equipo5
  *
  */
 public class Criminal extends Persona {

@@ -5,7 +5,7 @@ import modelo.clases.Persona;
 
 /**
  * Esta clase interfaz representa el controlador de insercion de personas
- * @author Elias
+ * @author Equipo5
  *
  */
 public interface ContDatosInsertPer {

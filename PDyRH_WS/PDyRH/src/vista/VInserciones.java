@@ -26,7 +26,7 @@ import java.awt.SystemColor;
 
 /**
  * Esta clase representa la ventana desde la cual se puede acceder a las diferentes inserciones: 
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class VInserciones extends JDialog implements ActionListener {

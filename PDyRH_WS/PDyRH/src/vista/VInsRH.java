@@ -39,7 +39,7 @@ import javax.swing.ImageIcon;
 
 /**
  * Esta clase representa la ventana de insercion y gestion de restps humanos
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class VInsRH extends JDialog implements ActionListener, ContDatosRH {

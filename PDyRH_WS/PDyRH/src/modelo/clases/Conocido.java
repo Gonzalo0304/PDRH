@@ -2,7 +2,7 @@ package modelo.clases;
 
 /**
  * Esta clase representa los conocidos de una persona
- * @author 1dam
+ * @author Equipo5
  *
  */
 public class Conocido {

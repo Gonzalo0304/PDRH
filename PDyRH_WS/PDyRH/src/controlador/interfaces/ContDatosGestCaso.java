@@ -9,7 +9,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta interfaz representa el control de gestion de los casos
- * @author Elias
+ * @author Equipo5
  * Contiene metodos para modificar, eliminar, insertar participantes e involucrados, 
  * listarlos, comprobar el dni y el codigo del resto.
  */

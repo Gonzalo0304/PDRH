@@ -42,7 +42,7 @@ import javax.swing.ImageIcon;
 import java.awt.SystemColor;
 /**
  * Esta clase representa la comparacion de los restos humanos y desaparecidos junto con el controlador de comparacion
- * @author Elias
+ * @author Equipo5
  *
  */
 public class VComparacion extends JDialog implements ActionListener, ContDatosComp {

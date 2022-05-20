@@ -2,7 +2,7 @@ package modelo.clases;
 
 /**
  * Esta clase representa la comparacion de la persona desaparecida y el resto humano
- * @author Elias
+ * @author Equipo5
  *
  */
 public class Comparacion {

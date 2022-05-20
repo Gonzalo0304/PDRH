@@ -36,7 +36,7 @@ import javax.swing.ImageIcon;
 /**
 * Esta clase representa la busqueda de restos humanos junto con el controlador de busqueda
 *
-* @autor Elías
+* @autor Equipo5
 *
 */
 public class VBusRH extends JDialog implements ActionListener, ContDatosBusqRH {

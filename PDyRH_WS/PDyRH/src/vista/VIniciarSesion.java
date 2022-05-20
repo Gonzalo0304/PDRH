@@ -31,7 +31,7 @@ import java.awt.Toolkit;
 
 /**
  * Esta clase representa la ventana de Inicio de Sesion
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class VIniciarSesion extends JFrame implements ActionListener,ControladorDatosIS {

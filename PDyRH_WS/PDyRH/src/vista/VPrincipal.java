@@ -29,7 +29,7 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 /**
  * Esta clase representa la ventana Principal del programa
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class VPrincipal extends JDialog implements ActionListener, MouseListener {

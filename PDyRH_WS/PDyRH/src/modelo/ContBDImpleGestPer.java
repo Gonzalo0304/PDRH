@@ -22,7 +22,7 @@ import modelo.clases.Persona;
 /**
  * Esta clase representa la ventana de Implementacion de Gestion de Personas. Las sentencias sirven para llamar procedimientos, actualizar datos de las personas, eliminar personas e 
  * insertar datos nuevos.
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class ContBDImpleGestPer implements ContDatosGestPer {

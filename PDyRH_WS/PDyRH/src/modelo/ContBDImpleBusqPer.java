@@ -18,7 +18,7 @@ import modelo.clases.Persona;
 
 /**
  *Esta clase representa la implementacion de la ventana de persona.
- * @autor Elías
+ * @autor Equipo5
  * Utiliza sentencias SQL para seleccionar los datos de las personas junto a un procedimiento que comprueba los datos.
  *
  */

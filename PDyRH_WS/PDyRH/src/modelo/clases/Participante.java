@@ -2,7 +2,7 @@ package modelo.clases;
 
 /**
  * Esta clase representa el parTicipante del caso
- * @author Elias
+ * @author Equipo5
  *
  */
 public class Participante {

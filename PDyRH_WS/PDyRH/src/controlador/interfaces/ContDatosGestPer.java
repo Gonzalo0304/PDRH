@@ -9,7 +9,7 @@ import modelo.clases.Persona;
 
 /**
  * Esta interfaz representa el control de la gestion de las personas
- * @author Elias
+ * @author Equipo5
  *
  */
 public interface ContDatosGestPer {

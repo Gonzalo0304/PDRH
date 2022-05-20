@@ -7,7 +7,7 @@ import modelo.clases.Persona;
 
 /**
  * Esta interfaz representa el control de busqueda de personas
- * @autor Elías
+ * @autor Equipo5
  * Contiene métodos para obtener a la persona y listar los conocidos de esa persona mediante el DNI.
  *
  */

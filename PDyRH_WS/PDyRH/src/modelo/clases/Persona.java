@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 /**
  * Esta clase representa a la Persona
- * @author Elias
+ * @author Equipo5
  *
  */
 public class Persona {

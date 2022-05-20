@@ -43,7 +43,7 @@ import javax.swing.JRadioButton;
 
 /**
  * Esta clase representa la ventana de Gestion de casos
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListener {
@@ -290,7 +290,6 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 
 		textCod = new JTextField();
 		textCod.setEditable(false);
-		textCod.setEnabled(false);
 		textCod.setColumns(10);
 		textCod.setBounds(95, 134, 187, 20);
 		contentDatos.add(textCod);

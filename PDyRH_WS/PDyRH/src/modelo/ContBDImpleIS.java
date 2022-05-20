@@ -11,7 +11,7 @@ import controlador.interfaces.ControladorDatosIS;
 
 /**
  * Esta clase representa la ventana de Implementacion de inicio de sesion. Las sentencias sirven para comprobar el inicio de sesion.
- * @author Gonzalo
+ * @author Equipo5
  */
 public class ContBDImpleIS implements ControladorDatosIS {
 	// <--- Sentencias --->

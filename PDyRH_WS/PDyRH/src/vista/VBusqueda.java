@@ -43,7 +43,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * Esta clase representa la ventana de Busqueda junto con el controlador
- *  @autor Elías
+ *  @autor Equipo5
  *
  */
 

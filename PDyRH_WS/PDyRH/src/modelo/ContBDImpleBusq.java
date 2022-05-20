@@ -12,7 +12,7 @@ import modelo.clases.Caso;
 
 /**
  * Esta clase representa la implementacion de la ventana de busqueda
- * @autor Elías
+ * @autor Equipo5
  * Utiliza sentencias SQL para seleccionar datos, un procedimiento que combrueba el dni de la persona
  * y otro que buscar al resto humano.
  *

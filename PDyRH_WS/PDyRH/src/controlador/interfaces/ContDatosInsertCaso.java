@@ -5,7 +5,7 @@ import modelo.clases.Caso;
 
 /**
  * Esta interfaz representa el controlador de insercion de los casos
- * @author Elias
+ * @author Equipo5
  *
  */
 public interface ContDatosInsertCaso {

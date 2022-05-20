@@ -49,7 +49,8 @@ import java.awt.event.KeyEvent;
 
 /**
  * Esta clase representa la ventana de Gestion de personas
- * @autor Gonzalo
+ * 
+ * @autor Equipo5
  *
  */
 public class VGesPersona extends JDialog implements ContDatosGestPer, ActionListener {
@@ -187,235 +188,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		getContentPane().add(tabbedPane);
 
 		bgPris = new ButtonGroup();
-
-		cargarDatos(dni);
-
-		// <--- Pestaña 2 --->
-		contentConos = new JPanel();
-		contentConos.setLayout(null);
-		contentConos.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		contentConos.setBackground(Color.WHITE);
-		tabbedPane.addTab("Conocidos", null, contentConos, null);
-		tabbedPane.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				// Cambiar el tamaño de la ventana para cada pestaña
-				int index = tabbedPane.getSelectedIndex();
-				if (index == 1) {
-					setBounds(100, 100, 507, 278);
-					setLocationRelativeTo(null);
-				} else {
-					setBounds(350, 150, 506, 690);
-					getContentPane().setBounds(350, 150, 506, 690);
-					setLocationRelativeTo(null);
-				}
-
-			}
-
-		});
-
-		// Movimiento de la ventana
-		contentConos.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				point.x = e.getX();
-				point.y = e.getY();
-			}
-		});
-		contentConos.addMouseMotionListener(new MouseMotionAdapter() {
-			public void mouseDragged(MouseEvent e) {
-				Point p = getLocation();
-				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
-			}
-		});
-
-		// Botón para cerrar la ventana
-		lblCerrar_1 = new JLabel("x");
-		lblCerrar_1.setBounds(470, 2, 31, 19);
-		lblCerrar_1.setBackground(new Color(153, 0, 0));
-		lblCerrar_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblCerrar_1.setForeground(new Color(0, 51, 102));
-				lblCerrar_1.setOpaque(true);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblCerrar_1.setForeground(Color.WHITE);
-				lblCerrar_1.setOpaque(false);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cerrar();
-			}
-		});
-		lblCerrar_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCerrar_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblCerrar_1.setForeground(Color.WHITE);
-		contentConos.add(lblCerrar_1);
-
-		// Menú superior
-		separatorMenu2 = new JSeparator();
-		separatorMenu2.setForeground(SystemColor.controlShadow);
-		separatorMenu2.setBackground(new Color(0, 51, 102));
-		separatorMenu2.setBounds(0, 36, 502, 2);
-		contentConos.add(separatorMenu2);
-
-		menuBar = new JMenuBar();
-		menuBar.setBounds(0, 1, 502, 37);
-		menuBar.setBorderPainted(false);
-		menuBar.setBackground(new Color(0, 51, 102));
-		contentConos.add(menuBar);
-
-		menUsuario = new JMenu(" " + info[0] + " ");
-		menuBar.add(menUsuario);
-		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
-		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		menUsuario.setBackground(new Color(0, 0, 255));
-		menUsuario.setForeground(new Color(255, 255, 255));
-
-		mCerrar2 = new JMenuItem("Cerrar Sesion");
-		mCerrar2.setHorizontalAlignment(SwingConstants.TRAILING);
-		mCerrar2.setBackground(new Color(32, 178, 170));
-		mCerrar2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mCerrar2.setForeground(Color.BLACK);
-		mCerrar2.addActionListener(this);
-		menUsuario.add(mCerrar2);
-
-		menInsertar = new JMenu("Insertar");
-		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
-		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menInsertar.setBackground(new Color(0, 0, 255));
-		menInsertar.setForeground(Color.WHITE);
-		menuBar.add(menInsertar);
-
-		mPersona = new JMenuItem("Persona");
-		mPersona.addActionListener(this);
-		menInsertar.add(mPersona);
-
-		mRestoHumano = new JMenuItem("Resto Humano");
-		mRestoHumano.addActionListener(this);
-		menInsertar.add(mRestoHumano);
-
-		mCaso = new JMenuItem("Caso");
-		mCaso.addActionListener(this);
-		menInsertar.add(mCaso);
-
-		menGestionar = new JMenu("Gestionar");
-		menGestionar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				abrirGes();
-			}
-		});
-		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
-		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menGestionar.setBackground(new Color(0, 0, 255));
-		menGestionar.setForeground(Color.WHITE);
-		menuBar.add(menGestionar);
-
-		menComparar = new JMenu("Comparar");
-		menComparar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				abrirCom();
-			}
-		});
-		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
-		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menComparar.setBackground(new Color(0, 0, 255));
-		menComparar.setForeground(Color.WHITE);
-		menuBar.add(menComparar);
-
-		menBuscar = new JMenu("Busqueda");
-		menBuscar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				abrirBus();
-			}
-		});
-		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
-		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
-		menBuscar.setBackground(new Color(0, 0, 255));
-		menBuscar.setForeground(Color.WHITE);
-		menuBar.add(menBuscar);
-
-		// Campos de información de conocido
-		lblDniCon = new JLabel("DNI");
-		lblDniCon.setForeground(new Color(0, 51, 102));
-		lblDniCon.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblDniCon.setBounds(26, 77, 81, 28);
-		contentConos.add(lblDniCon);
-
-		separatorDniCon = new JSeparator();
-		separatorDniCon.setForeground(SystemColor.controlShadow);
-		separatorDniCon.setBackground(new Color(0, 51, 102));
-		separatorDniCon.setBounds(26, 103, 106, 2);
-		contentConos.add(separatorDniCon);
-
-		textDniCon = new JTextField();
-		textDniCon.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarBoton();
-			}
-		});
-		textDniCon.setColumns(10);
-		textDniCon.setBounds(26, 116, 187, 20);
-		contentConos.add(textDniCon);
-
-		lblRel = new JLabel("RELACI\u00D3N");
-		lblRel.setForeground(new Color(153, 0, 0));
-		lblRel.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblRel.setBounds(26, 147, 81, 28);
-		contentConos.add(lblRel);
-
-		separatorRel = new JSeparator();
-		separatorRel.setForeground(SystemColor.controlShadow);
-		separatorRel.setBackground(new Color(153, 0, 0));
-		separatorRel.setBounds(26, 173, 106, 2);
-		contentConos.add(separatorRel);
-
-		textRel = new JTextField();
-		textRel.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				habilitarBoton();
-			}
-		});
-
-		textRel.setColumns(10);
-		textRel.setBounds(26, 186, 187, 20);
-		contentConos.add(textRel);
-
-		lblAnaCono = new JLabel("A\u00F1adir Conocidos");
-		lblAnaCono.setForeground(SystemColor.textInactiveText);
-		lblAnaCono.setFont(new Font("Nirmala UI", Font.BOLD, 14));
-		lblAnaCono.setBounds(10, 42, 142, 19);
-		contentConos.add(lblAnaCono);
-
-		separatorAnaCono = new JSeparator();
-		separatorAnaCono.setForeground(new Color(102, 0, 0));
-		separatorAnaCono.setBackground(new Color(153, 0, 0));
-		separatorAnaCono.setBounds(10, 64, 478, 2);
-		contentConos.add(separatorAnaCono);
-
-		// Botón de agregar conocido
-		buttonAgregar = new Button("A\u00D1ADIR");
-		buttonAgregar.setForeground(Color.WHITE);
-		buttonAgregar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		buttonAgregar.setBackground(new Color(153, 0, 0));
-		buttonAgregar.setBounds(310, 136, 89, 28);
-		buttonAgregar.setEnabled(false);
-		buttonAgregar.addActionListener(this);
-		contentConos.add(buttonAgregar);
-
-		separator = new JSeparator();
-		separator.setForeground(new Color(153, 153, 255));
-		separator.setBackground(new Color(153, 153, 204));
-		separator.setBounds(0, 251, 502, 2);
-		contentConos.add(separator);
 
 		contentDatos = new JPanel();
 		contentDatos.setLayout(null);
@@ -565,7 +337,6 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 
 		textDni = new JTextField();
 		textDni.setEditable(false);
-		textDni.setEnabled(false);
 		textDni.setColumns(10);
 		textDni.setBounds(26, 116, 187, 20);
 		contentDatos.add(textDni);
@@ -991,14 +762,14 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		separatorEsp.setVisible(false);
 		separatorEsp.setBounds(264, 552, 106, 2);
 		contentDatos.add(separatorEsp);
-		
+
 		lblTelfM = new JLabel("TELF NO COM\u00DAN");
 		lblTelfM.setForeground(new Color(204, 102, 0));
 		lblTelfM.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblTelfM.setBounds(126, 319, 96, 14);
 		lblTelfM.setVisible(false);
 		contentDatos.add(lblTelfM);
-		
+
 		lblTelfO = new JLabel("TELF NO COM\u00DAN");
 		lblTelfO.setForeground(new Color(204, 102, 0));
 		lblTelfO.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -1049,12 +820,243 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 		buttonFA.setBounds(457, 174, 20, 20);
 		buttonFA.setVisible(false);
 		buttonFA.addActionListener(this);
-																																																																																																																																																				contentDatos.add(buttonFA);
+		contentDatos.add(buttonFA);
+		
+		cargarDatos(dni);
+
+		// <--- Pestaña 2 --->
+		contentConos = new JPanel();
+		contentConos.setLayout(null);
+		contentConos.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		contentConos.setBackground(Color.WHITE);
+		tabbedPane.addTab("Conocidos", null, contentConos, null);
+		tabbedPane.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// Cambiar el tamaño de la ventana para cada pestaña
+				int index = tabbedPane.getSelectedIndex();
+				if (index == 1) {
+					setBounds(100, 100, 507, 278);
+					setLocationRelativeTo(null);
+				} else {
+					setBounds(350, 150, 506, 690);
+					getContentPane().setBounds(350, 150, 506, 690);
+					setLocationRelativeTo(null);
+				}
+
+			}
+
+		});
+
+		// Movimiento de la ventana
+		contentConos.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				point.x = e.getX();
+				point.y = e.getY();
+			}
+		});
+		contentConos.addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = getLocation();
+				setLocation(p.x + e.getX() - point.x, p.y + e.getY() - point.y);
+			}
+		});
+
+		// Botón para cerrar la ventana
+		lblCerrar_1 = new JLabel("x");
+		lblCerrar_1.setBounds(470, 2, 31, 19);
+		lblCerrar_1.setBackground(new Color(153, 0, 0));
+		lblCerrar_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCerrar_1.setForeground(new Color(0, 51, 102));
+				lblCerrar_1.setOpaque(true);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCerrar_1.setForeground(Color.WHITE);
+				lblCerrar_1.setOpaque(false);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		lblCerrar_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrar_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCerrar_1.setForeground(Color.WHITE);
+		contentConos.add(lblCerrar_1);
+
+		// Menú superior
+		separatorMenu2 = new JSeparator();
+		separatorMenu2.setForeground(SystemColor.controlShadow);
+		separatorMenu2.setBackground(new Color(0, 51, 102));
+		separatorMenu2.setBounds(0, 36, 502, 2);
+		contentConos.add(separatorMenu2);
+
+		menuBar = new JMenuBar();
+		menuBar.setBounds(0, 1, 502, 37);
+		menuBar.setBorderPainted(false);
+		menuBar.setBackground(new Color(0, 51, 102));
+		contentConos.add(menuBar);
+
+		menUsuario = new JMenu(" " + info[0] + " ");
+		menuBar.add(menUsuario);
+		menUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+		menUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		menUsuario.setBackground(new Color(0, 0, 255));
+		menUsuario.setForeground(new Color(255, 255, 255));
+
+		mCerrar2 = new JMenuItem("Cerrar Sesion");
+		mCerrar2.setHorizontalAlignment(SwingConstants.TRAILING);
+		mCerrar2.setBackground(new Color(32, 178, 170));
+		mCerrar2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mCerrar2.setForeground(Color.BLACK);
+		mCerrar2.addActionListener(this);
+		menUsuario.add(mCerrar2);
+
+		menInsertar = new JMenu("Insertar");
+		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menInsertar.setBackground(new Color(0, 0, 255));
+		menInsertar.setForeground(Color.WHITE);
+		menuBar.add(menInsertar);
+
+		mPersona = new JMenuItem("Persona");
+		mPersona.addActionListener(this);
+		menInsertar.add(mPersona);
+
+		mRestoHumano = new JMenuItem("Resto Humano");
+		mRestoHumano.addActionListener(this);
+		menInsertar.add(mRestoHumano);
+
+		mCaso = new JMenuItem("Caso");
+		mCaso.addActionListener(this);
+		menInsertar.add(mCaso);
+
+		menGestionar = new JMenu("Gestionar");
+		menGestionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirGes();
+			}
+		});
+		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menGestionar.setBackground(new Color(0, 0, 255));
+		menGestionar.setForeground(Color.WHITE);
+		menuBar.add(menGestionar);
+
+		menComparar = new JMenu("Comparar");
+		menComparar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menComparar.setBackground(new Color(0, 0, 255));
+		menComparar.setForeground(Color.WHITE);
+		menuBar.add(menComparar);
+
+		menBuscar = new JMenu("Busqueda");
+		menBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar.setFont(new Font("Dialog", Font.PLAIN, 14));
+		menBuscar.setBackground(new Color(0, 0, 255));
+		menBuscar.setForeground(Color.WHITE);
+		menuBar.add(menBuscar);
+
+		// Campos de información de conocido
+		lblDniCon = new JLabel("DNI");
+		lblDniCon.setForeground(new Color(0, 51, 102));
+		lblDniCon.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblDniCon.setBounds(26, 77, 81, 28);
+		contentConos.add(lblDniCon);
+
+		separatorDniCon = new JSeparator();
+		separatorDniCon.setForeground(SystemColor.controlShadow);
+		separatorDniCon.setBackground(new Color(0, 51, 102));
+		separatorDniCon.setBounds(26, 103, 106, 2);
+		contentConos.add(separatorDniCon);
+
+		textDniCon = new JTextField();
+		textDniCon.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarBoton();
+			}
+		});
+		textDniCon.setColumns(10);
+		textDniCon.setBounds(26, 116, 187, 20);
+		contentConos.add(textDniCon);
+
+		lblRel = new JLabel("RELACI\u00D3N");
+		lblRel.setForeground(new Color(153, 0, 0));
+		lblRel.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblRel.setBounds(26, 147, 81, 28);
+		contentConos.add(lblRel);
+
+		separatorRel = new JSeparator();
+		separatorRel.setForeground(SystemColor.controlShadow);
+		separatorRel.setBackground(new Color(153, 0, 0));
+		separatorRel.setBounds(26, 173, 106, 2);
+		contentConos.add(separatorRel);
+
+		textRel = new JTextField();
+		textRel.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				habilitarBoton();
+			}
+		});
+
+		textRel.setColumns(10);
+		textRel.setBounds(26, 186, 187, 20);
+		contentConos.add(textRel);
+
+		lblAnaCono = new JLabel("A\u00F1adir Conocidos");
+		lblAnaCono.setForeground(SystemColor.textInactiveText);
+		lblAnaCono.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+		lblAnaCono.setBounds(10, 42, 142, 19);
+		contentConos.add(lblAnaCono);
+
+		separatorAnaCono = new JSeparator();
+		separatorAnaCono.setForeground(new Color(102, 0, 0));
+		separatorAnaCono.setBackground(new Color(153, 0, 0));
+		separatorAnaCono.setBounds(10, 64, 478, 2);
+		contentConos.add(separatorAnaCono);
+
+		// Botón de agregar conocido
+		buttonAgregar = new Button("A\u00D1ADIR");
+		buttonAgregar.setForeground(Color.WHITE);
+		buttonAgregar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		buttonAgregar.setBackground(new Color(153, 0, 0));
+		buttonAgregar.setBounds(310, 136, 89, 28);
+		buttonAgregar.setEnabled(false);
+		buttonAgregar.addActionListener(this);
+		contentConos.add(buttonAgregar);
+
+		separator = new JSeparator();
+		separator.setForeground(new Color(153, 153, 255));
+		separator.setBackground(new Color(153, 153, 204));
+		separator.setBounds(0, 251, 502, 2);
+		contentConos.add(separator);
 	}
 
 	// Cargar la información
 	/**
-	 * Carga los datos de la persona que se busca para gestionar la persona. En funcion del tipo buscado mostrara unos campos u otros.
+	 * Carga los datos de la persona que se busca para gestionar la persona. En
+	 * funcion del tipo buscado mostrara unos campos u otros.
+	 * 
 	 * @param dni se manda el dni introducido en la pestaña de gestion
 	 */
 	private void cargarDatos(String dni) {
@@ -1147,7 +1149,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 
 	// Habilitar botón si hay un dni y una relación introducidas
 	/**
-	 * Habilitar botón si hay un dni y una relación introducidas 
+	 * Habilitar botón si hay un dni y una relación introducidas
 	 */
 	public void habilitarBoton() {
 		if (!textRel.getText().isBlank() && !textDniCon.getText().isBlank()) {
@@ -1164,12 +1166,18 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 
 	@Override
 	/**
-	 * Modifica la persona introducida. Comprueba si los int o LoacalDate estan vacios si estan vacios las variables que se usan para parsearlos se dejan a 0 o null y si estan llenos se 
-	 * parsea de String a LocalDate o String a int. Si la modificacion es realizada con exito se notificara aocn un JOptionPane.</br></br>
+	 * Modifica la persona introducida. Comprueba si los int o LoacalDate estan
+	 * vacios si estan vacios las variables que se usan para parsearlos se dejan a 0
+	 * o null y si estan llenos se parsea de String a LocalDate o String a int. Si
+	 * la modificacion es realizada con exito se notificara aocn un
+	 * JOptionPane.</br>
+	 * </br>
 	 * 
 	 * <h3><--Variables-->
-	 * <li>int movil: se usa para dejar a 0 el campo de movil y si es necesario parsear los datos introducidos.
-	 * <li>int opc: se usa para dejar a 0 el campo de movil y si es necesario parsear los datos introducidos.
+	 * <li>int movil: se usa para dejar a 0 el campo de movil y si es necesario
+	 * parsear los datos introducidos.
+	 * <li>int opc: se usa para dejar a 0 el campo de movil y si es necesario
+	 * parsear los datos introducidos.
 	 * <li>int rango: se usa para parsear el rango introducido a int.
 	 * <li>boolean pris: se usa para si el radiobutton de preso si se guarde true.
 	 * <lI>int altura: se usa para parsear de String a int la altura.
@@ -1241,7 +1249,8 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 
 	@Override
 	/**
-	 * Se pedira confirmacion para eliminar a una persona y si se elimina del todo se notificara con un JOptionPane
+	 * Se pedira confirmacion para eliminar a una persona y si se elimina del todo
+	 * se notificara con un JOptionPane
 	 */
 	public void eliminarPersona(String dni) {
 		if (JOptionPane.showConfirmDialog(this,
@@ -1261,8 +1270,10 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 
 	@Override
 	/**
-	 * Agrega un conocido a una persona lo primero que hace es comprobar el dni y si esta bien introducido añade a conocidos el dni de la persona y de su conocido y el tipo de relacion. Si
-	 * la relacion se añade con exito se notificara con un JOptionPane.
+	 * Agrega un conocido a una persona lo primero que hace es comprobar el dni y si
+	 * esta bien introducido añade a conocidos el dni de la persona y de su conocido
+	 * y el tipo de relacion. Si la relacion se añade con exito se notificara con un
+	 * JOptionPane.
 	 */
 	public void agregarConocido(Conocido cono) {
 		Map<String, Conocido> conocidos = listarConocidos(dni);
@@ -1303,7 +1314,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 			textFechaArr.setText("");
 		} catch (Excepciones e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Fecha existente.", JOptionPane.ERROR_MESSAGE);
-		} 
+		}
 	}
 
 	/**
@@ -1317,7 +1328,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 
 	// Abrir ventanas de menú
 	/**
-	 * Abrir ventana de gestion desde JMenuBar 
+	 * Abrir ventana de gestion desde JMenuBar
 	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
@@ -1326,7 +1337,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	/**
-	 * Abrir ventana de comparacion desde JMenuBar 
+	 * Abrir ventana de comparacion desde JMenuBar
 	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
@@ -1335,7 +1346,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	/**
-	 * Abrir ventana de busqueda desde JMenuBar 
+	 * Abrir ventana de busqueda desde JMenuBar
 	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
@@ -1344,7 +1355,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	/**
-	 * Abrir ventana de insercion de restos humanos desde JMenuBar 
+	 * Abrir ventana de insercion de restos humanos desde JMenuBar
 	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
@@ -1353,8 +1364,8 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	/**
-	 * Abrir ventana de insercion de personas desde JMenuBar 
-	 */	
+	 * Abrir ventana de insercion de personas desde JMenuBar
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
@@ -1362,7 +1373,7 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	}
 
 	/**
-	 * Abrir ventana de insercion de casos desde JMenuBar 
+	 * Abrir ventana de insercion de casos desde JMenuBar
 	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
@@ -1374,17 +1385,20 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(buttonMod)) {
 			try {
-				if ((!textMovil.getText().isBlank() && textMovil.getText().length() != 9) || (!textTelf.getText().isBlank() && textTelf.getText().length() != 9)) {
-					JOptionPane.showMessageDialog(this,"El teléfono debe tener 9 dígitos.","Telf. incorrecto",JOptionPane.ERROR_MESSAGE);
+				if ((!textMovil.getText().isBlank() && textMovil.getText().length() != 9)
+						|| (!textTelf.getText().isBlank() && textTelf.getText().length() != 9)) {
+					JOptionPane.showMessageDialog(this, "El teléfono debe tener 9 dígitos.", "Telf. incorrecto",
+							JOptionPane.ERROR_MESSAGE);
 				} else {
 					modificarPersona(per);
 				}
-			
+
 			} catch (DateTimeParseException e1) {
-				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).",
+						"Formato incorrecto", JOptionPane.ERROR_MESSAGE);
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Los números deben ser dígitos sin espacios.","Formato erroneo",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Los números deben ser dígitos sin espacios.", "Formato erroneo",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (e.getSource().equals(buttonBaja)) {
 			eliminarPersona(dni);
@@ -1392,22 +1406,20 @@ public class VGesPersona extends JDialog implements ContDatosGestPer, ActionList
 			try {
 				agregarFechaArresto(per.getDni(), LocalDate.parse(textFechaArr.getText()));
 			} catch (DateTimeParseException e1) {
-				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).", "Formato incorrecto",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "El formato de la fecha es incorrecto(yyyy-mm-dd).",
+						"Formato incorrecto", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (e.getSource().equals(buttonAgregar)) {
 			agregarConocido(con);
 		} else if (e.getSource().equals(mCerrar)) {
-			if (JOptionPane.showConfirmDialog(this,
-					"¿Seguro que desea cerrar sesión?",
-					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+			if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea cerrar sesión?", "Cerrar sesión",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 				this.dispose();
 				padre.setVisible(true);
 			}
 		} else if (e.getSource().equals(mCerrar2)) {
-			if (JOptionPane.showConfirmDialog(this,
-					"¿Seguro que desea cerrar sesión?",
-					"Cerrar sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+			if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea cerrar sesión?", "Cerrar sesión",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
 				this.dispose();
 				padre.setVisible(true);
 			}

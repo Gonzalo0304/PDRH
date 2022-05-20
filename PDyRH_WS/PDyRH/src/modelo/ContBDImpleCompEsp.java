@@ -14,7 +14,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta clase representa la implementacion de la ventana de comparación de los restos humanos.
- * @autor Elías
+ * @autor Equipo5
  * Utiliza sentencias SQL para seleccionar datos de los restos humanos y los desaparecidos, además de insertar a los identificadores.
  *
  */

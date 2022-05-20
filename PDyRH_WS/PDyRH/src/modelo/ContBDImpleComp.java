@@ -16,7 +16,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta clase representa la implementación de la ventana de comparacion
- * @autor Elías
+ * @autor Equipo5
  * Utiliza sentencias SQL para seleccionar datos del resto humano, la persona desaparecida y la persona identificada. 
  *
  */

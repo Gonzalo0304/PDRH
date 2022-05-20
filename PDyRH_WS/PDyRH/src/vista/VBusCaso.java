@@ -36,7 +36,7 @@ import javax.swing.JTabbedPane;
 
 /**
  * Esta clase representa la ventana de busqueda de caso junto con el controlador de busqueda
- * @autor Elías
+ * @autor Equipo5
  *
  */
 
@@ -279,7 +279,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorCod);
 
 		textCod = new JTextField();
-		textCod.setEnabled(false);
+		textCod.setEditable(false);
 		textCod.setColumns(10);
 		textCod.setBounds(151, 145, 187, 20);
 		contentDatos.add(textCod);
@@ -297,7 +297,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorNom);
 
 		textNombre = new JTextField();
-		textNombre.setEnabled(false);
+		textNombre.setEditable(false);
 		textNombre.setColumns(10);
 		textNombre.setBounds(151, 244, 187, 20);
 		contentDatos.add(textNombre);
@@ -315,7 +315,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorEstado);
 
 		textEstado = new JTextField();
-		textEstado.setEnabled(false);
+		textEstado.setEditable(false);
 		textEstado.setColumns(10);
 		textEstado.setBounds(151, 347, 187, 20);
 		contentDatos.add(textEstado);
@@ -333,7 +333,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorNac);
 
 		textNac = new JTextField();
-		textNac.setEnabled(false);
+		textNac.setEditable(false);
 		textNac.setColumns(10);
 		textNac.setBounds(151, 459, 187, 20);
 		contentDatos.add(textNac);
@@ -351,7 +351,7 @@ public class VBusCaso extends JDialog implements ContDatosBusqCaso, ActionListen
 		contentDatos.add(separatorFall);
 
 		textFall = new JTextField();
-		textFall.setEnabled(false);
+		textFall.setEditable(false);
 		textFall.setColumns(10);
 		textFall.setBounds(151, 575, 187, 20);
 		contentDatos.add(textFall);

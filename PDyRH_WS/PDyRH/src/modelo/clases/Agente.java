@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 /**
  * Esta clase representa al Agente que extiende de la clase Persona
- * @author Elias
+ * @author Equipo5
  *
  */
 public class Agente extends Persona {

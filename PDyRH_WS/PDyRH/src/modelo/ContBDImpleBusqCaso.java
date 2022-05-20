@@ -15,7 +15,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta clase representa la implementacion de la ventana de busqueda de caso
- * @autor Elías
+ * @autor Equipo5
  * Utiliza sentencias SQL para seleccionar los datos de los casos.
  *
  */

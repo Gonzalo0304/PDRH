@@ -12,7 +12,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta clase representa la implementacion de la ventana de resto humano
- * @autor Elías
+ * @autor Equipo5
  * Utiliza sentencias SQL para seleccionar los datos de la tabla restos humanos y de la tabla identifica.
  *
  */

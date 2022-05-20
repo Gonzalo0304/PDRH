@@ -17,7 +17,7 @@ import modelo.clases.Persona;
 
 /**
  * Esta clase representa la ventana de Implementacion de insercion de Personas. Las sentencias sirven para llamar insertar Persona.
- * @author Gonzalo
+ * @author Equipo5
  */
 public class ContBDImpleInsertPer implements ContDatosInsertPer {
 	// <--- Sentencias --->

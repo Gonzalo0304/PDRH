@@ -41,7 +41,7 @@ import javax.swing.ImageIcon;
 
 /**
  * Esta clase representa la ventana de insercion de casos
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class VInsCaso extends JDialog implements ContDatosInsertCaso, ActionListener {

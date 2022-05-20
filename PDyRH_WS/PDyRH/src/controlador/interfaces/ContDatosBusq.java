@@ -4,7 +4,7 @@ import modelo.clases.Caso;
 
 /**
  * Esta interfaz representa el controlador de busqueda
- * @autor Elías
+ * @autor Equipo5
  * Contiene métodos para encontrar personas, restos humanos y casos.
  *
  */

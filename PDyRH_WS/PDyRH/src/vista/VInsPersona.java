@@ -47,7 +47,7 @@ import java.awt.event.FocusEvent;
 
 /**
  * Esta clase representa la ventana de insercion de personas
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class VInsPersona extends JDialog implements ActionListener, ContDatosInsertPer {

@@ -7,7 +7,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta interfaz representa el control de la busqueda de casos
- * @autor Elías
+ * @autor Equipo5
  * Contiene métodos para listar a los participantes del caso y los involucrados
  *
  */

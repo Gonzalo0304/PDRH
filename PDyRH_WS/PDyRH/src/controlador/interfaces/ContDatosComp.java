@@ -7,7 +7,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta interfaz representa el control de comparación
- * @autor Elías
+ * @autor Equipo5
  * Contiene métodos para enumerar los restos humanos y las personas desaparecidas
  * y obtener al identificado.
  *

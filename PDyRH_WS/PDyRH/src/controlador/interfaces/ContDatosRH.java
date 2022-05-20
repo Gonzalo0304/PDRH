@@ -5,7 +5,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta clase representa la ventana controlador de datos de restos humanos. Para asegurase de que se ejecutan los metodos independientemente de la base de datos utilizada
- * @author Gonzalo
+ * @author Equipo5
  */
 public interface ContDatosRH {
 	/**
@@ -26,8 +26,9 @@ public interface ContDatosRH {
 	 */
 	public void eliminarRH(String codResto);
 	/**
-	 * Obtenie el resto humano cunado se solicita
+	 * Obtiene el resto humano cunado se solicita
 	 * @param codResto carga el codigo de resto humano.
+	 * @return devuelve un resto humano
 	 */
 	public RestoHumano obtenerRH(String codResto);
 }

@@ -42,7 +42,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * Esta clase representa la ventana de busqueda para introducir el codigo/DNI de el elemento a gestionar
- * @autor Gonzalo
+ * @autor Equipo5
  *
  */
 public class VGestion extends JDialog implements ActionListener, ContDatosBusq {

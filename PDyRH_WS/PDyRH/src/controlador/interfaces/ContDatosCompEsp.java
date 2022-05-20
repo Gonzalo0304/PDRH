@@ -5,7 +5,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta interfaz representa el control de comparación de restos humanos.
- * @autor Elías
+ * @autor Equipo5
  * Contiene metodos para obtener al resto humano ya la persona
  * y tambien agregar un identificador.
  *

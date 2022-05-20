@@ -14,7 +14,7 @@ import modelo.clases.Caso;
 
 /**
  * Esta clase representa la ventana de Implementacion de inserion de casos. Las sentencias sirven para llamar insertar Casos.
- * @author Gonzalo
+ * @author Equipo5
  */
 public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 	// <--- Sentencias --->

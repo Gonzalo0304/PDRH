@@ -4,7 +4,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta interfaz representa el controlador de datos de busqueda de los restos humanos
- * @autor Elías
+ * @autor Equipo5
  * Contiene métodos para obtener un identificador y los datos del resto humano mediante el código del resto.
  *
  */

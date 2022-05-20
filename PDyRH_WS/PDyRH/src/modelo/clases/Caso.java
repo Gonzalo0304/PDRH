@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 /**
  * Esta clase representa los casos policiales.
- * @author Elias
+ * @author Equipo5
  *
  */
 public class Caso {

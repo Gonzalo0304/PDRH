@@ -14,7 +14,7 @@ import modelo.clases.RestoHumano;
 
 /**
  * Esta clase representa la ventana de Implementacion de gestion e insercion de restos humanos. Las sentencias sirven para insertar, actualizar y borrar los restos humanos.
- * @author Gonzalo
+ * @author Equipo5
  */
 public class ContBDImpleRH implements ContDatosRH {
 	// <--- Sentencias --->	

@@ -40,7 +40,7 @@ import javax.swing.JList;
 
 /**
  * Esta clase representa la ventana de busqueda de persona junto con el controlador de busqueda
- * @autor Elías
+ * @autor Equipo5
  *
  */
 public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener {
@@ -325,7 +325,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorDni);
 
 		textDni = new JTextField();
-		textDni.setEnabled(false);
+		textDni.setEditable(false);
 		textDni.setColumns(10);
 		textDni.setBounds(26, 116, 187, 20);
 		contentDatos.add(textDni);
@@ -343,7 +343,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorNom);
 
 		textNombre = new JTextField();
-		textNombre.setEnabled(false);
+		textNombre.setEditable(false);
 		textNombre.setColumns(10);
 		textNombre.setBounds(26, 174, 187, 20);
 		contentDatos.add(textNombre);
@@ -361,7 +361,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorApe);
 
 		textApellido = new JTextField();
-		textApellido.setEnabled(false);
+		textApellido.setEditable(false);
 		textApellido.setColumns(10);
 		textApellido.setBounds(26, 242, 187, 20);
 		contentDatos.add(textApellido);
@@ -379,7 +379,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorMovil);
 
 		textMovil = new JTextField();
-		textMovil.setEnabled(false);
+		textMovil.setEditable(false);
 		textMovil.setColumns(10);
 		textMovil.setBounds(26, 300, 187, 20);
 		contentDatos.add(textMovil);
@@ -397,7 +397,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorOpc);
 
 		textTelf = new JTextField();
-		textTelf.setEnabled(false);
+		textTelf.setEditable(false);
 		textTelf.setColumns(10);
 		textTelf.setBounds(26, 370, 187, 20);
 		contentDatos.add(textTelf);
@@ -415,7 +415,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorNac);
 
 		textNac = new JTextField();
-		textNac.setEnabled(false);
+		textNac.setEditable(false);
 		textNac.setColumns(10);
 		textNac.setBounds(26, 497, 187, 20);
 		contentDatos.add(textNac);
@@ -433,7 +433,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(separatorFall);
 
 		textFall = new JTextField();
-		textFall.setEnabled(false);
+		textFall.setEditable(false);
 		textFall.setColumns(10);
 		textFall.setBounds(26, 565, 187, 20);
 		contentDatos.add(textFall);
@@ -453,7 +453,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		contentDatos.add(lblLoc);
 
 		textLoc = new JTextField();
-		textLoc.setEnabled(false);
+		textLoc.setEditable(false);
 		textLoc.setText((String) null);
 		textLoc.setColumns(10);
 		textLoc.setBounds(26, 428, 187, 19);
@@ -516,19 +516,19 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		panelDes.setVisible(false);
 
 		textFechaDes = new JTextField();
-		textFechaDes.setEnabled(false);
+		textFechaDes.setEditable(false);
 		textFechaDes.setBounds(21, 39, 187, 20);
 		panelDes.add(textFechaDes);
 		textFechaDes.setColumns(10);
 
 		textTP = new JTextField();
-		textTP.setEnabled(false);
+		textTP.setEditable(false);
 		textTP.setBounds(21, 223, 187, 20);
 		panelDes.add(textTP);
 		textTP.setColumns(10);
 
 		textUltUbi = new JTextField();
-		textUltUbi.setEnabled(false);
+		textUltUbi.setEditable(false);
 		textUltUbi.setBounds(21, 97, 187, 20);
 		panelDes.add(textUltUbi);
 		textUltUbi.setColumns(10);
@@ -582,13 +582,13 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorTP.setBackground(new Color(153, 0, 0));
 
 		textSexo = new JTextField();
-		textSexo.setEnabled(false);
+		textSexo.setEditable(false);
 		textSexo.setBounds(21, 165, 187, 20);
 		panelDes.add(textSexo);
 		textSexo.setColumns(10);
 
 		textCP = new JTextField();
-		textCP.setEnabled(false);
+		textCP.setEditable(false);
 		textCP.setBounds(21, 293, 187, 20);
 		panelDes.add(textCP);
 		textCP.setColumns(10);
@@ -606,7 +606,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorCP.setBackground(new Color(153, 0, 0));
 
 		textCO = new JTextField();
-		textCO.setEnabled(false);
+		textCO.setEditable(false);
 		textCO.setBounds(21, 351, 187, 20);
 		panelDes.add(textCO);
 		textCO.setColumns(10);
@@ -624,7 +624,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorCO.setBackground(new Color(153, 0, 0));
 
 		textAlt = new JTextField();
-		textAlt.setEnabled(false);
+		textAlt.setEditable(false);
 		textAlt.setBounds(21, 420, 187, 20);
 		panelDes.add(textAlt);
 		textAlt.setColumns(10);
@@ -642,7 +642,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorAlt.setBackground(new Color(153, 0, 0));
 
 		textEsp = new JTextField();
-		textEsp.setEnabled(false);
+		textEsp.setEditable(false);
 		textEsp.setBounds(21, 488, 187, 20);
 		panelDes.add(textEsp);
 		textEsp.setColumns(10);
@@ -680,7 +680,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorRango.setBackground(new Color(153, 0, 0));
 
 		textRango = new JTextField();
-		textRango.setEnabled(false);
+		textRango.setEditable(false);
 		textRango.setBounds(21, 42, 187, 20);
 		panelAgente.add(textRango);
 		textRango.setColumns(10);
@@ -698,7 +698,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorIniServ.setBackground(new Color(153, 0, 0));
 
 		textIniServ = new JTextField();
-		textIniServ.setEnabled(false);
+		textIniServ.setEditable(false);
 		textIniServ.setBounds(21, 100, 187, 20);
 		panelAgente.add(textIniServ);
 		textIniServ.setColumns(10);
@@ -716,7 +716,7 @@ public class VBusPer extends JDialog implements ContDatosBusqPer, ActionListener
 		separatorFinServ.setBackground(new Color(153, 0, 0));
 
 		textFinServ = new JTextField();
-		textFinServ.setEnabled(false);
+		textFinServ.setEditable(false);
 		textFinServ.setBounds(21, 168, 187, 20);
 		panelAgente.add(textFinServ);
 		textFinServ.setColumns(10);
