@@ -32,7 +32,7 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 			con = DriverManager.getConnection(url, user, pass);
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 	}
 
@@ -41,14 +41,14 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 		if (stmnt != null) {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 	}
@@ -104,13 +104,13 @@ public class ContBDImpleInsertCaso implements ContDatosInsertCaso {
 				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();

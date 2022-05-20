@@ -37,7 +37,7 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 	}
 
@@ -46,14 +46,14 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 		if (stmnt != null) {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 	}
@@ -89,13 +89,13 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				conocidos.put(cono.getDni2(), cono);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
@@ -170,13 +170,13 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();

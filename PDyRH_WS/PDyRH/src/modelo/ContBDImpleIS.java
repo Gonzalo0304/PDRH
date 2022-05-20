@@ -27,7 +27,7 @@ public class ContBDImpleIS implements ControladorDatosIS {
 			try {
 				con = DriverManager.getConnection(url, user, pass);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			} 
 		}
 
@@ -36,14 +36,14 @@ public class ContBDImpleIS implements ControladorDatosIS {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			if (stmnt != null) {
 				try {
 					stmnt.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 		}
@@ -69,13 +69,13 @@ public class ContBDImpleIS implements ControladorDatosIS {
 				datos[2] = rs.getString("rango");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();

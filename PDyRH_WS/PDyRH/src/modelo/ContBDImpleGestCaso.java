@@ -43,7 +43,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			con = DriverManager.getConnection(url, user, pass);
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 	}
 
@@ -52,14 +52,14 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 		if (stmnt != null) {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 	}
@@ -92,7 +92,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 			String msg = "Los campos no pueden exceder los 50 carácteres.";
@@ -126,13 +126,13 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				participantes.put(par.getDni(), par);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
@@ -152,12 +152,12 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			if (con != null) {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 		} finally {
@@ -183,7 +183,7 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 			if (par.getCodCaso().length() > 50 || par.getImplicacion().length() > 50) {
@@ -209,12 +209,12 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			if (con != null) {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 		} finally {
@@ -239,13 +239,13 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
@@ -271,13 +271,13 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
@@ -318,13 +318,13 @@ public class ContBDImpleGestCaso implements ContDatosGestCaso {
 				restos.put(resto.getCodResto(),resto);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();

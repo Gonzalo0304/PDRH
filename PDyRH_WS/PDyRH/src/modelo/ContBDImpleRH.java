@@ -34,7 +34,7 @@ public class ContBDImpleRH implements ContDatosRH {
 			con = DriverManager.getConnection(url, user, pass);
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 	}
 
@@ -43,14 +43,14 @@ public class ContBDImpleRH implements ContDatosRH {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 		if (stmnt != null) {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 	}
@@ -135,12 +135,12 @@ public class ContBDImpleRH implements ContDatosRH {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			if (con != null) {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 		} finally {
@@ -179,13 +179,13 @@ public class ContBDImpleRH implements ContDatosRH {
 				
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();

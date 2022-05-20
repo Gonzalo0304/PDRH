@@ -49,7 +49,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 	}
 
@@ -59,7 +59,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
 		}
 		if (stmnt != null) {
@@ -67,7 +67,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				stmnt.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
 		}
 	}
@@ -187,7 +187,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
 		}
 
@@ -212,7 +212,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 			String msg = "Esta fecha ya había sido introducida.";
@@ -287,13 +287,13 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				per.setLocalidad(rs.getString("localidad"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
@@ -313,12 +313,12 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 			stmnt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			if (con != null) {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 		} finally {
@@ -343,13 +343,13 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
@@ -384,7 +384,7 @@ public class ContBDImpleGestPer implements ContDatosGestPer {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 			String msg = "Los campos no pueden exceder los 50 carácteres.";

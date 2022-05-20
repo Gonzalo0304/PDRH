@@ -39,7 +39,7 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 			con = DriverManager.getConnection(url, user, pass);
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 	}
 
@@ -48,14 +48,14 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 		if (stmnt != null) {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 				try {
 					con.rollback();
 				} catch (SQLException e2) {
-					e.printStackTrace();
+					
 				}
 			}
 			String msg = "Los campos no pueden exceder los 50 carácteres.";
@@ -167,13 +167,13 @@ public class ContBDImpleInsertPer implements ContDatosInsertPer {
 				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 		this.closeConnection();

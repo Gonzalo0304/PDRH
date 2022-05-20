@@ -30,7 +30,6 @@ public class ContBDImpleBusq implements ContDatosBusq {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -39,14 +38,12 @@ public class ContBDImpleBusq implements ContDatosBusq {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
 		if (stmnt != null) {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -76,13 +73,13 @@ public class ContBDImpleBusq implements ContDatosBusq {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
@@ -107,13 +104,11 @@ public class ContBDImpleBusq implements ContDatosBusq {
 				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 			this.closeConnection();
@@ -137,13 +132,13 @@ public class ContBDImpleBusq implements ContDatosBusq {
 				esta = rs.getBoolean("esta");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();

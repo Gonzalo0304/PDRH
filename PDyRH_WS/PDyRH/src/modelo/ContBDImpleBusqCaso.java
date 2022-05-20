@@ -33,7 +33,7 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 	}
 
@@ -42,14 +42,14 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 		if (stmnt != null) {
 			try {
 				stmnt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 	}
@@ -88,13 +88,13 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 				participantes.put(par.getDni(), par);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
@@ -134,13 +134,13 @@ public class ContBDImpleBusqCaso implements ContDatosBusqCaso {
 				restos.put(resto.getCodResto(), resto);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					
 				}
 			}
 			this.closeConnection();
