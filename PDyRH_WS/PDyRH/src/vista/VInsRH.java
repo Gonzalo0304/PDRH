@@ -37,6 +37,11 @@ import javax.swing.JSeparator;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 
+/**
+ * Esta clase representa la ventana de insercion y gestion de restps humanos
+ * @autor Gonzalo
+ *
+ */
 public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 
 	private static final long serialVersionUID = 1L;
@@ -99,6 +104,13 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 
 	ContDatosRH datos = DataFactoryRH.getDatos();
 
+	/**
+	 * @param padre es la ventana padre de esta
+	 * @param modal para desabilitar y habilitar la ventana
+	 * @param codigo para recoger el codigo de resto humano
+	 * @param infos la informacion de usuario
+	 * @param esGes para saber si va a gestionar un resto humano en vez de darlo de alta
+	 */
 	public VInsRH(VIniciarSesion padre, boolean modal, String codigo, String[] infos, boolean esGes) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -492,6 +504,10 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		btnBaja.addActionListener(this);
 		contentPanel.add(btnBaja);
 
+		/**
+		 * El primer if hace invisibles los botones de modificacion y baja y el label si se quieren introducir restos humanos y el segundo if have invisibles el botn añadir y el label de 
+		 * insertar, inhabilita la modificacion de campo del codigo y carga los datos del resto humano con {@link #cargarDatos()}.
+		 */
 		if (!esGes) {
 			btnMod.setVisible(false);
 			btnBaja.setVisible(false);
@@ -504,6 +520,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		}
 	}
 
+	/**
+	 * Este metodo carga los datos de un resto humano cuando quieres modificar uno. El primer if comprueba si la fecha de muerte esta a null si no lo esta la parse a int y el segundo if
+	 * comprueba si el genero esta en null si no lo esta comprueba si es hombre o mujer para poner el combobox en la posicion de su genero. Tambien todos los datos que no sean string los
+	 * parsea a string para imprimirlos en los textfields correspondientes.
+	 */
 	private void cargarDatos() {
 		rh = obtenerRH(cod);
 		textCodigo.setText(rh.getCodResto());
@@ -526,6 +547,9 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		textUbicacion.setText(rh.getUbicacion());
 	}
 
+	/*
+	 * Cerrar la venta actual y abrir la anterior.
+	 */
 	private void cerrar() {
 		if (!esGes) {
 			VInserciones insertar = new VInserciones(padre, true, info);
@@ -539,16 +563,26 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 
 	}
 
+	/*
+	 * Parsear de String a Fecha.
+	 */
 	private LocalDate stringDate(String string) {
 		LocalDate nacimiento = LocalDate.parse(string);
 		return nacimiento;
 	}
 
+	/*
+	 * Parsear de int a String
+	 */
 	private int stringInt(String string) {
 		int altura = Integer.parseInt(string);
 		return altura;
 	}
 
+	/*
+	 * Habilita el boton de añadir personas al compribar que los campos del dni y del nombre no estan vacios.
+	 * Cambiar el color del boton cuando pasa de esatr desactivado a activado y  viceversa.
+	 */
 	private void habilitarBoton() {
 		if (!textCodigo.getText().isEmpty() && !textCausa.getText().isEmpty()) {
 			btnAnadir.setEnabled(true);
@@ -559,6 +593,7 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		}
 	}
 
+	//Eventos
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
@@ -589,42 +624,64 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 	}
 
 	// Abrir ventanas de menú
+	/*
+	 * Abrir ventana de gestion de personas desde JMenuBar 
+	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/*
+	 * Abrir ventana de comparacion de personas desde JMenuBar 
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/*
+	 * Abrir ventana de busqueda de personas desde JMenuBar 
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/*
+	 * Abrir ventana de insercion de restos humanos desde JMenuBar 
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/*
+	 * Abrir ventana de insercion de personas desde JMenuBar 
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
+	/*
+	 * Abrir ventana de insercion de casos desde JMenuBar 
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
 		vInsCaso.setVisible(true);
 	}
 
+	/*
+	 * Vaciar los campos modificados de la ventana.
+	 * Poner el ComboBox a su opcion predeterminada. 
+	 */
 	private void limpiar() {
 		textCodigo.setText("");
 		textCausa.setText("");
@@ -638,6 +695,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		textEspecificaciones.setText("");
 	}
 
+	/**
+	 * @param res envia RestoHumano
+	 * Se ingresan los datos con el metodo {@link #resgistrarDatos()}. Si el resgitro es realizada correctamente muestra un JOptionPane diciendo que la insercion se ha realizado con exito si 
+	 * no mostrar uno con un mensaje de error. Se usa el metodo {@link #limpiar()} para vaciar los campos y poder registrar mas restos humanos.
+	 */
 	@Override
 	public void altaRH(RestoHumano rh) {
 		rh = registrarDatos();
@@ -652,6 +714,14 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		} 
 	}
 
+	/**
+	 * Registra un resto humano,los datos que sean fechas o ints en la base de datos se comprueba si se han dejado en blanco si no se parsean los datos de String a LocalDate o int. Luego se
+	 * introducen los datos del resto humano en la base de datos. El comboBox comprueba si se ha seleccionado hombre o mujer y se introduce una M o una H en funcion de la eleccion. 
+	 * @return rh se devuelve el resto humano creado.<br><br>
+	 * <h3><--Variables-->
+	 * <li>LocalDate fechaMuer: para en caso de que sea necesario para guardar el parseo de la fecha de muerte y si es null que no de fallo a la hora de guardarlo en la base de datos.
+	 * <li>int altura: para en caso de que sea necesario para guardar el parseo de la altura y si es 0 que no de fallo a la hora de guardarlo en la base de datos.
+	 */
 	private RestoHumano registrarDatos() {
 		LocalDate fechaMuer = null;
 		int altura = 0;
@@ -681,6 +751,11 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		return rh;
 	}
 
+	/*
+	 * @param res envia RestoHumano
+	 * Se modifican los datos con el metodo {@link #resgistrarDatos()}. Si la modificacion es realizada correctamente muestra un JOptionPane diciendo que la insercion se ha realizado con 
+	 * exito si no mostrar uno con un mensaje de error.
+	 */
 	@Override
 	public void modificarRH(RestoHumano rh) {
 		rh = registrarDatos();
@@ -693,6 +768,9 @@ public class VInsRH extends JDialog implements ActionListener, ContDatosRH {
 		} 
 	}
 
+	/**
+	 * A la hora de eliminar un resto humano se pedira confirmar la baja con un mensaje y una vez realizada indicara que se ha realizado correctamente.
+	 */
 	@Override
 	public void eliminarRH(String codResto) {
 		if (JOptionPane.showConfirmDialog(this,

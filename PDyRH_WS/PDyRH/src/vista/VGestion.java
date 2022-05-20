@@ -40,6 +40,11 @@ import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Esta clase representa la ventana de busqueda para introducir el codigo/DNI de el elemento a gestionar
+ * @autor Gonzalo
+ *
+ */
 public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	private static final long serialVersionUID = 1L;
 
@@ -81,6 +86,11 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	// <--- Datos BD --->
 	ContDatosBusq datos = DataFactoryBusq.getDatos();
 
+	/**
+	 * @param padre es la ventana padre de esta.
+	 * @param modal es el valor del modal para dasabilitar la ventana anterior
+	 * @param infos es la informacion del usuario
+	 */
 	public VGestion(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -378,36 +388,54 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	}
 
 	// Abrir ventanas de menú
+	/**
+	 * Abrir ventana de gestion
+	 */
 	private void abrirGes() {
 		VGestion vGes = new VGestion(padre, true, info);
 		this.dispose();
 		vGes.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de comparacion
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de busqueda
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de resto humano
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de persona
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de caso
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
@@ -415,6 +443,15 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 	}
 
 	// Abrir ventanas de gestión
+	/**
+	 * Controlamos si la busqueda se realiza correctamente. Primero si no se ha seleccionado el tipo de busqueda se avisara al usuario con JOptionPane. Luego en funcion del tipo comprobara si
+	 * el codigo introducido se comprobara si existe y en caso de coincida con alguno de los introducidos en la base de datos se abrira la perstaña de modificacion del tipo introducido en caso
+	 * de que no coincida se mostrara un mensaje de error.</br></br>
+	 * <h3><--Variables-->
+	 * <li>esta: para saber si no se ha encontrado el id o dni.
+	 * <li>String selec: para guardar la seleccion del radiobutton. 
+	 * @param info pasar la informacion del usuario
+	 */
 	private void comprobarBus(String[] info) {
 		esta = true;
 		String selec = rbSeleccionado(bgTipo);
@@ -458,6 +495,9 @@ public class VGestion extends JDialog implements ActionListener, ContDatosBusq {
 		}
 	}
 
+	/**
+	 * Cerrar la venta actual y abrir la anterior.
+	 */
 	private void cerrar() {
 		VPrincipal vMain = new VPrincipal(padre, true, info);
 		this.dispose();

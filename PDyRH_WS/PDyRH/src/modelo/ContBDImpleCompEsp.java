@@ -12,6 +12,12 @@ import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
+/**
+ * Esta clase representa la implementacion de la ventana de comparación de los restos humanos.
+ * @autor Elías
+ * Utiliza sentencias SQL para seleccionar datos de los restos humanos y los desaparecidos, además de insertar a los identificadores.
+ *
+ */
 public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	// <--- Sentencias --->
 	final String INSERTident = "INSERT INTO identifica(dni,codResto) VALUES(?,?)";
@@ -19,16 +25,35 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 	final String SELECTdes = "SELECT * FROM desaparecida WHERE dni = ?";
 
 	// <--- Conexión --->
+	/**
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
+	 */
 	private PreparedStatement stmnt;
+	/**
+	 * <li>Conexión: Es la conexión de la base de dato
+	 */
 	private Connection con;
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
+	/**
+	 * <li> url: Es el enlace donde se encuentra la base de datos.
+	 */
 	private String url = bundle.getString("URL");
+	/**
+	 * <li> usuario: Es el usuario para iniciar sesión.
+	 */
 	private String user = bundle.getString("USER");
+	/**
+	 * <li> pass: Es la contraseña de los usuarios
+	 */
 	private String pass = bundle.getString("PASS");
 
-	public void openConnection()  {
+
+	/**
+	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
+	 */
+	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 			con.setAutoCommit(false);
@@ -37,7 +62,10 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 		}
 	}
 
-	public void closeConnection()  {
+	/**
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
+	 */
+	public void closeConnection() {
 		if (con != null) {
 			try {
 				con.close();
@@ -53,7 +81,13 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 			}
 		}
 	}
-
+	
+	/**
+	 * Metodo para agregar un identificado mediante el codigo del resto humano y el sni de la persona
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para insertar el identificado, 
+	 * guarda el dni y el codigo introducido en la sentencia y finalmente se cierra la conexion.
+	 */
 	@Override
 	public void agregarIdentificado(String codResto, String dni)  {
 		this.openConnection();
@@ -80,6 +114,16 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 		}
 	}
 
+	/**
+	 * Metodo para obtener el Resto Humano mediante el codigo.
+	 * <li> ResultSet rs:  Contiene el resultado de la consulta ejecutada
+	 * <li> RestoHumano resto: Contiene los datos de la clase.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para seleccionar el resto humano, 
+	 * guarda los resultados en los atributos de la clase y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve los datos del resto.
+	 */
 	@Override
 	public RestoHumano obtenerRH(String codResto)  {
 		ResultSet rs = null;
@@ -126,6 +170,16 @@ public class ContBDImpleCompEsp implements ContDatosCompEsp {
 		return resto;
 	}
 
+	/**
+	 * Metodo para obtener a la persona mediante el DNI.
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> Persona des: Contiene los datos de la persona desaparecida.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para seleccionar a los desaparecidos, 
+	 * guarda los resultados en los atributos de la clase y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve los datos de la persona desaparecida.
+	 */
 	@Override
 	public Persona obtenerPersona(String dni)  {
 		ResultSet rs = null;

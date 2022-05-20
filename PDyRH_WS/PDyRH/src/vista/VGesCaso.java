@@ -41,6 +41,11 @@ import modelo.clases.Participante;
 import modelo.clases.RestoHumano;
 import javax.swing.JRadioButton;
 
+/**
+ * Esta clase representa la ventana de Gestion de casos
+ * @autor Gonzalo
+ *
+ */
 public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -78,9 +83,13 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JSeparator separatorImp;
 	private JTextField textImp;
 	private JMenu menInsertar;
+	private JMenu menInsertar_1;
 	private JMenu menComparar;
+	private JMenu menComparar_1;
 	private JMenu menGestionar;
+	private JMenu menGestionar_1;
 	private JMenu menBuscar;
+	private JMenu menBuscar_1;
 	private JMenu menUsuario;
 	private JMenuItem mCerrar;
 	private JMenuItem mCerrar2;
@@ -107,6 +116,13 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	private JLabel imgErtzAO_1;
 	private JSeparator separatorMenu;
 
+	/**
+	 * Es el constructor de la venta.
+	 * @param padre es la ventana padre de esta.
+	 * @param modal es el valor del modal para dasabilitar la ventana anterior
+	 * @param caso recibe el caso a modificar
+	 * @param infos es la informacion del usuario
+	 */
 	public VGesCaso(VIniciarSesion padre, boolean modal, Caso caso, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -481,29 +497,69 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		mCerrar2.setForeground(Color.BLACK);
 		menUsuario.add(mCerrar2);
 
-		menInsertar = new JMenu("Insertar");
-		menInsertar.setHorizontalAlignment(SwingConstants.LEFT);
-		menInsertar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		menInsertar.setForeground(Color.WHITE);
-		menuBar.add(menInsertar);
+		menInsertar_1 = new JMenu("Insertar");
+		menInsertar_1.setHorizontalAlignment(SwingConstants.LEFT);
+		menInsertar_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		menInsertar_1.setForeground(Color.WHITE);
+		menuBar.add(menInsertar_1);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Persona");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirInsertPer();
+			}
+		});
+		menInsertar_1.add(mntmNewMenuItem);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Caso");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirInsertCaso();
+			}
+		});
+		menInsertar_1.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Resto humano");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirInsertRH();
+			}
+		});
+		menInsertar_1.add(mntmNewMenuItem_2);
 
-		menGestionar = new JMenu("Gestionar");
-		menGestionar.setHorizontalAlignment(SwingConstants.LEFT);
-		menGestionar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		menGestionar.setForeground(Color.WHITE);
-		menuBar.add(menGestionar);
+		menGestionar_1 = new JMenu("Gestionar");
+		menGestionar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirGes();
+			}
+			
+		});
+		menGestionar_1.setHorizontalAlignment(SwingConstants.LEFT);
+		menGestionar_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		menGestionar_1.setForeground(Color.WHITE);
+		menuBar.add(menGestionar_1);
 
-		menComparar = new JMenu("Comparar");
-		menComparar.setHorizontalAlignment(SwingConstants.LEFT);
-		menComparar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		menComparar.setForeground(Color.WHITE);
-		menuBar.add(menComparar);
+		menComparar_1 = new JMenu("Comparar");
+		menComparar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirCom();
+			}
+		});
+		menComparar_1.setHorizontalAlignment(SwingConstants.LEFT);
+		menComparar_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		menComparar_1.setForeground(Color.WHITE);
+		menuBar.add(menComparar_1);
 
-		menBuscar = new JMenu("Busqueda");
-		menBuscar.setHorizontalAlignment(SwingConstants.LEFT);
-		menBuscar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		menBuscar.setForeground(Color.WHITE);
-		menuBar.add(menBuscar);
+		menBuscar_1 = new JMenu("Busqueda");
+		menBuscar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirBus();
+			}
+		});
+		menBuscar_1.setHorizontalAlignment(SwingConstants.LEFT);
+		menBuscar_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		menBuscar_1.setForeground(Color.WHITE);
+		menuBar.add(menBuscar_1);
 
 		// Campos de participante involucrado
 		lblDniInv = new JLabel("DNI");
@@ -607,6 +663,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 
 	// <--- Métodos --->
 	// Cargar la información
+	/**
+	 * Muestra los datos de el caso que vamos a modificar. Para el estado del caso primero lo comprueba y luego marca el radiobutton correspondiente y para las fechas comprueba si no estan
+	 * en null y si no lo estan las parsea de LocalDate a String.
+	 * @param caso envia el dato a gestionar
+	 */
 	private void cargarDatos(Caso caso) {
 		textCod.setText(caso.getCodCaso());
 		textNom.setText(caso.getNombre());
@@ -630,36 +691,53 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	// Abrir ventanas de menú
+	/**
+	 * Abrir ventana de gestion desde JMenuBar 
+	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
-
+	/**
+	 * Abrir ventana de comparacion desde JMenuBar 
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de busqueda desde JMenuBar 
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de resto humano desde JMenuBar 
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info, false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de persona desde JMenuBar 
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de caso desde JMenuBar 
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();
@@ -667,6 +745,9 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	// Habilitar botón cuando haya texto introducido
+	/**
+	 * Comprobar si el DNI del involucardo y la implicacion no estan en blanco o el codigo de resto no esta en blaco  si se cumple una de estas dos condiciones habilitar el boton.
+	 */
 	public void habilitarBoton() {
 		if ((!textImp.getText().isBlank() && !textDniInv.getText().isBlank()) || !textCodResto.getText().isBlank()) {
 			buttonAgregar.setEnabled(true);
@@ -680,6 +761,9 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 		return datos.comprobarDNI(dni);
 	}
 
+	/**
+	 * Cerrar esta ventana y abrir la anterior
+	 */
 	public void cerrar() {
 		VGestion vGest = new VGestion(padre, true, info);
 		this.dispose();
@@ -737,6 +821,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	@Override
+	/**
+	 * Actualiza los datos modificados del caso. Para la fechaIni y la fechaFin si no se han dejado en blanco se parsea a LocalDate. Si la modificacion es exitosa  saldra un JOptionPane
+	 * diciendo que la modificacion a sido exitosa y si esta mal introducido avisara con otro
+	 * @param caso carga los datos del caso
+	 */
 	public void modificarCaso(Caso caso) {
 		caso.setNombre(textNom.getText());
 		caso.setEstado(rbSelect(bgEstado));
@@ -756,6 +845,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	// Compronar que radio buttón está seleccionado
+	/**
+	 * Para comprobarlo se van pasando por los RadioRuttons del ButtonGroup y se comprueba si esta seleccionado si lo esta devuelve el texto del radiobuton si no devuelve null
+	 * @param bg es el grupo de radiobuttons
+	 * @return null devuelve null en caso de no estar ningun radiobutton seleccionado
+	 */
 	public String rbSelect(ButtonGroup bg) {
 		for (Enumeration<AbstractButton> botones = bg.getElements(); botones.hasMoreElements();) {
 			AbstractButton boton = botones.nextElement();
@@ -769,6 +863,10 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	@Override
+	/**
+	 * Antes de eliminar un caso se avisara de que es una accion permanente y tendra que comfirmarlo si decide darlo de baja se avisaba con un JOptionPane.
+	 * @param codCaso se envia el codigo de caso
+	 */
 	public void eliminarCaso(String codCaso) {
 		if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar este caso? Es una acción irreversible.",
 				"Confirmar baja", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
@@ -781,6 +879,11 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	@Override
+	/**
+	 * Se insertan en participante el dni de la persona participante y su implicacion. Si se introduce correctamente saldra un JOptionPane indicando que la insercion se ha realizado 
+	 * correctamente y si no se a introducido correctamente tambien se mostrar uno diciendo que se ha introducido mal.
+	 * @param par se pasa el participante
+	 */
 	public void insertarParticipante(Participante par) {
 		par.setCodCaso(caso.getCodCaso());
 		par.setDni(textDniInv.getText());
@@ -797,6 +900,12 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	}
 
 	@Override
+	/**
+	 * Si el codigo de resto humano no esta registrado se avisara con un JOptionPane, si esta bien introducido tambien se avisara con un JOptionPane y se limpiaran os cambios para poder 
+	 * realizar otra insercion y si el codigo ya esta introducido en un caso este no te dejara introducirlo y se te avisara de esto con un JOptionPane.
+	 * @param codResto se pasa el codigo de resto humano
+	 * @param codCaso se pasa el codigo de caso
+	 */
 	public void insertarInvolucrado(String codResto, String codCaso) {
 		if (!comprobarCodResto(textCodResto.getText())) {
 			JOptionPane.showMessageDialog(this,
@@ -828,4 +937,5 @@ public class VGesCaso extends JDialog implements ContDatosGestCaso, ActionListen
 	public Map<String, RestoHumano> listarInvolucrados() {
 		return datos.listarInvolucrados();
 	}
+
 }

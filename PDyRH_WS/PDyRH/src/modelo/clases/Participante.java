@@ -1,17 +1,44 @@
 package modelo.clases;
 
+/**
+ * Esta clase representa el parTicipante del caso
+ * @author Elias
+ *
+ */
 public class Participante {
 	// <--- Atributos --->
+	/**
+	 * El nombre del participante
+	 */
 	private String nomComp;
+	/**
+	 * El dni de la persona
+	 */
 	private String dni;
+	/**
+	 * La implicacion que tiene con el caso
+	 */
 	private String implicacion;
+	/**
+	 * El codigo del caso
+	 */
 	private String codCaso;
 	
 	// <--- Constructores --->
+	/**
+	 * Constructor vacio
+	 */
 	public Participante() {
 		super();
 	}
 
+	/**
+	 * Constructor con parametros
+	 * @param nomComp
+	 * @param dni
+	 * @param codCaso
+	 * @param implicacion
+	 */
 	public Participante(String nomComp, String dni, String codCaso, String implicacion) {
 
 		super();

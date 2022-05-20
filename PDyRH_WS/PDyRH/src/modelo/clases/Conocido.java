@@ -1,17 +1,44 @@
 package modelo.clases;
 
+/**
+ * Esta clase representa los conocidos de una persona
+ * @author 1dam
+ *
+ */
 public class Conocido {
 	// <--- Atributos --->
+	/**
+	 * El nombre de la persona conocida
+	 */
 	private String nomComp;
+	/**
+	 * El dni de una persona conocida
+	 */
 	private String dni1;
+	/**
+	 * El dni de la otra persona
+	 */
 	private String dni2;
+	/**
+	 * Descripcion de la relacion entre los dos 
+	 */
 	private String relacion;
 	
 	// <--- Constructores --->
+	/**
+	 * Constructor vacio
+	 */
 	public Conocido() {
 		super();
 	}
 
+	/**
+	 * Constructor con parametros
+	 * @param nomComp
+	 * @param dni1
+	 * @param dni2
+	 * @param relacion
+	 */
 	public Conocido(String nomComp, String dni1, String dni2, String relacion) {
 		super();
 		this.nomComp = nomComp;

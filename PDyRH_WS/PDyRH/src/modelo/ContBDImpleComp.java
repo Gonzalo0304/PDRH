@@ -14,6 +14,12 @@ import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 import modelo.clases.RestoHumano;
 
+/**
+ * Esta clase representa la implementación de la ventana de comparacion
+ * @autor Elías
+ * Utiliza sentencias SQL para seleccionar datos del resto humano, la persona desaparecida y la persona identificada. 
+ *
+ */
 public class ContBDImpleComp implements ContDatosComp {
 	// <--- Sentencias --->
 	final String SELECTrhs = "SELECT * FROM restohumano";
@@ -21,16 +27,34 @@ public class ContBDImpleComp implements ContDatosComp {
 	final String SELECTidentificado = "SELECT dni FROM identifica WHERE codResto = ?";
 
 	// <--- Conexión --->
+	/**
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
+	 */
 	private PreparedStatement stmnt;
+	/**
+	 * <li>Conexión: Es la conexión de la base de dato
+	 */
 	private Connection con;
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
+	/**
+	 * <li> url: Es el enlace donde se encuentra la base de datos.
+	 */
 	private String url = bundle.getString("URL");
+	/**
+	 * <li> usuario: Es el usuario para iniciar sesión.
+	 */
 	private String user = bundle.getString("USER");
+	/**
+	 * <li> pass: Es la contraseña de los usuarios
+	 */
 	private String pass = bundle.getString("PASS");
 
-	public void openConnection()  {
+	/**
+	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
+	 */
+	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
@@ -38,7 +62,11 @@ public class ContBDImpleComp implements ContDatosComp {
 		}
 	}
 
-	public void closeConnection()  {
+
+	/**
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
+	 */
+	public void closeConnection() {
 		if (con != null) {
 			try {
 				con.close();
@@ -54,7 +82,18 @@ public class ContBDImpleComp implements ContDatosComp {
 			}
 		}
 	}
-
+	
+	/**
+	 * Metodo para listar los Restos Humanos
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> RestoHumano resto: Contiene los datos de la clase.
+	 * <li> Map<String,RestoHumano> restos: Se utiliza para introducir los datos dentro del Map.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para seleccionar el resto humano, 
+	 * guarda los resultados en los atributos de la clase y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve los datos de los restos.
+	 */
 	@Override
 	public Map<String, RestoHumano> listarRHs()  {
 		ResultSet rs = null;
@@ -104,6 +143,17 @@ public class ContBDImpleComp implements ContDatosComp {
 		return restos;
 	}
 
+	/**
+	 * Metodo para listar los Restos Humanos
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> Persona des: Contiene los datos de la clase Desaparecida.
+	 * <li> Map<String, Persona> desaparecidas: Se utiliza para introducir los datos dentro del Map.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para seleccionar el resto humano, 
+	 * guarda los resultados en los atributos de la clase y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve los datos de las desaparecidas.
+	 */
 	@Override
 	public Map<String, Persona> listarDesaparecidas()  {
 		ResultSet rs = null;
@@ -147,7 +197,17 @@ public class ContBDImpleComp implements ContDatosComp {
 		}
 		return desaparecidas;
 	}
-
+	
+	/**
+	 *  Metodo para obtener el identificado mediante el codigo del resto humano
+	 * <li> ResultSet rs:  Contiene el resultado de la consulta ejecutada
+	 * <li> String dni: En esta variable guarda el DNI de la persona.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia para seleccionar el identificado, 
+	 * el dni guarda el resultado y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve el DNI de la persona.
+	 */
 	@Override
 	public String obtenerIdentificado(String codResto)  {
 		ResultSet rs = null;

@@ -24,6 +24,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.SystemColor;
 
+/**
+ * Esta clase representa la ventana desde la cual se puede acceder a las diferentes inserciones: 
+ * @autor Gonzalo
+ *
+ */
 public class VInserciones extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +55,12 @@ public class VInserciones extends JDialog implements ActionListener {
 	private static Point point = new Point();
 	private JLabel lblCerrar;
 
+	/**
+	 * Es el constructor de la venta.
+	 * @param padre es la ventana padre de esta.
+	 * @param modal es el valor del modal para dasabilitar la ventana anterior
+	 * @param infos es la informacion del usuario
+	 */
 	public VInserciones(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño de ventana --->
 		super(padre);
@@ -246,33 +257,45 @@ public class VInserciones extends JDialog implements ActionListener {
 		separatorIns.setBounds(24, 82, 561, 2);
 		contentPanel.add(separatorIns);
 	}
-
+	
+	//Metodos para cerrar y abrir otras ventanas de inserciones
+	/**
+	 * Cierra la ventana actual y abre la anterior
+	 */
 	private void cerrar() {
 		VPrincipal principal = new VPrincipal(padre, true, info);
 		this.dispose();
 		principal.setVisible(true);
 	}
-
+	
+	/**
+	 * Cierra la ventana actual y abre la ventana de insercion de casos
+	 */
 	private void insertarCaso() {
 		VInsCaso caso = new VInsCaso(padre, true, info);
 		this.dispose();
 		caso.setVisible(true);
-
 	}
-
+	
+	/**
+	 * Cierra la ventana actual y abre la ventana de insercion de restos humanos
+	 */
 	private void insertarRestoHumano() {
 		VInsRH restoHumano = new VInsRH(padre, true, null, info,false);
 		this.dispose();
 		restoHumano.setVisible(true);
-
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de insercion de personas
+	 */
 	private void insertarPersona() {
 		VInsPersona persona = new VInsPersona(padre, true, info);
 		this.dispose();
 		persona.setVisible(true);
 	}
-
+	
+	//Eventos
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
@@ -292,36 +315,54 @@ public class VInserciones extends JDialog implements ActionListener {
 	}
 	
 	// Abrir ventanas de menú
+	/**
+	 * Abrir ventana de gestion desde JMenuBar 
+	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre,true,info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
-
+	
+	/**
+	 * Abrir ventana de comparacion desde JMenuBar 
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre,true,info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de busqueda desde JMenuBar 
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre,true,info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de restos humanos desde JMenuBar 
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre,true,null,info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Abrir ventana de insercion de personas desde JMenuBar 
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre,true,info);
 		this.dispose();
 		vInsPer.setVisible(true);		
 	}
 
+	/**
+	 * Abrir ventana de insercion de casos desde JMenuBar 
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre,true,info);
 		this.dispose();

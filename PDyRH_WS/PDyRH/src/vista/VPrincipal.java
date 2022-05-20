@@ -27,7 +27,11 @@ import javax.swing.JComponent;
 
 import java.awt.SystemColor;
 import java.awt.Toolkit;
-
+/**
+ * Esta clase representa la ventana Principal del programa
+ * @autor Gonzalo
+ *
+ */
 public class VPrincipal extends JDialog implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
 
@@ -66,6 +70,11 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	private String[] info;
 	private JMenuBar menuBar;
 	
+	/**
+	 * @param padre es la ventana padre de esta.
+	 * @param modal es el valor del modal para dasabilitar la ventana anterior.
+	 * @param infos es la informacion del usuario.
+	 */
 	public VPrincipal(VIniciarSesion padre, boolean modal, String[] infos) {
 		// <--- Diseño ventana --->
 		super(padre);
@@ -333,12 +342,18 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	}
 
 	// <--- Métodos --->
-	// Cerrar la ventana
+	/**
+	 * Cierra la ventana actual y abre la anterior
+	 */
 	private void cerrar() {
 		this.dispose();
 		padre.setVisible(true);
 	}
+	
 	// Abrir ventanas
+	/**
+	 * Cierra la ventana actual y abre la ventana de inserciones
+	 */
 	private void vInsertar() {
 		panelInsert.setBackground(SystemColor.controlShadow);
 		imgInsert.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/laAO.png")));
@@ -348,6 +363,9 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		inserciones.setVisible(true);
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de busqueda
+	 */
 	private void vBusqueda() {
 		panelBus.setBackground(SystemColor.controlShadow);
 		imgBuscar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/luAO.png")));
@@ -357,6 +375,9 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		busqueda.setVisible(true);
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de gestion
+	 */
 	private void vGestionar() {
 		panelGest.setBackground(SystemColor.controlShadow);
 		imgGest.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/engAO.png")));
@@ -366,6 +387,9 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		gestionar.setVisible(true);
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de comparacion
+	 */
 	private void vComparar() {
 		panelComp.setBackground(SystemColor.controlShadow);
 		imgComparar.setIcon(new ImageIcon(VPrincipal.class.getResource("/imagenes/coAO.png")));
@@ -375,6 +399,7 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 		comparar.setVisible(true);
 	}
 
+	//Eventos
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(mCerrar)) {
@@ -435,36 +460,54 @@ public class VPrincipal extends JDialog implements ActionListener, MouseListener
 	}
 	
 	// Abrir ventanas de menú
+	/**
+	 * Cierra la ventana actual y abre la ventana de gestion desde el menu
+	 */
 	private void abrirGes() {
 		VGestion vBus = new VGestion(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de comparacion desde el menu
+	 */
 	private void abrirCom() {
 		VComparacion vCom = new VComparacion(padre, true, info);
 		this.dispose();
 		vCom.setVisible(true);
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de busqueda desde el menu
+	 */
 	private void abrirBus() {
 		VBusqueda vBus = new VBusqueda(padre, true, info);
 		this.dispose();
 		vBus.setVisible(true);
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de insercion de resto humano desde el menu
+	 */
 	private void abrirInsertRH() {
 		VInsRH vInsRH = new VInsRH(padre, true, null, info,false);
 		this.dispose();
 		vInsRH.setVisible(true);
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de insercion de persona desde el menu
+	 */
 	private void abrirInsertPer() {
 		VInsPersona vInsPer = new VInsPersona(padre, true, info);
 		this.dispose();
 		vInsPer.setVisible(true);
 	}
 
+	/**
+	 * Cierra la ventana actual y abre la ventana de insercion de caso desde el menu
+	 */
 	private void abrirInsertCaso() {
 		VInsCaso vInsCaso = new VInsCaso(padre, true, info);
 		this.dispose();

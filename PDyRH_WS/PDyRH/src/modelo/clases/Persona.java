@@ -2,21 +2,60 @@ package modelo.clases;
 
 import java.time.LocalDate;
 
+/**
+ * Esta clase representa a la Persona
+ * @author Elias
+ *
+ */
 public class Persona {
 	// <--- Atributos --->
+	/**
+	 * El dni de la persona
+	 */
 	private String dni;
+	/**
+	 * El nombre de la persona
+	 */
 	private String nombre;
+	/**
+	 * El apellido
+	 */
 	private String apellido;
+	/**
+	 * La persona puede tener dos telefonos
+	 */
 	private int[] telefonos;
+	/**
+	 * La localidad donde vive
+	 */
 	private String localidad;
+	/**
+	 * La fecha de nacimiento
+	 */
 	private LocalDate fechaNac;
+	/**
+	 * La fecha de fallecimiento
+	 */
 	private LocalDate fechaFal;
 	
 	// <--- Constructores --->
+	/**
+	 * Constructor vacio
+	 */
 	public Persona() {
 		super();
 	}
 	
+	/**
+	 * Constructor con parametros
+	 * @param dni
+	 * @param nombre
+	 * @param apellido
+	 * @param telefonos
+	 * @param localidad
+	 * @param fechaNac
+	 * @param fechaFal
+	 */
 	public Persona(String dni, String nombre, String apellido, int[] telefonos, String localidad, LocalDate fechaNac,
 			LocalDate fechaFal) {
 		super();

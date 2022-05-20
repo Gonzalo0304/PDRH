@@ -16,6 +16,12 @@ import modelo.clases.Criminal;
 import modelo.clases.Desaparecida;
 import modelo.clases.Persona;
 
+/**
+ *Esta clase representa la implementacion de la ventana de persona.
+ * @autor Elías
+ * Utiliza sentencias SQL para seleccionar los datos de las personas junto a un procedimiento que comprueba los datos.
+ *
+ */
 public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	// <--- Sentencias --->
 	final String CALLcompPer = "{CALL comprobarPer(?)}";
@@ -24,16 +30,35 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 	final String SELECTnomComp = "SELECT nombre,apellido FROM persona WHERE dni = ?";
 
 	// <--- Conexión --->
+	/**
+	 * <li>PreparedStatement: Sirve para ejecutar la sentencia SQL en los métodos.
+	 */
 	private PreparedStatement stmnt;
+	/**
+	 * <li>Conexión: Es la conexión de la base de dato
+	 */
 	private Connection con;
 
 	ResourceBundle bundle = ResourceBundle.getBundle("modelo.config");
 
+	/**
+	 * <li> url: Es el enlace donde se encuentra la base de datos.
+	 */
 	private String url = bundle.getString("URL");
+	/**
+	 * <li> usuario: Es el usuario para iniciar sesión.
+	 */
 	private String user = bundle.getString("USER");
+	/**
+	 * <li> pass: Es la contraseña de los usuarios
+	 */
 	private String pass = bundle.getString("PASS");
 
-	public void openConnection()  {
+
+	/**
+	 * Metodo para abrir la conexion de la base de datos con la URL, el usuario y la contraseña.
+	 */
+	public void openConnection() {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
@@ -41,7 +66,10 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 		}
 	}
 
-	public void closeConnection()  {
+	/**
+	 * Metodo para cerrar la conexion de la base de datos y cerrar la sentencia SQL
+	 */
+	public void closeConnection() {
 		if (con != null) {
 			try {
 				con.close();
@@ -58,6 +86,18 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 		}
 	}
 
+	/**
+	 *  Metodo para listar a los participantes de los casos mediante el codigo del caso.
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> ResultSet rs2: Contiene el resultado de la consulta ejecutada
+	 * <li> Conocido cono: Contiene los datos de los conocidos
+	 * <li> Map<String, Conocido> conocidos: Se utiliza para introducir los datos dentro del Map.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta la sentencia que selecciona los participantes, 
+	 * guardara los resultados en los atributos de la clase  y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve el los ressultados que se encuentran en el Map.
+	 */
 	@Override
 	public Map<String, Conocido> listarConocidos(String dni1)  {
 		ResultSet rs = null;
@@ -103,6 +143,19 @@ public class ContBDImpleBusqPer implements ContDatosBusqPer {
 		return conocidos;
 	}
 
+	/**
+	 *  Metodo para obtener a la persona mediante el DNI.
+	 * <li> ResultSet rs: Contiene el resultado de la consulta ejecutada
+	 * <li> ResultSet rs2: Contiene el resultado de la consulta ejecutada
+	 * <li> Persona per: Contiene los datos de las personas
+	 * <li> String tipo: Aqui guarda el tipo de persona.
+	 * 
+	 * Primeramente se abre la conexion y se ejecuta el procedimiento que comprueba el tipo de persona, 
+	 * controla si es un agente, criminal o desaparecido y guarda los resultados en los atributos de la clase 
+	 * y finalmente se cierra el resultado y la conexion.
+	 * 
+	 * @return Devuelve los datos de la persona.
+	 */
 	@Override
 	public Persona obtenerPersona(String dni)  {
 		ResultSet rs = null;
